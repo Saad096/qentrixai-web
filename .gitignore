@@ -108,3 +108,6 @@ $RECYCLE.BIN/
 # Local task runner outputs (Claude Code)
 # ───────────────────────────────────────────────────────────
 .claude/
+
+# Vendored agent skills (reproducible from skills-lock.json)
+.agents/
