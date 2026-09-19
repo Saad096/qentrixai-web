@@ -29,7 +29,7 @@ export function Section({
     <section id={id} className={cn("section", className)}>
       <Container>
         {(eyebrow || heading || lede) && (
-          <header className={cn("max-w-measure", headerClassName)}>
+          <header data-reveal className={cn("max-w-measure", headerClassName)}>
             {eyebrow && <p className="mb-4 font-mono text-xs text-muted">{eyebrow}</p>}
             {heading && (
               <Heading className="text-3xl font-bold text-text">{heading}</Heading>

@@ -1,10 +1,12 @@
 # QentrixAI — Design system
 
-> **Direction: Kiln** — selected at GATE 3 on 2026-09-19. Candidates and the reasoning behind them are in `docs/revamp/04-design.md`; mocks in `docs/revamp/screenshots/directions/`.
+> **Direction: Aurora** — set by the owner on 2026-09-20, replacing Kiln. The colour scheme is taken from the two reference sites at their explicit instruction, which overrides the violet/indigo ban in CLAUDE.md §1.8 and §6.1. Kiln and the two rejected directions remain documented in `docs/revamp/04-design.md`.
 
 ## The idea
 
-A committed mid-tone. Almost every site in this category is near-white or near-black; Kiln is warm graphite, the colour of anodised metal, and it spends all of its boldness in exactly one place — a full-bleed verdigris slab that carries the proof and the only call to action. Everything else stays quiet. It suits the part of QentrixAI's story the other directions underplayed: this is a studio that operates nine of its own products, and quiet confidence sells that better than instrumentation or paperwork.
+Light follows VamTam "AI FusionX": pure white, lavender gradient washes, a strong violet. Dark follows Quixlab "Optim AI": a blue-black base with violet and blue glows. Values were sampled from the live sites rather than eyeballed, then adjusted only where they failed contrast.
+
+One adjustment was necessary. Quixlab's `#9B31FF` measures **3.88:1** on its own dark base and **2.94:1** on its surface, so in dark it is a **fill only** — text uses `#B57DFF` (6.65:1 / 5.04:1). In light, VamTam's `#6904F2` measures 7.24:1 on white and works as both fill and text.
 
 ## Brand constraints
 
@@ -13,31 +15,30 @@ A committed mid-tone. Almost every site in this category is near-white or near-b
 
 ## Banned
 
-- The previous palette: aubergine `#0D0B14`, iris `#7C6AFA`, the `brand-50…900` violet ramp.
-- Indigo, violet or purple as a primary or inside any gradient.
+- Any colour outside the Aurora tokens. (The CLAUDE.md violet ban was lifted by the owner on 2026-09-20; violet is now the brand.)
+- **`brand` as text in the dark theme** — `#9B31FF` measures 3.88:1. Text uses `link`.
 - Tailwind default hues (`gray-500`, `blue-600`, …) anywhere in components.
 - Neon-cyber clichés: circuit boards, glowing brains, matrix rain.
 - Typefaces: Inter, Roboto, Arial, Space Grotesk.
 - Generated-design tells: tracked-out ALL-CAPS eyebrows, meta strings joined with middle dots, `→` appended to button labels, one word of a headline accented in another colour, three identical rounded cards with the same shadow as a default section layout, numbered `01/02/03` markers on content that is not a sequence.
 
-## Colour — Kiln
+## Colour — Aurora
 
-| Role | Dark (default) | Light |
+| Role | Dark (default, Quixlab) | Light (VamTam) |
 |---|---|---|
-| `bg` | `#262621` warm graphite | `#E3E1D8` stone |
-| `surface` | `#2F2F29` | `#F2F1EA` |
-| `surface-2` | `#3A3A32` | `#D5D3C8` |
-| `border` | `rgb(240 238 230 / .14)` | `rgb(35 35 31 / .16)` |
-| `text` | `#F0EEE6` chalk | `#23231F` |
-| `muted` | `#B0ADA0` | `#55554D` |
-| `brand` | `#0FA88C` verdigris | `#0B6B5C` |
-| `accent` | `#74DCC6` pale verdigris | `#0B6B5C` |
-| `on-brand` | `#0E1F1B` ink | `#F2F1EA` |
-| `danger` / `info` | `#E8755C` / `#8FB8D0` | `#A8402B` / `#2C5F7A` |
+| `bg` | `#0D1017` blue-black | `#FFFFFF` |
+| `surface` | `#252A32` | `#FAF9F7` warm band |
+| `surface-2` | `#191D2A` | `#F1EFFB` lavender tint |
+| `border` | `rgb(255 255 255 / .10)` | `rgb(0 0 0 / .12)` |
+| `text` | `#F8F9FA` | `#000000` |
+| `muted` | `#9AA3B2` (7.48:1) | `#52565E` (7.36:1) |
+| `brand` (fills) | `#9B31FF` | `#6904F2` |
+| `link` (text) | `#B57DFF` | `#6904F2` |
+| `accent` | `#144C99` | `#BCAFFC` |
+| `on-brand` | `#FFFFFF` (4.91:1) | `#FFFFFF` (7.24:1) |
+| orb stops | `#9B31FF`, `#144C99`, `#F52060` | `#BCAFFC`, `#DBD3FF`, `#F7F7FF` |
 
-**Why verdigris and not jade.** Oxidised copper, not fresh mint — it belongs to the same material world as the graphite base, and it sits furthest (RGB distance 61) from the Supabase green that every other studio site reaches for. Measured: `#0FA88C` is 5.07:1 on the graphite base, and ink on the slab is 5.72:1.
-
-**Measured contrast (all pass):** text on bg 13.08 dark / 12.04 light · muted on bg 6.75 / 5.74 · brand as text on bg 5.07 / 4.90 · label on the slab — **ink** 5.72 dark, white 6.42 light.
+**Verified:** zero axe violations across every route in both themes at 412px and 1440px, Lighthouse accessibility 100 on every page.
 
 Tokens are CSS variables in `src/app/globals.css`, mapped to semantic Tailwind colours in `tailwind.config.ts`. **No raw hex in components.**
 
@@ -53,7 +54,7 @@ Tokens are CSS variables in `src/app/globals.css`, mapped to semantic Tailwind c
 - **Button labels follow the base.** Where the theme's brand hue is light, the label is ink, not white. White-on-brand is only legal where it measures ≥ 4.5:1.
 - Semantic colours are real tokens with real jobs, not decoration.
 
-## Type — Kiln
+## Type
 
 **Schibsted Grotesk** for display and text — one family, two clearly separated roles by size and weight. **DM Mono** for small factual strings only: stat labels, timestamps, identifiers, locations.
 
@@ -63,18 +64,20 @@ Self-hosted through `next/font`, variable where available, `display: swap`, lati
 - Line length under 80 characters; serif body gets extra line-height.
 - Monospace is for numbers, identifiers and machine strings **only** — never for prose labels.
 
-## Motion — Kiln
+## Motion
 
-The slab is the only animated element: it fills on first paint. Everything else is static.
+Scroll reveals run on GSAP ScrollTrigger, imported dynamically and started on idle or first scroll — never in the initial bundle, and never touching the hero. Measured cost: total blocking time stays at 2–99ms against a 200ms budget.
 
-- **No infinite animations.** Not one. Speed Index on the current site is 42.3 s because 80 elements never stop moving.
+The ambient orb field is the one infinite animation. It animates `transform` only, so it lives on the compositor and costs no main-thread time. This is the exception, not a reopening of the door:
+
+- **No other infinite animations.** Not one. Speed Index on the current site is 42.3 s because 80 elements never stop moving.
 - One orchestrated page-load moment per page. Scroll reveals are subtle and respect `prefers-reduced-motion`.
 - Animate `transform` and `opacity`. Never `width`, `top` or `height` on a scroll ticker.
 - Hover communicates affordance. It does not perform.
 
-## Imagery — Kiln
+## Imagery
 
-Large, quiet product screenshots — we already own 21 — cropped tight and placed directly on the graphite with no frames and no shadows. Original system diagrams (agent graph, retrieval flow, deployment topology) in two weights and one colour. No stock photography.
+Iridescent 3D renders for atmosphere, photography for the industry tabs, and our own 21 product screenshots. Two sources with different licence status — **read `docs/revamp/06-images.md` before adding or shipping imagery.** Getty files, third-party company logos and stock portraits-as-social-proof are excluded and must stay excluded.
 
 ## Components
 

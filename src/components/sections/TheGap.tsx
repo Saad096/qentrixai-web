@@ -3,11 +3,23 @@
  * times across the homepage (hero x2, Problem, AboutPreview, CaseStudies,
  * WhyUs, ProductsShowcase).
  */
+import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 
 export function TheGap() {
   return (
-    <Section eyebrow="Why this is hard" heading="The demo is the easy part." className="rule">
+    <Section
+      eyebrow="Why this is hard"
+      heading="The demo is the easy part."
+      className="rule relative isolate overflow-hidden"
+    >
+      <Image
+        src="/images/abstract/violet-wave.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-10 object-cover opacity-30"
+      />
       <div className="mt-8 max-w-measure space-y-5 text-md text-muted">
         <p>
           A model that answers well in a notebook is not a system. Production means retrieval that

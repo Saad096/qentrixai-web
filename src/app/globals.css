@@ -1,24 +1,23 @@
 /*
  * ===========================================================================
- * QentrixAI design system — Kiln
+ * QentrixAI design system — Aurora (2026-09-20)
  * ===========================================================================
- * Selected at GATE 3 (2026-09-19). Full reasoning in docs/revamp/04-design.md,
- * the living rules in /DESIGN.md.
+ * Owner direction: take the colour scheme from the two reference sites.
+ * Light follows VamTam "AI FusionX", dark follows Quixlab "Optim AI".
+ * This supersedes Kiln and overrides the violet ban in CLAUDE.md 1.8/6.1 at
+ * the owner's explicit instruction.
  *
- * The idea: a committed mid-tone. Almost every site in this category is
- * near-white or near-black; Kiln is warm graphite — the colour of anodised
- * metal — and spends all of its boldness in one place, a full-bleed verdigris
- * slab carrying the proof and the only call to action.
+ * Values were sampled from the live sites rather than eyeballed:
+ *   VamTam   white #FFFFFF, warm band #FAF9F7, lavender stops #DBD3FF and
+ *            #BCAFFC, violet text #6904F2
+ *   Quixlab  blue-black #0D1017, surface #252A32, deepest #040406,
+ *            violet #9B31FF with a blue #144C99 in the same gradient
  *
- * Verdigris, not jade: oxidised copper belongs to the same material world as
- * the base, and sits furthest from the Supabase green every other studio site
- * reaches for. #0FA88C measures 5.07:1 on the graphite base; ink on the slab
- * is 5.72:1.
- *
- * Replaces the 2026-07 iris/aubergine system entirely. Gone with it: the
- * marquee mask, the glassmorphism helpers, the gradient-text utilities, the
- * drifting orbs, the custom cursor, and every infinite animation — the old
- * site's Speed Index was 42.3s because 80 elements never stopped moving.
+ * Contrast work on top of those samples:
+ *   #6904F2 measures 7.24:1 on white and 5.09:1 on the lavender tint, so it
+ *   serves as both fill and text in light.
+ *   #9B31FF measures only 3.88:1 on the dark base and 2.94:1 on its surface,
+ *   so in dark it is a FILL ONLY. Text uses #B57DFF (6.65 / 5.04).
  * ===========================================================================
  */
 
@@ -27,49 +26,55 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------ */
-/* Neutral ramp. One warm hue, eleven steps, shared by both themes.    */
+/* Ramp. Warm white through lavender into Quixlab's blue-blacks.       */
 /* ------------------------------------------------------------------ */
 :root {
-  --n-50: 245 244 238;   /* #F5F4EE */
-  --n-100: 240 238 230;  /* #F0EEE6  chalk */
-  --n-200: 227 225 216;  /* #E3E1D8  stone */
-  --n-300: 213 211 200;  /* #D5D3C8 */
-  --n-400: 176 173 160;  /* #B0ADA0 */
-  --n-500: 138 135 123;  /* #8A877B */
-  --n-600: 85 85 77;     /* #55554D */
-  --n-700: 58 58 50;     /* #3A3A32 */
-  --n-800: 47 47 41;     /* #2F2F29 */
-  --n-900: 38 38 33;     /* #262621  graphite */
-  --n-950: 35 35 31;     /* #23231F  ink */
+  --n-0: 255 255 255;    /* #FFFFFF */
+  --n-50: 250 249 247;   /* #FAF9F7 VamTam warm band */
+  --n-100: 241 239 251;  /* #F1EFFB lavender tint */
+  --n-200: 219 211 255;  /* #DBD3FF lavender, gradient stop */
+  --n-300: 188 175 252;  /* #BCAFFC lavender, deeper stop */
+  --n-400: 154 163 178;  /* #9AA3B2 */
+  --n-500: 106 112 124;  /* #6A707C */
+  --n-600: 82 86 94;     /* #52565E */
+  --n-700: 51 58 70;     /* #333A46 */
+  --n-800: 37 42 50;     /* #252A32 Quixlab surface */
+  --n-850: 25 29 42;     /* #191D2A */
+  --n-900: 13 16 23;     /* #0D1017 Quixlab base */
+  --n-950: 4 4 6;        /* #040406 Quixlab deepest */
+  --n-1000: 0 0 0;       /* #000000 */
 }
 
 /* ------------------------------------------------------------------ */
-/* Semantic tokens. RGB triplets so Tailwind alpha modifiers work.     */
-/* Dark is the default theme.                                          */
+/* Dark is the default theme (Quixlab reference).                       */
 /* ------------------------------------------------------------------ */
 :root {
   --color-bg: var(--n-900);
   --color-surface: var(--n-800);
-  --color-surface-2: var(--n-700);
-  --color-text: var(--n-100);
-  --color-muted: var(--n-400);
+  --color-surface-2: var(--n-850);
+  --color-text: 248 249 250;     /* #F8F9FA */
+  --color-muted: var(--n-400);   /* 7.48:1 on the base */
 
-  --color-brand: 15 168 140;     /* #0FA88C verdigris, fills and slabs */
-  /* Verdigris as *text* measures 4.49:1 on --color-surface, so links get a
-     brighter step that clears 4.5:1 on bg, surface and surface-2 alike. */
-  --color-link: 28 188 157;      /* #1CBC9D */
-  --color-accent: 116 220 198;   /* #74DCC6 pale verdigris */
-  --color-on-brand: 14 31 27;    /* #0E1F1B ink on the slab */
+  --color-brand: 155 49 255;     /* #9B31FF fill only in dark */
+  --color-link: 181 125 255;     /* #B57DFF text, 6.65:1 base / 5.04:1 surface */
+  --color-accent: 20 76 153;     /* #144C99 the blue in Quixlab's gradient */
+  --color-on-brand: 255 255 255; /* white on #9B31FF measures 4.91:1 */
 
-  --color-success: 15 168 140;
-  --color-warn: 224 167 92;      /* #E0A75C */
-  --color-danger: 232 117 92;    /* #E8755C */
-  --color-info: 143 184 208;     /* #8FB8D0 */
+  --color-success: 62 207 154;
+  --color-warn: 224 167 92;
+  --color-danger: 245 32 96;     /* #F52060, sampled from the radial glow */
+  --color-info: 20 76 153;
 
-  --color-border: rgb(240 238 230 / 0.14);
-  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.03) inset;
+  --color-border: rgb(255 255 255 / 0.10);
+  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset;
 
-  /* Type scale */
+  /* Ambient orb field */
+  --orb-1: 155 49 255;
+  --orb-2: 20 76 153;
+  --orb-3: 245 32 96;
+  --orb-alpha: 0.30;
+  --orb-blur: 90px;
+
   --text-xs: 12px;
   --text-sm: 13px;
   --text-base: 15px;
@@ -87,25 +92,34 @@
   --motion-base: 260ms;
 }
 
+/* ------------------------------------------------------------------ */
+/* Light theme (VamTam reference): pure white, lavender washes.         */
+/* ------------------------------------------------------------------ */
 .light {
-  --color-bg: var(--n-200);
+  --color-bg: var(--n-0);
   --color-surface: var(--n-50);
-  --color-surface-2: var(--n-300);
-  --color-text: var(--n-950);
-  --color-muted: var(--n-600);
+  --color-surface-2: var(--n-100);
+  --color-text: var(--n-1000);   /* VamTam sets pure black */
+  --color-muted: var(--n-600);   /* 7.36:1 on white */
 
-  --color-brand: 11 107 92;      /* #0B6B5C */
-  --color-link: 10 98 80;        /* #0A6250 */
-  --color-accent: 11 107 92;
-  --color-on-brand: 245 244 238; /* #F5F4EE */
+  --color-brand: 105 4 242;      /* #6904F2 — 7.24:1 on white */
+  --color-link: 105 4 242;
+  --color-accent: 188 175 252;   /* #BCAFFC lavender */
+  --color-on-brand: 255 255 255;
 
   --color-success: 11 107 92;
-  --color-warn: 138 90 5;        /* #8A5A05 */
-  --color-danger: 168 64 43;     /* #A8402B */
-  --color-info: 44 95 122;       /* #2C5F7A */
+  --color-warn: 138 90 5;
+  --color-danger: 168 64 43;
+  --color-info: 20 76 153;
 
-  --color-border: rgb(35 35 31 / 0.16);
-  --shadow-card: none;
+  --color-border: rgb(0 0 0 / 0.12);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -18px rgb(105 4 242 / 0.18);
+
+  --orb-1: 188 175 252;
+  --orb-2: 219 211 255;
+  --orb-3: 247 247 255;
+  --orb-alpha: 0.55;
+  --orb-blur: 80px;
 }
 
 html,
@@ -117,8 +131,79 @@ body {
 }
 
 /* ------------------------------------------------------------------ */
-/* Rhythm. One value, never varied — the references run 156px and read */
-/* as confidence; the old site ran 112px across 17 sections.           */
+/* Ambient orb field.                                                   */
+/*                                                                      */
+/* Animates transform and nothing else, so it lives entirely on the     */
+/* compositor and costs no main-thread time. This is the one infinite   */
+/* animation on the site; the marquees that cost the old build its      */
+/* main thread are not coming back.                                     */
+/* ------------------------------------------------------------------ */
+.orb-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(var(--orb-blur));
+  will-change: transform;
+  opacity: var(--orb-alpha);
+  animation: orb-drift 26s ease-in-out infinite;
+}
+
+.orb-a {
+  width: 46vw;
+  height: 46vw;
+  max-width: 620px;
+  max-height: 620px;
+  top: -14%;
+  left: -8%;
+  background: radial-gradient(circle, rgb(var(--orb-1)) 0%, rgb(var(--orb-1) / 0) 70%);
+}
+
+.orb-b {
+  width: 40vw;
+  height: 40vw;
+  max-width: 560px;
+  max-height: 560px;
+  top: 6%;
+  right: -10%;
+  background: radial-gradient(circle, rgb(var(--orb-2)) 0%, rgb(var(--orb-2) / 0) 70%);
+  animation-duration: 32s;
+  animation-direction: reverse;
+}
+
+.orb-c {
+  width: 34vw;
+  height: 34vw;
+  max-width: 460px;
+  max-height: 460px;
+  bottom: -18%;
+  left: 28%;
+  background: radial-gradient(circle, rgb(var(--orb-3)) 0%, rgb(var(--orb-3) / 0) 70%);
+  animation-duration: 38s;
+  animation-delay: -8s;
+}
+
+@keyframes orb-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(5%, -4%, 0) scale(1.08); }
+  66% { transform: translate3d(-4%, 3%, 0) scale(0.95); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Section content always sits above the orb field. */
+.above-orbs {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Rhythm                                                               */
 /* ------------------------------------------------------------------ */
 .section {
   padding-top: 5.5rem;
@@ -126,49 +211,50 @@ body {
 }
 @media (min-width: 768px) {
   .section {
-    padding-top: 9.75rem; /* 156px */
-    padding-bottom: 9.75rem;
+    padding-top: 8.5rem;
+    padding-bottom: 8.5rem;
   }
 }
 
-/* Links inside a text block are underlined. Distinguishing them by colour
-   alone fails WCAG 1.4.1 unless the link/text contrast clears 3:1. */
+.rule {
+  border-top: 1px solid var(--color-border);
+}
+
 .prose-links a {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-/* A rule that marks a real boundary, not decoration. */
-.rule {
-  border-top: 1px solid var(--color-border);
+/* ------------------------------------------------------------------ */
+/* Motion. Scroll reveals are driven by GSAP ScrollTrigger, loaded      */
+/* lazily below the fold; these are the from-states it animates out of. */
+/* ------------------------------------------------------------------ */
+/* The hidden from-state is applied only once the reveal script has actually
+   loaded and set .js-reveal on <html>. If JS never runs, or fails, every
+   section renders visible -- content must never depend on an animation. */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  will-change: transform, opacity;
 }
 
-/* ------------------------------------------------------------------ */
-/* Motion. One orchestrated page-load moment. Nothing loops.           */
-/* ------------------------------------------------------------------ */
+.js-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
 @keyframes rise {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 10px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
 }
 
 .rise {
   animation: rise var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* The slab is the only element that performs: it fills on first paint. */
 @keyframes slab-fill {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
 
 .slab-fill {
@@ -176,22 +262,17 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid rgb(var(--color-brand));
+  outline: 2px solid rgb(var(--color-link));
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
+::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb {
   background: rgb(var(--color-text) / 0.14);
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--color-text) / 0.24);
-}
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--color-text) / 0.24); }
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -201,5 +282,12 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .orb { animation: none; }
+
+  .js-reveal [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

@@ -4,6 +4,7 @@
  */
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
+import { OrbField } from "@/components/ui/OrbField";
 import { Button } from "@/components/ui/Button";
 import { faqs } from "@/data/faqs";
 import { PRIMARY_CTA } from "@/data/navigation";
@@ -38,8 +39,9 @@ export function FaqCta() {
         </ul>
       </Section>
 
-      <section className="pb-24 md:pb-32">
-        <Container>
+      <section className="relative isolate overflow-hidden pb-24 md:pb-32">
+        <OrbField />
+        <Container className="above-orbs">
           <div className="rounded-lg bg-brand p-9 text-on-brand md:p-14">
             <h2 className="max-w-[20ch] text-2xl font-bold">
               Bring a goal. Leave with an architecture and a timeline.

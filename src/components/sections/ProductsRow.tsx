@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/ui/Section";
-import { Reveal } from "@/components/ui/Reveal";
 import { products } from "@/data/products";
 
 const FEATURED = ["minutely", "neuromesh", "voxroute"];
@@ -25,7 +24,7 @@ export function ProductsRow() {
           const shot = p.coverMode === "dark" ? "" : p.cover || p.gallery[0] || "";
           return (
             <li key={p.slug}>
-              <Reveal delay={i * 70}>
+              <div data-reveal data-reveal-delay={i * 70}>
                 <Link href={`/products/${p.slug}`} className="group block">
                   {shot ? (
                     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md">
@@ -47,7 +46,7 @@ export function ProductsRow() {
                   </h3>
                   <p className="mt-2 text-base text-muted">{p.tagline}</p>
                 </Link>
-              </Reveal>
+              </div>
             </li>
           );
         })}

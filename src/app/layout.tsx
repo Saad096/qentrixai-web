@@ -12,6 +12,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { buildMetadata, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { publicEnv } from "@/lib/env";
 
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <ScrollReveal />
       </body>
     </html>
   );

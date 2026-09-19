@@ -1,14 +1,58 @@
 # 06 — Image manifest
 
-**Date:** 2026-09-19 · **Direction:** Kiln · **Status:** awaiting GATE 4
+**Date:** 2026-09-20 · **Direction:** Aurora (violet, from the reference sites)
 
-Kiln's imagery rule is short: **large, quiet product screenshots and original system diagrams, placed directly on the graphite with no frames and no shadows. No stock photography.** VamTam uses none and reads more premium than Quixlab, which uses a lot. Stock is also the fastest way to look like the template we are trying not to be.
+> ## Provenance and licence status — read this first
+>
+> Imagery now comes from two sources, and they carry different risk.
+>
+> **A. Unsplash (clean).** Sourced by me under the Unsplash License, which permits commercial use. Author recorded for every file.
+>
+> **B. Quixlab "Optim AI" template assets (licence unresolved).** Supplied by the owner from the reference site and used at their explicit instruction on 2026-09-20. These are assets licensed to the template author, not to QentrixAI. The owner was told this before they were used. **Action for the owner:** either buy the Quixlab/Envato licence and confirm it covers use outside the template, or swap these for the Unsplash equivalents already sitting in the repo. Every affected file is listed below so the swap is a five-minute job.
+>
+> **C. Excluded, and not negotiable.** Three groups from the supplied folder are not on the site and should not go on it:
+> - `GettyImages-1500728139*.png`, `GettyImages-2237131438*.png` (5 files) — Getty Images, a named rights-holder.
+> - `brand_1–6.svg` (invented client logos, one of them VamTam's own mark) and the real-company marks (`notion.svg`, `spotify-*`, `dropbox-*`, `hotjar-*`, `asana-*`, `AMMAZON.svg`, `stripe.svg`, `master-card.svg`, `open-ai.svg`, `perplexity-ai.svg`, and the rest) — these would tell visitors those companies are QentrixAI clients.
+> - `opai-avatar-img-*` (9 portraits) — real people's faces used as "trusted by 20k customers" social proof.
+>
+> The site's whole repositioning rests on not fabricating proof; the placeholder testimonials were deleted for exactly this reason (audit A-01).
+>
+> Also skipped as useless rather than risky: `theme-*.jpg` (40 screenshots of unrelated VamTam themes), `1.jpg`–`10.jpg` (screenshots of other websites), `power-elite-author.svg` (an Envato seller badge), and `image_75/99/100.jpg` (HTML error pages saved with a .jpg extension). Several files named `.svg` are actually PNGs and were renamed on import.
 
----
+## 1. What is on the site now
 
-## 1. What we already own
+### 1.1 Unsplash — licence clean
 
-`/public` is **9.9 MB** today. Everything below stays; the weights are the problem, not the assets.
+| File | Used for | Photographer | Unsplash ID |
+|---|---|---|---|
+| `abstract/aurora-ripple.jpg` | Hero visual | Steve A Johnson | `F8bQff_C_Mg` |
+| `abstract/glass-curve.jpg` | held for section backgrounds | Dzo | `nzkGVjsIkG8` |
+| `abstract/chrome-ribbons.jpg` | held for dark sections | Rohit Choudhari | `sC2Twgvu3lg` |
+| `industries/enterprise-it.jpg` | Enterprise IT tab | Taylor Vick | `M5tzZtFCOfs` |
+| `industries/healthcare.jpg` | Healthcare tab | Irshad Pathan | `3EIraOmufG4` |
+
+Rejected during sourcing: `klWUhr-wPJ8`, which has "imgix" branding visible on the server racks.
+
+### 1.2 Quixlab template assets — licence unresolved
+
+| File | Used for | Origin |
+|---|---|---|
+| `industries/customer-operations.jpg` | Customer operations tab | `opai-img-287.jpg` |
+| `industries/regulated-industries.jpg` | Regulated industries tab | `opai-img-291.jpg` |
+| `industries/professional-services.jpg` | Professional services tab | `opai-img-292.jpg` |
+| `industries/logistics.jpg` | Logistics tab | `opai-img-285.jpg` |
+| `abstract/violet-wave.jpg` | "The demo is the easy part" backdrop | `opai-36.jpg` |
+| `abstract/system-cluster.png` | "What we build" visual | `opai-img-280.svg` (actually a PNG) |
+| `abstract/metrics-bars.png` | held | `vector-18.svg` (actually a PNG) |
+| `abstract/spectrum-hand.png` | held | `opai-img-61.png` |
+
+Unsplash equivalents already downloaded for the four industry photos, should you want the swap: Petr Machacek (`BeVGrXEktIk`), Cytonn Photography (`GJao3ZTX9gU`), Rodeo PM (`ONe-snuCaqQ`), Ruchindra Gunasekara (`GK8x_XCcDZg`).
+
+### 1.3 The owner's source folder
+
+`/images/` at the repo root holds all 138 supplied files. It is **git-ignored** — it is working material, not site content.
+
+## 2. Assets we already owned
 
 ### 1.1 Product screenshots — 21 files, the strongest asset on the site
 

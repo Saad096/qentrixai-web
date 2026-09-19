@@ -5,7 +5,6 @@
  */
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
-import { Reveal } from "@/components/ui/Reveal";
 import { caseStudies } from "@/data/caseStudies";
 
 const HOME_SLUGS = [
@@ -30,7 +29,7 @@ export function SelectedWork() {
       <ul className="mt-12 grid gap-px overflow-hidden rounded-md bg-[color:var(--color-border)] md:grid-cols-3">
         {shown.map((study, i) => (
           <li key={study.slug} className="bg-bg">
-            <Reveal delay={i * 70}>
+            <div data-reveal data-reveal-delay={i * 70}>
               <Link
                 href={`/case-studies/${study.slug}`}
                 className="flex h-full flex-col gap-4 p-7 transition-colors hover:bg-surface"
@@ -49,7 +48,7 @@ export function SelectedWork() {
                   <p className="mt-auto pt-3 text-base text-muted">{study.outcome}</p>
                 )}
               </Link>
-            </Reveal>
+            </div>
           </li>
         ))}
       </ul>

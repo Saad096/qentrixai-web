@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Kiln (2026-09 revamp). Every colour is a semantic token backed by a CSS
+ * Aurora (2026-09-20). Every colour is a semantic token backed by a CSS
  * variable in globals.css, so components never name a hue and both themes
  * come free. The previous iris `brand-50..900` ramp is gone.
  *
@@ -29,6 +29,7 @@ const config: Config = {
         danger: "rgb(var(--color-danger) / <alpha-value>)",
         info: "rgb(var(--color-info) / <alpha-value>)",
         n: {
+          0: "rgb(var(--n-0) / <alpha-value>)",
           50: "rgb(var(--n-50) / <alpha-value>)",
           100: "rgb(var(--n-100) / <alpha-value>)",
           200: "rgb(var(--n-200) / <alpha-value>)",
@@ -39,7 +40,9 @@ const config: Config = {
           700: "rgb(var(--n-700) / <alpha-value>)",
           800: "rgb(var(--n-800) / <alpha-value>)",
           900: "rgb(var(--n-900) / <alpha-value>)",
+          850: "rgb(var(--n-850) / <alpha-value>)",
           950: "rgb(var(--n-950) / <alpha-value>)",
+          1000: "rgb(var(--n-1000) / <alpha-value>)",
         },
       },
       borderColor: {

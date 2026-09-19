@@ -9,6 +9,7 @@
  */
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
@@ -76,11 +77,12 @@ export function Industries() {
           role="tabpanel"
           id={`panel-${active}`}
           aria-labelledby={`tab-${active}`}
-          className="pt-9"
+          className="grid gap-9 pt-9 lg:grid-cols-12 lg:gap-12"
         >
-          <p className="max-w-measure text-lg text-text">{current.line}</p>
+          <div className="lg:col-span-5">
+            <p className="text-lg text-text">{current.line}</p>
 
-          {linked.length > 0 ? (
+            {linked.length > 0 ? (
             <ul className="mt-7 flex flex-wrap gap-x-8 gap-y-2">
               {linked.map((c) => (
                 <li key={c.slug}>
@@ -93,9 +95,25 @@ export function Industries() {
                 </li>
               ))}
             </ul>
-          ) : (
-            <p className="mt-6 font-mono text-xs text-muted">No published engagement in this sector yet.</p>
-          )}
+            ) : (
+              <p className="mt-6 font-mono text-xs text-muted">
+                No published engagement in this sector yet.
+              </p>
+            )}
+          </div>
+
+          <div className="lg:col-span-7">
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md">
+              <Image
+                key={current.image}
+                src={current.image}
+                alt={current.imageAlt}
+                fill
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </Section>
