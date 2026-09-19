@@ -1,0 +1,17 @@
+export const ROUTES = [
+  "/",
+  "/services",
+  "/services/agentic-ai",
+  "/case-studies",
+  "/case-studies/multi-agent-ai-platform",
+  "/products",
+  "/products/minutely",
+  "/about",
+  "/blogs",
+  "/blogs/mcp-how-agents-reach-your-systems",
+  "/contact",
+  "/book",
+  "/careers",
+  "/privacy",
+  "/terms",
+];

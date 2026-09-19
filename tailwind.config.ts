@@ -1,78 +1,77 @@
 import type { Config } from "tailwindcss";
 
 /**
- * 2026-07 revamp: colors are now semantic tokens backed by CSS variables in
- * globals.css, so every component renders correctly in both the warm-linen
- * light theme and the violet-black dark theme. `brand` is a static iris
- * violet-indigo ramp used for gradient stops and glows only.
+ * Kiln (2026-09 revamp). Every colour is a semantic token backed by a CSS
+ * variable in globals.css, so components never name a hue and both themes
+ * come free. The previous iris `brand-50..900` ramp is gone.
+ *
+ * Theme switching is `.light` on <html>; dark is the default at :root.
  */
 const config: Config = {
-  content: [
-    "./src/**/*.{ts,tsx,mdx}",
-  ],
-  darkMode: "class",
+  content: ["./src/**/*.{ts,tsx,mdx}"],
+  darkMode: ["selector", ":root:not(.light)"],
   theme: {
     extend: {
       colors: {
-        base: "rgb(var(--color-base-rgb) / <alpha-value>)",
+        bg: "rgb(var(--color-bg) / <alpha-value>)",
         surface: {
-          DEFAULT: "rgb(var(--color-surface-rgb) / <alpha-value>)",
-          2: "rgb(var(--color-surface-2-rgb) / <alpha-value>)",
+          DEFAULT: "rgb(var(--color-surface) / <alpha-value>)",
+          2: "rgb(var(--color-surface-2) / <alpha-value>)",
         },
-        ink: "rgb(var(--color-ink-rgb) / <alpha-value>)",
-        muted: "rgb(var(--color-muted-rgb) / <alpha-value>)",
-        brand: {
-          50: "#F2F1FE",
-          100: "#E6E4FD",
-          200: "#CFCBFA",
-          300: "#B0A9F6",
-          400: "#9187F0",
-          500: "#6E60EA",
-          600: "#5B50E5",
-          700: "#4A3FD0",
-          800: "#3D35A8",
-          900: "#332D85",
+        text: "rgb(var(--color-text) / <alpha-value>)",
+        muted: "rgb(var(--color-muted) / <alpha-value>)",
+        brand: "rgb(var(--color-brand) / <alpha-value>)",
+        link: "rgb(var(--color-link) / <alpha-value>)",
+        accent: "rgb(var(--color-accent) / <alpha-value>)",
+        "on-brand": "rgb(var(--color-on-brand) / <alpha-value>)",
+        success: "rgb(var(--color-success) / <alpha-value>)",
+        warn: "rgb(var(--color-warn) / <alpha-value>)",
+        danger: "rgb(var(--color-danger) / <alpha-value>)",
+        info: "rgb(var(--color-info) / <alpha-value>)",
+        n: {
+          50: "rgb(var(--n-50) / <alpha-value>)",
+          100: "rgb(var(--n-100) / <alpha-value>)",
+          200: "rgb(var(--n-200) / <alpha-value>)",
+          300: "rgb(var(--n-300) / <alpha-value>)",
+          400: "rgb(var(--n-400) / <alpha-value>)",
+          500: "rgb(var(--n-500) / <alpha-value>)",
+          600: "rgb(var(--n-600) / <alpha-value>)",
+          700: "rgb(var(--n-700) / <alpha-value>)",
+          800: "rgb(var(--n-800) / <alpha-value>)",
+          900: "rgb(var(--n-900) / <alpha-value>)",
+          950: "rgb(var(--n-950) / <alpha-value>)",
         },
-        accent: {
-          DEFAULT: "rgb(var(--color-accent-rgb) / <alpha-value>)",
-          muted: "rgb(var(--color-accent-muted-rgb) / <alpha-value>)",
-          sky: "rgb(var(--color-sky-rgb) / <alpha-value>)",
-          violet: "#7A70F0",
-          cyan: "#60AAF0",
-          mint: "#3ECF8E",
-        },
+      },
+      borderColor: {
+        DEFAULT: "var(--color-border)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-grotesk)", "system-ui", "sans-serif"],
+        sans: ["var(--font-schibsted)", "system-ui", "sans-serif"],
+        display: ["var(--font-schibsted)", "system-ui", "sans-serif"],
+        mono: ["var(--font-dm-mono)", "ui-monospace", "monospace"],
+      },
+      fontSize: {
+        xs: ["var(--text-xs)", { lineHeight: "1.45" }],
+        sm: ["var(--text-sm)", { lineHeight: "1.5" }],
+        base: ["var(--text-base)", { lineHeight: "1.6" }],
+        md: ["var(--text-md)", { lineHeight: "1.6" }],
+        lg: ["var(--text-lg)", { lineHeight: "1.5" }],
+        xl: ["var(--text-xl)", { lineHeight: "1.3", letterSpacing: "-0.02em" }],
+        "2xl": ["var(--text-2xl)", { lineHeight: "1.15", letterSpacing: "-0.03em" }],
+        "3xl": ["var(--text-3xl)", { lineHeight: "1.05", letterSpacing: "-0.035em" }],
+        hero: ["var(--text-hero)", { lineHeight: "0.98", letterSpacing: "-0.04em" }],
+      },
+      borderRadius: {
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
       },
       boxShadow: {
-        glow: "var(--glow-accent)",
         card: "var(--shadow-card)",
-        header: "var(--shadow-header)",
       },
-      keyframes: {
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        marquee: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-        "pulse-glow": {
-          "0%,100%": { opacity: "0.6" },
-          "50%": { opacity: "1" },
-        },
-        shimmer: {
-          "100%": { transform: "translateX(100%)" },
-        },
-      },
-      animation: {
-        "fade-up": "fade-up 600ms ease-out both",
-        marquee: "marquee 35s linear infinite",
-        "pulse-glow": "pulse-glow 3.5s ease-in-out infinite",
-        shimmer: "shimmer 2s linear infinite",
+      maxWidth: {
+        container: "1260px",
+        measure: "62ch",
       },
     },
   },

@@ -1,105 +1,140 @@
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { Stats } from "@/components/sections/Stats";
-import { Process } from "@/components/sections/Process";
-import { CTABanner } from "@/components/sections/CTABanner";
-import { Testimonials } from "@/components/sections/Testimonials";
+import { Section } from "@/components/ui/Section";
+import { HowWeWork } from "@/components/sections/HowWeWork";
+import { StackTabs } from "@/components/sections/StackTabs";
+import { FaqCta } from "@/components/sections/FaqCta";
 import { company } from "@/data/company";
-import { buildMetadata } from "@/lib/seo";
+import { publicEnv } from "@/lib/env";
+import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "About",
+  title: "How we work",
   path: "/about",
   description:
-    "QentrixAI is an AI product and services company building practical, scalable AI systems. One team covering AI research, engineering, cloud infrastructure, business analysis, and product strategy.",
+    "Four phases, each ending with an artifact you own: a problem framing, an architecture decision record, an eval harness in your CI, and a runbook.",
 });
+
+const beliefs = [
+  {
+    title: "The metric comes before the model.",
+    body: "If we cannot say what number should move, we are not ready to build. That conversation happens in week one, not at the review.",
+  },
+  {
+    title: "A system you cannot observe is a system you do not own.",
+    body: "Tracing and evals are part of the build, not a follow-on project. They are the difference between fixing a regression and guessing at one.",
+  },
+  {
+    title: "Handover is the deliverable.",
+    body: "The engagement ends with your team able to change the thing without us. Anything else is a dependency we sold you.",
+  },
+];
 
 export default function AboutPage() {
   return (
     <>
-      <section className="pt-32 pb-16">
-        <Container>
-          <div className="grid items-start gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <SectionHeading
-                eyebrow="About QentrixAI"
-                title="An AI product studio and delivery partner, built for production."
-                description={company.mission}
-              />
-              <div className="mt-8 space-y-4 text-[15.5px] leading-relaxed text-ink/70">
-                <p>
-                  We're a focused team of senior AI engineers, platform engineers, cloud
-                  specialists and a business analyst covering the full path from problem
-                  framing to a deployed system.
-                </p>
-                <p>
-                  Our work blends AI consulting, generative AI systems, agentic workflows, RAG
-                  and enterprise search, voice AI and conversational systems, SaaS product
-                  development, cloud and DevOps, custom automation, and full MVP-to-production
-                  delivery. The same team handles strategy, design, engineering and operations.
-                </p>
-                <p>
-                  We chose this shape because the gap that kills most AI projects sits between
-                  vendors, between the strategy deck, the model, the cloud, and the product.
-                  Owning the path end-to-end removes that gap.
-                </p>
-              </div>
-              <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-2">
-                {company.pillars.map((p) => (
-                  <div
-                    key={p}
-                    className="rounded-xl border border-ink/[0.06] bg-ink/[0.02] px-4 py-3 text-[14px] text-ink/80"
-                  >
-                    {p}
-                  </div>
-                ))}
-              </div>
-            </div>
+      <script id="ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "How we work", path: "/about" },
+            ])
+          ),
+        }}
+      />
 
-            <Reveal className="lg:col-span-5" delay={0.1}>
-              <div className="relative">
-                <div className="absolute -inset-4 -z-10 rounded-[28px] bg-gradient-to-br from-brand-500/20 via-accent-violet/15 to-accent-cyan/15 blur-2xl" />
-                <div className="overflow-hidden rounded-2xl border border-ink/[0.08] bg-surface">
-                  <Image
-                    src="/products/neuromesh-1.png"
-                    alt="QentrixAI engineering: NeuroMesh agent graph"
-                    width={1200}
-                    height={900}
-                    className="w-full object-cover"
-                  />
-                </div>
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <div className="overflow-hidden rounded-2xl border border-ink/[0.08] bg-surface">
-                    <Image
-                      src="/products/minutely-3.png"
-                      alt="Minutely meeting platform"
-                      width={800}
-                      height={600}
-                      className="w-full object-cover"
-                    />
-                  </div>
-                  <div className="overflow-hidden rounded-2xl border border-ink/[0.08] bg-surface">
-                    <Image
-                      src="/products/salespire-3.png"
-                      alt="SalesPire pipeline intelligence"
-                      width={800}
-                      height={600}
-                      className="w-full object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+      <section className="py-16 md:py-24">
+        <Container>
+          <h1 className="max-w-[16ch] text-hero font-bold text-text">How we work</h1>
+          <p className="mt-7 max-w-measure text-md text-muted">{company.mission}</p>
         </Container>
       </section>
 
-      <Stats />
-      <Process />
-      <Testimonials />
-      <CTABanner />
+      <HowWeWork />
+
+      <Section heading="What we believe" className="rule">
+        <ul className="mt-10 grid gap-10 md:grid-cols-3">
+          {beliefs.map((b) => (
+            <li key={b.title}>
+              <h3 className="text-lg font-semibold text-text">{b.title}</h3>
+              <p className="mt-3 text-base text-muted">{b.body}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section heading="Who you will work with" className="rule">
+        <div className="mt-10 grid gap-9 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <Image
+              src="/team/saad-alam.jpeg"
+              alt="Saad Alam"
+              width={853}
+              height={1280}
+              sizes="(min-width: 768px) 33vw, 100vw"
+              className="aspect-square w-full max-w-[360px] rounded-md object-cover object-top"
+            />
+          </div>
+          <div className="md:col-span-8">
+            <h3 className="text-lg font-semibold text-text">{publicEnv.profile.name}</h3>
+            <p className="mt-1 font-mono text-xs text-muted">CEO and AI lead</p>
+            <p className="mt-5 max-w-measure text-md text-muted">
+              Five years across enterprise AI delivery: generative and agentic systems, retrieval,
+              voice automation, document intelligence and the MLOps that keeps them running. Saad
+              scopes the work and stays on it through handover.
+            </p>
+            <p className="mt-5 max-w-measure text-md text-muted">
+              Behind him is a senior team across platform engineering, cloud and product. There is
+              no junior bench: the people who scope an engagement are the people who build it.
+            </p>
+            <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-1">
+              {[
+                { label: "LinkedIn", href: publicEnv.team.saadLinkedIn || publicEnv.socials.linkedin },
+                { label: "GitHub", href: publicEnv.socials.github },
+                { label: "Upwork", href: publicEnv.socials.upwork },
+              ]
+                .filter((l) => l.href)
+                .map((l) => (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-[44px] min-w-[44px] items-center font-mono text-xs text-link underline underline-offset-4 hover:brightness-110"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <StackTabs />
+
+      <Section heading="Where we are" className="rule">
+        <dl className="mt-8 grid max-w-measure gap-px">
+          {[
+            ["Based in", company.location],
+            ["Founded", company.founded],
+            ["Hours", company.hours],
+            ["Email", publicEnv.profile.email],
+          ].map(([k, v]) => (
+            <div
+              key={k}
+              className="flex flex-wrap justify-between gap-4 border-t border-[color:var(--color-border)] py-4"
+            >
+              <dt className="font-mono text-xs text-muted">{k}</dt>
+              <dd className="text-base text-text">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </Section>
+
+      <FaqCta />
     </>
   );
 }

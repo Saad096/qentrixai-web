@@ -1,8 +1,8 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageHeading } from "@/components/ui/PageHeading";
 import { Button } from "@/components/ui/Button";
-import { CTABanner } from "@/components/sections/CTABanner";
+import { FaqCta } from "@/components/sections/FaqCta";
 import { buildMetadata } from "@/lib/seo";
 import { publicEnv } from "@/lib/env";
 
@@ -62,31 +62,32 @@ const openRoles = [
 export default function CareersPage() {
   return (
     <>
-      <section className="pt-32 pb-12">
+      <section className="pt-16 md:pt-24 pb-12">
         <Container>
-          <SectionHeading
+          <PageHeading
             eyebrow="Careers"
             title="Work with senior people on AI systems that ship."
-            description="No army-of-juniors model, no busywork. Real engineering, real outcomes, real upside."
+            lede="No army-of-juniors model, no busywork. Real engineering, real outcomes, real upside."
           />
         </Container>
       </section>
 
       <section className="pb-12">
         <Container>
-          <div className="grid gap-4 md:grid-cols-2">
+          <h2 className="text-2xl font-semibold tracking-tight text-text">How we hire</h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
             {principles.map((p) => (
               <div
                 key={p.title}
-                className="rounded-2xl border border-ink/[0.06] bg-ink/[0.02] p-6"
+                className="rounded-2xl border border-[color:var(--color-border)] bg-surface p-6"
               >
-                <div className="inline-flex size-9 items-center justify-center rounded-lg border border-brand-400/30 bg-brand-500/10 text-accent">
+                <div className="inline-flex size-9 items-center justify-center rounded-lg border border-[color:var(--color-border)] bg-brand/10 text-link">
                   <Sparkles className="size-4" />
                 </div>
-                <h3 className="mt-4 font-display text-[17px] font-semibold text-ink">
+                <h3 className="mt-4  text-base font-semibold text-text">
                   {p.title}
                 </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-ink/65">{p.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
               </div>
             ))}
           </div>
@@ -95,32 +96,32 @@ export default function CareersPage() {
 
       <section className="pb-20">
         <Container>
-          <h2 className="font-display text-2xl font-semibold tracking-tight text-ink md:text-3xl">
+          <h2 className=" text-2xl font-semibold tracking-tight text-text md:text-3xl">
             Open roles
           </h2>
-          <div className="mt-6 divide-y divide-ink/[0.06] rounded-2xl border border-ink/[0.06] bg-ink/[0.02]">
+          <div className="mt-6 divide-y divide-ink/[0.06] rounded-2xl border border-[color:var(--color-border)] bg-surface">
             {openRoles.map((r) => (
               <div
                 key={r.title}
                 className="flex flex-col items-start gap-3 p-6 md:flex-row md:items-center md:justify-between"
               >
                 <div>
-                  <h3 className="font-display text-[17px] font-semibold text-ink">{r.title}</h3>
-                  <p className="mt-1 text-[13.5px] text-ink/55">{r.location}</p>
-                  <p className="mt-2 max-w-2xl text-[14px] text-ink/70">{r.summary}</p>
+                  <h3 className=" text-base font-semibold text-text">{r.title}</h3>
+                  <p className="mt-1 text-[13.5px] text-muted">{r.location}</p>
+                  <p className="mt-2 max-w-2xl text-sm text-muted">{r.summary}</p>
                 </div>
                 <Button
                   href={`mailto:${publicEnv.profile.email}?subject=Career: ${encodeURIComponent(r.title)}`}
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                 >
                   Apply <ArrowRight className="size-4" />
                 </Button>
               </div>
             ))}
-            <div className="p-6 text-[13.5px] text-ink/55">
+            <div className="p-6 text-[13.5px] text-muted">
               Don't see the right fit? Email{" "}
-              <a href={`mailto:${publicEnv.profile.email}`} className="text-accent hover:underline">
+              <a href={`mailto:${publicEnv.profile.email}`} className="text-link underline underline-offset-4">
                 {publicEnv.profile.email}
               </a>{" "}
               with what you do best and a few links.
@@ -129,7 +130,7 @@ export default function CareersPage() {
         </Container>
       </section>
 
-      <CTABanner />
+      <FaqCta />
     </>
   );
 }

@@ -1,7 +1,8 @@
 /**
- * 2026-07 revamp: service names rewritten verb-first, descriptions cut to
- * two sentences (what it does, why it matters), dash separators and filler
- * removed. Slugs, icons, and data shape unchanged so pages keep working.
+ * Kiln (2026-09 revamp). The `accent` field is gone with the iris palette.
+ * `short` is now the outcome line used on the homepage row, and six entries
+ * are marked featured. All 14 slugs get their own page under /services/[slug]
+ * -- the old site wrote 300 words per capability and rendered none of them.
  */
 import {
   Bot,
@@ -26,7 +27,8 @@ export type Service = {
   short: string;
   description: string;
   icon: LucideIcon;
-  accent: "blue" | "violet" | "cyan" | "mint";
+  /** Shown on the homepage "What we build" row. Six are featured. */
+  featured?: boolean;
   outcomes: string[];
   technologies: string[];
   bullets: string[];
@@ -35,12 +37,12 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "generative-ai",
+    featured: true,
     title: "Ship custom LLM products",
-    short: "Copilots, content engines, and reasoning workflows built on your data.",
+    short: "The whole product, not the model call: auth, billing, limits, admin and the eval suite.",
     description:
       "We design and ship LLM products anchored on your data, your tone, and your KPIs. No off-the-shelf chatbot wrappers.",
     icon: BrainCircuit,
-    accent: "blue",
     outcomes: [
       "Domain-tuned copilots that lift task throughput",
       "Multimodal pipelines across text, vision, and voice",
@@ -57,12 +59,12 @@ export const services: Service[] = [
   },
   {
     slug: "agentic-ai",
+    featured: true,
     title: "Put agents to work",
-    short: "Production agents that take real actions with humans in the loop.",
+    short: "Agents with typed tools, retries and approval checkpoints on anything irreversible.",
     description:
       "We build tool-using, plan-and-execute agents with traceable state, retries, and approval gates. They operate inside real business workflows, not slide decks.",
     icon: Network,
-    accent: "violet",
     outcomes: [
       "Autonomous workflows that move tickets, leads, and tasks",
       "Human-in-the-loop approvals on sensitive actions",
@@ -79,12 +81,12 @@ export const services: Service[] = [
   },
   {
     slug: "rag-enterprise-search",
+    featured: true,
     title: "Make your knowledge answer",
-    short: "Hybrid retrieval over your docs, contracts, tickets, and code.",
+    short: "Hybrid BM25 and vector retrieval with re-ranking, so answers carry citations you can check.",
     description:
       "We build retrieval systems that actually answer, with hybrid search, re-ranking, and citations. Retrieval quality is measured with evals, not guessed.",
     icon: Database,
-    accent: "cyan",
     outcomes: [
       "Trustworthy answers with inline citations",
       "Secure, role-aware enterprise data Q&A",
@@ -101,12 +103,12 @@ export const services: Service[] = [
   },
   {
     slug: "voice-ai",
+    featured: true,
     title: "Automate calls with voice AI",
-    short: "Real-time voice agents, call automation, and IVR replacement.",
+    short: "Streaming speech agents that hold a real conversation and hand off to a human when confidence drops.",
     description:
       "ASR, TTS, and LLMs stitched into a real-time conversational layer. Outbound agents, IVR replacement, and support deflection you can measure.",
     icon: Phone,
-    accent: "mint",
     outcomes: [
       "Sub-second turn-taking on real calls",
       "IVR replacement with higher containment",
@@ -128,7 +130,6 @@ export const services: Service[] = [
     description:
       "Production vision systems for identity, safety, quality, and content. We design for real lighting, real cameras, and real edge cases instead of pristine benchmarks.",
     icon: Eye,
-    accent: "blue",
     outcomes: [
       "Reliable detection across lighting and camera variance",
       "Auditable, privacy-respecting biometric pipelines",
@@ -145,12 +146,12 @@ export const services: Service[] = [
   },
   {
     slug: "nlp-document-ai",
+    featured: true,
     title: "Turn documents into data",
-    short: "Classification, extraction, summarisation, and translation at production accuracy.",
+    short: "Structured data out of contracts, forms and manuals, with the extraction measured.",
     description:
       "Classic and modern NLP for invoices, contracts, claims, tickets, and feedback streams. Everything wires into the systems your team already uses.",
     icon: Languages,
-    accent: "cyan",
     outcomes: [
       "Structured data from messy documents and conversations",
       "Multilingual coverage with grounded accuracy",
@@ -172,7 +173,6 @@ export const services: Service[] = [
     description:
       "A focused sprint from problem framing to a deployable MVP. UI, backend, AI integration, Docker, and CI/CD handed over with a roadmap for V1.",
     icon: Rocket,
-    accent: "blue",
     outcomes: [
       "A real, deployable product instead of a Figma deck",
       "Architecture ready for V1 scale",
@@ -194,7 +194,6 @@ export const services: Service[] = [
     description:
       "Our CTO leads a dedicated blockchain practice covering smart contracts, secure dApps, and tokenized systems. We also wire AI agents to wallets, oracles, and on-chain state.",
     icon: Boxes,
-    accent: "violet",
     outcomes: [
       "Audited smart contracts with test & invariant coverage",
       "Production-grade dApp front-ends and indexers",
@@ -216,7 +215,6 @@ export const services: Service[] = [
     description:
       "When latency, privacy, or connectivity rule out the cloud, we move models to the device. Quantized inference and hybrid routing tuned to your hardware.",
     icon: Cpu,
-    accent: "violet",
     outcomes: [
       "Real-time inference without cloud round-trips",
       "Data stays on-device for privacy & compliance",
@@ -233,12 +231,12 @@ export const services: Service[] = [
   },
   {
     slug: "cloud-devops-mlops",
+    featured: true,
     title: "Keep AI alive in production",
-    short: "The infrastructure layer that keeps AI products running.",
+    short: "Tracing, evals and dashboards wired before launch, so you can see what the system is doing.",
     description:
       "Containers, deployments, observability, security, scaling, and LLM-specific evals. The unglamorous layer that decides whether your AI product survives.",
     icon: Cloud,
-    accent: "cyan",
     outcomes: [
       "Predictable, observable AI deployments",
       "Cost controls on tokens, GPUs, and storage",
@@ -260,7 +258,6 @@ export const services: Service[] = [
     description:
       "Classic ML done right, with proper data pipelines, evaluation, and deployment. Every model ships monitored and re-trainable.",
     icon: BrainCircuit,
-    accent: "blue",
     outcomes: [
       "Models that ship, monitored and re-trained",
       "Cleaner data pipelines and feature stores",
@@ -282,7 +279,6 @@ export const services: Service[] = [
     description:
       "AI you can defend in a board meeting and in a regulator's inbox. Eval harnesses, red-team pipelines, PII controls, and governance docs ship with the system.",
     icon: ShieldCheck,
-    accent: "mint",
     outcomes: [
       "Defensible AI risk posture, in writing",
       "Continuous evals, not one-time benchmarks",
@@ -304,7 +300,6 @@ export const services: Service[] = [
     description:
       "We extend n8n, Make, Zapier, and your CRM with AI steps. Faster than a full build and durable enough to keep.",
     icon: Zap,
-    accent: "mint",
     outcomes: [
       "Ops automation in days, not months",
       "AI inserted into existing CRM & sales flows",
@@ -326,7 +321,6 @@ export const services: Service[] = [
     description:
       "For teams who need clarity before they spend. We audit your data, prioritise use cases, design the right architecture, and produce a defensible roadmap.",
     icon: Bot,
-    accent: "violet",
     outcomes: [
       "Prioritised AI use-case roadmap",
       "Architecture & build-vs-buy decisions",

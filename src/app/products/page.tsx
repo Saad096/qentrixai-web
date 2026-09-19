@@ -1,30 +1,80 @@
+import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ProductsShowcase } from "@/components/sections/ProductsShowcase";
-import { CTABanner } from "@/components/sections/CTABanner";
-import { buildMetadata } from "@/lib/seo";
+import { Section } from "@/components/ui/Section";
+import { FaqCta } from "@/components/sections/FaqCta";
+import { products } from "@/data/products";
+import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Products",
+  title: "Nine products we build and run ourselves",
   path: "/products",
   description:
-    "Internal AI products from QentrixAI: Minutely (meeting intelligence), NeuroMesh (agent framework), SalesPire (AI sales), VoxRoute (voice IVR), DocumentAI (RAG) and AlmaRed (multimodal chatbot).",
+    "Minutely, NeuroMesh, SalesPire, ALA, DocumentAI, VoxRoute and more — operated in-house on the same evals, tracing and on-call discipline we hand to clients.",
 });
 
 export default function ProductsPage() {
   return (
     <>
-      <section className="pt-32 pb-4">
+      <script id="ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Products", path: "/products" },
+            ])
+          ),
+        }}
+      />
+
+      <section className="py-16 md:py-24">
         <Container>
-          <SectionHeading
-            eyebrow="Products"
-            title="The QentrixAI product studio."
-            description="Internal frameworks, MVPs, and shipped client systems. Each card opens a full breakdown of problem, solution, stack, and roadmap."
-          />
+          <h1 className="max-w-[18ch] text-hero font-bold text-text">Products we build and run</h1>
+          <p className="mt-7 max-w-measure text-md text-muted">
+            Nine products, operated in-house on the same discipline we sell. Several started as
+            client work and earned their own roadmap.
+          </p>
         </Container>
       </section>
-      <ProductsShowcase />
-      <CTABanner />
+
+      <Section className="rule">
+        <ul className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">
+          {products.map((p) => {
+            const shot = p.coverMode === "dark" ? "" : p.cover || p.gallery[0] || "";
+            return (
+              <li key={p.slug}>
+                <Link href={`/products/${p.slug}`} className="group block">
+                  {shot ? (
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md">
+                      <Image
+                        src={shot}
+                        alt={`${p.name} interface`}
+                        fill
+                        sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                  ) : (
+                    <div className="grid aspect-[16/10] w-full place-items-center rounded-md bg-surface">
+                      <span className="text-xl font-bold text-muted">{p.name}</span>
+                    </div>
+                  )}
+                  <div className="mt-5 flex items-baseline gap-3">
+                    <h2 className="text-lg font-semibold text-text group-hover:text-link">
+                      {p.name}
+                    </h2>
+                    <span className="font-mono text-xs text-muted">{p.category}</span>
+                  </div>
+                  <p className="mt-2 text-base text-muted">{p.tagline}</p>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+
+      <FaqCta />
     </>
   );
 }

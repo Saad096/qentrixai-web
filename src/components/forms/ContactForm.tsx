@@ -13,23 +13,23 @@ import { publicEnv } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
 const problems = [
-  "Ship an LLM product or copilot",
-  "Automate a workflow with agents",
-  "Search and answer over our documents",
-  "Automate calls with voice AI",
-  "Computer vision or document AI",
-  "Launch an AI MVP",
-  "Cloud, MLOps or AI infrastructure",
-  "Something else",
+ "Ship an LLM product or copilot",
+ "Automate a workflow with agents",
+ "Search and answer over our documents",
+ "Automate calls with voice AI",
+ "Computer vision or document AI",
+ "Launch an AI MVP",
+ "Cloud, MLOps or AI infrastructure",
+ "Something else",
 ];
 
 const budgets = [
-  "< $5k (exploration)",
-  "$5k – $15k",
-  "$15k – $40k",
-  "$40k – $100k",
-  "$100k+",
-  "Not sure yet",
+ "< $5k (exploration)",
+ "$5k – $15k",
+ "$15k – $40k",
+ "$40k – $100k",
+ "$100k+",
+ "Not sure yet",
 ];
 
 type State =
@@ -81,19 +81,27 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="grid gap-4">
-      <p className="text-[14px] leading-relaxed text-ink/65">
+      <p className="text-[14px] leading-relaxed text-muted">
         We read every message and respond within one business day.
       </p>
 
-      <input type="text" name="honeypot" autoComplete="off" tabIndex={-1} className="hidden" />
+      <input
+        type="text"
+        name="honeypot"
+        autoComplete="off"
+        tabIndex={-1}
+        aria-hidden="true"
+        aria-label="Leave this field empty"
+        className="hidden"
+      />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Name" name="name" type="text" required placeholder="Your full name" />
-        <Field label="Email" name="email" type="email" required placeholder="you@company.com" />
+        <Field label="Name" name="name" type="text" required autoComplete="name" placeholder="Your full name" />
+        <Field label="Email" name="email" type="email" required autoComplete="email" inputMode="email" placeholder="you@company.com" />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Company (optional)" name="company" type="text" placeholder="Company / project" />
-        <Field label="Phone / WhatsApp" name="phone" type="text" placeholder="+1 555 …" />
+        <Field label="Company (optional)" name="company" type="text" autoComplete="organization" placeholder="Company or project" />
+        <Field label="Phone or WhatsApp" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+1 555 000 0000" />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <Select label="What are you looking to solve?" name="service" options={problems} />
@@ -124,17 +132,17 @@ export function ContactForm() {
       </div>
 
       {state.status === "success" && (
-        <div className="rounded-xl border border-accent-mint/25 bg-accent-mint/10 px-4 py-3 text-[14px] text-emerald-700 dark:text-emerald-200">
+        <div className="rounded-xl border border-brand-mint/25 bg-brand-mint/10 px-4 py-3 text-[14px] text-emerald-700 ">
           {state.message}
         </div>
       )}
       {state.status === "error" && (
-        <div className="rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3 text-[14px] text-amber-700 dark:text-amber-200">
+        <div className="rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3 text-[14px] text-amber-700 ">
           <p>{state.message}</p>
           <div className="mt-2 flex flex-wrap gap-3">
             <a
               href={`mailto:${publicEnv.profile.email}`}
-              className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-ink/[0.05] px-3 py-1.5 text-[13px] text-ink"
+              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-[13px] text-text"
             >
               <Mail className="size-3.5" /> Email
             </a>
@@ -143,7 +151,7 @@ export function ContactForm() {
                 href={publicEnv.socials.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-ink/[0.05] px-3 py-1.5 text-[13px] text-ink"
+                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-[13px] text-text"
               >
                 <MessageCircle className="size-3.5" /> WhatsApp
               </a>
@@ -156,31 +164,36 @@ export function ContactForm() {
 }
 
 const inputClass =
-  "w-full rounded-xl border border-ink/10 bg-surface/60 px-4 py-3 text-[14.5px] text-ink placeholder-ink/35 outline-none transition duration-200 focus:border-accent/60 focus:shadow-[0_0_0_3px_rgb(var(--color-accent-rgb)/0.2)]";
+ "w-full rounded-xl border border-[color:var(--color-border)] bg-surface/60 px-4 py-3 text-[14.5px] text-text placeholder-ink/35 outline-none transition duration-200 focus:border-brand focus:shadow-[0_0_0_3px_rgb(var(--color-accent-rgb)/0.2)]";
 
 function Field({
   label,
   name,
   type,
   required,
+  autoComplete,
+  inputMode,
   placeholder,
 }: {
   label: string;
   name: string;
-  type: "text" | "email" | "textarea";
+  type: "text" | "email" | "tel" | "textarea";
   required?: boolean;
+  autoComplete?: string;
+  inputMode?: "text" | "email" | "tel" | "numeric" | "url";
   placeholder?: string;
 }) {
   return (
     <label className="block">
-      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-ink/60">
+      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
         {label}
-        {required && <span className="text-accent"> *</span>}
+        {required && <span className="text-link"> *</span>}
       </span>
       {type === "textarea" ? (
         <textarea
           name={name}
           required={required}
+          autoComplete={autoComplete}
           rows={5}
           placeholder={placeholder}
           className={cn(inputClass, "mt-2 resize-none")}
@@ -190,6 +203,8 @@ function Field({
           name={name}
           type={type}
           required={required}
+          autoComplete={autoComplete}
+          inputMode={inputMode}
           placeholder={placeholder}
           className={cn(inputClass, "mt-2")}
         />
@@ -201,7 +216,7 @@ function Field({
 function Select({ label, name, options }: { label: string; name: string; options: string[] }) {
   return (
     <label className="block">
-      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-ink/60">
+      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
         {label}
       </span>
       <select
@@ -209,11 +224,11 @@ function Select({ label, name, options }: { label: string; name: string; options
         defaultValue=""
         className={cn(inputClass, "mt-2 appearance-none")}
       >
-        <option value="" disabled className="bg-surface text-ink">
+        <option value="" disabled className="bg-surface text-text">
           Choose…
         </option>
         {options.map((o) => (
-          <option key={o} value={o} className="bg-surface text-ink">
+          <option key={o} value={o} className="bg-surface text-text">
             {o}
           </option>
         ))}

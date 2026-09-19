@@ -1,33 +1,27 @@
-import { Check } from "lucide-react";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { company } from "@/data/company";
+import Link from "next/link";
+import { Section } from "@/components/ui/Section";
+import { pillars } from "@/data/company";
 
 export function WhyUs() {
   return (
-    <section className="section">
-      <Container>
-        <SectionHeading
-          eyebrow="Why QentrixAI"
-          title="Senior people. Production discipline. Skin in the game."
-        />
-        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {company.whyUs.map((w, i) => (
-            <Reveal key={w.title} delay={i * 0.04}>
-              <div className="h-full rounded-2xl border border-ink/[0.06] bg-ink/[0.02] p-6 card-glow">
-                <div className="inline-flex size-9 items-center justify-center rounded-lg border border-brand-400/30 bg-brand-500/10 text-accent">
-                  <Check className="size-4" />
-                </div>
-                <h3 className="mt-4 font-display text-[17px] font-semibold text-ink">
-                  {w.title}
-                </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-ink/65">{w.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Container>
-    </section>
+    <Section eyebrow="Why QentrixAI" heading="Three reasons, and the receipts for each." className="rule">
+      <ul className="mt-12 grid gap-10 md:grid-cols-3">
+        {pillars.map((p) => (
+          <li key={p.title}>
+            <h3 className="text-lg font-semibold text-text">{p.title}</h3>
+            <p className="mt-3 text-base text-muted">{p.body}</p>
+            <p className="mt-4 font-mono text-xs text-muted">
+              {p.proofHref ? (
+                <Link href={p.proofHref} className="inline-flex min-h-[44px] items-center text-link hover:brightness-110">
+                  {p.proof}
+                </Link>
+              ) : (
+                p.proof
+              )}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

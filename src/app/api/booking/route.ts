@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendBookingEmail } from "@/lib/mail";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 
 const cors = process.env.CORS_ALLOW_ORIGINS ?? "*";
 
@@ -16,6 +17,14 @@ export async function OPTIONS() {
 }
 
 export async function POST(req: Request) {
+  const limited = rateLimit(`booking:${clientIp(req)}`, { limit: 5 });
+  if (!limited.ok) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests. Try again shortly." },
+      { status: 429, headers: { "Retry-After": String(limited.retryAfterSeconds) } }
+    );
+  }
+
   let payload: Record<string, unknown> = {};
   try {
     payload = await req.json();

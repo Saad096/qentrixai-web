@@ -15,12 +15,12 @@ import { cn } from "@/lib/utils";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MONTH_NAMES = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+ "January", "February", "March", "April", "May", "June",
+ "July", "August", "September", "October", "November", "December",
 ];
 const TIME_SLOTS = [
-  "09:00", "10:00", "11:00", "12:00", "13:00",
-  "14:00", "15:00", "16:00", "17:00", "18:00",
+ "09:00", "10:00", "11:00", "12:00", "13:00",
+ "14:00", "15:00", "16:00", "17:00", "18:00",
 ];
 
 function isSameDay(a: Date, b: Date) {
@@ -138,7 +138,7 @@ export function BookingCalendar() {
     <div className="grid gap-6 lg:grid-cols-12">
       <div className="lg:col-span-6">
         <div className="flex items-center justify-between">
-          <h3 className="font-display text-lg font-semibold text-ink">
+          <h3 className="font-display text-lg font-semibold text-text">
             {MONTH_NAMES[viewMonth]} {viewYear}
           </h3>
           <div className="flex items-center gap-1.5">
@@ -147,7 +147,7 @@ export function BookingCalendar() {
               onClick={goPrevMonth}
               disabled={isCurrentMonth}
               aria-label="Previous month"
-              className="grid size-8 place-items-center rounded-full border border-ink/10 text-ink/70 transition-colors hover:border-accent/40 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+              className="grid size-11 place-items-center rounded-full border border-[color:var(--color-border)] text-text transition-colors hover:border-brand hover:text-link disabled:cursor-not-allowed disabled:opacity-30"
             >
               <ChevronLeft className="size-4" />
             </button>
@@ -155,14 +155,14 @@ export function BookingCalendar() {
               type="button"
               onClick={goNextMonth}
               aria-label="Next month"
-              className="grid size-8 place-items-center rounded-full border border-ink/10 text-ink/70 transition-colors hover:border-accent/40 hover:text-accent"
+              className="grid size-11 place-items-center rounded-full border border-[color:var(--color-border)] text-text transition-colors hover:border-brand hover:text-link"
             >
               <ChevronRight className="size-4" />
             </button>
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-7 gap-1 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-ink/40">
+        <div className="mt-4 grid grid-cols-7 gap-1 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-muted">
           {WEEKDAYS.map((w) => (
             <div key={w}>{w}</div>
           ))}
@@ -183,10 +183,10 @@ export function BookingCalendar() {
                 disabled={disabled}
                 onClick={() => selectDate(d)}
                 className={cn(
-                  "aspect-square rounded-xl text-[13.5px] font-medium transition-all duration-150",
-                  disabled && "cursor-not-allowed text-ink/20",
-                  !disabled && !selected && "text-ink/75 hover:bg-accent/10 hover:text-accent",
-                  selected && "bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-glow",
+ "aspect-square min-h-[44px] min-w-[44px] rounded-xl text-[13.5px] font-medium transition-all duration-150",
+                  disabled && "cursor-not-allowed text-muted",
+                  !disabled && !selected && "text-text hover:bg-brand/10 hover:text-link",
+                  selected && "bg-gradient-to-br from-brand to-brand text-white ",
                   !selected && isToday && !disabled && "ring-1 ring-accent/40"
                 )}
               >
@@ -196,13 +196,13 @@ export function BookingCalendar() {
           })}
         </div>
 
-        <p className="mt-4 text-[12.5px] text-ink/45">
+        <p className="mt-4 text-[12.5px] text-muted">
           Mon – Sat · 9:00 AM – 7:00 PM PKT. Sundays are off.
         </p>
 
         {selectedDate && (
           <div className="mt-6">
-            <p className="flex items-center gap-2 text-[12.5px] font-medium uppercase tracking-[0.12em] text-ink/60">
+            <p className="flex items-center gap-2 text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
               <Clock className="size-3.5" /> Pick a time — {formatDateLabel(selectedDate)}
             </p>
             <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -214,10 +214,10 @@ export function BookingCalendar() {
                     type="button"
                     onClick={() => setSelectedTime(t)}
                     className={cn(
-                      "rounded-full border px-3 py-2 text-[13px] font-medium transition-all duration-150",
+ "min-h-[44px] rounded-full border px-4 text-[13px] font-medium transition-all duration-150",
                       selected
-                        ? "border-transparent bg-gradient-to-r from-brand-500 to-brand-700 text-white shadow-glow"
-                        : "border-ink/10 text-ink/70 hover:border-accent/40 hover:text-accent"
+                        ? "border-transparent bg-gradient-to-r from-brand to-brand text-white "
+                        : "border-[color:var(--color-border)] text-text hover:border-brand hover:text-link"
                     )}
                   >
                     {formatTime12h(t)}
@@ -231,17 +231,17 @@ export function BookingCalendar() {
 
       <div className="lg:col-span-6">
         {!selectedDate || !selectedTime ? (
-          <div className="flex h-full min-h-[220px] flex-col items-center justify-center rounded-2xl border border-dashed border-ink/10 bg-ink/[0.015] p-8 text-center">
-            <Clock className="size-6 text-ink/25" />
-            <p className="mt-3 text-[14px] text-ink/50">
+          <div className="flex h-full min-h-[220px] flex-col items-center justify-center rounded-2xl border border-dashed border-[color:var(--color-border)] bg-surface p-8 text-center">
+            <Clock className="size-6 text-muted" />
+            <p className="mt-3 text-[14px] text-muted">
               Pick a date and time on the left, then leave your details here.
             </p>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="grid gap-4">
-            <div className="rounded-2xl border border-accent/20 bg-gradient-to-br from-brand-500/10 via-transparent to-accent-violet/10 px-4 py-3">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Your slot</p>
-              <p className="mt-1 text-[14.5px] font-medium text-ink">
+            <div className="rounded-2xl border border-brand bg-gradient-to-br from-brand/10 via-transparent to-brand/5 px-4 py-3">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-link">Your slot</p>
+              <p className="mt-1 text-[14.5px] font-medium text-text">
                 {formatDateLabel(selectedDate)} · {formatTime12h(selectedTime)} PKT
               </p>
             </div>
@@ -277,17 +277,17 @@ export function BookingCalendar() {
             </Button>
 
             {state.status === "success" && (
-              <div className="rounded-xl border border-accent-mint/25 bg-accent-mint/10 px-4 py-3 text-[14px] text-emerald-700 dark:text-emerald-200">
+              <div className="rounded-xl border border-brand-mint/25 bg-brand-mint/10 px-4 py-3 text-[14px] text-emerald-700 ">
                 {state.message}
               </div>
             )}
             {state.status === "error" && (
-              <div className="rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3 text-[14px] text-amber-700 dark:text-amber-200">
+              <div className="rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3 text-[14px] text-amber-700 ">
                 <p>{state.message}</p>
                 <div className="mt-2 flex flex-wrap gap-3">
                   <a
                     href={`mailto:${publicEnv.profile.email}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-ink/[0.05] px-3 py-1.5 text-[13px] text-ink"
+                    className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-[13px] text-text"
                   >
                     <Mail className="size-3.5" /> Email
                   </a>
@@ -296,7 +296,7 @@ export function BookingCalendar() {
                       href={publicEnv.socials.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-ink/[0.05] px-3 py-1.5 text-[13px] text-ink"
+                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-[13px] text-text"
                     >
                       <MessageCircle className="size-3.5" /> WhatsApp
                     </a>
@@ -312,7 +312,7 @@ export function BookingCalendar() {
 }
 
 const inputClass =
-  "w-full rounded-xl border border-ink/10 bg-surface/60 px-4 py-3 text-[14.5px] text-ink placeholder-ink/35 outline-none transition duration-200 focus:border-accent/60 focus:shadow-[0_0_0_3px_rgb(var(--color-accent-rgb)/0.2)]";
+ "w-full rounded-xl border border-[color:var(--color-border)] bg-surface/60 px-4 py-3 text-[14.5px] text-text placeholder-ink/35 outline-none transition duration-200 focus:border-brand focus:shadow-[0_0_0_3px_rgb(var(--color-accent-rgb)/0.2)]";
 
 function Field({
   label,
@@ -329,9 +329,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-ink/60">
+      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
         {label}
-        {required && <span className="text-accent"> *</span>}
+        {required && <span className="text-link"> *</span>}
       </span>
       {type === "textarea" ? (
         <textarea

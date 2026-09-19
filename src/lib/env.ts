@@ -7,7 +7,9 @@
 const pick = (v: string | undefined, fallback = "") => (v && v.trim().length > 0 ? v : fallback);
 
 export const publicEnv = {
-  siteUrl: pick(process.env.NEXT_PUBLIC_SITE_URL, "https://qentrixai.com"),
+  // The apex host 308-redirects to www, so the canonical must be www or every
+  // canonical points at a redirect (audit B-06). Vercel env must match this.
+  siteUrl: pick(process.env.NEXT_PUBLIC_SITE_URL, "https://www.qentrix-ai.com"),
   siteName: pick(process.env.NEXT_PUBLIC_SITE_NAME, "QentrixAI"),
 
   profile: {

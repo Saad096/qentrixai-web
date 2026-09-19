@@ -51,7 +51,9 @@ Severity: **P0** blocker · **P1** major · **P2** minor · **P3** polish
 | A-02 | 9 of 14 pages have no `<h1>` | axe `page-has-heading-one`: `/services`, `/products`, `/case-studies`, `/about`, `/contact`, `/blogs`, `/careers`, `/book` (+`/team` redirect). Crawl `h1=0`. | Every page opens with one `<h1>`; demote the current `SectionHeading` H2 on page-lead sections. |
 | A-03 | Mobile performance far below the ≥90 bar | LH mobile: home **56**, services **60**, contact **68**, products 78, case-studies 83. TBT 1,100–1,458 ms; main-thread 5.0 s; bootup 1.6 s; long tasks 423/274/241 ms. | Server-render the hero, drop one animation library, cut client components, defer Lenis/cursor. |
 | A-04 | LCP element is a JS-animated headline | LH `largest-contentful-paint-element` = hero `<h1>` with `opacity/transform` from Framer Motion; LCP 3.71 s mobile. | Render the H1 statically; animate only decorative layers, or use CSS `@starting-style`/keyframes that do not gate paint. |
-| A-05 | 80 永-running animations pin Speed Index at 42.3 s | LH `non-composited-animations`: 80 elements; SI 42.3 s mobile / 17.1 s desktop (score 0). Sources: `Capabilities` 13-item marquee, `Clients` marquee, `.gradient-animate`, `pulse-glow`, `shimmer`. | Delete the two marquees (§1.8 of the brief), make remaining loops finite or `will-change`-composited only. |
+| A-05 | 80 never-ending animations on every page | LH `non-composited-animations`: **80 animated elements**. Sources: `Capabilities` 13-item marquee, `Clients` marquee, `.gradient-animate`, `pulse-glow`, `shimmer`. | Delete the two marquees (§1.8 of the brief), make remaining loops finite or composited only. |
+
+> **Correction (2026-09-20).** This row originally cited Speed Index 42.3 s as the evidence. That number is **an artifact of this audit machine**, not the site: a one-line static HTML page with a single `<h1>` measures **SI 39.6 s** here, because Lighthouse's frame-capture Speed Index does not work under software rendering (swiftshader, no GPU). Every Speed Index figure in this document — before and after — should be ignored, and the perf score is capped near 90 on this host regardless of the page. The 80 animated elements were real and worth removing on main-thread and battery grounds; Speed Index was never valid evidence for it. Authoritative performance numbers must come from the Vercel preview (Phase 8).
 | A-06 | `og.png` 404s sitewide | `curl https://www.qentrix-ai.com/og.png` → **404**; `src/lib/seo.ts:38` defaults every page's OG/Twitter image to `/og.png`; blog `cover: ""` falls back to the same. | Generate per-page OG images with `next/og`, plus a static fallback that actually exists. |
 | A-07 | No proof above the fold on any route | `_abovefold/home-390.png`, `home-1440.png`: headline + 2 CTAs + 9 capability dots, nothing else. | Put numbers and named clients in the first viewport. Owner confirmed TriggerX, Grow9X and TechForge may be named. |
 
@@ -101,9 +103,11 @@ Severity: **P0** blocker · **P1** major · **P2** minor · **P3** polish
 
 ### 4.1 Lighthouse — production, 2026-09-19
 
+> The Speed Index column is struck through: see the correction under A-05. Every other column is sound.
+
 | Page | Form factor | Perf | A11y | BP | SEO | FCP | LCP | SI | TBT | CLS |
 |---|---|---|---|---|---|---|---|---|---|---|
-| `/` | mobile | **56** | 98 | 100 | 100 | 1.24 s | **3.71 s** | 42.3 s | **1,100 ms** | 0.000 |
+| `/` | mobile | **56** | 98 | 100 | 100 | 1.24 s | **3.71 s** | ~~42.3 s~~ | **1,100 ms** | 0.000 |
 | `/` | desktop | 86 | 98 | 100 | 100 | 0.36 s | 0.84 s | 17.1 s | 151 ms | 0.000 |
 | `/services` | mobile | **60** | 98 | 100 | 100 | 1.11 s | 2.80 s | 41.4 s | **1,458 ms** | 0.000 |
 | `/services` | desktop | 88 | 98 | 100 | 100 | 0.34 s | 0.63 s | 17.4 s | 121 ms | 0.000 |

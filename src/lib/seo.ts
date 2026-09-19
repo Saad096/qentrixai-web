@@ -1,30 +1,32 @@
 import type { Metadata } from "next";
 import { publicEnv } from "./env";
 
+/**
+ * Kiln (2026-09 revamp). Titles are outcome-shaped, never `<Noun> | QentrixAI`.
+ * Structured data covers Organization, WebSite, Service, FAQPage, Article,
+ * Product and BreadcrumbList — the previous site emitted Organization alone.
+ */
+
 const defaultDescription =
-  "QentrixAI is an AI product studio. We build GenAI, agentic AI, RAG, voice AI, computer vision, NLP, edge AI, responsible AI, and blockchain systems that hold up in production, deployed on cloud or on-prem.";
+  "QentrixAI is an AI product studio. We design, build and run agentic systems, retrieval pipelines and voice AI, then hand over the repo, the eval harness and the runbook.";
 
 export const defaultKeywords = [
-  "AI development company",
-  "Generative AI development services",
-  "Agentic AI solutions",
+  "AI product studio",
+  "agentic AI development",
   "RAG development company",
-  "AI automation agency",
-  "Voice AI solutions",
-  "Computer vision development",
-  "NLP development services",
-  "Edge AI development",
-  "Responsible AI consulting",
-  "Blockchain development company",
-  "AI x Blockchain solutions",
-  "FinTech AI",
-  "HealthTech AI",
-  "InsureTech AI",
-  "AI SaaS development",
+  "voice AI development",
+  "LLM application development",
+  "AI MVP development",
+  "MLOps and LLM observability",
+  "computer vision development",
+  "edge AI development",
+  "responsible AI consulting",
   "AI consulting Pakistan",
-  "AI product development company",
   "QentrixAI",
 ];
+
+const base = () => publicEnv.siteUrl.replace(/\/$/, "");
+const abs = (path = "/") => `${base()}${path.startsWith("/") ? path : `/${path}`}`;
 
 type SeoInput = {
   title?: string;
@@ -32,53 +34,58 @@ type SeoInput = {
   path?: string;
   image?: string;
   keywords?: string[];
+  type?: "website" | "article";
+  publishedTime?: string;
 };
 
 export function buildMetadata({
   title,
   description = defaultDescription,
   path = "/",
-  image = "/og.png",
+  image,
   keywords,
+  type = "website",
+  publishedTime,
 }: SeoInput = {}): Metadata {
   const fullTitle = title
     ? `${title} | ${publicEnv.siteName}`
-    : `${publicEnv.siteName} · AI products, agents & automation that ship`;
-  const url = `${publicEnv.siteUrl.replace(/\/$/, "")}${path.startsWith("/") ? path : `/${path}`}`;
+    : `${publicEnv.siteName} — AI systems that survive production`;
+  const url = abs(path);
+  // When no image is passed we deliberately omit `images` so Next's
+  // opengraph-image.tsx file convention supplies the generated card. The old
+  // site hard-coded /og.png here, and that file 404'd in production.
 
   return {
-    metadataBase: new URL(publicEnv.siteUrl),
+    metadataBase: new URL(base()),
     title: fullTitle,
     description,
     keywords: keywords ?? defaultKeywords,
     alternates: { canonical: url },
-    authors: [{ name: publicEnv.siteName, url: publicEnv.siteUrl }],
+    authors: [{ name: publicEnv.siteName, url: base() }],
     creator: publicEnv.siteName,
     publisher: publicEnv.siteName,
     openGraph: {
-      type: "website",
+      type,
       url,
       title: fullTitle,
       description,
       siteName: publicEnv.siteName,
-      images: [{ url: image, width: 1200, height: 630, alt: publicEnv.siteName }],
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: fullTitle }] } : {}),
+      ...(publishedTime ? { publishedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [image],
+      ...(image ? { images: [image] } : {}),
     },
     robots: {
       index: true,
       follow: true,
       googleBot: { index: true, follow: true, "max-image-preview": "large" },
     },
-    // ?v=3 busts the old cached favicon: browsers cache tab icons aggressively.
     icons: {
-      icon: [
-        { url: "/logo/qentrix-mark.png?v=3", type: "image/png", sizes: "512x512" },
-      ],
+      icon: [{ url: "/logo/qentrix-mark.png?v=3", type: "image/png", sizes: "512x512" }],
       shortcut: "/logo/qentrix-mark.png?v=3",
       apple: "/logo/qentrix-mark.png?v=3",
     },
@@ -89,9 +96,10 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${base()}/#organization`,
     name: publicEnv.siteName,
-    url: publicEnv.siteUrl,
-    logo: `${publicEnv.siteUrl}/logo/qentrix-mark.png`,
+    url: base(),
+    logo: `${base()}/logo/qentrix-mark.png`,
     description: defaultDescription,
     foundingDate: "2024",
     email: publicEnv.profile.email,
@@ -101,10 +109,93 @@ export function organizationJsonLd() {
       addressLocality: "Lahore",
       addressCountry: "PK",
     },
-    sameAs: [
-      publicEnv.socials.linkedin,
-      publicEnv.socials.github,
-      publicEnv.socials.upwork,
-    ].filter(Boolean),
+    sameAs: [publicEnv.socials.linkedin, publicEnv.socials.github, publicEnv.socials.upwork].filter(
+      Boolean
+    ),
+  };
+}
+
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${base()}/#website`,
+    url: base(),
+    name: publicEnv.siteName,
+    description: defaultDescription,
+    publisher: { "@id": `${base()}/#organization` },
+  };
+}
+
+export function serviceJsonLd(s: { title: string; description: string; slug: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: s.title,
+    description: s.description,
+    url: abs(`/services/${s.slug}`),
+    provider: { "@id": `${base()}/#organization` },
+    areaServed: "Worldwide",
+  };
+}
+
+export function productJsonLd(p: { name: string; tagline: string; slug: string; image?: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: p.name,
+    description: p.tagline,
+    url: abs(`/products/${p.slug}`),
+    applicationCategory: "BusinessApplication",
+    ...(p.image ? { image: abs(p.image) } : {}),
+    publisher: { "@id": `${base()}/#organization` },
+  };
+}
+
+export function faqJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+}
+
+export function articleJsonLd(a: {
+  title: string;
+  excerpt: string;
+  slug: string;
+  date: string;
+  author: string;
+  image?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: a.title,
+    description: a.excerpt,
+    url: abs(`/blogs/${a.slug}`),
+    datePublished: a.date,
+    dateModified: a.date,
+    author: { "@type": "Person", name: a.author },
+    publisher: { "@id": `${base()}/#organization` },
+    ...(a.image ? { image: abs(a.image) } : {}),
+    mainEntityOfPage: { "@type": "WebPage", "@id": abs(`/blogs/${a.slug}`) },
+  };
+}
+
+export function breadcrumbJsonLd(trail: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: t.name,
+      item: abs(t.path),
+    })),
   };
 }

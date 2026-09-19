@@ -1,5 +1,12 @@
+/**
+ * Kiln (2026-09 revamp). `metric` is the hard-number slot for each study.
+ * Only the multi-agent platform has a published figure today; the owner is
+ * supplying the rest, and until they arrive the slot stays empty rather than
+ * carrying an invented number (copy deck section 12).
+ */
 export type CaseStudy = {
   slug: string;
+  metric?: { value: string; label: string };
   title: string;
   category: string;
   client: string;
@@ -13,6 +20,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "multi-agent-ai-platform",
+    metric: { value: "0 to 70%", label: "of in-scope tasks automated in one quarter" },
     title: "Multi-Agent AI Platform for Operational Workflows",
     category: "Agentic AI",
     client: "Enterprise (NDA)",

@@ -111,3 +111,4 @@ $RECYCLE.BIN/
 
 # Vendored agent skills (reproducible from skills-lock.json)
 .agents/
+

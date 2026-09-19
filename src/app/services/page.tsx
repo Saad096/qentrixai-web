@@ -1,66 +1,61 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { ServiceCard } from "@/components/cards/ServiceCard";
-import { CTABanner } from "@/components/sections/CTABanner";
-import { Process } from "@/components/sections/Process";
-import { Industries } from "@/components/sections/Industries";
+import { Section } from "@/components/ui/Section";
+import { FaqCta } from "@/components/sections/FaqCta";
 import { services } from "@/data/services";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "AI Services",
+  title: "AI systems built for production",
   path: "/services",
   description:
-    "Production-grade AI services from QentrixAI: Generative AI, Agentic AI, RAG, Voice AI, Computer Vision, NLP & Document AI, Edge AI, Responsible AI, Blockchain & Web3, Cloud / DevOps / MLOps, and AI strategy consulting.",
-  keywords: [
-    "AI development company",
-    "Generative AI services",
-    "Agentic AI development",
-    "RAG development",
-    "Voice AI services",
-    "Computer vision services",
-    "NLP services",
-    "Edge AI development",
-    "Responsible AI governance",
-    "Blockchain development company",
-    "AI x Blockchain development",
-    "MLOps consulting",
-    "AI strategy consulting",
-    "QentrixAI",
-  ],
+    "Fourteen capabilities, from agentic systems and retrieval to voice AI and MLOps. Each one ships with evals, tracing and a handover.",
 });
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="pt-32 pb-12">
+      <script id="ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "What we build", path: "/services" },
+            ])
+          ),
+        }}
+      />
+
+      <section className="py-16 md:py-24">
         <Container>
-          <SectionHeading
-            eyebrow="Services"
-            title="Engineering-led AI services for teams that need production, not prototypes."
-            description="Pick one service or compose several. Every engagement ends with code you own, runbooks you can act on, and a roadmap for what's next."
-          />
+          <h1 className="max-w-[16ch] text-hero font-bold text-text">What we build</h1>
+          <p className="mt-7 max-w-measure text-md text-muted">
+            Fourteen capabilities. Each one ships with the same production discipline: evals,
+            tracing, and a handover.
+          </p>
         </Container>
       </section>
 
-      <section className="pb-20">
-        <Container>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((s, i) => (
-              <Reveal key={s.slug} delay={i * 0.04}>
-                <div id={s.slug} className="scroll-mt-24">
-                  <ServiceCard service={s} />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <Section className="rule">
+        <ul className="grid gap-x-10 gap-y-px sm:grid-cols-2">
+          {services.map((s) => (
+            <li key={s.slug} className="border-t border-[color:var(--color-border)]">
+              <Link href={`/services/${s.slug}`} className="group flex gap-5 py-7">
+                <s.icon className="mt-0.5 size-5 shrink-0 text-link" aria-hidden />
+                <span>
+                  <span className="block text-lg font-semibold text-text group-hover:text-link">
+                    {s.title}
+                  </span>
+                  <span className="mt-2 block text-base text-muted">{s.short}</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-      <Industries />
-      <Process />
-      <CTABanner />
+      <FaqCta />
     </>
   );
 }
