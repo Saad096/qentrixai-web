@@ -157,46 +157,81 @@ does the reverse. Every test runs somewhere.
 
 ## Lighthouse — home, mobile
 
-| Metric | Before | After | Budget |
+**Every number in the first version of this section was wrong** and has been
+replaced. Those runs were measured against a build whose stylesheet 404'd, so
+the page under test had **zero CSS rules**. An unstyled page scores well: no
+layout work, no shifts, and axe finds nothing to complain about. See
+"The unstyled-build trap" below.
+
+Five runs on a correct build, because this host is contended and a single run
+is not evidence:
+
+| run | perf | LCP | TBT | CLS |
+|---|---|---|---|---|
+| 1 | 87 | 3.32 s | 252 ms | 0 |
+| 2 | 96 | 2.63 s | 75 ms | 0 |
+| 3 | 69 | 3.45 s | 1026 ms | 0 |
+| 4 | 96 | 2.64 s | 84 ms | 0 |
+| 5 | 96 | 2.68 s | 88 ms | 0 |
+
+Three of five cluster tightly at 96 / ~2.65 s / ~80 ms. Runs 1 and 3 carry TBT
+of 252 ms and 1026 ms, which is other work on the machine, not the page.
+
+| Metric | Before | Median now | Budget |
 |---|---|---|---|
-| Performance | 87 | **94–96** | ≥ 90 |
+| Performance | 87 | **96** | ≥ 90 |
 | Accessibility | — | **100** | ≥ 95 |
 | Best practices | — | **100** | ≥ 95 |
 | SEO | — | **100** | ≥ 95 |
-| TBT | 0 ms | **70 ms** | ≤ 200 ms |
+| TBT | 0 ms | **88 ms** | ≤ 200 ms |
 | CLS | 0 | **0** | < 0.1 |
-| **LCP** | 2.6 s | **2.7–3.1 s** | **< 2.5 s — missed** |
+| LCP | 2.6 s | **2.68 s** | < 2.5 s — still missed |
 
-Two runs, because the numbers move: 94/3.1 s and 96/2.7 s.
+LCP is **effectively unchanged** (2.6 → 2.68 s) while the performance score
+went from 87 to 96. It misses the 2.5 s budget by ~0.2 s, and it missed it
+before the overhaul too, so this is not a regression the overhaul introduced.
 
-### LCP is the one budget still missed
+Of that 2.68 s, ~460 ms is TTFB from a local `next start` with no CDN in
+front. **Re-measure against the Vercel preview before acting on it** — image
+optimisation and caching run on Vercel's infrastructure, not this process.
 
-The LCP element is the hero image at mobile width. The phase breakdown puts
-**TTFB at ~460 ms and render delay at 1.9–2.6 s, with load time at 0–143 ms** —
-the bytes arrive quickly and the paint lands late.
+### The unstyled-build trap
 
-Three hypotheses tested and **discarded**, recorded so nobody pays for them
-again:
+`next dev` and `next build` both write to `.next`. Running a build while the
+VS Code dev task is up leaves prerendered HTML from one and static assets from
+the other: the HTML asks for `/_next/static/css/<hash>.css`, the directory
+holds `static/css/app/layout.css`, the request 404s, and every page renders
+with no CSS. **The build still exits 0 and reports success.**
 
-1. **The grain overlay.** `feTurbulence` is expensive to rasterise, so it was
-   the obvious suspect. Measured under 4× CPU throttle with the overlay
-   disabled: 424 ms vs 476 ms, then 444 ms vs 444 ms. **No effect.**
-2. **Images served unoptimised.** A probe showed 220 KB JPEG for a `w=384`
-   request. That was a stale browser disk-cache entry. With the cache
-   disabled the browser receives **AVIF at 1–7 KB**. Optimisation works.
-3. **Cold AVIF encode on first request.** Every variant encodes in ~0.2 s,
-   including cold. Not the cost.
+It cost three builds and a full round of measurements here, and it is silent —
+`max-width: none`, `padding: 0`, browser-default `body` margin, which reads as
+"the layout is broken" rather than "the stylesheet is missing".
 
-What is left is render delay under Lighthouse's simulated Slow-4G model, of
-which ~460 ms is local TTFB that a CDN removes. **On Vercel, image
-optimisation and caching run on their infrastructure, so this figure should
-not be read across to production unchanged.** Re-measure against the preview
-deployment before deciding anything.
+Fixed at the root: `next.config.mjs` takes `distDir` from `NEXT_DIST_DIR`, and
+verification runs as:
 
-The one lever that would certainly work is making the hero art smaller or
-lazy on phones — it is decorative. That is a design decision, and it runs
-against the owner's explicit ask for a more image-rich page, so it is **not**
-being taken unilaterally.
+```bash
+NEXT_DIST_DIR=.next-prod npm run build
+NEXT_DIST_DIR=.next-prod npx next start -p 3311
+```
+
+**Check the stylesheet resolves before trusting any measurement:**
+
+```bash
+CSS=$(curl -s localhost:3311/ | grep -oE '/_next/static/css/[a-z0-9]+\.css' | head -1)
+curl -s -o /dev/null -w '%{http_code}\n' "http://127.0.0.1:3311$CSS"   # must be 200
+```
+
+### Centring, measured
+
+"Not centred" was this bug, not a layout fault. On a correct build the
+container is exact at every width:
+
+| Viewport | Container | Left | Right |
+|---|---|---|---|
+| 1440 | 1260 px | 90 | 90 |
+| 1920 | 1260 px | 330 | 330 |
+| 2560 | 1260 px | 650 | 650 |
 
 ## Fixed along the way
 
