@@ -5,6 +5,7 @@
  * Numbered because it genuinely is a sequence -- the one case where numbered
  * markers earn their place.
  */
+import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { phases } from "@/data/company";
 
@@ -17,9 +18,9 @@ export function HowWeWork() {
       lede="Every phase ends with an artifact in your repo, not a status call."
       ground="base"
     >
-      <ol className="mt-12 grid gap-px overflow-hidden rounded-md bg-[color:var(--color-border)] md:grid-cols-2 xl:grid-cols-4">
+      <ol className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {phases.map((p, i) => (
-          <li key={p.step} className="bg-bg">
+          <Card as="li" key={p.step}>
             <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-4 p-7">
               <span className="font-mono text-xs text-link">{p.step}</span>
               <h3 className="text-lg font-semibold text-text">{p.title}</h3>
@@ -29,7 +30,7 @@ export function HowWeWork() {
                 {p.artifact}
               </p>
             </div>
-          </li>
+          </Card>
         ))}
       </ol>
     </Section>

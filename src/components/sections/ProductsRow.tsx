@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
 import { products } from "@/data/products";
 
@@ -27,17 +27,14 @@ export function ProductsRow() {
               <div data-reveal data-reveal-delay={i * 70}>
                 <Link href={`/products/${p.slug}`} className="group block">
                   {shot ? (
-                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md">
-                      <Image
-                        src={shot}
-                        alt={`${p.name} interface`}
-                        fill
-                        sizes="(min-width: 768px) 33vw, 100vw"
-                        className="object-cover object-top"
-                      />
-                    </div>
+                    <DeviceFrame
+                      src={shot}
+                      alt={`${p.name} interface`}
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="lift"
+                    />
                   ) : (
-                    <div className="grid aspect-[16/10] w-full place-items-center rounded-md bg-surface">
+                    <div className="grid aspect-[16/10] w-full place-items-center rounded-md bg-surface shadow-1">
                       <span className="text-xl font-bold text-muted">{p.name}</span>
                     </div>
                   )}
