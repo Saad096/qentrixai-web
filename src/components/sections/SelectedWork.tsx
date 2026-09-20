@@ -3,11 +3,12 @@
  * that stays empty until the owner supplies real figures -- no placeholder
  * numbers ship (copy deck section 5).
  */
-import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
+import { Illustration } from "@/components/ui/Illustration";
 import { caseStudies } from "@/data/caseStudies";
+import { CASE_ART } from "@/data/illustrations";
 
 const HOME_SLUGS = [
   "multi-agent-ai-platform",
@@ -16,24 +17,19 @@ const HOME_SLUGS = [
 ];
 
 /**
- * Only one of the three studies shown here has a published screenshot — the
- * rest are under NDA. Imaging one card and leaving two bare looks worse than
- * imaging none, so the others fall back to abstract art keyed by category.
+ * Thumbnails are the case study's unDraw illustration, not photography.
  *
- * Abstract is the honest choice: it decorates without implying it is a
- * screenshot of the client's system. Never substitute another client's
- * interface here.
+ * Three abstract renders keyed by category used to fill these, and they said
+ * nothing about the engagements -- one of them was a dark-only PNG that
+ * disappeared on the light theme. The illustrations at least depict the shape
+ * of the work.
+ *
+ * All three take the same treatment on purpose. One real screenshot beside
+ * two illustration plates makes the row look half-finished, so the screenshot
+ * we do have is not used here.
+ *
+ * Never substitute another client's interface here.
  */
-const FALLBACK_ART: Record<string, string> = {
-  // Was system-cluster.png: light vendor marks on a transparent ground, so
-  // on the light theme it sat on the lavender surface-2 tile and all but
-  // disappeared. Every entry here must be opaque art that holds up on both
-  // themes, because the tile behind it changes colour and the art does not.
-  "Agentic AI": "/images/abstract/aurora-ripple.jpg",
-  RAG: "/images/abstract/glass-curve.jpg",
-  "Voice AI": "/images/abstract/chrome-ribbons.jpg",
-};
-const DEFAULT_ART = "/images/abstract/violet-wave.jpg";
 
 export function SelectedWork() {
   const shown = HOME_SLUGS.map((slug) => caseStudies.find((c) => c.slug === slug)).filter(
@@ -56,15 +52,10 @@ export function SelectedWork() {
                 href={`/case-studies/${study.slug}`}
                 className="flex h-full flex-col"
               >
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface-2">
-                  <Image
-                    src={study.cover || FALLBACK_ART[study.category] || DEFAULT_ART}
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover object-top"
-                  />
-                </div>
+                <Illustration
+                  src={CASE_ART[study.slug]}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                />
 
                 <div className="flex flex-1 flex-col gap-4 p-7">
                 <span className="font-mono text-xs text-link">{study.category}</span>

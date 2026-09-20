@@ -44,7 +44,9 @@ an `ArtPanel` stage: `ModelOrbit`, `AgentGraph`, `RetrievalFlow`, `VoiceWave`.
 |---|---|---|
 | `bg` | `#050609` near-black | `#FFFFFF` |
 | `surface` | `#0C0E15` + `.surface-sheen` | `#FAF9F7` warm band |
-| `surface-2` | `#090A10` | `#F1EFFB` lavender tint |
+| `surface-2` | `#0E1119` | `#F1EFFB` lavender tint |
+| `band` stops | `#0E1119` → `#141826` | `#FAF9F7` → `#F1EFFB` |
+| illustration plate | `#F1EFFB` (light in **both** themes) | `#F1EFFB` |
 | `art-ground` | `#030407` | `#F8F7FD` |
 | `border` | `rgb(255 255 255 / .10)` | `rgb(0 0 0 / .12)` |
 | `text` | `#F8F9FA` | `#000000` |
@@ -100,6 +102,13 @@ raised (framed media, floating panels), `shadow-3` hover only.
 | `--shadow-1` | Resting card. Hairline ring + inner highlight |
 | `--shadow-2` | Raised: device frames, panel images |
 | `--shadow-3` | Hover. Brand-tinted ring and glow |
+
+**A band sits above the page, not below it** (2026-09-21). The band stops
+were `#040406` and `#0A0C12` — a darker strip, which read correctly against
+the old `#0D1017` base and stopped reading the moment the base went to
+`#050609`: `#040406` is one unit darker than the page, so `band` drew no band
+at all and two sections meant to alternate became one strip. Muted text
+measures 7.42:1 on the first stop and 6.95:1 on the second.
 
 **Grounds** are set per section with `<Section ground="base" | "wash" | "band">`.
 `wash` lays two soft brand/accent radials behind the content; `band` moves it
