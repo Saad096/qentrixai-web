@@ -11,30 +11,16 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/ui/Section";
+import { TabPill, useTabs } from "@/components/ui/Tabs";
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
-import { cn } from "@/lib/utils";
 
 export function Industries() {
-  const [active, setActive] = React.useState(0);
-  const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
-  const current = industries[active];
+  const tabs = useTabs(industries.length);
+  const current = industries[tabs.active];
   const linked = current.cases
     .map((slug) => caseStudies.find((c) => c.slug === slug))
     .filter((c): c is (typeof caseStudies)[number] => Boolean(c));
-
-  function onKeyDown(e: React.KeyboardEvent) {
-    const last = industries.length - 1;
-    let next = active;
-    if (e.key === "ArrowRight") next = active === last ? 0 : active + 1;
-    else if (e.key === "ArrowLeft") next = active === 0 ? last : active - 1;
-    else if (e.key === "Home") next = 0;
-    else if (e.key === "End") next = last;
-    else return;
-    e.preventDefault();
-    setActive(next);
-    tabRefs.current[next]?.focus();
-  }
 
   return (
     <Section
@@ -43,42 +29,15 @@ export function Industries() {
       ground="wash"
     >
       <div className="mt-11">
-        <div
-          role="tablist"
-          aria-label="Industries"
-          onKeyDown={onKeyDown}
-          className="flex flex-wrap gap-x-7 gap-y-1 border-b border-[color:var(--color-border)]"
-        >
+        <div {...tabs.tablistProps("Industries")} className="flex flex-wrap gap-2">
           {industries.map((ind, i) => (
-            <button
-              key={ind.name}
-              ref={(el) => {
-                tabRefs.current[i] = el;
-              }}
-              role="tab"
-              id={`tab-${i}`}
-              aria-selected={i === active}
-              aria-controls={`panel-${i}`}
-              tabIndex={i === active ? 0 : -1}
-              onClick={() => setActive(i)}
-              className={cn(
-                "-mb-px min-h-[44px] min-w-[44px] border-b-2 px-1 text-base transition-colors",
-                i === active
-                  ? "border-brand text-text"
-                  : "border-transparent text-muted hover:text-text"
-              )}
-            >
-              {ind.name}
+            <button key={ind.name} ref={tabs.registerRef(i)} {...tabs.tabProps(i, "ind")}>
+              <TabPill selected={i === tabs.active}>{ind.name}</TabPill>
             </button>
           ))}
         </div>
 
-        <div
-          role="tabpanel"
-          id={`panel-${active}`}
-          aria-labelledby={`tab-${active}`}
-          className="grid gap-9 pt-9 lg:grid-cols-12 lg:gap-12"
-        >
+        <div {...tabs.panelProps("ind")} className="grid gap-9 pt-9 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
             <p className="text-lg text-text">{current.line}</p>
 
@@ -103,7 +62,7 @@ export function Industries() {
           </div>
 
           <div className="lg:col-span-7">
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md">
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md shadow-2">
               <Image
                 key={current.image}
                 src={current.image}

@@ -1,0 +1,92 @@
+"use client";
+
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+/**
+ * Roving-tabindex tablist.
+ *
+ * Extracted from Industries and StackTabs, which carried the same fourteen-line
+ * keyboard handler copy-pasted into both — so a fix to one silently left the
+ * other broken.
+ *
+ * One tabstop for the whole list; arrows move and wrap; Home and End jump to
+ * the ends.
+ */
+export function useTabs(count: number) {
+  const [active, setActive] = React.useState(0);
+  const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
+
+  const onKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      const last = count - 1;
+      let next = active;
+      if (e.key === "ArrowRight") next = active === last ? 0 : active + 1;
+      else if (e.key === "ArrowLeft") next = active === 0 ? last : active - 1;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = last;
+      else return;
+      e.preventDefault();
+      setActive(next);
+      refs.current[next]?.focus();
+    },
+    [active, count]
+  );
+
+  return {
+    active,
+    setActive,
+    registerRef: (i: number) => (el: HTMLButtonElement | null) => {
+      refs.current[i] = el;
+    },
+    tablistProps: (label: string) => ({
+      role: "tablist" as const,
+      "aria-label": label,
+      onKeyDown,
+    }),
+    tabProps: (i: number, idPrefix: string) => ({
+      role: "tab" as const,
+      id: `${idPrefix}-tab-${i}`,
+      "aria-selected": i === active,
+      "aria-controls": `${idPrefix}-panel-${i}`,
+      tabIndex: i === active ? 0 : -1,
+      onClick: () => setActive(i),
+    }),
+    panelProps: (idPrefix: string) => ({
+      role: "tabpanel" as const,
+      id: `${idPrefix}-panel-${active}`,
+      "aria-labelledby": `${idPrefix}-tab-${active}`,
+    }),
+  };
+}
+
+/**
+ * Pill styling for a tab.
+ *
+ * The previous 2px underline was near-invisible against a dark ground, so the
+ * tablist did not read as a control at all. A filled pill says which one is
+ * active at a glance.
+ *
+ * The fill is `bg-brand` with `text-on-brand`: brand as a fill is the one legal
+ * use of #9B31FF in the dark theme, where it measures 3.88:1 as text.
+ */
+export function TabPill({
+  selected,
+  children,
+}: {
+  selected: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <span
+      className={cn(
+        "inline-flex min-h-[44px] items-center rounded-full px-4 text-base transition-colors",
+        selected
+          ? "bg-brand text-on-brand shadow-1"
+          : "text-muted hover:bg-surface hover:text-text"
+      )}
+    >
+      {children}
+    </span>
+  );
+}
