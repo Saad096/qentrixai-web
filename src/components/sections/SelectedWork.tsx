@@ -25,7 +25,11 @@ const HOME_SLUGS = [
  * interface here.
  */
 const FALLBACK_ART: Record<string, string> = {
-  "Agentic AI": "/images/abstract/system-cluster.png",
+  // Was system-cluster.png: light vendor marks on a transparent ground, so
+  // on the light theme it sat on the lavender surface-2 tile and all but
+  // disappeared. Every entry here must be opaque art that holds up on both
+  // themes, because the tile behind it changes colour and the art does not.
+  "Agentic AI": "/images/abstract/aurora-ripple.jpg",
   RAG: "/images/abstract/glass-curve.jpg",
   "Voice AI": "/images/abstract/chrome-ribbons.jpg",
 };

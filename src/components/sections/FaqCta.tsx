@@ -66,12 +66,20 @@ export function FaqCta() {
       <section className="relative isolate overflow-hidden pb-24 md:pb-32">
         <OrbField />
         <Container className="above-orbs">
-          {/* Centred. The card is geometrically centred on the page and always
-              was, but its contents sat hard left with the whole right half
-              empty, which is what read as "not centred". A final CTA is the
-              one block on the page with a single message and a single action,
-              so centring it is also the right call typographically. */}
-          <div className="brand-gradient rounded-lg px-9 py-14 text-center text-on-brand md:px-14 md:py-20">
+          {/* Reported as "not centred and very big", and measurement showed it
+              was already centred to the pixel -- 126px of gutter on each side
+              at 1440. Two other things were doing the work.
+
+              The panel ran the full 1188px container while the copy was capped
+              at 24ch, so most of it was empty gradient: it read as a slab, not
+              a card. It is capped at 880px now, near the width of its own
+              content, and the vertical padding comes down with it.
+
+              And `.brand-gradient` is a 135deg ramp, so its bright end sat in
+              the top-left corner while the text sat in the middle. Centred
+              copy on an off-centre ground reads as off-centre copy. The radial
+              variant anchors the light stop on the text instead. */}
+          <div className="brand-gradient-radial mx-auto max-w-[880px] rounded-lg px-9 py-12 text-center text-on-brand md:px-12 md:py-16">
             <h2 className="mx-auto max-w-[24ch] text-2xl font-bold">
               Bring a goal. Leave with an architecture and a timeline.
             </h2>

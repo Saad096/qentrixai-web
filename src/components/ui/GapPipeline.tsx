@@ -36,23 +36,21 @@ export function GapPipeline() {
       </div>
 
       <ol className="grid grid-cols-1 gap-x-6 gap-y-9 sm:grid-cols-2 lg:grid-cols-6">
-        {STAGES.map((stage, i) => {
-          const isEnd = i === 0 || i === STAGES.length - 1;
-          return (
-            <li key={stage.name} data-pipeline-node className="relative">
-              <span
-                aria-hidden="true"
-                className={
-                  isEnd
-                    ? "block size-[27px] rounded-full border-[7px] border-brand bg-bg"
-                    : "block size-[27px] rounded-full border-2 border-[color:var(--color-border)] bg-bg"
-                }
-              />
-              <p className="mt-5 font-mono text-xs text-link">{stage.name}</p>
-              <p className="mt-2 text-base text-muted">{stage.note}</p>
-            </li>
-          );
-        })}
+        {STAGES.map((stage) => (
+          <li key={stage.name} data-pipeline-node className="relative">
+            {/* Every node carries the full brand ring. The middle four were
+                hairline outlines, which made four of the six stages read as
+                not-yet-reached -- the opposite of the argument, since the
+                unglamorous middle *is* the work. Direction is already carried
+                by the rail gradient; it does not need dimmed nodes too. */}
+            <span
+              aria-hidden="true"
+              className="block size-[27px] rounded-full border-[7px] border-brand bg-bg"
+            />
+            <p className="mt-5 font-mono text-xs text-link">{stage.name}</p>
+            <p className="mt-2 text-base text-muted">{stage.note}</p>
+          </li>
+        ))}
       </ol>
     </div>
   );
