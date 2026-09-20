@@ -21,11 +21,26 @@ export function Hero() {
     names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0];
 
   return (
-    <section className="relative isolate overflow-hidden pb-16 pt-16 md:pb-28 md:pt-24">
+    <section className="grain relative isolate overflow-hidden pb-16 pt-16 md:pb-28 md:pt-24">
       <OrbField />
       <Container className="above-orbs">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
+            {/* Proof, then claim. Both reference sites lead with evidence and
+                put the headline second; the trusted-by line used to sit below
+                the fold where nobody weighing us up would reach it. */}
+            <p className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-base text-muted">
+              <span className="inline-flex items-center gap-2 rounded-full bg-surface px-3.5 py-1.5 shadow-1">
+                <span className="size-1.5 rounded-full bg-link" aria-hidden="true" />
+                <span className="font-mono text-xs text-text">
+                  {company.stats[1].value} {company.stats[1].label}
+                </span>
+              </span>
+              <span>
+                Shipping for <span className="font-semibold text-text">{trustedBy}</span>
+              </span>
+            </p>
+
             <h1 className="max-w-[17ch] text-hero font-bold text-text">
               AI systems that survive real users, real load, and handover.
             </h1>
@@ -39,7 +54,10 @@ export function Hero() {
           <div className="lg:col-span-5">
             {/* Shorter on phones: stacked full-width it becomes the LCP
                 element, and a square crop pushed LCP to 2.5s. */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg lg:aspect-square">
+            <div
+              data-parallax="0.06"
+              className="relative aspect-[16/10] w-full overflow-hidden rounded-lg shadow-2 lg:aspect-square"
+            >
               <Image
                 src="/images/abstract/aurora-ripple.jpg"
                 alt=""
@@ -73,10 +91,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="rule mt-7 flex flex-col gap-2 pt-6 sm:flex-row sm:items-baseline sm:justify-between">
-          <p className="text-base text-muted">
-            Shipping for <span className="font-semibold text-text">{trustedBy}</span>.
-          </p>
+        <div className="rule mt-7 pt-6">
           <span className="font-mono text-xs text-muted">Lahore, working across 12 time zones</span>
         </div>
       </Container>
