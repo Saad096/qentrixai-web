@@ -470,6 +470,19 @@ body {
   }
 }
 
+/* The plate unDraw illustrations sit on. Light in BOTH themes on purpose --
+   the art is drawn for light grounds, so a themed plate would hide half of
+   every figure on dark. Aurora's lavender tint, so it reads as a chosen
+   surface and not as bare white. */
+.bg-illus-plate {
+  background-color: #f1effb;
+  background-image: radial-gradient(
+    80% 70% at 50% 8%,
+    rgb(105 4 242 / 0.10),
+    transparent 70%
+  );
+}
+
 /* Section content always sits above the orb field. */
 .above-orbs {
   position: relative;

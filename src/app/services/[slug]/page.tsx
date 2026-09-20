@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { Illustration } from "@/components/ui/Illustration";
 import { services } from "@/data/services";
+import { SERVICE_ART } from "@/data/illustrations";
 import { caseStudies } from "@/data/caseStudies";
 import { PRIMARY_CTA } from "@/data/navigation";
 import { buildMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
@@ -25,6 +27,8 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
+
+  const art = SERVICE_ART[service.slug];
 
   // Case studies that share this capability's category wording.
   const related = caseStudies.filter((c) =>
@@ -58,20 +62,40 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
         }}
       />
 
+      {/* Two columns. The page was a single left-hand text column with the
+          whole right half of the viewport empty from the masthead down, which
+          is what made fourteen capability pages read as one wall of prose.
+          The illustration fills it and gives each capability a face. */}
       <section className="py-16 md:py-24">
         <Container>
-          <Link
-            href="/services"
-            className="inline-flex min-h-[44px] items-center font-mono text-xs text-muted hover:text-text"
-          >
-            What we build
-          </Link>
-          <h1 className="mt-3 max-w-[18ch] text-3xl font-bold text-text">{service.title}</h1>
-          <p className="mt-6 max-w-measure text-md text-muted">{service.description}</p>
-          <div className="mt-9">
-            <Button href={PRIMARY_CTA.href} size="lg">
-              {PRIMARY_CTA.label}
-            </Button>
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+            <div className="lg:col-span-7">
+              <Link
+                href="/services"
+                className="inline-flex min-h-[44px] items-center font-mono text-xs text-muted hover:text-text"
+              >
+                What we build
+              </Link>
+              <h1 className="mt-3 max-w-[18ch] text-3xl font-bold text-text">{service.title}</h1>
+              <p className="mt-6 max-w-measure text-md text-muted">{service.description}</p>
+              <div className="mt-9">
+                <Button href={PRIMARY_CTA.href} size="lg">
+                  {PRIMARY_CTA.label}
+                </Button>
+              </div>
+            </div>
+
+            {art ? (
+              <div className="lg:col-span-5">
+                <Illustration
+                  src={art}
+                  ratio="aspect-[4/3]"
+                  className="rounded-lg shadow-2"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  priority
+                />
+              </div>
+            ) : null}
           </div>
         </Container>
       </section>

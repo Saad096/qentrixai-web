@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Illustration } from "@/components/ui/Illustration";
+import { PRODUCT_ART } from "@/data/illustrations";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -27,6 +29,7 @@ export default async function ProductDetail({ params }: { params: Promise<Params
   if (!product) notFound();
 
   const shots = product.coverMode === "dark" ? [] : [product.cover, ...product.gallery].filter(Boolean);
+  const art = shots.length === 0 ? PRODUCT_ART[product.slug] : undefined;
 
   return (
     <>
@@ -70,7 +73,7 @@ export default async function ProductDetail({ params }: { params: Promise<Params
             {product.category} — {product.status}
           </p>
 
-          {shots[0] && (
+          {shots[0] ? (
             <Image
               src={shots[0]}
               alt={`${product.name} interface`}
@@ -80,7 +83,18 @@ export default async function ProductDetail({ params }: { params: Promise<Params
               sizes="(min-width: 1280px) 1200px, 100vw"
               className="mt-11 w-full rounded-lg object-cover"
             />
-          )}
+          ) : art ? (
+            /* Products marked coverMode="dark" have no screenshot to show and
+               rendered with no imagery at all. A real shot always wins over
+               this -- a picture of the thing beats a drawing of the idea. */
+            <Illustration
+              src={art}
+              ratio="aspect-[21/9]"
+              className="mt-11 rounded-lg shadow-2"
+              sizes="(min-width: 1260px) 1180px, 100vw"
+              priority
+            />
+          ) : null}
         </Container>
       </section>
 

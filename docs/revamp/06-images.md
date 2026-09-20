@@ -217,3 +217,42 @@ grain.
 
 The three asks in section 6 are unchanged. The fallbacks above are a way to
 ship without them — they are not a substitute for real screenshots.
+
+---
+
+## unDraw illustrations (2026-09-21)
+
+Owner direction: the site was "very low graphics" and the detail pages were
+"only boring and plain text". Twenty-six unDraw illustrations now carry the
+insight cards, the capability pages, the case studies, and the three products
+that have no screenshot.
+
+**Licence.** unDraw is free for commercial use with **no attribution
+required** and no account needed. The one restriction is that you may not
+redistribute the illustrations as a standalone illustration library or resell
+them; using them inside a product or site is the intended use. Source:
+<https://undraw.co/license>.
+
+**Two changes on download**, scripted, not hand-edited:
+
+1. The unDraw accent `#6c63ff` is rewritten to the Aurora brand violet
+   `#6904F2`, so the art belongs to this palette rather than to unDraw's.
+2. Nothing else. Figures stay `#2f2e41`, fills stay `#f2f2f2` — which is why
+   every one sits on `.bg-illus-plate`, a light lavender plate, in **both**
+   themes. unDraw is drawn for light grounds; on our near-black page the
+   figures would vanish and the highlights would glare. The plate is a
+   deliberate object, not a theming failure.
+
+Files: `/public/images/undraw/*.svg`, 26 files, 344 KB total.
+Mapping from content to file: `src/data/illustrations.ts`.
+
+| Where | Map | Rule |
+|---|---|---|
+| Insight cards + article pages | `BLOG_ART` | Per slug. A real `cover` on the post still wins. |
+| Capability pages | `SERVICE_ART` | Per slug, all 14 distinct. |
+| Case study pages | `CASE_ART` | Per slug — two are Voice AI and would otherwise pair up. |
+| Product pages | `PRODUCT_ART` | **Only** the three with `coverMode: "dark"`. A real screenshot always wins. |
+
+Source URLs are the `cdn.undraw.co` paths returned by `undraw.co/api/search?q=`;
+each file keeps the unDraw name it was downloaded under, so it can be traced
+back by searching that name on undraw.co.

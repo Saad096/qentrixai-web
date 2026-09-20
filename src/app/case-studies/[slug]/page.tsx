@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
+import { Illustration } from "@/components/ui/Illustration";
+import { CASE_ART } from "@/data/illustrations";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { caseStudies } from "@/data/caseStudies";
@@ -28,6 +30,8 @@ export default async function CaseStudyDetail({ params }: { params: Promise<Para
   const { slug } = await params;
   const study = caseStudies.find((c) => c.slug === slug);
   if (!study) notFound();
+
+  const art = CASE_ART[study.slug];
 
   const others = caseStudies.filter((c) => c.slug !== study.slug).slice(0, 3);
 
@@ -58,6 +62,20 @@ export default async function CaseStudyDetail({ params }: { params: Promise<Para
           <p className="mt-5 font-mono text-xs text-muted">
             {study.category} — {study.client}
           </p>
+
+          {/* These engagements are under NDA, so there is no screenshot to
+              show. An illustration of the shape of the work is the honest
+              substitute -- it decorates without implying it is a picture of
+              the client's system. */}
+          {art ? (
+            <Illustration
+              src={art}
+              ratio="aspect-[21/9]"
+              className="mt-10 rounded-lg shadow-2"
+              sizes="(min-width: 1260px) 1180px, 100vw"
+              priority
+            />
+          ) : null}
 
           {study.metric && (
             <div className="slab-fill mt-11 rounded-lg bg-brand p-8 text-on-brand md:p-10">

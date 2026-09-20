@@ -3,19 +3,20 @@ import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { blogs } from "@/data/blogs";
+import { BLOG_ART } from "@/data/illustrations";
+import { Illustration } from "@/components/ui/Illustration";
 import { formatDate } from "@/lib/utils";
 
 /**
  * Cover art for a post.
  *
- * Every `cover` in `blogs.ts` is currently an empty string, so the row was
- * three blocks of text in a hairline grid. Rather than source nine stock
- * photographs that would say nothing about the writing, each category gets a
- * generated panel built from the theme tokens: a two-stop gradient and the
- * category set in mono.
+ * Order of preference: a real `cover` on the post, then the unDraw
+ * illustration mapped to its slug, then the generated gradient panel.
  *
- * Original, themed, no licence to track, and it stays right if the palette
- * changes. A real `cover` on a post wins over it.
+ * The gradient panels stay as the last resort. They are what a post with no
+ * art mapped to it gets, and they are still the right answer there -- but
+ * three of them side by side said nothing about the writing, which is what
+ * the illustrations fix.
  */
 type Art = { a: string; b: string };
 
@@ -67,6 +68,13 @@ export function InsightsRow() {
                       sizes="(min-width: 768px) 33vw, 100vw"
                       className="object-cover"
                     />
+                  </div>
+                ) : BLOG_ART[post.slug] ? (
+                  <div className="relative">
+                    <Illustration src={BLOG_ART[post.slug]} sizes="(min-width: 768px) 33vw, 100vw" />
+                    <span className="absolute bottom-3 left-3 rounded-full bg-black/45 px-2.5 py-1 font-mono text-xs text-white backdrop-blur-sm">
+                      {post.category}
+                    </span>
                   </div>
                 ) : (
                   <div

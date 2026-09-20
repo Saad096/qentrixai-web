@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
+import { Illustration } from "@/components/ui/Illustration";
+import { BLOG_ART } from "@/data/illustrations";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { blogs, getBlog } from "@/data/blogs";
@@ -32,6 +34,8 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
   const { slug } = await params;
   const blog = getBlog(slug);
   if (!blog) notFound();
+
+  const art = BLOG_ART[blog.slug];
 
   const related = blogs.filter((b) => b.slug !== blog.slug).slice(0, 3);
 
@@ -77,6 +81,18 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
           <p className="mt-5 font-mono text-xs text-muted">
             {formatDate(blog.date)} — {blog.readingTime} — {blog.author}
           </p>
+
+          {/* A banner between the masthead and the body. The article opened
+              straight into prose, so every post looked like the last one. */}
+          {art ? (
+            <Illustration
+              src={art}
+              ratio="aspect-[21/9]"
+              className="mt-10 rounded-lg shadow-2"
+              sizes="(min-width: 1260px) 1180px, 100vw"
+              priority
+            />
+          ) : null}
 
           <div className="mt-12 max-w-measure space-y-6">
             {blog.content.map((para, i) => (

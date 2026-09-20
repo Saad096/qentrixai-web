@@ -63,7 +63,7 @@ export function FaqCta() {
         </div>
       </Section>
 
-      <section className="relative isolate overflow-hidden pb-24 md:pb-32">
+      <section className="relative isolate overflow-hidden py-12 md:py-16">
         <OrbField />
         <Container className="above-orbs">
           {/* Reported as "not centred and very big", and measurement showed it
