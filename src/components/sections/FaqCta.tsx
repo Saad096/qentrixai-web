@@ -66,14 +66,23 @@ export function FaqCta() {
       <section className="relative isolate overflow-hidden pb-24 md:pb-32">
         <OrbField />
         <Container className="above-orbs">
-          <div className="rounded-lg bg-brand p-9 text-on-brand md:p-14">
-            <h2 className="max-w-[20ch] text-2xl font-bold">
+          {/* Centred. The card is geometrically centred on the page and always
+              was, but its contents sat hard left with the whole right half
+              empty, which is what read as "not centred". A final CTA is the
+              one block on the page with a single message and a single action,
+              so centring it is also the right call typographically. */}
+          <div className="rounded-lg bg-brand px-9 py-14 text-center text-on-brand md:px-14 md:py-20">
+            <h2 className="mx-auto max-w-[24ch] text-2xl font-bold">
               Bring a goal. Leave with an architecture and a timeline.
             </h2>
-            <p className="mt-4 max-w-measure text-md">
+            <p className="mx-auto mt-5 max-w-[56ch] text-md">
               Thirty minutes, no pitch deck. If we are not the right fit, we will say so on the call.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            {/* The caption sits under the button, not beside it. Laid out as a
+                row the pair centres as a group, which leaves the button itself
+                visibly left of centre — the exact thing this block is meant to
+                fix. */}
+            <div className="mt-9 flex flex-col items-center gap-3">
               <Button
                 href={PRIMARY_CTA.href}
                 size="lg"

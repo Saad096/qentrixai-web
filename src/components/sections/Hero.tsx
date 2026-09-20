@@ -6,7 +6,6 @@
  * The slab is the only thing that performs, and it animates clip-path, which
  * the compositor handles without touching layout.
  */
-import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { OrbField } from "@/components/ui/OrbField";
 import { Button } from "@/components/ui/Button";
@@ -28,26 +27,12 @@ export function Hero() {
        transparent at all. The same amount goes back on as top padding, so
        nothing lands underneath the nav. */
     <section className="grain relative isolate -mt-[68px] overflow-hidden pb-16 pt-[calc(4rem+68px)] md:pb-28 md:pt-[calc(6rem+68px)]">
-      {/* The artwork is the hero's background now, not a bordered panel on the
-          right (owner direction). No frame, no shadow — it bleeds to the edges
-          and the scrim below carries the text contrast. */}
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <Image
-          src="/images/abstract/aurora-ripple.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-right"
-        />
-        {/* Scrim. The headline has to clear 4.5:1 over a photograph, and a
-            photograph does not hold still across breakpoints. The gradient is
-            opaque on the text side and clears toward the art. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/85 to-bg/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg/60" />
-      </div>
-
-      <OrbField />
+      {/* The orb field is the hero's background (owner direction) — no
+          photograph, no frame. The `hero` variant scales the orbs up and
+          raises their opacity so they carry the whole section rather than
+          sitting as faint atmosphere behind a picture.
+          It animates transform only, so it stays on the compositor. */}
+      <OrbField className="orb-field--hero" />
       <Container className="above-orbs">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-8">

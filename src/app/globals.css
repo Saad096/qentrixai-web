@@ -213,6 +213,60 @@ body {
   animation-delay: -8s;
 }
 
+/* ------------------------------------------------------------------ */
+/* Hero variant.                                                        */
+/*                                                                      */
+/* In the hero the orbs are the background rather than atmosphere       */
+/* behind something else, so they are larger, denser and slower. Still  */
+/* transform-only, so the cost is unchanged: this is the same three     */
+/* elements, drawn bigger.                                              */
+/* ------------------------------------------------------------------ */
+/* The light theme's orb stops are deliberately pale where the field is
+   atmosphere behind other content. As the hero's entire background they
+   simply disappeared, so the hero variant gets more saturated stops. Still
+   light enough that #000 body text clears its contrast floor over them. */
+.light .orb-field--hero {
+  --orb-1: 167 139 250;
+  --orb-2: 196 181 253;
+  --orb-3: 221 214 254;
+  --orb-alpha: 0.5;
+}
+
+.orb-field--hero .orb {
+  opacity: calc(var(--orb-alpha) * 1.55);
+  filter: blur(calc(var(--orb-blur) * 1.25));
+}
+
+.orb-field--hero .orb-a {
+  width: 74vw;
+  height: 74vw;
+  max-width: 980px;
+  max-height: 980px;
+  top: -26%;
+  left: -16%;
+  animation-duration: 34s;
+}
+
+.orb-field--hero .orb-b {
+  width: 66vw;
+  height: 66vw;
+  max-width: 880px;
+  max-height: 880px;
+  top: -8%;
+  right: -14%;
+  animation-duration: 40s;
+}
+
+.orb-field--hero .orb-c {
+  width: 56vw;
+  height: 56vw;
+  max-width: 760px;
+  max-height: 760px;
+  bottom: -34%;
+  left: 34%;
+  animation-duration: 46s;
+}
+
 @keyframes orb-drift {
   0% { transform: translate3d(0, 0, 0) scale(1); }
   33% { transform: translate3d(5%, -4%, 0) scale(1.08); }
