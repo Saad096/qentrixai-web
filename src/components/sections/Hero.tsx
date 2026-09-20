@@ -28,10 +28,29 @@ export function Hero() {
        transparent at all. The same amount goes back on as top padding, so
        nothing lands underneath the nav. */
     <section className="grain relative isolate -mt-[68px] overflow-hidden pb-16 pt-[calc(4rem+68px)] md:pb-28 md:pt-[calc(6rem+68px)]">
+      {/* The artwork is the hero's background now, not a bordered panel on the
+          right (owner direction). No frame, no shadow — it bleeds to the edges
+          and the scrim below carries the text contrast. */}
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
+        <Image
+          src="/images/abstract/aurora-ripple.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-right"
+        />
+        {/* Scrim. The headline has to clear 4.5:1 over a photograph, and a
+            photograph does not hold still across breakpoints. The gradient is
+            opaque on the text side and clears toward the art. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/85 to-bg/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg/60" />
+      </div>
+
       <OrbField />
       <Container className="above-orbs">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-8">
             {/* Proof, then claim. Both reference sites lead with evidence and
                 put the headline second; the trusted-by line used to sit below
                 the fold where nobody weighing us up would reach it. */}
@@ -57,24 +76,11 @@ export function Hero() {
             </p>
           </div>
 
-          <div className="lg:col-span-5">
-            {/* Shorter on phones: stacked full-width it becomes the LCP
-                element, and a square crop pushed LCP to 2.5s. */}
-            <div
-              data-parallax="0.06"
-              className="relative aspect-[16/10] w-full overflow-hidden rounded-lg shadow-2 lg:aspect-square"
-            >
-              <Image
-                src="/images/abstract/aurora-ripple.jpg"
-                alt=""
-                fill
-                priority
-                sizes="(min-width: 1024px) 40vw, 92vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
         </div>
+
+        {/* The hero needs vertical room for the background art to read at all
+            on a short viewport. */}
+        <div className="h-8 md:h-24" aria-hidden="true" />
 
         <div className="slab-fill mt-12 rounded-lg bg-brand p-7 text-on-brand md:mt-14 md:p-9">
           <div className="flex flex-col gap-9 lg:flex-row lg:items-center lg:justify-between">

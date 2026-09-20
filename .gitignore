@@ -115,3 +115,4 @@ $RECYCLE.BIN/
 
 # Working folder of source imagery (most of it is not shipped -- see docs/revamp/06-images.md)
 /images/
+.next-prod/

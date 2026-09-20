@@ -33,21 +33,31 @@ export function WhatWeBuild() {
       </ul>
 
       <div className="lg:col-span-4">
-        {/* The artwork is dark chips on a transparent ground, so on the light
-            theme it floated as unexplained dark blobs on white. It gets a
-            committed dark panel in both themes instead — the same object,
-            deliberately placed, rather than an asset that only works in one
-            theme. */}
-        <div className="hidden overflow-hidden rounded-lg bg-n-900 p-5 shadow-2 lg:block">
-          <Image
-            src="/images/abstract/system-cluster.png"
-            alt=""
-            width={900}
-            height={900}
-            sizes="(min-width: 1024px) 32vw, 0px"
-            className="w-full"
-          />
-        </div>
+        {/* The artwork is light vendor marks on dark chips with a transparent
+            ground, so it can only ever sit on something dark. On the light
+            theme it first floated as unexplained black blobs on white; a bare
+            black box then read as a rendering fault rather than a choice.
+            It is framed as a deliberate object instead: a dark panel with a
+            brand-tinted edge, a glow, and a caption that says what it is. */}
+        <figure className="hidden overflow-hidden rounded-lg bg-n-950 shadow-3 ring-1 ring-brand/25 lg:block">
+          <div className="relative">
+            <div
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_45%,rgb(var(--color-brand)/0.28),transparent_70%)]"
+              aria-hidden="true"
+            />
+            <Image
+              src="/images/abstract/system-cluster.png"
+              alt=""
+              width={900}
+              height={900}
+              sizes="(min-width: 1024px) 32vw, 0px"
+              className="relative w-full"
+            />
+          </div>
+          <figcaption className="border-t border-white/10 px-5 py-3.5 font-mono text-xs text-n-400">
+            Models we run in production
+          </figcaption>
+        </figure>
       </div>
       </div>
 

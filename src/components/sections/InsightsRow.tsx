@@ -17,16 +17,36 @@ import { formatDate } from "@/lib/utils";
  * Original, themed, no licence to track, and it stays right if the palette
  * changes. A real `cover` on a post wins over it.
  */
-const CATEGORY_ART: Record<string, string> = {
-  MCP: "from-brand/35 to-accent/25",
-  "Agentic AI": "from-accent/35 to-brand/20",
-  RAG: "from-brand/25 to-info/30",
-  "Voice AI": "from-danger/25 to-brand/30",
-  MLOps: "from-info/30 to-accent/25",
-  "AI Strategy": "from-brand/20 to-accent/35",
-  Product: "from-accent/30 to-info/25",
+type Art = { a: string; b: string };
+
+/**
+ * Two radial stops per category, as raw token references so the alpha can go
+ * high enough to actually read. The first attempt used Tailwind gradient
+ * utilities at 20-35% alpha, which on the light theme washed out to pale
+ * rectangles that looked like images that had failed to load.
+ */
+const CATEGORY_ART: Record<string, Art> = {
+  MCP: { a: "var(--color-brand)", b: "var(--color-accent)" },
+  "Agentic AI": { a: "var(--color-accent)", b: "var(--color-brand)" },
+  RAG: { a: "var(--color-brand)", b: "var(--color-info)" },
+  "Voice AI": { a: "var(--color-danger)", b: "var(--color-brand)" },
+  MLOps: { a: "var(--color-info)", b: "var(--color-accent)" },
+  "AI Strategy": { a: "var(--color-accent)", b: "var(--color-brand)" },
+  Product: { a: "var(--color-info)", b: "var(--color-brand)" },
 };
-const DEFAULT_ART = "from-brand/25 to-accent/25";
+const DEFAULT_ART: Art = { a: "var(--color-brand)", b: "var(--color-accent)" };
+
+/** A mesh of two offset radials over a deep base, plus the grain overlay. */
+function artStyle({ a, b }: Art) {
+  return {
+    backgroundColor: "rgb(var(--color-surface-2))",
+    backgroundImage: [
+      `radial-gradient(75% 85% at 18% 12%, rgb(${a} / 0.85), transparent 68%)`,
+      `radial-gradient(70% 80% at 88% 78%, rgb(${b} / 0.75), transparent 66%)`,
+      `linear-gradient(140deg, rgb(${a} / 0.30), rgb(${b} / 0.18))`,
+    ].join(", "),
+  };
+}
 
 export function InsightsRow() {
   const latest = [...blogs].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 3);
@@ -51,11 +71,12 @@ export function InsightsRow() {
                 ) : (
                   <div
                     aria-hidden="true"
-                    className={`grain relative flex aspect-[16/9] w-full items-end bg-gradient-to-br p-5 ${
-                      CATEGORY_ART[post.category] ?? DEFAULT_ART
-                    }`}
+                    className="grain relative flex aspect-[16/9] w-full items-end p-5"
+                    style={artStyle(CATEGORY_ART[post.category] ?? DEFAULT_ART)}
                   >
-                    <span className="font-mono text-xs text-text">{post.category}</span>
+                    <span className="rounded-full bg-black/35 px-2.5 py-1 font-mono text-xs text-white backdrop-blur-sm">
+                      {post.category}
+                    </span>
                   </div>
                 )}
 
