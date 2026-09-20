@@ -4,6 +4,7 @@
  * WhyUs, ProductsShowcase).
  */
 import Image from "next/image";
+import { GapDiagram } from "@/components/ui/GapDiagram";
 import { Section } from "@/components/ui/Section";
 
 export function TheGap() {
@@ -31,6 +32,10 @@ export function TheGap() {
           That work is unglamorous and it is most of the job. We are not a slide-deck consultancy,
           an offshore body shop, or a demo factory.
         </p>
+      </div>
+
+      <div className="mt-11" data-reveal>
+        <GapDiagram />
       </div>
     </Section>
   );
