@@ -24,7 +24,11 @@ for (const theme of ["dark", "light"]) {
   });
   for (const route of routes) {
     const page = await context.newPage();
-    await page.goto(new URL(route, base).href, { waitUntil: "networkidle" });
+    // "load" rather than "networkidle": the orb field animates continuously,
+    // so on a busy machine the network-idle heuristic can fail to settle and
+    // time out on a page that is perfectly fine.
+    await page.goto(new URL(route, base).href, { waitUntil: "load", timeout: 45_000 });
+    await page.waitForTimeout(400);
     await page.addScriptTag({ content: axeSource });
     const results = await page.evaluate(async () => {
       // @ts-expect-error injected at runtime

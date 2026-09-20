@@ -164,3 +164,56 @@ Rule: a diagram shows a mechanism we actually ship. No decorative node-and-line 
 3. **Permission to delete** `team/mawra-muneer.png`, `team/shahid-nawaz.jpeg` and `team/shafaat-ullah.jpeg` from the repo, since the founder-only decision means nothing renders them. Removing the first alone takes 2.0 MB out of `/public`.
 
 *Resolved at GATE 4: no stock photography; team is founder-only; both Unsplash textures retired (608 KB).*
+
+---
+
+## 7. Visual overhaul addendum — 2026-09-20
+
+Three imagery decisions taken during the overhaul, recorded here because none
+of them adds a file to `/public` and so none would otherwise show up in an
+audit of the directory.
+
+### 7.1 Generated blog covers — *no licence, no file*
+
+Every `cover` in `src/data/blogs.ts` is an empty string, so the insights row
+was three blocks of text in a hairline grid.
+
+Rather than source nine stock photographs that would say nothing about the
+writing, each category gets a **generated gradient panel** built from the
+theme tokens, in `InsightsRow.tsx` (`CATEGORY_ART`). Original work, no file,
+no licence to track, and it stays correct if the palette moves. A real
+`cover` on a post takes precedence over it automatically.
+
+### 7.2 Case-study fallback art — *existing assets, reused honestly*
+
+Only `multi-agent-ai-platform` has a published screenshot; the rest are under
+NDA. Imaging one of three cards and leaving two bare reads worse than imaging
+none, so the others fall back to the abstract renders already in
+`/public/images/abstract`, keyed by category in `SelectedWork.tsx`
+(`FALLBACK_ART`).
+
+**Abstract is the point.** It decorates without implying it is a screenshot of
+the client's system. **Never** substitute another client's interface here, and
+never a stock photograph of an office — both would read as a claim.
+
+### 7.3 `system-cluster.png` is dark-only artwork
+
+It is dark chips on a transparent ground, so on the light theme it floated as
+unexplained dark blobs on white. It now sits on a committed dark panel in both
+themes (`WhatWeBuild.tsx`).
+
+Note it carries **third-party vendor marks**. It ships as-is because it was
+already live, but it is the one asset in the repo that would need replacing if
+the vendor-logo exclusion in section 2 is ever enforced strictly.
+
+### 7.4 `violet-wave.jpg` is dark-only
+
+At 30% over the light theme's lavender wash it averaged into a muddy
+grey-purple that dulled the heading and swallowed the gap diagram. `TheGap`
+renders it under `dark:` only; the light theme is carried by the wash and
+grain.
+
+### 7.5 Still outstanding
+
+The three asks in section 6 are unchanged. The fallbacks above are a way to
+ship without them — they are not a substitute for real screenshots.

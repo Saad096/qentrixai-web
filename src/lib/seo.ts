@@ -84,10 +84,17 @@ export function buildMetadata({
       follow: true,
       googleBot: { index: true, follow: true, "max-image-preview": "large" },
     },
+    // Favicons are referenced by URL, so they bypass next/image and ship at
+    // whatever size the file is. All three pointed at the 512px 84KB master,
+    // which every page then downloaded in full for a 32px slot. Sized files
+    // instead: 1KB, 6KB and 25KB.
     icons: {
-      icon: [{ url: "/logo/qentrix-mark.png?v=3", type: "image/png", sizes: "512x512" }],
-      shortcut: "/logo/qentrix-mark.png?v=3",
-      apple: "/logo/qentrix-mark.png?v=3",
+      icon: [
+        { url: "/logo/icon-32.png?v=4", type: "image/png", sizes: "32x32" },
+        { url: "/logo/icon-512.png?v=4", type: "image/png", sizes: "512x512" },
+      ],
+      shortcut: "/logo/icon-32.png?v=4",
+      apple: "/logo/icon-180.png?v=4",
     },
   };
 }
