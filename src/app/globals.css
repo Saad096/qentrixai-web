@@ -48,10 +48,27 @@
 /* ------------------------------------------------------------------ */
 /* Dark is the default theme (Quixlab reference).                       */
 /* ------------------------------------------------------------------ */
+/*
+ * Grounds went near-black on 2026-09-21 at the owner's instruction: the
+ * sampled Quixlab surface #252A32 read as grey plastic wherever it was used
+ * as a card, and it was the weakest ground on the page for reading off.
+ * These are theme values rather than ramp steps, because the ramp holds the
+ * sampled reference colours and these deliberately depart from them.
+ *
+ * Every foreground gets *more* contrast on the new grounds, so nothing here
+ * can regress accessibility:
+ *
+ *   on card surface   text 13.68 -> 18.29   muted 5.67 -> 7.58   link 5.04 -> 6.74
+ *   on page base      text 18.05 -> 19.22   muted 7.48 -> 7.97   link 6.65 -> 7.08
+ *
+ * `brand` as text is still banned in dark -- it measures 3.93:1 on the new
+ * card surface, no better than before. Fills only, `link` for text.
+ */
 :root {
-  --color-bg: var(--n-900);
-  --color-surface: var(--n-800);
-  --color-surface-2: var(--n-850);
+  --color-bg: 5 6 9;             /* #050609 near-black page */
+  --color-surface: 12 14 21;     /* #0C0E15 card, lifted just off the page */
+  --color-surface-2: 9 10 16;    /* #090A10 band, between the two */
+  --art-ground: 3 4 7;           /* the stage card illustrations are drawn on */
   --color-text: 248 249 250;     /* #F8F9FA */
   --color-muted: var(--n-400);   /* 7.48:1 on the base */
 
@@ -113,6 +130,7 @@
   --color-bg: var(--n-0);
   --color-surface: var(--n-50);
   --color-surface-2: var(--n-100);
+  --art-ground: 248 247 253;     /* the stage card illustrations are drawn on */
   --color-text: var(--n-1000);   /* VamTam sets pure black */
   --color-muted: var(--n-600);   /* 7.36:1 on white */
 
@@ -305,6 +323,151 @@ body {
 .brand-gradient {
   background-color: rgb(var(--color-brand));
   background-image: linear-gradient(135deg, rgb(var(--grad-a)) 0%, rgb(var(--grad-b)) 100%);
+}
+
+/* The same two stops, arranged radially instead of on a 135deg ramp.
+   On a wide panel the linear version puts its bright end in the top-left
+   corner while the copy sits in the middle, so centred text reads as pushed
+   right -- the final CTA was reported as "not centred" when it was centred to
+   the pixel. Anchoring the light stop on the copy puts the visual mass and
+   the text in the same place. Both stops clear 4.9:1 against on-brand white
+   in either theme, so the blend between them cannot fail contrast. */
+.brand-gradient-radial {
+  background-color: rgb(var(--grad-b));
+  background-image: radial-gradient(
+    120% 150% at 50% 34%,
+    rgb(var(--grad-a)) 0%,
+    rgb(var(--grad-b)) 78%
+  );
+}
+
+/* The gradient that keeps a near-black card from reading as a flat hole.
+   One brand-tinted wash falling off the top edge -- enough to give the
+   surface a light direction, far too faint to cost any text contrast
+   (7% of the brand hue moves the card's luminance by under a point). */
+.surface-sheen {
+  background-image: linear-gradient(
+    180deg,
+    rgb(var(--color-brand) / 0.07) 0%,
+    rgb(var(--color-brand) / 0) 55%
+  );
+}
+
+/* A rail that scrolls sideways should not also show a scrollbar; the pills
+   running to the edge are the affordance. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Card illustrations.                                                  */
+/*                                                                      */
+/* Four bespoke diagrams, one per capability, drawn from tokens rather  */
+/* than shipped as images: they theme correctly, cost no bytes, and     */
+/* stay sharp at any density. The reference site's equivalents are a    */
+/* paid template's assets and are not used here.                        */
+/*                                                                      */
+/* Every animation below is decorative and transform/opacity only, so   */
+/* it stays on the compositor. All of it stops under reduced motion --  */
+/* see the block at the end of this file.                               */
+/* ------------------------------------------------------------------ */
+.art-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    70% 60% at 50% 42%,
+    rgb(var(--color-brand) / 0.22),
+    transparent 72%
+  );
+}
+
+.art-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(to right, rgb(var(--color-text) / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-text) / 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(70% 70% at 50% 45%, #000, transparent 75%);
+}
+
+/* Orbit rings turn; the chips riding them do not, so their labels stay
+   upright and readable. */
+.art-ring {
+  animation: art-spin 34s linear infinite;
+}
+.art-ring-slow {
+  animation: art-spin 52s linear infinite reverse;
+}
+
+@keyframes art-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A packet running the agent graph's happy path. */
+.art-packet {
+  animation: art-travel 4.2s ease-in-out infinite;
+}
+
+@keyframes art-travel {
+  0%,
+  8% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  92%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* Waveform bars. Each gets its own delay inline. */
+.art-bar {
+  transform-origin: center;
+  animation: art-pulse 1.9s ease-in-out infinite;
+}
+
+@keyframes art-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Retrieval: the matched chunks light up in turn. */
+.art-hit {
+  animation: art-blink 3.6s ease-in-out infinite;
+}
+
+@keyframes art-blink {
+  0%,
+  55%,
+  100% {
+    opacity: 0.35;
+  }
+  20%,
+  40% {
+    opacity: 1;
+  }
 }
 
 /* Section content always sits above the orb field. */

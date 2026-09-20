@@ -21,14 +21,31 @@ One adjustment was necessary. Quixlab's `#9B31FF` measures **3.88:1** on its own
 - Neon-cyber clichés: circuit boards, glowing brains, matrix rain.
 - Typefaces: Inter, Roboto, Arial, Space Grotesk.
 - Generated-design tells: tracked-out ALL-CAPS eyebrows, meta strings joined with middle dots, `→` appended to button labels, one word of a headline accented in another colour, three identical rounded cards with the same shadow as a default section layout, numbered `01/02/03` markers on content that is not a sequence.
+- **Raster artwork that only works on one theme.** `/images/abstract/system-cluster.png` was light vendor marks on a transparent ground, so on light it had to be boxed in a black panel with a caption explaining itself. Card artwork is drawn from tokens instead — see below.
+
+## Card artwork (2026-09-21)
+
+Four diagrams in `src/components/art/`, one per featured capability, each on
+an `ArtPanel` stage: `ModelOrbit`, `AgentGraph`, `RetrievalFlow`, `VoiceWave`.
+
+- Drawn from tokens, not shipped as images: they theme correctly, cost no
+  bytes and stay sharp at any density.
+- **No vendor logos.** Model names are set in mono type. Redrawing the OpenAI,
+  Anthropic and Google marks from memory gets them subtly wrong, they are
+  trademarks, and a raster of them is what broke the light theme.
+- Nothing is taken from the reference templates. Both are paid commercial
+  products; their layout and rhythm are fair to study, their asset files are
+  not ours to ship.
+- All motion is transform/opacity only and stops under `prefers-reduced-motion`.
 
 ## Colour — Aurora
 
 | Role | Dark (default, Quixlab) | Light (VamTam) |
 |---|---|---|
-| `bg` | `#0D1017` blue-black | `#FFFFFF` |
-| `surface` | `#252A32` | `#FAF9F7` warm band |
-| `surface-2` | `#191D2A` | `#F1EFFB` lavender tint |
+| `bg` | `#050609` near-black | `#FFFFFF` |
+| `surface` | `#0C0E15` + `.surface-sheen` | `#FAF9F7` warm band |
+| `surface-2` | `#090A10` | `#F1EFFB` lavender tint |
+| `art-ground` | `#030407` | `#F8F7FD` |
 | `border` | `rgb(255 255 255 / .10)` | `rgb(0 0 0 / .12)` |
 | `text` | `#F8F9FA` | `#000000` |
 | `muted` | `#9AA3B2` (7.48:1) | `#52565E` (7.36:1) |
@@ -38,7 +55,33 @@ One adjustment was necessary. Quixlab's `#9B31FF` measures **3.88:1** on its own
 | `on-brand` | `#FFFFFF` (4.91:1) | `#FFFFFF` (7.24:1) |
 | orb stops | `#9B31FF`, `#144C99`, `#F52060` | `#BCAFFC`, `#DBD3FF`, `#F7F7FF` |
 
-**Verified:** zero axe violations across every route in both themes at 412px and 1440px, Lighthouse accessibility 100 on every page.
+### Dark grounds went near-black (2026-09-21)
+
+Owner direction: the sampled Quixlab surface `#252A32` read as grey plastic
+wherever it was used as a card. The three dark grounds are now near-black and
+every card carries `.surface-sheen`, one brand-tinted wash falling off its top
+edge, so a card still reads as an object rather than a hole in the page.
+
+These depart from the sampled reference values deliberately, so they are
+theme values in `globals.css` rather than steps on the `--n-*` ramp; the ramp
+still holds what was sampled.
+
+Contrast only improved. Nothing here can regress accessibility:
+
+| | text | muted | link | brand (fill) |
+|---|---|---|---|---|
+| card, was `#252A32` | 13.68 | 5.67 | 5.04 | 2.94 |
+| card, now `#0C0E15` | **18.29** | **7.58** | **6.74** | 3.93 |
+| page, was `#0D1017` | 18.05 | 7.48 | 6.65 | 3.88 |
+| page, now `#050609` | **19.22** | **7.97** | **7.08** | 4.13 |
+
+`brand` as text stays banned in dark — 3.93:1 on the new card surface is no
+better than it was. Fills only; `link` for text.
+
+**Verified:** zero axe violations across every route in both themes at 390px
+and 1440px, re-run after the near-black change; no horizontal overflow at
+360 / 390 / 768 / 1024 / 1440 / 1920 in either theme. Lighthouse accessibility
+100 on every page.
 
 Tokens are CSS variables in `src/app/globals.css`, mapped to semantic Tailwind colours in `tailwind.config.ts`. **No raw hex in components.**
 

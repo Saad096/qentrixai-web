@@ -10,6 +10,11 @@ import { cn } from "@/lib/utils";
  * `interactive` adds the hover lift. Use it only where the whole card is a
  * link or a button: a lift on something you cannot click is a lie about
  * affordance.
+ *
+ * `surface-sheen` is on the base, not opt-in. The card ground went near-black
+ * on 2026-09-21 and a flat near-black rectangle reads as a hole punched in
+ * the page rather than an object sitting on it. The sheen gives it a light
+ * direction. Every card wants that, so none of them should have to ask.
  */
 export function Card({
   as: Tag = "div",
@@ -27,7 +32,7 @@ export function Card({
   return (
     <Tag
       className={cn(
-        "rounded-md bg-surface",
+        "rounded-md bg-surface surface-sheen",
         elevation === 1 ? "shadow-1" : "shadow-2",
         interactive && "lift",
         className
