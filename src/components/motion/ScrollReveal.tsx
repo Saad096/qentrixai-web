@@ -55,8 +55,46 @@ export function ScrollReveal() {
           });
         });
 
+        // Parallax. The fraction is read off the element, so a section tunes
+        // its own depth without needing another component around it.
+        const parallax = Array.from(
+          document.querySelectorAll<HTMLElement>("[data-parallax]")
+        ).map((el) =>
+          gsap.to(el, {
+            yPercent: () => Number(el.dataset.parallax ?? 0) * -100,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.5,
+            },
+          })
+        );
+
+        // Progress line: scales a rule from 0 to 1 as its list passes, so the
+        // four phases read as a sequence rather than four separate cards.
+        const lines = Array.from(
+          document.querySelectorAll<HTMLElement>("[data-progress-line]")
+        ).map((el) =>
+          gsap.fromTo(
+            el,
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: el.parentElement ?? el,
+                start: "top 85%",
+                end: "bottom 55%",
+                scrub: 0.4,
+              },
+            }
+          )
+        );
+
         cleanup = () => {
-          tweens.forEach((t) => {
+          [...tweens, ...parallax, ...lines].forEach((t) => {
             t.scrollTrigger?.kill();
             t.kill();
           });

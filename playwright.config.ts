@@ -4,7 +4,22 @@ import { defineConfig, devices } from "@playwright/test";
  * The matrix from CLAUDE.md section 9.1, minus WebKit: this host cannot run it
  * (missing libavif13). Install it with `sudo npx playwright install-deps
  * webkit` and the three WebKit projects below start working.
+ *
+ * Browser binaries: Playwright 1.63 ships no bundled Chromium or Firefox for
+ * macOS 12, and `npx playwright install` refuses on this OS. The Chromium
+ * projects therefore drive the locally installed Google Chrome, which is the
+ * same engine. Firefox has no local equivalent, so it runs only where a
+ * bundled build exists -- set PW_FIREFOX=1 (CI does) to include it.
  */
+const CHROME = { channel: "chrome" } as const;
+const firefoxProjects = process.env.CI || process.env.PW_FIREFOX
+  ? [
+      {
+        name: "firefox",
+        use: { ...devices["Desktop Firefox"], viewport: { width: 1440, height: 900 } },
+      },
+    ]
+  : [];
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
@@ -25,13 +40,13 @@ export default defineConfig({
         timeout: 120_000,
       },
   projects: [
-    { name: "phone-small", use: { ...devices["Desktop Chrome"], viewport: { width: 360, height: 780 }, isMobile: false } },
-    { name: "phone-large", use: { ...devices["Desktop Chrome"], viewport: { width: 430, height: 932 } } },
-    { name: "tablet", use: { ...devices["Desktop Chrome"], viewport: { width: 768, height: 1024 } } },
-    { name: "laptop", use: { ...devices["Desktop Chrome"], viewport: { width: 1366, height: 768 } } },
-    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } },
-    { name: "wide", use: { ...devices["Desktop Chrome"], viewport: { width: 1920, height: 1080 } } },
-    { name: "ultrawide", use: { ...devices["Desktop Chrome"], viewport: { width: 2560, height: 1440 } } },
-    { name: "firefox", use: { ...devices["Desktop Firefox"], viewport: { width: 1440, height: 900 } } },
+    { name: "phone-small", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 360, height: 780 }, isMobile: false } },
+    { name: "phone-large", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 430, height: 932 } } },
+    { name: "tablet", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 768, height: 1024 } } },
+    { name: "laptop", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 1366, height: 768 } } },
+    { name: "desktop", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 1440, height: 900 } } },
+    { name: "wide", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 1920, height: 1080 } } },
+    { name: "ultrawide", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 2560, height: 1440 } } },
+    ...firefoxProjects,
   ],
 });
