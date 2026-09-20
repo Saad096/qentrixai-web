@@ -12,8 +12,31 @@ import { PRIMARY_CTA } from "@/data/navigation";
 export function FaqCta() {
   return (
     <>
-      <Section id="faq" eyebrow="Before the call" heading="Questions buyers actually ask." ground="band">
-        <ul className="mt-11 max-w-measure">
+      {/* Two columns rather than one.
+          The accordion was capped at `max-w-measure` and left-aligned, which
+          left the entire right half of the section empty — on /contact that
+          dead space is most of the page. The heading and a standing offer to
+          just ask now hold the left column, the questions fill the right. */}
+      <Section id="faq" ground="band">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-5" data-reveal>
+            <p className="mb-4 font-mono text-xs text-muted">Before the call</p>
+            <h2 className="text-3xl font-bold text-text">Questions buyers actually ask.</h2>
+            <p className="mt-5 text-md text-muted">
+              If yours is not here, ask it on the call. We answer scoping and architecture
+              questions before there is a contract.
+            </p>
+            <div className="mt-8 rounded-md bg-surface p-7 shadow-1">
+              <p className="text-base text-muted">
+                Thirty minutes, no pitch deck. If we are not the right fit, we will say so.
+              </p>
+              <Button href={PRIMARY_CTA.href} size="lg" className="mt-5 w-full sm:w-auto">
+                {PRIMARY_CTA.label}
+              </Button>
+            </div>
+          </div>
+
+          <ul className="lg:col-span-7">
           {faqs.map((faq) => (
             <li key={faq.question} className="border-t border-[color:var(--color-border)]">
               <details className="group">
@@ -36,7 +59,8 @@ export function FaqCta() {
               </details>
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
       </Section>
 
       <section className="relative isolate overflow-hidden pb-24 md:pb-32">

@@ -26,10 +26,25 @@ const FOCUSABLE = 'a[href], button:not([disabled])';
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
   const panelRef = React.useRef<HTMLDivElement>(null);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   React.useEffect(() => setOpen(false), [pathname]);
+
+  /**
+   * Transparent at the top of the page, glass once scrolled.
+   *
+   * Passive listener writing a boolean, so it cannot block scrolling, and the
+   * state only changes twice per page — crossing the threshold in either
+   * direction — rather than on every frame.
+   */
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   React.useEffect(() => {
     if (!open) {
@@ -72,7 +87,17 @@ export function Header() {
     pathname === href || (href !== "/" && pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[color:var(--color-border)] bg-bg">
+    <header
+      className={cn(
+        "sticky top-0 z-50 transition-colors duration-200",
+        // Transparent over the hero, glass once you have scrolled past it.
+        // While the mobile panel is open the bar must be opaque regardless,
+        // or the menu reads on top of the page content behind it.
+        scrolled || open
+          ? "border-b border-[color:var(--color-border)] bg-bg/80 backdrop-blur-md supports-[not(backdrop-filter:blur(0))]:bg-bg"
+          : "border-b border-transparent bg-transparent"
+      )}
+    >
       <Container>
         <div className="flex h-[68px] items-center justify-between gap-4">
           <Logo />

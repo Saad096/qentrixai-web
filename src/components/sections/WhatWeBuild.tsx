@@ -33,14 +33,21 @@ export function WhatWeBuild() {
       </ul>
 
       <div className="lg:col-span-4">
-        <Image
-          src="/images/abstract/system-cluster.png"
-          alt=""
-          width={900}
-          height={900}
-          sizes="(min-width: 1024px) 32vw, 0px"
-          className="hidden w-full rounded-lg lg:block"
-        />
+        {/* The artwork is dark chips on a transparent ground, so on the light
+            theme it floated as unexplained dark blobs on white. It gets a
+            committed dark panel in both themes instead — the same object,
+            deliberately placed, rather than an asset that only works in one
+            theme. */}
+        <div className="hidden overflow-hidden rounded-lg bg-n-900 p-5 shadow-2 lg:block">
+          <Image
+            src="/images/abstract/system-cluster.png"
+            alt=""
+            width={900}
+            height={900}
+            sizes="(min-width: 1024px) 32vw, 0px"
+            className="w-full"
+          />
+        </div>
       </div>
       </div>
 

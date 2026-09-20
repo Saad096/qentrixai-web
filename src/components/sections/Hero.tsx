@@ -21,7 +21,13 @@ export function Hero() {
     names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0];
 
   return (
-    <section className="grain relative isolate overflow-hidden pb-16 pt-16 md:pb-28 md:pt-24">
+    /* The header is transparent until you scroll, and it is sticky rather
+       than fixed — so it sits in normal flow and would otherwise show plain
+       page background. Pulling the hero up by the header's height puts the
+       orb field and grain behind the bar, which is the point of making it
+       transparent at all. The same amount goes back on as top padding, so
+       nothing lands underneath the nav. */
+    <section className="grain relative isolate -mt-[68px] overflow-hidden pb-16 pt-[calc(4rem+68px)] md:pb-28 md:pt-[calc(6rem+68px)]">
       <OrbField />
       <Container className="above-orbs">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">

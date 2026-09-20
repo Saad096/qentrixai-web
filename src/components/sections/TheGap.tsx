@@ -15,13 +15,21 @@ export function TheGap() {
       ground="wash"
       className="relative isolate overflow-hidden"
     >
-      <Image
-        src="/images/abstract/violet-wave.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="-z-10 object-cover opacity-30"
-      />
+      {/* Dark theme only.
+          violet-wave.jpg is a dark photograph. At 30% over the light theme's
+          lavender wash the two averaged into a muddy grey-purple that dulled
+          the heading and swallowed the diagram. In light the wash and grain
+          carry the section on their own; in dark the photograph has something
+          to sit against, so it stays and gets a little more presence. */}
+      <div className="absolute inset-0 -z-10 hidden dark:block">
+        <Image
+          src="/images/abstract/violet-wave.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover opacity-40"
+        />
+      </div>
       <div className="mt-8 max-w-measure space-y-5 text-md text-muted">
         <p>
           A model that answers well in a notebook is not a system. Production means retrieval that

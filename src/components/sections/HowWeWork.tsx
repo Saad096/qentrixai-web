@@ -5,9 +5,21 @@
  * Numbered because it genuinely is a sequence -- the one case where numbered
  * markers earn their place.
  */
+import { Activity, Hammer, PenTool, Target } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { phases } from "@/data/company";
+
+/**
+ * A mark per phase. Keyed by title so `company.ts` stays free of any
+ * dependency on the icon set.
+ */
+const MARKS: Record<string, typeof Target> = {
+  Frame: Target,
+  Design: PenTool,
+  Build: Hammer,
+  Run: Activity,
+};
 
 export function HowWeWork() {
   return (
@@ -32,7 +44,18 @@ export function HowWeWork() {
         {phases.map((p, i) => (
           <Card as="li" key={p.step}>
             <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-4 p-7">
-              <span className="font-mono text-xs text-link">{p.step}</span>
+              <span className="flex items-center gap-3">
+                <span
+                  className="grid size-10 shrink-0 place-items-center rounded-full bg-brand/12 text-link"
+                  aria-hidden="true"
+                >
+                  {(() => {
+                    const Mark = MARKS[p.title] ?? Target;
+                    return <Mark className="size-[18px]" />;
+                  })()}
+                </span>
+                <span className="font-mono text-xs text-link">{p.step}</span>
+              </span>
               <h3 className="text-lg font-semibold text-text">{p.title}</h3>
               <p className="text-base text-muted">{p.body}</p>
               <p className="mt-auto border-t border-[color:var(--color-border)] pt-4 text-base text-text">
