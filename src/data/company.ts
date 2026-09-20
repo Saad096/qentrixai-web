@@ -95,4 +95,54 @@ export const pillars: Pillar[] = [
   },
 ];
 
+/**
+ * The homepage "why us" grid, 2026-09-21. Six cells rather than three cards,
+ * at the owner's direction, following the reference layout.
+ *
+ * Every line traces to something already on this page: `stats` above, the
+ * three `pillars` below, and the nine products in products.ts. Nothing here
+ * is a new claim -- the reference site's own cells include a "95% client
+ * retention rate" we have no basis for, so it is not here.
+ *
+ * `pillars` is kept as-is. It is the fuller three-reason argument and /about
+ * is the place for it; this is the scannable form.
+ */
+export type Reason = {
+  title: string;
+  line: string;
+  href?: string;
+};
+
+export const reasons: Reason[] = [
+  {
+    title: "Senior-only delivery",
+    line: "The people who scope the work are the people who build it. No junior bench.",
+    href: "/about",
+  },
+  {
+    title: "We run our own products",
+    line: "Nine of them, in production. We live with our own architecture decisions.",
+    href: "/products",
+  },
+  {
+    title: "Evals before launch",
+    line: "Tracing, eval suites and a rollback path wired up front, not after an incident.",
+    href: "/services/cloud-devops-mlops",
+  },
+  {
+    title: "25+ systems shipped",
+    line: "Across five years of AI and data engineering, not five years of pilots.",
+    href: "/case-studies",
+  },
+  {
+    title: "12 client geographies",
+    line: "Delivered remotely into twelve countries, working in your timezone.",
+  },
+  {
+    title: "Six weeks to an MVP",
+    line: "Kickoff to something real users can use, with the repo yours at handover.",
+    href: "/#how-we-work",
+  },
+];
+
 export type Company = typeof company;

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -72,21 +73,55 @@ export function useTabs(count: number) {
  */
 export function TabPill({
   selected,
+  chevron = false,
   children,
 }: {
   selected: boolean;
+  /** Adds the forward mark on the selected pill. Rail-style tablists only. */
+  chevron?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <span
       className={cn(
-        "inline-flex min-h-[44px] items-center rounded-full px-4 text-base transition-colors",
+        "inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap rounded-full px-4 text-base transition-colors",
         selected
           ? "bg-brand text-on-brand shadow-1"
           : "text-muted hover:bg-surface hover:text-text"
       )}
     >
       {children}
+      {chevron && selected && <ChevronRight className="size-4 shrink-0" aria-hidden />}
     </span>
+  );
+}
+
+/**
+ * The rail variant: every tab inside one recessed track rather than loose
+ * pills on the page ground.
+ *
+ * Loose pills read as a row of buttons -- eight separate things to consider.
+ * Inside a track they read as one control with one selected state, which is
+ * what a tablist is. The track also fixes the wrap: on a narrow screen eight
+ * pills stacked into three ragged rows, so the rail scrolls sideways instead,
+ * with snap points. The scroll is contained, so it never becomes page-level
+ * horizontal overflow.
+ */
+export function TabRail({
+  children,
+  className,
+  ...rest
+}: React.ComponentPropsWithoutRef<"div">) {
+  return (
+    <div
+      {...rest}
+      className={cn(
+        "no-scrollbar -mx-1 flex snap-x snap-mandatory gap-1 overflow-x-auto rounded-full bg-surface-2 p-1.5",
+        "ring-1 ring-[color:var(--color-border)]",
+        className
+      )}
+    >
+      {children}
+    </div>
   );
 }

@@ -1,68 +1,78 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
+import { ArtPanel } from "@/components/art/ArtPanel";
+import { ModelOrbit } from "@/components/art/ModelOrbit";
+import { AgentGraph } from "@/components/art/AgentGraph";
+import { RetrievalFlow } from "@/components/art/RetrievalFlow";
+import { VoiceWave } from "@/components/art/VoiceWave";
 import { services } from "@/data/services";
 
+/**
+ * Four illustrated cards, 2026-09-21, replacing a two-column text list of six
+ * services beside one framed stock render.
+ *
+ * Four rather than six because each card carries a bespoke diagram, and the
+ * diagram is the point: a row of cards distinguished only by a line-icon is
+ * the pattern DESIGN.md bans, and it is what the six-item list amounted to.
+ * The two featured services that come off the row are still reachable, and
+ * the link below still leads to all fourteen.
+ *
+ * Which four: the capabilities buyers open a conversation with, and which
+ * each have something specific to draw. Cloud/MLOps is deliberately not here
+ * -- "evals and tracing before launch" is the Why-us section's argument, and
+ * saying it twice on one page is what the revamp was for.
+ */
+const CARDS = [
+  { slug: "generative-ai", Art: ModelOrbit },
+  { slug: "agentic-ai", Art: AgentGraph },
+  { slug: "rag-enterprise-search", Art: RetrievalFlow },
+  { slug: "voice-ai", Art: VoiceWave },
+] as const;
+
 export function WhatWeBuild() {
-  const featured = services.filter((s) => s.featured);
+  const cards = CARDS.map(({ slug, Art }) => {
+    const service = services.find((s) => s.slug === slug);
+    if (!service) throw new Error(`WhatWeBuild: no service "${slug}"`);
+    return { service, Art };
+  });
 
   return (
     <Section
       eyebrow="What we build"
-      heading="Six things we are asked for most."
+      heading="Four things we are asked for most."
       lede="Fourteen capabilities in total. These are the ones that start most engagements."
       ground="base"
+      headerClassName="mx-auto text-center"
     >
-      <div className="mt-12 grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-      <ul className="grid gap-x-10 gap-y-px sm:grid-cols-2 lg:col-span-8">
-        {featured.map((s, i) => (
-          <li key={s.slug} className="border-t border-[color:var(--color-border)]">
-            <div data-reveal data-reveal-delay={i * 50}>
-              <Link href={`/services/${s.slug}`} className="group flex gap-5 py-7">
-                <s.icon className="mt-0.5 size-5 shrink-0 text-link" aria-hidden />
-                <span>
-                  <span className="block text-lg font-semibold text-text group-hover:text-link">
-                    {s.title}
-                  </span>
-                  <span className="mt-2 block text-base text-muted">{s.short}</span>
-                </span>
-              </Link>
-            </div>
-          </li>
+      <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {cards.map(({ service, Art }, i) => (
+          <Card as="li" key={service.slug} interactive>
+            <Link
+              href={`/services/${service.slug}`}
+              data-reveal
+              data-reveal-delay={i * 70}
+              className="flex h-full flex-col p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--color-link))]"
+            >
+              <ArtPanel>
+                <Art />
+              </ArtPanel>
+              <h3 className="mt-6 px-2 text-center text-lg font-semibold text-text">
+                {service.title}
+              </h3>
+              <p className="mb-2 mt-3 px-2 pb-2 text-center text-base text-muted">
+                {service.short}
+              </p>
+            </Link>
+          </Card>
         ))}
       </ul>
 
-      <div className="lg:col-span-4">
-        {/* The artwork is light vendor marks on dark chips with a transparent
-            ground, so it can only ever sit on something dark. On the light
-            theme it first floated as unexplained black blobs on white; a bare
-            black box then read as a rendering fault rather than a choice.
-            It is framed as a deliberate object instead: a dark panel with a
-            brand-tinted edge, a glow, and a caption that says what it is. */}
-        <figure className="hidden overflow-hidden rounded-lg bg-n-950 shadow-3 ring-1 ring-brand/25 lg:block">
-          <div className="relative">
-            <div
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_45%,rgb(var(--color-brand)/0.28),transparent_70%)]"
-              aria-hidden="true"
-            />
-            <Image
-              src="/images/abstract/system-cluster.png"
-              alt=""
-              width={900}
-              height={900}
-              sizes="(min-width: 1024px) 32vw, 0px"
-              className="relative w-full"
-            />
-          </div>
-          <figcaption className="border-t border-white/10 px-5 py-3.5 font-mono text-xs text-n-400">
-            Models we run in production
-          </figcaption>
-        </figure>
-      </div>
-      </div>
-
-      <p className="mt-9">
-        <Link href="/services" className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110">
+      <p className="mt-9 text-center">
+        <Link
+          href="/services"
+          className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110"
+        >
           All fourteen capabilities
         </Link>
       </p>
