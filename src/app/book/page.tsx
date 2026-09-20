@@ -32,7 +32,7 @@ export default function BookPage() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
-              <div className="rounded-3xl border border-ink/[0.06] bg-surface p-6 md:p-8">
+              <div className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6 md:p-8">
                 <h2 className=" text-xl font-semibold text-text">Choose a date & time</h2>
                 <p className="mt-1 text-sm text-muted">
                   All times shown in Pakistan Standard Time (PKT). We'll confirm the meeting link by email.
@@ -44,7 +44,7 @@ export default function BookPage() {
             </div>
 
             <aside className="lg:col-span-4 space-y-4">
-              <div className="rounded-3xl border border-ink/[0.06] bg-surface p-6">
+              <div className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6">
                 <h3 className=" text-lg font-semibold text-text">Direct lines</h3>
                 <ul className="mt-4 space-y-3 text-sm text-muted">
                   <li className="flex items-start gap-3">
@@ -70,7 +70,7 @@ export default function BookPage() {
                 </ul>
               </div>
 
-              <div className="rounded-3xl border border-ink/[0.06] bg-gradient-to-br from-brand/15 via-transparent to-accent-violet/10 p-6">
+              <div className="rounded-lg border border-[color:var(--color-border)] bg-gradient-to-br from-brand/15 via-transparent to-accent/10 p-6">
                 <h3 className=" text-lg font-semibold text-text">Prefer to skip the calendar?</h3>
                 <p className="mt-1 text-sm text-muted">
                   Send a brief instead, or ping us on WhatsApp. Same response time.

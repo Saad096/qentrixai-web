@@ -132,12 +132,12 @@ export function ContactForm() {
       </div>
 
       {state.status === "success" && (
-        <div className="rounded-xl border border-brand-mint/25 bg-brand-mint/10 px-4 py-3 text-[14px] text-emerald-700 ">
+        <div className="rounded-md border border-success/40 bg-success/10 px-4 py-3 text-base text-text">
           {state.message}
         </div>
       )}
       {state.status === "error" && (
-        <div className="rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3 text-[14px] text-amber-700 ">
+        <div className="rounded-md border border-warn/40 bg-warn/10 px-4 py-3 text-base text-text">
           <p>{state.message}</p>
           <div className="mt-2 flex flex-wrap gap-3">
             <a

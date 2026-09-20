@@ -35,7 +35,7 @@ export default function ContactPage() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <div className="rounded-3xl border border-ink/[0.06] bg-surface p-6 md:p-8">
+              <div className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6 md:p-8">
                 <h2 className=" text-xl font-semibold text-text">Send a brief</h2>
                 <p className="mt-1 text-sm text-muted">
                   Anything you can share helps: problem, timeline, stack constraints, success metric.
@@ -47,7 +47,7 @@ export default function ContactPage() {
             </div>
 
             <aside className="lg:col-span-5 space-y-4">
-              <div className="rounded-3xl border border-ink/[0.06] bg-surface p-6">
+              <div className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6">
                 <h3 className=" text-lg font-semibold text-text">Direct lines</h3>
                 <ul className="mt-4 space-y-3 text-sm text-muted">
                   <li className="flex items-start gap-3">
@@ -73,7 +73,7 @@ export default function ContactPage() {
                 </ul>
               </div>
 
-              <div className="rounded-3xl border border-ink/[0.06] bg-gradient-to-br from-brand/15 via-transparent to-accent-violet/10 p-6">
+              <div className="rounded-lg border border-[color:var(--color-border)] bg-gradient-to-br from-brand/15 via-transparent to-accent/10 p-6">
                 <h3 className=" text-lg font-semibold text-text">Skip the form</h3>
                 <p className="mt-1 text-sm text-muted">
                   Book a 30-minute strategy call, or ping us on WhatsApp. Same response time.
@@ -90,7 +90,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-ink/[0.06] bg-surface p-6">
+              <div className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6">
                 <h3 className=" text-lg font-semibold text-text">Elsewhere</h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {s.linkedin && (

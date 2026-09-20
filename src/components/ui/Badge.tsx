@@ -1,12 +1,24 @@
 import { cn } from "@/lib/utils";
 
+/**
+ * Migrated to Aurora. Every tone here previously named a colour from the old
+ * iris palette — `ink`, `accent-violet`, `accent-sky`, `accent-mint`,
+ * `brand-400` — none of which survive in `tailwind.config.ts`. Tailwind emits
+ * nothing for a class it cannot resolve, so these badges were rendering with
+ * no border, no background and inherited text colour.
+ *
+ * Tones now map onto the semantic tokens, so both themes come free.
+ *
+ * `violet` is kept as an alias of `brand` rather than removed: Aurora's brand
+ * hue *is* violet, and several pages already ask for it by that name.
+ */
 const tones = {
-  default: "border-ink/10 bg-ink/[0.03] text-ink/80",
-  brand: "border-brand-400/30 bg-brand-500/10 text-accent",
-  violet: "border-accent-violet/30 bg-accent-violet/10 text-violet-700 dark:text-violet-200",
-  cyan: "border-accent-sky/30 bg-accent-sky/10 text-sky-700 dark:text-sky-200",
-  mint: "border-accent-mint/30 bg-accent-mint/10 text-emerald-700 dark:text-emerald-200",
-  amber: "border-amber-300/30 bg-amber-400/10 text-amber-700 dark:text-amber-200",
+  default: "border-[color:var(--color-border)] bg-surface text-muted",
+  brand: "border-brand/35 bg-brand/10 text-link",
+  violet: "border-brand/35 bg-brand/10 text-link",
+  cyan: "border-info/40 bg-info/10 text-text",
+  mint: "border-success/40 bg-success/10 text-text",
+  amber: "border-warn/40 bg-warn/10 text-text",
 };
 
 export function Badge({
@@ -21,7 +33,10 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em]",
+        // Sentence case, normal tracking. The previous uppercase +
+        // 0.12em tracking is the label treatment DESIGN.md calls out as a
+        // generated-page tell.
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
         tones[tone],
         className
       )}

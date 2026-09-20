@@ -79,7 +79,7 @@ export default function CareersPage() {
             {principles.map((p) => (
               <div
                 key={p.title}
-                className="rounded-2xl border border-[color:var(--color-border)] bg-surface p-6"
+                className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6"
               >
                 <div className="inline-flex size-9 items-center justify-center rounded-lg border border-[color:var(--color-border)] bg-brand/10 text-link">
                   <Sparkles className="size-4" />
@@ -99,7 +99,7 @@ export default function CareersPage() {
           <h2 className=" text-2xl font-semibold tracking-tight text-text md:text-3xl">
             Open roles
           </h2>
-          <div className="mt-6 divide-y divide-ink/[0.06] rounded-2xl border border-[color:var(--color-border)] bg-surface">
+          <div className="mt-6 divide-y divide-[color:var(--color-border)] rounded-lg border border-[color:var(--color-border)] bg-surface">
             {openRoles.map((r) => (
               <div
                 key={r.title}
