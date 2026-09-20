@@ -130,3 +130,91 @@ Screenshots: `docs/revamp/screenshots/before/` (46 files) and `docs/revamp/scree
 **Environment**
 9. `output: "standalone"` is now opt-in via `NEXT_OUTPUT=standalone` (the Dockerfile sets it). It was breaking `next start` locally by writing the server under `.next/standalone`, and Vercel ignores it.
 10. **`NEXT_PUBLIC_SITE_URL` must be set to `https://www.qentrix-ai.com` in the Vercel project** — the repo default now matches, but the deployed env var is what wins.
+
+---
+
+# Visual overhaul — QA, 2026-09-20
+
+Measured against the production build on `revamp/v2`, served by `next start`,
+driven by the locally installed Google Chrome. Playwright 1.63 ships no
+bundled browser for macOS 12 and `playwright install` refuses on this OS, so
+`playwright.config.ts` and `scripts/*.mjs` use `channel: "chrome"`.
+
+## Gates
+
+| Gate | Result |
+|---|---|
+| Playwright matrix (7 viewports × 15 routes) | **266 passed, 0 failed**, 7 skipped |
+| axe-core, 9 routes × 2 themes | **0 violations** |
+| Horizontal overflow, 360–2560 px | **0 px everywhere** |
+| Console errors after full-page scroll | **none** |
+| `npm run lint` / `tsc --noEmit` | clean |
+| `next build` | exit 0, no warnings |
+
+The 7 skips are viewport-conditional pairs, not gaps: the mobile-nav test
+skips at desktop widths and runs at phone and tablet; the theme-toggle test
+does the reverse. Every test runs somewhere.
+
+## Lighthouse — home, mobile
+
+| Metric | Before | After | Budget |
+|---|---|---|---|
+| Performance | 87 | **94–96** | ≥ 90 |
+| Accessibility | — | **100** | ≥ 95 |
+| Best practices | — | **100** | ≥ 95 |
+| SEO | — | **100** | ≥ 95 |
+| TBT | 0 ms | **70 ms** | ≤ 200 ms |
+| CLS | 0 | **0** | < 0.1 |
+| **LCP** | 2.6 s | **2.7–3.1 s** | **< 2.5 s — missed** |
+
+Two runs, because the numbers move: 94/3.1 s and 96/2.7 s.
+
+### LCP is the one budget still missed
+
+The LCP element is the hero image at mobile width. The phase breakdown puts
+**TTFB at ~460 ms and render delay at 1.9–2.6 s, with load time at 0–143 ms** —
+the bytes arrive quickly and the paint lands late.
+
+Three hypotheses tested and **discarded**, recorded so nobody pays for them
+again:
+
+1. **The grain overlay.** `feTurbulence` is expensive to rasterise, so it was
+   the obvious suspect. Measured under 4× CPU throttle with the overlay
+   disabled: 424 ms vs 476 ms, then 444 ms vs 444 ms. **No effect.**
+2. **Images served unoptimised.** A probe showed 220 KB JPEG for a `w=384`
+   request. That was a stale browser disk-cache entry. With the cache
+   disabled the browser receives **AVIF at 1–7 KB**. Optimisation works.
+3. **Cold AVIF encode on first request.** Every variant encodes in ~0.2 s,
+   including cold. Not the cost.
+
+What is left is render delay under Lighthouse's simulated Slow-4G model, of
+which ~460 ms is local TTFB that a CDN removes. **On Vercel, image
+optimisation and caching run on their infrastructure, so this figure should
+not be read across to production unchanged.** Re-measure against the preview
+deployment before deciding anything.
+
+The one lever that would certainly work is making the hero art smaller or
+lazy on phones — it is decorative. That is a design decision, and it runs
+against the owner's explicit ask for a more image-rich page, so it is **not**
+being taken unilaterally.
+
+## Fixed along the way
+
+- `contact`, `book`, `careers` and `Badge` still referenced Kiln tokens
+  (`ink`, `accent-violet`, `accent-mint`, `brand-400`). Tailwind emits nothing
+  for an unresolvable class, so every card on those pages had no border and no
+  surface.
+- Contact and booking form **success and error messages** were
+  `text-emerald-700` / `text-amber-700` — near-invisible on the dark theme, at
+  the most important moment on the page.
+- All three favicons pointed at the 512 px 84 KB master. Every page pulled
+  84 KB for a 32 px slot.
+- `GapDiagram` clipped its last label to "Productio".
+
+## Environment notes
+
+- `next dev` and `next build` share `.next`. Running both corrupts the build;
+  one intermediate test run passed against a 500 page because of it. Use the
+  production server for verification.
+- `next build` needs network egress for `next/font`. Without it the build
+  hangs on `socket hang up / Retrying` indefinitely rather than failing.
