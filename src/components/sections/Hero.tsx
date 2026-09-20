@@ -67,7 +67,7 @@ export function Hero() {
             on a short viewport. */}
         <div className="h-8 md:h-24" aria-hidden="true" />
 
-        <div className="slab-fill mt-12 rounded-lg bg-brand p-7 text-on-brand md:mt-14 md:p-9">
+        <div className="slab-fill brand-gradient mt-12 rounded-lg p-7 text-on-brand md:mt-14 md:p-9">
           <div className="flex flex-col gap-9 lg:flex-row lg:items-center lg:justify-between">
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:gap-10">
               {company.stats.map((s) => (

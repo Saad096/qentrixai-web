@@ -71,7 +71,7 @@ export function FaqCta() {
               empty, which is what read as "not centred". A final CTA is the
               one block on the page with a single message and a single action,
               so centring it is also the right call typographically. */}
-          <div className="rounded-lg bg-brand px-9 py-14 text-center text-on-brand md:px-14 md:py-20">
+          <div className="brand-gradient rounded-lg px-9 py-14 text-center text-on-brand md:px-14 md:py-20">
             <h2 className="mx-auto max-w-[24ch] text-2xl font-bold">
               Bring a goal. Leave with an architecture and a timeline.
             </h2>

@@ -274,6 +274,29 @@ body {
   100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
+/* ------------------------------------------------------------------ */
+/* Brand gradient for the solid violet blocks.                          */
+/*                                                                      */
+/* Stops are per theme because the second stop has to keep white legible
+/* on its own. In dark it runs violet into the blue from Quixlab's own
+/* gradient; in light `accent` is a pale lavender that white fails
+/* against, so light runs violet into a deeper violet instead.          */
+/* ------------------------------------------------------------------ */
+:root {
+  --grad-a: 155 49 255;  /* #9B31FF */
+  --grad-b: 20 76 153;   /* #144C99 */
+}
+
+.light {
+  --grad-a: 105 4 242;   /* #6904F2 */
+  --grad-b: 74 3 171;    /* #4A03AB — white clears 9:1 here */
+}
+
+.brand-gradient {
+  background-color: rgb(var(--color-brand));
+  background-image: linear-gradient(135deg, rgb(var(--grad-a)) 0%, rgb(var(--grad-b)) 100%);
+}
+
 /* Section content always sits above the orb field. */
 .above-orbs {
   position: relative;

@@ -13,7 +13,7 @@ export function WhatWeBuild() {
       lede="Fourteen capabilities in total. These are the ones that start most engagements."
       ground="base"
     >
-      <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
+      <div className="mt-12 grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
       <ul className="grid gap-x-10 gap-y-px sm:grid-cols-2 lg:col-span-8">
         {featured.map((s, i) => (
           <li key={s.slug} className="border-t border-[color:var(--color-border)]">

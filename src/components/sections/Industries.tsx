@@ -37,7 +37,7 @@ export function Industries() {
           ))}
         </div>
 
-        <div {...tabs.panelProps("ind")} className="grid gap-9 pt-9 lg:grid-cols-12 lg:gap-12">
+        <div {...tabs.panelProps("ind")} className="grid items-center gap-9 pt-9 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
             <p className="text-lg text-text">{current.line}</p>
 

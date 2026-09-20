@@ -93,8 +93,46 @@ export function ScrollReveal() {
           )
         );
 
+        // Pipelines: the rail draws left to right as the block passes, and
+        // each stage arrives just behind the rail head. Scrubbed, so scrolling
+        // back up runs it in reverse rather than replaying.
+        //
+        // Every from-state is set here at runtime via fromTo, never in CSS, so
+        // with no JS — or under reduced motion, which returns before any of
+        // this — the stages render in their final state.
+        const pipelines = Array.from(
+          document.querySelectorAll<HTMLElement>("[data-pipeline]")
+        ).map((el) => {
+          const rail = el.querySelector<HTMLElement>("[data-pipeline-rail]");
+          const nodes = el.querySelectorAll<HTMLElement>("[data-pipeline-node]");
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: el,
+              // Finish while the block is still comfortably on screen. Ending
+              // on `bottom` left the last stage mid-tween — faded and offset —
+              // at the moment the section sits centred, which reads as a
+              // rendering fault rather than as motion.
+              start: "top 92%",
+              end: "top 58%",
+              scrub: 0.5,
+            },
+          });
+
+          if (rail) tl.fromTo(rail, { scaleX: 0 }, { scaleX: 1, ease: "none" }, 0);
+          if (nodes.length) {
+            tl.fromTo(
+              nodes,
+              { opacity: 0.2, y: 14 },
+              { opacity: 1, y: 0, ease: "power2.out", stagger: 0.12 },
+              0
+            );
+          }
+          return tl;
+        });
+
         cleanup = () => {
-          [...tweens, ...parallax, ...lines].forEach((t) => {
+          [...tweens, ...parallax, ...lines, ...pipelines].forEach((t) => {
             t.scrollTrigger?.kill();
             t.kill();
           });
