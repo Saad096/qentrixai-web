@@ -14,28 +14,55 @@
  *   - skipped entirely for prefers-reduced-motion
  *   - if anything fails, .js-reveal is never set and every section renders
  *     visible
+ *
+ * It re-runs on every route change. This component sits in the root layout,
+ * which the App Router does not remount when you navigate, so keyed on `[]`
+ * it ran exactly once per full page load: `.js-reveal` stayed on <html>
+ * hiding every `[data-reveal]`, while the ScrollTriggers that reveal them had
+ * been built from a `querySelectorAll` of the page you just left. Every route
+ * you reached by clicking rendered as empty shells until you refreshed.
  */
 import * as React from "react";
+import { usePathname } from "next/navigation";
 
 const IDLE_TIMEOUT = 1400;
 
+/**
+ * Module scope, so it survives a route change and resets on a real page load
+ * -- which is exactly the lifetime of the thing it describes. The idle gate
+ * exists to keep GSAP off the critical path before the hero has painted.
+ * Once the bundle is in memory there is no critical path left to protect, and
+ * waiting up to 1.4s on every subsequent navigation would show the new page
+ * unstyled and then snatch it back.
+ */
+let gsapLoaded = false;
+
 export function ScrollReveal() {
+  const pathname = usePathname();
+
   React.useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let cancelled = false;
     let cleanup: (() => void) | undefined;
 
-    async function start() {
+    async function start(immediate: boolean) {
       if (cancelled) return;
       const targets = document.querySelectorAll<HTMLElement>("[data-reveal]");
       if (targets.length === 0) return;
+
+      // On the immediate path the import below resolves from cache, but not
+      // synchronously. Hiding the from-state now, in the same tick as the
+      // previous route's cleanup, means there is never a frame where the new
+      // page paints revealed and is then hidden again.
+      if (immediate) document.documentElement.classList.add("js-reveal");
 
       try {
         const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
           import("gsap"),
           import("gsap/ScrollTrigger"),
         ]);
+        gsapLoaded = true;
         if (cancelled) return;
 
         gsap.registerPlugin(ScrollTrigger);
@@ -144,14 +171,23 @@ export function ScrollReveal() {
       }
     }
 
-    const onFirstScroll = () => start();
+    // Already loaded: this is a navigation, so wire the new page up now.
+    if (gsapLoaded) {
+      void start(true);
+      return () => {
+        cancelled = true;
+        cleanup?.();
+      };
+    }
+
+    const onFirstScroll = () => start(false);
     window.addEventListener("scroll", onFirstScroll, { once: true, passive: true });
 
     const ric = (window as Window & typeof globalThis).requestIdleCallback;
     const cic = (window as Window & typeof globalThis).cancelIdleCallback;
     const idle: number = ric
-      ? ric(() => start(), { timeout: IDLE_TIMEOUT })
-      : window.setTimeout(() => start(), IDLE_TIMEOUT);
+      ? ric(() => start(false), { timeout: IDLE_TIMEOUT })
+      : window.setTimeout(() => start(false), IDLE_TIMEOUT);
 
     return () => {
       cancelled = true;
@@ -160,7 +196,7 @@ export function ScrollReveal() {
       else window.clearTimeout(idle);
       cleanup?.();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
