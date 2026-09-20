@@ -253,3 +253,58 @@ container is exact at every width:
   production server for verification.
 - `next build` needs network egress for `next/font`. Without it the build
   hangs on `socket hang up / Retrying` indefinitely rather than failing.
+
+
+---
+
+## Addendum — hero rebuilt on the orb field, 2026-09-20
+
+Owner direction: no photograph in the hero, use the orb animation. The three
+orbs scale to 74/66/56vw and slow to 34-46s. Still transform-only.
+
+Re-measured, three runs:
+
+| run | perf | LCP | TBT | CLS |
+|---|---|---|---|---|
+| 1 | 89 | 2.76 s | 307 ms | 0 |
+| 2 | 96 | 2.67 s | 76 ms | 0 |
+| 3 | 96 | 2.67 s | 80 ms | 0 |
+
+**Median: perf 96, LCP 2.67 s, TBT 80 ms, CLS 0.** Run 1's TBT of 307 ms is
+machine contention again, not the page.
+
+### The LCP element is now the `<h1>`
+
+This is the change that matters, more than the number. With the hero image
+gone, Lighthouse picks the **server-rendered headline** as the LCP element:
+
+```
+<h1 class="max-w-[17ch] text-hero font-bold text-text">
+```
+
+That is the correct thing to be optimising. An LCP that is a server-rendered
+string cannot be made slow by an image pipeline, a CDN miss or a cold encode;
+it is bounded by TTFB and the font.
+
+LCP itself barely moved — 2.68 s to 2.67 s — so the image was never the real
+cost. Of that, ~460 ms is TTFB from a local `next start` with no CDN. The
+remainder is Lighthouse's simulated Slow-4G model applied to font delivery.
+
+**This is the point to stop optimising locally.** The budget is missed by
+~0.17 s on a contended 2021 Intel Mac serving without a CDN. Re-measure on the
+Vercel preview; if it still misses there, the lever is font delivery, not
+imagery.
+
+### Gates after the change
+
+| Gate | Result |
+|---|---|
+| Playwright matrix | 266 passed, 0 failed, 7 skipped |
+| axe, both themes | 0 violations |
+| Stylesheet resolves | 200 |
+
+axe was re-run specifically because the headline now sits directly on the orb
+field rather than on a scrim, so the contrast question genuinely changed. The
+light theme's orb stops had to be strengthened for the hero — the defaults are
+tuned as faint atmosphere behind other content and disappeared when asked to
+carry a whole section on white.
