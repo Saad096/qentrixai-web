@@ -12,6 +12,7 @@ export function Section({
   heading,
   lede,
   headingAs: Heading = "h2",
+  ground = "base",
   className,
   headerClassName,
   children,
@@ -21,12 +22,28 @@ export function Section({
   heading?: React.ReactNode;
   lede?: React.ReactNode;
   headingAs?: "h1" | "h2";
+  /**
+   * The surface the section sits on. Alternating these is what gives the page
+   * vertical rhythm — with every section on the same ground, the homepage read
+   * as one strip nearly ten thousand pixels long.
+   *
+   * `band` draws its own rules, so do not also pass `rule` in className.
+   */
+  ground?: "base" | "wash" | "band";
   className?: string;
   headerClassName?: string;
   children?: React.ReactNode;
 }) {
   return (
-    <section id={id} className={cn("section", className)}>
+    <section
+      id={id}
+      className={cn(
+        "section",
+        ground === "wash" && "ground-wash grain",
+        ground === "band" && "ground-band",
+        className
+      )}
+    >
       <Container>
         {(eyebrow || heading || lede) && (
           <header data-reveal className={cn("max-w-measure", headerClassName)}>

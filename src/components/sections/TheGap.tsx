@@ -11,7 +11,8 @@ export function TheGap() {
     <Section
       eyebrow="Why this is hard"
       heading="The demo is the easy part."
-      className="rule relative isolate overflow-hidden"
+      ground="wash"
+      className="relative isolate overflow-hidden"
     >
       <Image
         src="/images/abstract/violet-wave.jpg"

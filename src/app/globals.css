@@ -66,7 +66,21 @@
   --color-info: 20 76 153;
 
   --color-border: rgb(255 255 255 / 0.10);
-  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset;
+
+  /* Elevation. The old single inset hairline is why cards read as outlines:
+     there was no depth to read, only an edge. */
+  --shadow-1:
+    0 0 0 1px rgb(255 255 255 / 0.07),
+    0 1px 0 0 rgb(255 255 255 / 0.05) inset;
+  --shadow-2:
+    0 0 0 1px rgb(255 255 255 / 0.09),
+    0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+    0 18px 40px -24px rgb(0 0 0 / 0.9);
+  --shadow-3:
+    0 0 0 1px rgb(var(--color-brand) / 0.38),
+    0 1px 0 0 rgb(255 255 255 / 0.08) inset,
+    0 24px 60px -28px rgb(var(--color-brand) / 0.42);
+  --shadow-card: var(--shadow-1);
 
   /* Ambient orb field */
   --orb-1: 155 49 255;
@@ -113,7 +127,17 @@
   --color-info: 20 76 153;
 
   --color-border: rgb(0 0 0 / 0.12);
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -18px rgb(105 4 242 / 0.18);
+
+  --shadow-1:
+    0 0 0 1px rgb(0 0 0 / 0.09),
+    0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-2:
+    0 0 0 1px rgb(0 0 0 / 0.10),
+    0 12px 32px -18px rgb(105 4 242 / 0.22);
+  --shadow-3:
+    0 0 0 1px rgb(var(--color-brand) / 0.34),
+    0 18px 44px -20px rgb(105 4 242 / 0.30);
+  --shadow-card: var(--shadow-1);
 
   --orb-1: 188 175 252;
   --orb-2: 219 211 255;
@@ -218,6 +242,77 @@ body {
 
 .rule {
   border-top: 1px solid var(--color-border);
+}
+
+/* ------------------------------------------------------------------ */
+/* Section grounds.                                                     */
+/*                                                                      */
+/* The finding this fixes: every section sat on the same near-black at   */
+/* the same weight with a hairline between, so a 9,900px page read as    */
+/* one undifferentiated strip. Three grounds alternate down the page.    */
+/* Every decorative layer is pointer-events:none and sits behind         */
+/* content, so none of them can eat a click.                             */
+/* ------------------------------------------------------------------ */
+.ground-wash,
+.ground-band {
+  position: relative;
+  isolation: isolate;
+}
+
+.ground-wash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 70% at 12% 0%, rgb(var(--color-brand) / 0.16), transparent 62%),
+    radial-gradient(52% 64% at 92% 28%, rgb(var(--color-accent) / 0.16), transparent 66%);
+}
+
+.ground-band {
+  background-color: rgb(var(--color-surface-2));
+}
+
+.ground-band::before,
+.ground-band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+  pointer-events: none;
+}
+.ground-band::before { top: 0; }
+.ground-band::after { bottom: 0; }
+
+/* Grain. Breaks up the banding that makes a large soft wash read as "a CSS
+   gradient" rather than as a designed surface. One inline SVG: no request,
+   no runtime cost. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Cards lift on hover. transform and box-shadow only, so it stays off the
+   layout path. Guarded to real hover devices: on touch this would fire on
+   tap and stick. */
+.lift {
+  transition:
+    transform var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: var(--shadow-3);
+  }
 }
 
 .prose-links a {

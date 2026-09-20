@@ -24,7 +24,7 @@ export function SelectedWork() {
       eyebrow="Selected work"
       heading="Six systems in production. Here are three."
       lede="Problem, what we built, what changed. Names are withheld where the contract says so."
-      className="rule"
+      ground="band"
     >
       <ul className="mt-12 grid gap-px overflow-hidden rounded-md bg-[color:var(--color-border)] md:grid-cols-3">
         {shown.map((study, i) => (

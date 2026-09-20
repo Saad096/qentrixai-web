@@ -40,7 +40,7 @@ export function Industries() {
     <Section
       eyebrow="Where this lands"
       heading="Domain shapes the system, not just the wording."
-      className="rule"
+      ground="wash"
     >
       <div className="mt-11">
         <div

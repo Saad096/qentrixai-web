@@ -12,7 +12,7 @@ import { PRIMARY_CTA } from "@/data/navigation";
 export function FaqCta() {
   return (
     <>
-      <Section id="faq" eyebrow="Before the call" heading="Questions buyers actually ask." className="rule">
+      <Section id="faq" eyebrow="Before the call" heading="Questions buyers actually ask." ground="band">
         <ul className="mt-11 max-w-measure">
           {faqs.map((faq) => (
             <li key={faq.question} className="border-t border-[color:var(--color-border)]">

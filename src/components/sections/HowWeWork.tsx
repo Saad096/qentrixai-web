@@ -15,7 +15,7 @@ export function HowWeWork() {
       eyebrow="How we work"
       heading="Four phases, and what you own after each one."
       lede="Every phase ends with an artifact in your repo, not a status call."
-      className="rule"
+      ground="base"
     >
       <ol className="mt-12 grid gap-px overflow-hidden rounded-md bg-[color:var(--color-border)] md:grid-cols-2 xl:grid-cols-4">
         {phases.map((p, i) => (

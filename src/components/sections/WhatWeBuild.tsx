@@ -11,7 +11,7 @@ export function WhatWeBuild() {
       eyebrow="What we build"
       heading="Six things we are asked for most."
       lede="Fourteen capabilities in total. These are the ones that start most engagements."
-      className="rule"
+      ground="base"
     >
       <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
       <ul className="grid gap-x-10 gap-y-px sm:grid-cols-2 lg:col-span-8">

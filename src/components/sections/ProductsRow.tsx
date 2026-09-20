@@ -15,7 +15,7 @@ export function ProductsRow() {
       eyebrow="Our own products"
       heading="We run the kind of software we sell."
       lede="Nine products built and operated in-house, on the same evals, tracing and on-call discipline we hand to clients."
-      className="rule"
+      ground="band"
     >
       <ul className="mt-12 grid gap-9 md:grid-cols-3">
         {shown.map((p, i) => {

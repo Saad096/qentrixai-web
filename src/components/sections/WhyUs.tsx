@@ -4,7 +4,7 @@ import { pillars } from "@/data/company";
 
 export function WhyUs() {
   return (
-    <Section eyebrow="Why QentrixAI" heading="Three reasons, and the receipts for each." className="rule">
+    <Section eyebrow="Why QentrixAI" heading="Three reasons, and the receipts for each." ground="band">
       <ul className="mt-12 grid gap-10 md:grid-cols-3">
         {pillars.map((p) => (
           <li key={p.title}>

@@ -9,7 +9,7 @@ export function InsightsRow() {
     .slice(0, 3);
 
   return (
-    <Section eyebrow="Insights" heading="Field notes from the work." className="rule">
+    <Section eyebrow="Insights" heading="Field notes from the work." ground="base">
       <ul className="mt-11 grid gap-px overflow-hidden rounded-md bg-[color:var(--color-border)] md:grid-cols-3">
         {latest.map((post) => (
           <li key={post.slug} className="bg-bg">
