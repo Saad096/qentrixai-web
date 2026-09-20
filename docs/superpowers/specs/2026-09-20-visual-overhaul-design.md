@@ -76,6 +76,13 @@ bans that and the ban stands.
 Reordered on the reference sites' reading logic: **proof before claim**, one
 action per screen.
 
+Correction after reading the code: Industries and the tech stack are already
+tabbed, and the case-study and product rows already carry real screenshots.
+The gap is not missing patterns — it is that every section sits on the same
+ground at the same weight, cards are `gap-px` outline grids with no elevation
+or hover, images are unframed rectangles, and the only motion on the page is a
+single fade-up. That is what 4.1 and 4.3 address.
+
 | # | Section | Change |
 |---|---|---|
 | 1 | Hero | Proof cluster (3 real client marks + 25+ systems / 12 geographies) moves *above* the `<h1>`. One primary CTA. Orb field gains scroll parallax. Large visual drops below the fold line |
@@ -85,8 +92,8 @@ action per screen.
 | 5 | What we build | 6 capabilities, asymmetric 2-col grid — not three identical cards |
 | 6 | Products | Browser-framed screenshots, hover cross-fade to a second shot |
 | 7 | How we work | 4-phase timeline, scroll-driven progress line |
-| 8 | Industries | **Tabbed** — 6 labels, one large photograph per tab, using the 6 photos already in `public/images/industries/` |
-| 9 | Tech stack | **Tabbed** — 4 categories × cards, each name + one line + link |
+| 8 | Industries | Already tabbed with a photo per tab. Gains the visual treatment: larger panel, framed image, tab pills instead of underlines, cross-fade on tab change |
+| 9 | Tech stack | Lives on `/services`, already tabbed. Chips → cards in the second pass, not on the homepage |
 | 10 | Why us | 3 reasons with receipts |
 | 11 | Insights | 3 articles with generated cover art |
 | 12 | FAQ + CTA | Accordion left, booking card right |
@@ -130,12 +137,12 @@ a blur placeholder. Only the hero visual gets `priority`.
 | `ui/Section.tsx` | New `ground` prop (`base` / `wash` / `band`) |
 | `ui/Card.tsx` | **New** — the elevation scale, replacing ad-hoc card markup |
 | `ui/DeviceFrame.tsx` | **New** — browser chrome wrapper for product screenshots |
-| `ui/Tabs.tsx` | **New** — shared tab primitive, keyboard-complete, used by Industries and StackTabs |
+| `ui/Tabs.tsx` | **New** — extracts the roving-tabindex logic duplicated in `Industries.tsx` and `StackTabs.tsx`, adds the pill styling and panel cross-fade |
 | `ui/Stat.tsx` | Counter roll-up, gradient numerals |
 | `ui/OrbField.tsx` | Scroll parallax, opt-in per section |
 | `motion/ScrollReveal.tsx` | Extended: parallax, progress line, counters |
 | `sections/Hero.tsx` | Restructured per 4.2 |
-| `sections/Industries.tsx` | Chip row → tabbed photo panel |
+| `sections/Industries.tsx` | Rebuilt onto `ui/Tabs`; framed panel image |
 | `sections/StackTabs.tsx` | Visual upgrade onto `ui/Tabs` |
 | `sections/TheGap.tsx` | Gains the SVG diagram |
 | All other sections | Grounds, cards, imagery |
