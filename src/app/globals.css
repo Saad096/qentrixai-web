@@ -285,11 +285,21 @@ body {
 :root {
   --grad-a: 155 49 255;  /* #9B31FF */
   --grad-b: 20 76 153;   /* #144C99 */
+
+  /* Band grounds. The flat #191D2A surface read as a washed-out blue-grey
+     slab; these run it to black with a little depth instead. */
+  --band-a: 4 4 6;       /* #040406 Quixlab's deepest */
+  --band-b: 10 12 18;    /* #0A0C12 */
 }
 
 .light {
   --grad-a: 105 4 242;   /* #6904F2 */
   --grad-b: 74 3 171;    /* #4A03AB — white clears 9:1 here */
+
+  /* Black is not an option on the light theme, so the band gets the same
+     treatment in kind: a gradient rather than one flat fill. */
+  --band-a: 250 249 247; /* #FAF9F7 */
+  --band-b: 241 239 251; /* #F1EFFB */
 }
 
 .brand-gradient {
@@ -347,8 +357,21 @@ body {
     radial-gradient(52% 64% at 92% 28%, rgb(var(--color-accent) / 0.16), transparent 66%);
 }
 
+/* The flat #191D2A fill read as a washed-out blue-grey slab. The band is a
+   gradient to black now, with one brand-tinted corner so it has a light
+   source rather than being a flat rectangle.
+   The glow is a background layer, not a pseudo-element: ::before and ::after
+   here are the 1px hairlines and are already spoken for. */
 .ground-band {
-  background-color: rgb(var(--color-surface-2));
+  background-color: rgb(var(--band-a));
+  background-image:
+    radial-gradient(46% 62% at 88% 0%, rgb(var(--color-brand) / 0.14), transparent 70%),
+    linear-gradient(
+      168deg,
+      rgb(var(--band-a)) 0%,
+      rgb(var(--band-b)) 62%,
+      rgb(var(--band-a)) 100%
+    );
 }
 
 .ground-band::before,
