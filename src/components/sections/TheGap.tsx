@@ -3,13 +3,19 @@
  * times across the homepage (hero x2, Problem, AboutPreview, CaseStudies,
  * WhyUs, ProductsShowcase).
  *
+ * Dark ground (2026-09-21): the stock `violet-wave.jpg` that sat behind this
+ * at 40% is gone. It threw a mauve diagonal across the block that muddied
+ * the ground and dropped the contrast of the prose sitting on it, and it was
+ * the last photographic wash on the homepage. The `wash` ground -- two soft
+ * brand and accent radials on near-black, plus grain -- does the job without
+ * a photograph.
+ *
  * Rebuilt: the stock glass render is gone and the pipeline is the centrepiece.
  * Previously the argument was entirely in the prose, a generic 3D image sat
  * beside it saying nothing, and the diagram was a small afterthought below
  * both. Now each stage of the pipeline carries the clause from the prose that
  * belongs to it.
  */
-import Image from "next/image";
 import { GapPipeline } from "@/components/ui/GapPipeline";
 import { Section } from "@/components/ui/Section";
 
@@ -22,16 +28,6 @@ export function TheGap() {
       className="relative isolate overflow-hidden"
       headerClassName="max-w-[30ch]"
     >
-      <div className="absolute inset-0 -z-10 hidden dark:block">
-        <Image
-          src="/images/abstract/violet-wave.jpg"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover opacity-40"
-        />
-      </div>
-
       {/* Two columns of prose rather than one column and an empty half. */}
       <div className="mt-9 grid gap-x-14 gap-y-5 text-md text-muted lg:grid-cols-2">
         <p>
