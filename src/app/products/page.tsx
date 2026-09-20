@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
 import { FaqCta } from "@/components/sections/FaqCta";
 import { products } from "@/data/products";
@@ -45,20 +45,18 @@ export default function ProductsPage() {
             return (
               <li key={p.slug}>
                 <Link href={`/products/${p.slug}`} className="group block">
+                  {/* Same treatment as the homepage row. The listing used to
+                      show a bare flush-cropped screenshot, so the two places
+                      a product appears did not look like the same product. */}
                   {shot ? (
-                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md">
-                      <Image
-                        src={shot}
-                        alt={`${p.name} interface`}
-                        fill
-                        sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        className="object-cover object-top"
-                      />
-                    </div>
+                    <DeviceFrame
+                      src={shot}
+                      alt={`${p.name} interface`}
+                      sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="lift"
+                    />
                   ) : (
-                    <div className="grid aspect-[16/10] w-full place-items-center rounded-md bg-surface">
-                      <span className="text-xl font-bold text-muted">{p.name}</span>
-                    </div>
+                    <DevicePlaceholder name={p.name} className="lift" />
                   )}
                   <div className="mt-5 flex items-baseline gap-3">
                     <h2 className="text-lg font-semibold text-text group-hover:text-link">

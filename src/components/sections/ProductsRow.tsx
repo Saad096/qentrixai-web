@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DeviceFrame } from "@/components/ui/DeviceFrame";
+import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
 import { products } from "@/data/products";
 
@@ -34,9 +34,7 @@ export function ProductsRow() {
                       className="lift"
                     />
                   ) : (
-                    <div className="grid aspect-[16/10] w-full place-items-center rounded-md bg-surface shadow-1">
-                      <span className="text-xl font-bold text-muted">{p.name}</span>
-                    </div>
+                    <DevicePlaceholder name={p.name} className="lift" />
                   )}
                   <h3 className="mt-5 text-lg font-semibold text-text group-hover:text-link">
                     {p.name}

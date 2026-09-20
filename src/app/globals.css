@@ -483,6 +483,18 @@ body {
   );
 }
 
+/* The gradient plate a product screenshot is inset on. Two offset radials
+   rather than a linear ramp: a 135deg ramp puts its bright end in one corner,
+   and with a screenshot centred on top that corner is the only part of the
+   gradient still visible. Radials keep the colour around all four edges,
+   which is the part you actually see. */
+.product-plate {
+  background-color: rgb(var(--color-surface-2));
+  background-image:
+    radial-gradient(85% 95% at 12% 0%, rgb(var(--color-brand) / 0.55), transparent 62%),
+    radial-gradient(80% 90% at 92% 100%, rgb(var(--color-accent) / 0.50), transparent 64%);
+}
+
 /* Section content always sits above the orb field. */
 .above-orbs {
   position: relative;
