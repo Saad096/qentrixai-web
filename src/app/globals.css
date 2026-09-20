@@ -67,11 +67,7 @@
 :root {
   --color-bg: 5 6 9;             /* #050609 near-black page */
   --color-surface: 12 14 21;     /* #0C0E15 card, lifted just off the page */
-  /* #0E1119. Was #090A10, four units off the page base, which meant the
-     `band` ground drew no visible band at all and two sections that were
-     meant to alternate read as one strip. Muted text still measures 7.42:1
-     here and link 6.60:1. */
-  --color-surface-2: 14 17 25;
+  --color-surface-2: 9 10 16;    /* #090A10 band, between the two */
   --art-ground: 3 4 7;           /* the stage card illustrations are drawn on */
   --color-text: 248 249 250;     /* #F8F9FA */
   --color-muted: var(--n-400);   /* 7.48:1 on the base */
@@ -310,13 +306,8 @@ body {
 
   /* Band grounds. The flat #191D2A surface read as a washed-out blue-grey
      slab; these run it to black with a little depth instead. */
-  /* A band now sits ABOVE the page, not below it. These were #040406 and
-     #0A0C12 -- a darker strip, which worked when the base was #0D1017 and
-     stopped working the moment the base went to #050609: #040406 is one unit
-     darker than the page, so `band` drew nothing at all. Muted text measures
-     7.42:1 on the first stop and 7.02:1 on the second. */
-  --band-a: 14 17 25;    /* #0E1119 */
-  --band-b: 20 24 38;    /* #141826 */
+  --band-a: 4 4 6;       /* #040406 Quixlab's deepest */
+  --band-b: 10 12 18;    /* #0A0C12 */
 }
 
 .light {
