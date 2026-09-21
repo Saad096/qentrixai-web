@@ -29,6 +29,7 @@ export function ProductsRow() {
                   {shot ? (
                     <DeviceFrame
                       src={shot}
+                      orientation={p.orientation}
                       alt={`${p.name} interface`}
                       sizes="(min-width: 768px) 33vw, 100vw"
                       className="lift"

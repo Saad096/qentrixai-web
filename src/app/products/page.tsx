@@ -51,6 +51,7 @@ export default function ProductsPage() {
                   {shot ? (
                     <DeviceFrame
                       src={shot}
+                      orientation={p.orientation}
                       alt={`${p.name} interface`}
                       sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
                       className="lift"

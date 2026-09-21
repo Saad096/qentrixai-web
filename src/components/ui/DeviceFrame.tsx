@@ -25,14 +25,43 @@ export function DeviceFrame({
   alt,
   sizes,
   priority = false,
+  orientation = "desktop",
   className,
 }: {
   src: string;
   alt: string;
   sizes: string;
   priority?: boolean;
+  /** Mobile products get a phone body at 9:16 instead of window chrome. */
+  orientation?: "desktop" | "mobile";
   className?: string;
 }) {
+  if (orientation === "mobile") {
+    return (
+      // Same outer aspect as the desktop plate. Left to its own height a
+      // 9:16 phone is twice as tall as its neighbours and the grid row goes
+      // ragged, so the handset is scaled to fit this box instead.
+      <div
+        className={cn(
+          "product-plate grid aspect-[16/10] place-items-center overflow-hidden rounded-lg p-4",
+          className
+        )}
+      >
+        <div className="relative h-full max-h-full w-auto rounded-[1.6rem] bg-surface p-1.5 shadow-2 ring-1 ring-[color:var(--color-border)] [aspect-ratio:9/16]">
+          {/* Speaker slot. Enough to read as a handset, not an imitation of
+              any particular one. */}
+          <span
+            aria-hidden="true"
+            className="absolute left-1/2 top-3 z-10 h-1 w-10 -translate-x-1/2 rounded-full bg-text/25"
+          />
+          <div className="relative size-full overflow-hidden rounded-[1.2rem]">
+            <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover object-top" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("product-plate rounded-lg p-3 md:p-4", className)}>
       <div className="overflow-hidden rounded-md bg-surface shadow-2">

@@ -8,8 +8,9 @@
  * the owner's explicit instruction.
  *
  * Values were sampled from the live sites rather than eyeballed:
- *   VamTam   white #FFFFFF, warm band #FAF9F7, lavender stops #DBD3FF and
- *            #BCAFFC, violet text #6904F2
+ *   Superseded 2026-09-21. The sampled reference palette is kept in the
+ *   ramp below for the neutral steps only; the brand colours moved to
+ *   warm graphite + amber. See the dark-theme block for the reasoning.
  *   Quixlab  blue-black #0D1017, surface #252A32, deepest #040406,
  *            violet #9B31FF with a blue #144C99 in the same gradient
  *
@@ -46,7 +47,19 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Dark is the default theme (Quixlab reference).                       */
+/* Dark is the default theme.                                           */
+/*                                                                      */
+/* Repalette 2026-09-21. Violet is out: research for this change found  */
+/* that purple became the visual shorthand for AI after 2024, so it now */
+/* reads as category wallpaper, and blue is ~70% of SaaS. The emerging  */
+/* black+acid-lime default is already turning into the next cliche, so  */
+/* this goes the other way: warm tactile neutrals (the actual 2026      */
+/* move away from pure white and cold grey) with an amber primary that  */
+/* is high-chroma, warm and effectively unused in AI branding.          */
+/*                                                                      */
+/* Measured: text 18.16 on base / 17.02 on card, muted 7.80 / 7.31,     */
+/* amber-as-text 9.91 / 9.28, emerald 9.92. Ink on an amber fill is     */
+/* 9.91 -- white on it is 2:1, so button labels are ink, never white.   */
 /* ------------------------------------------------------------------ */
 /*
  * Grounds went near-black on 2026-09-21 at the owner's instruction: the
@@ -65,22 +78,27 @@
  * card surface, no better than before. Fills only, `link` for text.
  */
 :root {
-  --color-bg: 5 6 9;             /* #050609 near-black page */
-  --color-surface: 12 14 21;     /* #0C0E15 card, lifted just off the page */
-  --color-surface-2: 9 10 16;    /* #090A10 band, between the two */
-  --art-ground: 3 4 7;           /* the stage card illustrations are drawn on */
-  --color-text: 248 249 250;     /* #F8F9FA */
-  --color-muted: var(--n-400);   /* 7.48:1 on the base */
+  --color-bg: 11 10 8;           /* #0B0A08 warm graphite page */
+  --color-surface: 21 19 16;     /* #151310 card, lifted off the page */
+  --color-surface-2: 16 14 12;   /* #100E0C band, between the two */
+  --art-ground: 8 7 6;           /* #080706 the stage art is drawn on */
+  --color-text: 247 245 240;     /* #F7F5F0 warm off-white, 18.16:1 */
+  --color-muted: 168 162 150;    /* #A8A296 7.80:1 on base, 7.31:1 on card */
 
-  --color-brand: 155 49 255;     /* #9B31FF fill only in dark */
-  --color-link: 181 125 255;     /* #B57DFF text, 6.65:1 base / 5.04:1 surface */
-  --color-accent: 20 76 153;     /* #144C99 the blue in Quixlab's gradient */
-  --color-on-brand: 255 255 255; /* white on #9B31FF measures 4.91:1 */
+  /* Amber carries fill AND text here -- 9.91:1 on the base, 9.28:1 on the
+     card -- so unlike the violet it needs no separate `link` step. */
+  --color-brand: 242 169 59;     /* #F2A93B */
+  --color-link: 242 169 59;
+  /* Decorative surfaces (product plates, gradients) read `accent`, so it has
+     to sit beside amber rather than argue with it -- emerald here turned every
+     plate amber-to-green. Emerald stays, but only as `success`. */
+  --color-accent: 214 124 28;    /* #D67C1C burnt amber */
+  --color-on-brand: 11 10 8;     /* ink on amber, 9.91:1. White is 2:1 -- never */
 
-  --color-success: 62 207 154;
-  --color-warn: 224 167 92;
-  --color-danger: 245 32 96;     /* #F52060, sampled from the radial glow */
-  --color-info: 20 76 153;
+  --color-success: 63 207 142;
+  --color-warn: 242 169 59;
+  --color-danger: 240 106 87;    /* #F06A57 */
+  --color-info: 122 178 214;
 
   --color-border: rgb(255 255 255 / 0.10);
 
@@ -100,11 +118,16 @@
   --shadow-card: var(--shadow-1);
 
   /* Ambient orb field */
-  --orb-1: 155 49 255;
-  --orb-2: 20 76 153;
-  --orb-3: 245 32 96;
-  --orb-alpha: 0.30;
-  --orb-blur: 90px;
+  /* All three stops stay inside the warm half of the wheel. The first pass
+     paired amber with the emerald and the overlap mixed to olive -- a warm
+     and a cool wash at this size and blur make mud, not depth. Alpha is well
+     down from the violet era too: amber is a far brighter hue, so the same
+     0.30 washed the page and fought the copy. */
+  --orb-1: 242 169 59;   /* amber */
+  --orb-2: 214 124 28;   /* burnt amber */
+  --orb-3: 240 106 87;   /* warm coral */
+  --orb-alpha: 0.16;
+  --orb-blur: 110px;
 
   --text-xs: 12px;
   --text-sm: 13px;
@@ -124,25 +147,26 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Light theme (VamTam reference): pure white, lavender washes.         */
+/* Light theme: warm bone and sand, deep amber. Pure white is out for    */
+/* the same reason cold grey is -- 2026's neutral is warm and tactile.   */
 /* ------------------------------------------------------------------ */
 .light {
-  --color-bg: var(--n-0);
-  --color-surface: var(--n-50);
-  --color-surface-2: var(--n-100);
-  --art-ground: 248 247 253;     /* the stage card illustrations are drawn on */
-  --color-text: var(--n-1000);   /* VamTam sets pure black */
-  --color-muted: var(--n-600);   /* 7.36:1 on white */
+  --color-bg: 251 250 247;       /* #FBFAF7 warm bone, not pure white */
+  --color-surface: 244 241 234;  /* #F4F1EA sand */
+  --color-surface-2: 237 233 224;/* #EDE9E0 */
+  --art-ground: 247 244 237;     /* #F7F4ED the stage art is drawn on */
+  --color-text: 18 16 13;        /* #12100D warm ink, 18.20:1 */
+  --color-muted: 92 86 75;       /* #5C564B 6.97:1 on bone */
 
-  --color-brand: 105 4 242;      /* #6904F2 — 7.24:1 on white */
-  --color-link: 105 4 242;
-  --color-accent: 188 175 252;   /* #BCAFFC lavender */
-  --color-on-brand: 255 255 255;
+  --color-brand: 138 90 5;       /* #8A5A05 deep amber, 5.67:1 as text */
+  --color-link: 138 90 5;
+  --color-accent: 176 120 40;    /* #B07828 bronze */
+  --color-on-brand: 255 255 255; /* white on deep amber, 5.92:1 */
 
-  --color-success: 11 107 92;
+  --color-success: 11 107 79;
   --color-warn: 138 90 5;
   --color-danger: 168 64 43;
-  --color-info: 20 76 153;
+  --color-info: 44 95 122;
 
   --color-border: rgb(0 0 0 / 0.12);
 
@@ -151,17 +175,17 @@
     0 1px 2px rgb(0 0 0 / 0.04);
   --shadow-2:
     0 0 0 1px rgb(0 0 0 / 0.10),
-    0 12px 32px -18px rgb(105 4 242 / 0.22);
+    0 12px 32px -18px rgb(138 90 5 / 0.18);
   --shadow-3:
     0 0 0 1px rgb(var(--color-brand) / 0.34),
-    0 18px 44px -20px rgb(105 4 242 / 0.30);
+    0 18px 44px -20px rgb(138 90 5 / 0.26);
   --shadow-card: var(--shadow-1);
 
-  --orb-1: 188 175 252;
-  --orb-2: 219 211 255;
-  --orb-3: 247 247 255;
-  --orb-alpha: 0.55;
-  --orb-blur: 80px;
+  --orb-1: 246 205 142;  /* warm amber wash */
+  --orb-2: 242 214 178;  /* sand */
+  --orb-3: 250 228 205;  /* pale sand */
+  --orb-alpha: 0.42;
+  --orb-blur: 90px;
 }
 
 html,
@@ -323,29 +347,28 @@ body > footer {
 /* ------------------------------------------------------------------ */
 /* Brand gradient for the solid violet blocks.                          */
 /*                                                                      */
-/* Stops are per theme because the second stop has to keep white legible
-/* on its own. In dark it runs violet into the blue from Quixlab's own
-/* gradient; in light `accent` is a pale lavender that white fails
-/* against, so light runs violet into a deeper violet instead.          */
+/* Stops are per theme because the label sitting on the gradient has to
+/* clear it at both ends. Dark runs amber into a burnt amber and carries
+/* INK, not white. Light runs deep amber into a deeper bronze and carries
+/* white.                                                               */
 /* ------------------------------------------------------------------ */
 :root {
-  --grad-a: 155 49 255;  /* #9B31FF */
-  --grad-b: 20 76 153;   /* #144C99 */
+  --grad-a: 242 169 59;  /* #F2A93B — ink clears 9.91:1 */
+  --grad-b: 214 124 28;  /* #D67C1C — ink clears 6.6:1 */
 
-  /* Band grounds. The flat #191D2A surface read as a washed-out blue-grey
-     slab; these run it to black with a little depth instead. */
-  --band-a: 4 4 6;       /* #040406 Quixlab's deepest */
-  --band-b: 10 12 18;    /* #0A0C12 */
+  /* Band grounds: the page run to near-black with a little warmth. */
+  --band-a: 6 6 5;       /* #060605 */
+  --band-b: 16 14 12;    /* #100E0C */
 }
 
 .light {
-  --grad-a: 105 4 242;   /* #6904F2 */
-  --grad-b: 74 3 171;    /* #4A03AB — white clears 9:1 here */
+  --grad-a: 138 90 5;    /* #8A5A05 — white clears 5.92:1 */
+  --grad-b: 99 62 2;     /* #633E02 — white clears 9.1:1 */
 
   /* Black is not an option on the light theme, so the band gets the same
      treatment in kind: a gradient rather than one flat fill. */
-  --band-a: 250 249 247; /* #FAF9F7 */
-  --band-b: 241 239 251; /* #F1EFFB */
+  --band-a: 247 244 237; /* #F7F4ED */
+  --band-b: 240 235 224; /* #F0EBE0 */
 }
 
 .brand-gradient {
@@ -358,8 +381,9 @@ body > footer {
    corner while the copy sits in the middle, so centred text reads as pushed
    right -- the final CTA was reported as "not centred" when it was centred to
    the pixel. Anchoring the light stop on the copy puts the visual mass and
-   the text in the same place. Both stops clear 4.9:1 against on-brand white
-   in either theme, so the blend between them cannot fail contrast. */
+   the text in the same place. `text-on-brand` carries the label, which is
+   ink on the dark theme's amber (9.91 and 6.37 at the two stops) and white
+   on light's deep amber (5.92 and 9.46), so the blend cannot fail either. */
 .brand-gradient-radial {
   background-color: rgb(var(--grad-b));
   background-image: radial-gradient(

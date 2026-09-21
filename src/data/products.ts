@@ -30,6 +30,11 @@ export type Product = {
    * with coverMode="dark" they're ignored and the dark cover is shown.
    */
   gallery: string[];
+  /**
+   * "mobile" renders the gallery in phone frames at 9:16 instead of a
+   * browser-chrome plate. Defaults to desktop.
+   */
+  orientation?: "desktop" | "mobile";
   problem: string;
   solution: string;
   novelty: string;
@@ -46,13 +51,13 @@ export const products: Product[] = [
     tagline: "AI meeting intelligence: transcripts, MOMs, action items, decisions.",
     category: "Meeting Intelligence Platform",
     status: "Beta",
-    cover: "/products/minutely-1.png",
+    cover: "/images/products/minutely-1.webp",
     coverMode: "image",
     gallery: [
-      "/products/minutely-1.png",
-      "/products/minutely-2.png",
-      "/products/minutely-3.png",
-      "/products/minutely-4.png",
+      "/images/products/minutely-1.webp",
+      "/images/products/minutely-2.webp",
+      "/images/products/minutely-3.webp",
+      "/images/products/minutely-4.webp",
     ],
     problem:
       "Meetings produce decisions, action items and follow-ups that get lost in fragmented notes, recordings and side-chats. Teams either re-do the work or skip the follow-through.",
@@ -97,9 +102,12 @@ export const products: Product[] = [
     tagline: "Deep agent builder for complex multi-agent workflows.",
     category: "Agentic AI Framework",
     status: "Internal Framework",
-    cover: "/products/neuromesh-1.png",
+    cover: "/images/products/neuromesh-1.webp",
     coverMode: "image",
-    gallery: ["/products/neuromesh-1.png", "/products/neuromesh-2.jpeg"],
+    gallery: [
+      "/images/products/neuromesh-1.webp",
+      "/images/products/neuromesh-2.webp",
+    ],
     problem:
       "Building multi-agent systems usually means stitching together brittle prompts, manual state, and hand-rolled retries. Hard to debug, harder to maintain.",
     solution:
@@ -131,12 +139,12 @@ export const products: Product[] = [
     tagline: "AI sales co-pilot: lead enrichment, outreach, and pipeline intelligence.",
     category: "Sales Automation",
     status: "MVP",
-    cover: "/products/salespire-1.png",
+    cover: "/images/products/salespire-1.webp",
     coverMode: "image",
     gallery: [
-      "/products/salespire-1.png",
-      "/products/salespire-2.png",
-      "/products/salespire-3.png",
+      "/images/products/salespire-1.webp",
+      "/images/products/salespire-2.webp",
+      "/images/products/salespire-3.webp",
     ],
     problem:
       "Sales teams burn hours on manual enrichment, follow-up writing, and pipeline hygiene. Generic AI tools spam inboxes and miss context.",
@@ -166,13 +174,13 @@ export const products: Product[] = [
     tagline: "Neutral answers. Reflective wisdom. Trust-first AI for interfaith learning.",
     category: "Responsible Conversational AI",
     status: "Beta",
-    cover: "/products/ala-1.png",
+    cover: "/images/products/ala-1.webp",
     coverMode: "image",
     gallery: [
-      "/products/ala-1.png",
-      "/products/ala-2.png",
-      "/products/ala-3.png",
-      "/products/ala-4.png",
+      "/images/products/ala-1.webp",
+      "/images/products/ala-2.webp",
+      "/images/products/ala-3.webp",
+      "/images/products/ala-4.webp",
     ],
     problem:
       "Religious, cultural and ethical questions are some of the worst use cases for off-the-shelf chatbots. They hallucinate, flatten nuance, and over-confidently pick a single tradition's voice. Users get answers that are either wrong, disrespectful, or dangerously oversimplified.",
@@ -216,9 +224,11 @@ export const products: Product[] = [
     tagline: "Multimodal personal companion: Study, Health, Finance, Growth.",
     category: "Consumer Multi-Agent Platform",
     status: "Concept",
-    cover: "",
-    coverMode: "dark",
-    gallery: [],
+    cover: "/images/products/multiagent-1.webp",
+    coverMode: "image",
+    gallery: [
+      "/images/products/multiagent-1.webp",
+    ],
     problem:
       "Most personal AI tools are single-purpose chatbots. Users end up juggling tabs for study help, fitness, finance, and personal growth, and none of the contexts talk to each other.",
     solution:
@@ -246,9 +256,11 @@ export const products: Product[] = [
     tagline: "Enterprise document intelligence & semantic search.",
     category: "RAG & Knowledge Platform",
     status: "Client Delivery",
-    cover: "",
-    coverMode: "dark",
-    gallery: [],
+    cover: "/images/products/documentai-1.webp",
+    coverMode: "image",
+    gallery: [
+      "/images/products/documentai-1.webp",
+    ],
     problem:
       "Enterprises sit on millions of pages of contracts, SOPs, manuals and tickets. Keyword search misses intent; out-of-the-box chat tools hallucinate.",
     solution:
@@ -290,9 +302,11 @@ export const products: Product[] = [
     tagline: "AI-powered IVR & voice call automation platform.",
     category: "Voice AI Platform",
     status: "Client Delivery",
-    cover: "",
-    coverMode: "dark",
-    gallery: [],
+    cover: "/images/products/voxroute-1.webp",
+    coverMode: "image",
+    gallery: [
+      "/images/products/voxroute-1.webp",
+    ],
     problem:
       "Legacy IVRs frustrate callers and dump everyone into long queues. Live agents repeat the same handful of resolutions all day.",
     solution:
@@ -334,9 +348,12 @@ export const products: Product[] = [
     tagline: "Real-time conversational voice assistant: streaming ASR, instant replies.",
     category: "Conversational Voice AI",
     status: "MVP",
-    cover: "/products/voicebot-1.jpeg",
+    cover: "/images/products/voicebot-1.webp",
     coverMode: "image",
-    gallery: ["/products/voicebot-1.jpeg", "/products/voicebot-2.jpeg"],
+    gallery: [
+      "/images/products/voicebot-1.webp",
+      "/images/products/voicebot-2.webp",
+    ],
     problem:
       "Most voice assistants either feel laggy and robotic or hallucinate confidently. Teams building voice-first features need a real-time conversational layer that listens, thinks, and speaks back fast enough to feel natural, without sacrificing factual grounding.",
     solution:
@@ -374,17 +391,93 @@ export const products: Product[] = [
     ],
   },
   {
+    slug: "medaculous",
+    name: "Medaculous",
+    tagline: "Clinical companion for learning, practice and patient care.",
+    category: "Health AI",
+    status: "Live",
+    cover: "/images/products/medaculous/1.webp",
+    coverMode: "image",
+    orientation: "mobile",
+    gallery: [
+      "/images/products/medaculous/1.webp",
+      "/images/products/medaculous/2.webp",
+      "/images/products/medaculous/3.webp",
+      "/images/products/medaculous/4.webp",
+      "/images/products/medaculous/5.webp",
+      "/images/products/medaculous/6.webp",
+      "/images/products/medaculous/7.webp",
+      "/images/products/medaculous/8.webp",
+      "/images/products/medaculous/9.webp",
+      "/images/products/medaculous/10.webp",
+      "/images/products/medaculous/11.webp",
+    ],
+    problem:
+      "A clinician on a ward round needs a differential, a drug dose and a guideline in the same two minutes, and the three of them live in three different places.",
+    solution:
+      "One mobile companion covering systems and disease topics, symptom-to-differential workup, symptom-based drug recommendations, a formulary with interactions and contraindications, notes, clinical calculators, a knowledge hub and a ward dashboard.",
+    novelty:
+      "The assistant answers against the same structured content the rest of the app is built on, so an explanation and the formulary entry behind it do not disagree. Built to work offline, because hospital signal does not.",
+    features: [
+      "Systems and disease topics across all body systems",
+      "Symptom workup with differentials, red flags and investigations",
+      "Symptom-based drug recommendations with safety checks",
+      "Formulary: indications, doses, contraindications, interactions",
+      "Medaculous AI for explanations and decision support",
+      "Clinical calculators at the point of care",
+      "Notes with rich text, images and drawings",
+      "Ward Companion for patients, tasks and handovers",
+      "Exam Planner for study tracking",
+    ],
+    targetUsers: ["Junior doctors", "Medical students", "Ward teams", "Clinical educators"],
+    techStack: ["React Native", "FastAPI", "Postgres", "Retrieval + re-ranking", "On-device cache"],
+    roadmap: [
+      "Institution-wide deployments with local formularies",
+      "Handover export into hospital systems",
+      "Offline-first sync for low-signal wards",
+    ],
+  },
+  {
+    slug: "rosenode",
+    name: "RoseNode",
+    tagline: "A conversational AI companion, with the economics instrumented.",
+    category: "Consumer AI",
+    status: "Live",
+    cover: "/images/products/rosenode-1.webp",
+    coverMode: "image",
+    gallery: ["/images/products/rosenode-1.webp", "/images/products/rosenode-2.webp"],
+    problem:
+      "A consumer assistant people talk to every day is a per-message cost problem long before it is a model problem. Without per-intent cost and latency you cannot tell a product decision from a billing accident.",
+    solution:
+      "A voice-and-text companion with long-term memory, sitting on an operator dashboard that tracks active users, messages, cost per message and p50/p99 latency, broken down by conversation intent.",
+    novelty:
+      "The intent breakdown is the product analytics and the cost control at once: every conversation is classified, so spend and tail latency are attributable to the kind of conversation driving them rather than to a monthly total.",
+    features: [
+      "Voice and text conversation with long-term memory",
+      "Per-intent classification of every conversation",
+      "Cost per message tracked against active users",
+      "p50 and p99 latency trends, daily through yearly",
+      "Operator dashboard for usage, revenue and engagement",
+    ],
+    targetUsers: ["Consumer AI teams", "Operators running assistants at scale"],
+    techStack: ["Next.js", "FastAPI", "Postgres", "Streaming ASR/TTS", "Langfuse"],
+    roadmap: [
+      "Cost ceilings and alerts per intent",
+      "Retention cohorts against conversation type",
+    ],
+  },
+  {
     slug: "fintelia",
     name: "Fintelia",
     tagline: "Financial intelligence in one workspace: calculators, planning, and market insight.",
     category: "FinTech / InsureTech AI",
     status: "Beta",
-    cover: "/products/fintelia-calculator.png",
+    cover: "/images/products/fintelia-1.webp",
     coverMode: "image",
     gallery: [
-      "/products/fintelia-calculator.png",
-      "/products/fintelia-planner.png",
-      "/products/fintelia-market-intelligence.png",
+      "/images/products/fintelia-1.webp",
+      "/images/products/fintelia-2.webp",
+      "/images/products/fintelia-3.webp",
     ],
     problem:
       "Financial decisions like deductible choices, investment plans, retirement, and market timing depend on data scattered across portals, PDFs and news. Most tools solve one slice and leave the user to stitch the rest. Generic AI chatbots get the math wrong and miss compliance constraints.",
