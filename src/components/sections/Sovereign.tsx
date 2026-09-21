@@ -42,7 +42,7 @@ export function Sovereign() {
         {EVIDENCE.map((e, i) => (
           <Card as="li" key={e.stat}>
             <div data-reveal data-reveal-delay={i * 70} className="flex h-full flex-col gap-3 p-7">
-              <span className="text-3xl font-bold text-brand">{e.stat}</span>
+              <span className="text-3xl font-bold text-link">{e.stat}</span>
               <p className="text-base text-text">{e.line}</p>
               <p className="mt-auto pt-4 font-mono text-xs text-muted">{e.source}</p>
             </div>

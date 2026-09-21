@@ -38,6 +38,7 @@ export function Industries() {
 
   return (
     <Section
+      id="industries"
       eyebrow="Where this lands"
       heading="Domain shapes the system, not just the wording."
       ground="wash"

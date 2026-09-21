@@ -138,7 +138,7 @@ export function InferenceEconomics() {
                 className="stroke-[color:var(--color-border)]" />
               <circle
                 cx="60" cy="60" r="52" fill="none" strokeWidth="9" strokeLinecap="round"
-                className="stroke-brand transition-[stroke-dashoffset] duration-500 ease-out"
+                className="stroke-[color:rgb(var(--color-link))] transition-[stroke-dashoffset] duration-500 ease-out"
                 strokeDasharray={circumference}
                 strokeDashoffset={circumference * (1 - cost / 100)}
               />
@@ -176,7 +176,7 @@ export function InferenceEconomics() {
                   <span className="block text-md font-semibold">{s.technique}</span>
                   {i === active && <span className="mt-2 block text-base text-muted">{s.detail}</span>}
                 </span>
-                <span className="font-mono text-xs tabular-nums text-brand">{s.cost}%</span>
+                <span className="font-mono text-xs tabular-nums text-link">{s.cost}%</span>
               </button>
             </li>
           ))}

@@ -124,7 +124,7 @@ export function ModelRadar() {
                 <div key={a.key}>
                   <label htmlFor={`w-${a.key}`} className="flex items-baseline justify-between gap-4">
                     <span className="text-base font-semibold text-text">{a.label}</span>
-                    <span className="font-mono text-xs tabular-nums text-brand">{weights[a.key]}</span>
+                    <span className="font-mono text-xs tabular-nums text-link">{weights[a.key]}</span>
                   </label>
                   <input
                     id={`w-${a.key}`}
@@ -135,7 +135,7 @@ export function ModelRadar() {
                     onChange={(e) =>
                       setWeights((w) => ({ ...w, [a.key]: Number(e.target.value) }))
                     }
-                    className="mt-2 h-11 w-full accent-[color:rgb(var(--color-brand))]"
+                    className="mt-2 h-11 w-full accent-[color:rgb(var(--color-link))]"
                   />
                   <p className="font-mono text-xs text-muted">{a.hint}</p>
                 </div>
@@ -166,7 +166,7 @@ export function ModelRadar() {
                           key={m.name}
                           className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2"
                         >
-                          <span className="w-[6.5rem] font-mono text-sm tabular-nums text-brand">
+                          <span className="w-[6.5rem] font-mono text-sm tabular-nums text-link">
                             {m.score}
                           </span>
                           <span className="text-base font-semibold text-text">{m.name}</span>

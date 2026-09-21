@@ -7,7 +7,7 @@
  * blocking time on mobile; none of them sold anything.
  */
 import type { Metadata, Viewport } from "next";
-import { Schibsted_Grotesk, DM_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, DM_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
@@ -17,7 +17,7 @@ import { OrbField } from "@/components/ui/OrbField";
 import { buildMetadata, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { publicEnv } from "@/lib/env";
 
-const schibsted = Schibsted_Grotesk({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-schibsted",
   display: "swap",
@@ -55,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const gaId = publicEnv.analytics.gaId;
 
   return (
-    <html lang="en" className={`${schibsted.variable} ${dmMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${jakarta.variable} ${dmMono.variable}`} suppressHydrationWarning>
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <Script id="theme-bootstrap" strategy="beforeInteractive">
           {themeBootstrap}

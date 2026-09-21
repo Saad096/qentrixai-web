@@ -1,6 +1,6 @@
 # QentrixAI — Design system
 
-> **Direction: Aurora** — set by the owner on 2026-09-20, replacing Kiln. The colour scheme is taken from the two reference sites at their explicit instruction, which overrides the violet/indigo ban in CLAUDE.md §1.8 and §6.1. Kiln and the two rejected directions remain documented in `docs/revamp/04-design.md`.
+> **Direction: Meridian** — set by the owner on 2026-09-21, sampled from axcelerate.ai. Navy grounds, cool paper light theme, one blue. Supersedes the amber pass; the earlier directions remain documented in `docs/revamp/04-design.md`.
 
 ## The idea
 
@@ -38,105 +38,30 @@ an `ArtPanel` stage: `ModelOrbit`, `AgentGraph`, `RetrievalFlow`, `VoiceWave`.
   not ours to ship.
 - All motion is transform/opacity only and stops under `prefers-reduced-motion`.
 
-## Colour — Aurora
+## Colour — Meridian
 
-| Role | Dark (default, Quixlab) | Light (VamTam) |
+Sampled from the reference rather than eyeballed.
+
+| Role | Dark (default) | Light |
 |---|---|---|
-| `bg` | `#050609` near-black | `#FFFFFF` |
-| `surface` | `#0C0E15` + `.surface-sheen` | `#FAF9F7` warm band |
-| `surface-2` | `#090A10` | `#F1EFFB` lavender tint |
-| `band` stops | `#040406` → `#0A0C12` | `#FAF9F7` → `#F1EFFB` |
-| illustration plate | `#F1EFFB` (light in **both** themes) | `#F1EFFB` |
-| `art-ground` | `#030407` | `#F8F7FD` |
-| `border` | `rgb(255 255 255 / .10)` | `rgb(0 0 0 / .12)` |
-| `text` | `#F8F9FA` | `#000000` |
-| `muted` | `#9AA3B2` (7.48:1) | `#52565E` (7.36:1) |
-| `brand` (fills) | `#9B31FF` | `#6904F2` |
-| `link` (text) | `#B57DFF` | `#6904F2` |
-| `accent` | `#144C99` | `#BCAFFC` |
-| `on-brand` | `#FFFFFF` (4.91:1) | `#FFFFFF` (7.24:1) |
-| orb stops | `#9B31FF`, `#144C99`, `#F52060` | `#BCAFFC`, `#DBD3FF`, `#F7F7FF` |
+| `bg` | `#0E2A47` navy | `#F5F7FA` cool paper |
+| `surface` | `#143152` | `#FFFFFF` |
+| `surface-2` | `#0B2139` | `#EBEFF4` |
+| `art-ground` | `#081B30` | `#EAF2FD` |
+| `text` | `#FFFFFF` (14.57:1) | `#13263A` (14.32:1) |
+| `muted` | `#9FB3C8` (6.77:1) | `#566779` (5.42:1) |
+| `brand` — fills only in dark | `#1F5FD1` | `#1F5FD1` |
+| `link` — text | `#6FA8FF` (6.05:1) | `#1F5FD1` (5.41:1) |
+| `on-brand` | `#FFFFFF` (5.81:1) | `#FFFFFF` |
 
-### Dark grounds went near-black (2026-09-21)
+**The rule that keeps breaking, written down.** `brand` is a fill token. On
+the navy it measures **2.51:1 as text** — it has failed an audit twice now,
+once as amber-on-graphite and once here. Foreground on a page ground is
+always `link`. The same applies to non-text UI that has to clear 3:1: the
+inference dial arc and the radar's range inputs both use `link`.
 
-Owner direction: the sampled Quixlab surface `#252A32` read as grey plastic
-wherever it was used as a card. The three dark grounds are now near-black and
-every card carries `.surface-sheen`, one brand-tinted wash falling off its top
-edge, so a card still reads as an object rather than a hole in the page.
-
-These depart from the sampled reference values deliberately, so they are
-theme values in `globals.css` rather than steps on the `--n-*` ramp; the ramp
-still holds what was sampled.
-
-Contrast only improved. Nothing here can regress accessibility:
-
-| | text | muted | link | brand (fill) |
-|---|---|---|---|---|
-| card, was `#252A32` | 13.68 | 5.67 | 5.04 | 2.94 |
-| card, now `#0C0E15` | **18.29** | **7.58** | **6.74** | 3.93 |
-| page, was `#0D1017` | 18.05 | 7.48 | 6.65 | 3.88 |
-| page, now `#050609` | **19.22** | **7.97** | **7.08** | 4.13 |
-
-`brand` as text stays banned in dark — 3.93:1 on the new card surface is no
-better than it was. Fills only; `link` for text.
-
-**Verified:** zero axe violations across every route in both themes at 390px
-and 1440px, re-run after the near-black change; no horizontal overflow at
-360 / 390 / 768 / 1024 / 1440 / 1920 in either theme. Lighthouse accessibility
-100 on every page.
-
-Tokens are CSS variables in `src/app/globals.css`, mapped to semantic Tailwind colours in `tailwind.config.ts`. **No raw hex in components.**
-
-## Depth and grounds (2026-09-20)
-
-A browser pass found two things the palette could not fix on its own. Cards
-read as outlines because `--shadow-card` was a single inset hairline — an
-edge, with nothing behind it. And every section sat on the same ground at the
-same weight, so 9,900 px of homepage read as one undifferentiated strip.
-
-**Elevation** is a three-step scale per theme. `shadow-1` resting, `shadow-2`
-raised (framed media, floating panels), `shadow-3` hover only.
-
-| Token | Job |
-|---|---|
-| `--shadow-1` | Resting card. Hairline ring + inner highlight |
-| `--shadow-2` | Raised: device frames, panel images |
-| `--shadow-3` | Hover. Brand-tinted ring and glow |
-
-**A band goes darker than the page, never lighter** (2026-09-21). Lifting the
-band stops to `#0E1119`/`#141826` so the alternation would read was tried and
-rejected by the owner: the grounds are meant to be black, and a lighter strip
-is the grey-plastic look the near-black change existed to get rid of. The
-band is `#040406` into `#0A0C12` and is deliberately near-invisible against
-`#050609` — it is the hairline rules and the brand radial in `.ground-band`,
-not a change of value, that separate one section from the next.
-
-**Grounds** are set per section with `<Section ground="base" | "wash" | "band">`.
-`wash` lays two soft brand/accent radials behind the content; `band` moves it
-onto `surface-2` and draws its own hairlines. **No two adjacent sections share
-a ground** — that rule is the whole point of the prop. `band` draws its own
-rules, so never also pass `rule` in `className`.
-
-**Grain** (`.grain`) is one inline SVG turbulence at 3.5% over `wash` grounds.
-It exists to break the banding that makes a large soft gradient read as a CSS
-gradient rather than a designed surface. No request, no runtime cost.
-
-Every decorative layer is `pointer-events: none` at `z-index: -1` behind
-content. `tests/e2e/visual.spec.ts` asserts they neither widen the document
-nor intercept a click on the primary CTA, because neither failure shows up in
-a screenshot.
-
-```
---color-bg  --color-surface  --color-surface-2  --color-border
---color-text  --color-muted
---color-brand  --color-accent
---color-success  --color-warn  --color-danger  --color-info
-```
-
-- A 9-step neutral ramp per theme, generated from the base hue so greys carry the base's undertone.
-- **Contrast floors:** body text ≥ 4.5:1, large text ≥ 3:1, non-text UI ≥ 3:1. Secondary text never goes below `text/60` of the ink token.
-- **Button labels follow the base.** Where the theme's brand hue is light, the label is ink, not white. White-on-brand is only legal where it measures ≥ 4.5:1.
-- Semantic colours are real tokens with real jobs, not decoration.
+`brand` as a foreground is legal in exactly one place: on `bg-on-brand`
+(white), where blue on white is 5.81:1.
 
 ## Type
 

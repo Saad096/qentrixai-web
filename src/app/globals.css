@@ -49,13 +49,8 @@
 /* ------------------------------------------------------------------ */
 /* Dark is the default theme.                                           */
 /*                                                                      */
-/* Repalette 2026-09-21. Violet is out: research for this change found  */
-/* that purple became the visual shorthand for AI after 2024, so it now */
-/* reads as category wallpaper, and blue is ~70% of SaaS. The emerging  */
-/* black+acid-lime default is already turning into the next cliche, so  */
-/* this goes the other way: warm tactile neutrals (the actual 2026      */
-/* move away from pure white and cold grey) with an amber primary that  */
-/* is high-chroma, warm and effectively unused in AI branding.          */
+/* Repalette 2026-09-21 (second pass). Sampled from axcelerate.ai at the  */
+/* owner's direction: navy grounds, cool paper light theme, one blue.     */
 /*                                                                      */
 /* Measured: text 18.16 on base / 17.02 on card, muted 7.80 / 7.31,     */
 /* amber-as-text 9.91 / 9.28, emerald 9.92. Ink on an amber fill is     */
@@ -78,27 +73,25 @@
  * card surface, no better than before. Fills only, `link` for text.
  */
 :root {
-  --color-bg: 11 10 8;           /* #0B0A08 warm graphite page */
-  --color-surface: 21 19 16;     /* #151310 card, lifted off the page */
-  --color-surface-2: 16 14 12;   /* #100E0C band, between the two */
-  --art-ground: 8 7 6;           /* #080706 the stage art is drawn on */
-  --color-text: 247 245 240;     /* #F7F5F0 warm off-white, 18.16:1 */
-  --color-muted: 168 162 150;    /* #A8A296 7.80:1 on base, 7.31:1 on card */
+  --color-bg: 14 42 71;          /* #0E2A47 navy page */
+  --color-surface: 20 49 82;     /* #143152 card, lifted off the page */
+  --color-surface-2: 11 33 57;   /* #0B2139 band, between the two */
+  --art-ground: 8 27 48;         /* #081B30 deepest, the stage art sits on */
+  --color-text: 255 255 255;     /* 14.57:1 on the base */
+  --color-muted: 159 179 200;    /* #9FB3C8 6.77:1 on base */
 
-  /* Amber carries fill AND text here -- 9.91:1 on the base, 9.28:1 on the
-     card -- so unlike the violet it needs no separate `link` step. */
-  --color-brand: 242 169 59;     /* #F2A93B */
-  --color-link: 242 169 59;
-  /* Decorative surfaces (product plates, gradients) read `accent`, so it has
-     to sit beside amber rather than argue with it -- emerald here turned every
-     plate amber-to-green. Emerald stays, but only as `success`. */
-  --color-accent: 214 124 28;    /* #D67C1C burnt amber */
-  --color-on-brand: 11 10 8;     /* ink on amber, 9.91:1. White is 2:1 -- never */
+  /* The reference blue #1F5FD1 works as a FILL here -- white on it clears
+     5.81:1 -- but measures only 2.51:1 as text on the navy, so text gets a
+     lighter step. The same split the amber needed, in reverse. */
+  --color-brand: 31 95 209;      /* #1F5FD1 fill */
+  --color-link: 111 168 255;     /* #6FA8FF text, 6.05:1 base / 7.21:1 deepest */
+  --color-accent: 111 168 255;   /* #6FA8FF */
+  --color-on-brand: 255 255 255; /* white on #1F5FD1, 5.81:1 */
 
   --color-success: 63 207 142;
-  --color-warn: 242 169 59;
-  --color-danger: 240 106 87;    /* #F06A57 */
-  --color-info: 122 178 214;
+  --color-warn: 232 169 74;
+  --color-danger: 240 106 87;
+  --color-info: 111 168 255;
 
   --color-border: rgb(255 255 255 / 0.10);
 
@@ -123,10 +116,13 @@
      and a cool wash at this size and blur make mud, not depth. Alpha is well
      down from the violet era too: amber is a far brighter hue, so the same
      0.30 washed the page and fought the copy. */
-  --orb-1: 242 169 59;   /* amber */
-  --orb-2: 214 124 28;   /* burnt amber */
-  --orb-3: 240 106 87;   /* warm coral */
-  --orb-alpha: 0.16;
+  /* Blue on navy is same-hue, so the wash lifts the whole ground rather
+     than tinting a corner of it -- at 0.30 the page read as bright blue
+     instead of deep navy. */
+  --orb-1: 31 95 209;    /* brand blue */
+  --orb-2: 111 168 255;  /* light blue */
+  --orb-3: 20 49 82;     /* navy lift */
+  --orb-alpha: 0.17;
   --orb-blur: 110px;
 
   --text-xs: 12px;
@@ -151,22 +147,22 @@
 /* the same reason cold grey is -- 2026's neutral is warm and tactile.   */
 /* ------------------------------------------------------------------ */
 .light {
-  --color-bg: 251 250 247;       /* #FBFAF7 warm bone, not pure white */
-  --color-surface: 244 241 234;  /* #F4F1EA sand */
-  --color-surface-2: 237 233 224;/* #EDE9E0 */
-  --art-ground: 247 244 237;     /* #F7F4ED the stage art is drawn on */
-  --color-text: 18 16 13;        /* #12100D warm ink, 18.20:1 */
-  --color-muted: 92 86 75;       /* #5C564B 6.97:1 on bone */
+  --color-bg: 245 247 250;       /* #F5F7FA cool paper, their page ground */
+  --color-surface: 255 255 255;  /* white cards on it */
+  --color-surface-2: 235 239 244;/* #EBEFF4 */
+  --art-ground: 234 242 253;     /* #EAF2FD pale blue tint */
+  --color-text: 19 38 58;        /* #13263A 14.32:1 on the base */
+  --color-muted: 86 103 121;     /* #566779 5.42:1 on base, 5.81:1 on card */
 
-  --color-brand: 138 90 5;       /* #8A5A05 deep amber, 5.67:1 as text */
-  --color-link: 138 90 5;
-  --color-accent: 176 120 40;    /* #B07828 bronze */
-  --color-on-brand: 255 255 255; /* white on deep amber, 5.92:1 */
+  --color-brand: 31 95 209;      /* #1F5FD1 — 5.41:1 as text, white on it 5.81:1 */
+  --color-link: 31 95 209;
+  --color-accent: 31 95 209;
+  --color-on-brand: 255 255 255;
 
   --color-success: 11 107 79;
-  --color-warn: 138 90 5;
+  --color-warn: 176 120 40;
   --color-danger: 168 64 43;
-  --color-info: 44 95 122;
+  --color-info: 31 95 209;
 
   --color-border: rgb(0 0 0 / 0.12);
 
@@ -175,16 +171,16 @@
     0 1px 2px rgb(0 0 0 / 0.04);
   --shadow-2:
     0 0 0 1px rgb(0 0 0 / 0.10),
-    0 12px 32px -18px rgb(138 90 5 / 0.18);
+    0 12px 32px -18px rgb(19 38 58 / 0.16);
   --shadow-3:
     0 0 0 1px rgb(var(--color-brand) / 0.34),
-    0 18px 44px -20px rgb(138 90 5 / 0.26);
+    0 18px 44px -20px rgb(31 95 209 / 0.24);
   --shadow-card: var(--shadow-1);
 
-  --orb-1: 246 205 142;  /* warm amber wash */
-  --orb-2: 242 214 178;  /* sand */
-  --orb-3: 250 228 205;  /* pale sand */
-  --orb-alpha: 0.42;
+  --orb-1: 198 219 252;  /* pale blue wash */
+  --orb-2: 226 236 250;
+  --orb-3: 234 242 253;
+  --orb-alpha: 0.65;
   --orb-blur: 90px;
 }
 
@@ -353,22 +349,22 @@ body > footer {
 /* white.                                                               */
 /* ------------------------------------------------------------------ */
 :root {
-  --grad-a: 242 169 59;  /* #F2A93B — ink clears 9.91:1 */
-  --grad-b: 214 124 28;  /* #D67C1C — ink clears 6.6:1 */
+  --grad-a: 31 95 209;   /* #1F5FD1 — white clears 5.81:1 */
+  --grad-b: 17 58 133;   /* #113A85 — white clears 9.6:1 */
 
   /* Band grounds: the page run to near-black with a little warmth. */
-  --band-a: 6 6 5;       /* #060605 */
-  --band-b: 16 14 12;    /* #100E0C */
+  --band-a: 8 27 48;     /* #081B30 */
+  --band-b: 11 33 57;    /* #0B2139 */
 }
 
 .light {
-  --grad-a: 138 90 5;    /* #8A5A05 — white clears 5.92:1 */
-  --grad-b: 99 62 2;     /* #633E02 — white clears 9.1:1 */
+  --grad-a: 31 95 209;   /* #1F5FD1 — white clears 5.81:1 */
+  --grad-b: 17 58 133;   /* #113A85 — white clears 9.6:1 */
 
   /* Black is not an option on the light theme, so the band gets the same
      treatment in kind: a gradient rather than one flat fill. */
-  --band-a: 247 244 237; /* #F7F4ED */
-  --band-b: 240 235 224; /* #F0EBE0 */
+  --band-a: 245 247 250; /* #F5F7FA */
+  --band-b: 234 242 253; /* #EAF2FD */
 }
 
 .brand-gradient {
