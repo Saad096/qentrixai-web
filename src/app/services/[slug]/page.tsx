@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { ModelRadar } from "@/components/sections/ModelRadar";
 import { Button } from "@/components/ui/Button";
 import { Illustration } from "@/components/ui/Illustration";
 import { services } from "@/data/services";
@@ -152,6 +153,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
           </ul>
         </Section>
       )}
+      {service.slug === "inference-engineering" && <ModelRadar />}
     </>
   );
 }
