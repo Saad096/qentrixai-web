@@ -7,7 +7,7 @@ import { products } from "@/data/products";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Nine products we build and run ourselves",
+  title: "Products we build and run ourselves",
   path: "/products",
   description:
     "Minutely, NeuroMesh, SalesPire, ALA, DocumentAI, VoxRoute and more — operated in-house on the same evals, tracing and on-call discipline we hand to clients.",
@@ -32,8 +32,8 @@ export default function ProductsPage() {
         <Container>
           <h1 className="max-w-[18ch] text-hero font-bold text-text">Products we build and run</h1>
           <p className="mt-7 max-w-measure text-md text-muted">
-            Nine products, operated in-house on the same discipline we sell. Several started as
-            client work and earned their own roadmap.
+            {products.length} products, operated in-house on the same discipline we sell.
+            Several started as client work and earned their own roadmap.
           </p>
         </Container>
       </section>

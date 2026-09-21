@@ -59,10 +59,12 @@ const config: Config = {
         base: ["var(--text-base)", { lineHeight: "1.6" }],
         md: ["var(--text-md)", { lineHeight: "1.6" }],
         lg: ["var(--text-lg)", { lineHeight: "1.5" }],
-        xl: ["var(--text-xl)", { lineHeight: "1.3", letterSpacing: "-0.02em" }],
-        "2xl": ["var(--text-2xl)", { lineHeight: "1.15", letterSpacing: "-0.03em" }],
-        "3xl": ["var(--text-3xl)", { lineHeight: "1.05", letterSpacing: "-0.035em" }],
-        hero: ["var(--text-hero)", { lineHeight: "0.98", letterSpacing: "-0.04em" }],
+        xl: ["var(--text-xl)", { lineHeight: "1.32", letterSpacing: "-0.02em" }],
+        "2xl": ["var(--text-2xl)", { lineHeight: "1.2", letterSpacing: "-0.025em" }],
+        // 1.05 was set for a single-line heading and nearly every heading on
+        // the site wraps to two or three. At that leading the lines touch.
+        "3xl": ["var(--text-3xl)", { lineHeight: "1.14", letterSpacing: "-0.03em" }],
+        hero: ["var(--text-hero)", { lineHeight: "1.04", letterSpacing: "-0.035em" }],
       },
       borderRadius: {
         sm: "var(--radius-sm)",

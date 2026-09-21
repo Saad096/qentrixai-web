@@ -69,7 +69,7 @@ export const CASE_ART: Record<string, string> = {
 /**
  * Products only where there is no real screenshot.
  *
- * Six of the nine ship with actual product shots and those always win: a
+ * Most ship with actual product shots and those always win: a
  * screenshot of the thing is worth more than a drawing of the idea. These
  * three are the ones marked `coverMode: "dark"` in products.ts, which
  * rendered with no imagery at all.

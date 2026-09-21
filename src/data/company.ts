@@ -83,8 +83,8 @@ export const pillars: Pillar[] = [
   },
   {
     title: "We operate our own products",
-    body: "Nine of them. We live with our own architecture decisions, which is why we argue about them early.",
-    proof: "See all nine products",
+    body: "Eleven of them. We live with our own architecture decisions, which is why we argue about them early.",
+    proof: "See all eleven products",
     proofHref: "/products",
   },
   {
@@ -100,7 +100,7 @@ export const pillars: Pillar[] = [
  * at the owner's direction, following the reference layout.
  *
  * Every line traces to something already on this page: `stats` above, the
- * three `pillars` below, and the nine products in products.ts. Nothing here
+ * three `pillars` below, and the products in products.ts. Nothing here
  * is a new claim -- the reference site's own cells include a "95% client
  * retention rate" we have no basis for, so it is not here.
  *
@@ -121,7 +121,7 @@ export const reasons: Reason[] = [
   },
   {
     title: "We run our own products",
-    line: "Nine of them, in production. We live with our own architecture decisions.",
+    line: "Eleven of them, in production. We live with our own architecture decisions.",
     href: "/products",
   },
   {

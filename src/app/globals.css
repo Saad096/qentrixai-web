@@ -73,27 +73,39 @@
  * card surface, no better than before. Fills only, `link` for text.
  */
 :root {
-  --color-bg: 14 42 71;          /* #0E2A47 navy page */
-  --color-surface: 20 49 82;     /* #143152 card, lifted off the page */
-  --color-surface-2: 11 33 57;   /* #0B2139 band, between the two */
-  --art-ground: 8 27 48;         /* #081B30 deepest, the stage art sits on */
-  --color-text: 255 255 255;     /* 14.57:1 on the base */
-  --color-muted: 159 179 200;    /* #9FB3C8 6.77:1 on base */
+  /* Graphite (2026-09-21). The owner's call: the dark theme should not be
+     navy. So the base stops being a colour at all -- a warm-tinted near
+     black, with the blue kept for the brand fill and links. On a coloured
+     base every screenshot has to fight the page for saturation; on this one
+     the only saturated things on screen are the product shots and the CTA,
+     which is the point.
+
+     The tint is warm (R > B by two points) rather than the cool grey that
+     reads as "unstyled". Nothing here is pure black: #000 with white on it
+     is the halation complaint from the first audit. */
+  --color-bg: 18 17 20;          /* #121114 page */
+  --color-surface: 27 26 30;     /* #1B1A1E card, lifted off the page */
+  --color-surface-2: 13 12 15;   /* #0D0C0F band, set below the page */
+  --art-ground: 10 9 12;         /* #0A090C deepest, the stage art sits on */
+  --color-text: 246 245 247;     /* #F6F5F7 17.31:1 on the base */
+  --color-muted: 166 163 173;    /* #A6A3AD 7.58:1 base, 6.98:1 on a card */
 
   /* The reference blue #1F5FD1 works as a FILL here -- white on it clears
      5.81:1 -- but measures only 2.51:1 as text on the navy, so text gets a
      lighter step. The same split the amber needed, in reverse. */
-  --color-brand: 31 95 209;      /* #1F5FD1 fill */
-  --color-link: 111 168 255;     /* #6FA8FF text, 6.05:1 base / 7.21:1 deepest */
-  --color-accent: 111 168 255;   /* #6FA8FF */
-  --color-on-brand: 255 255 255; /* white on #1F5FD1, 5.81:1 */
+  /* brand is a FILL. It is never text on a dark ground -- #2F6BE0 as type
+     measures 3.85:1 there. Foregrounds use `link`. */
+  --color-brand: 47 107 224;     /* #2F6BE0 fill, 3.85:1 vs page (non-text ok) */
+  --color-link: 138 180 255;     /* #8AB4FF text, 9.01:1 base / 8.29:1 on a card */
+  --color-accent: 138 180 255;   /* #8AB4FF */
+  --color-on-brand: 255 255 255; /* white on #2F6BE0, 4.88:1 */
 
   --color-success: 63 207 142;
   --color-warn: 232 169 74;
   --color-danger: 240 106 87;
-  --color-info: 111 168 255;
+  --color-info: 138 180 255;
 
-  --color-border: rgb(255 255 255 / 0.10);
+  --color-border: rgb(255 255 255 / 0.11);
 
   /* Elevation. The old single inset hairline is why cards read as outlines:
      there was no depth to read, only an edge. */
@@ -116,30 +128,61 @@
      and a cool wash at this size and blur make mud, not depth. Alpha is well
      down from the violet era too: amber is a far brighter hue, so the same
      0.30 washed the page and fought the copy. */
-  /* Blue on navy is same-hue, so the wash lifts the whole ground rather
-     than tinting a corner of it -- at 0.30 the page read as bright blue
-     instead of deep navy. */
-  --orb-1: 31 95 209;    /* brand blue */
-  --orb-2: 111 168 255;  /* light blue */
-  --orb-3: 20 49 82;     /* navy lift */
-  --orb-alpha: 0.17;
-  --orb-blur: 110px;
+  /* On graphite the wash is atmosphere, not colour. Blue against a neutral
+     base is a different hue rather than the same one, so the same alpha that
+     merely lifted navy would read here as a blue stain on grey. Two brand
+     stops well down in opacity plus one neutral lift, blurred further so no
+     edge of an orb is ever findable. */
+  --orb-1: 47 107 224;   /* brand blue */
+  --orb-2: 138 180 255;  /* light blue */
+  --orb-3: 62 60 70;     /* neutral lift, no hue */
+  --orb-alpha: 0.11;
+  --orb-blur: 130px;
 
-  --text-xs: 12px;
-  --text-sm: 13px;
-  --text-base: 15px;
-  --text-md: 17px;
-  --text-lg: 20px;
-  --text-xl: clamp(22px, 2.4vw, 26px);
-  --text-2xl: clamp(26px, 3.2vw, 34px);
-  --text-3xl: clamp(32px, 4.4vw, 46px);
-  --text-hero: clamp(40px, 5.6vw, 78px);
+  /* How hard the section grounds are tinted. On navy a brand wash was the
+     same hue as the page and simply lifted it; on graphite it is a
+     different hue and the same value reads as a blue stain on grey. Halved
+     for the dark theme, unchanged for light. */
+  --wash-alpha: 0.07;
+  --band-glow: 0.06;
+
+  /* Scale raised one step across the board (2026-09-21), on the owner's
+     readability note. 15px body is the size a design tool shows you and a
+     reader squints at; 16px is the floor a browser defaults to for a reason.
+     The mono labels move 12 -> 13 because DM Mono runs small for its point
+     size and they carry real information, not decoration.
+
+     The display sizes move the other way. The hero was capped at 78px,
+     which put four words on a line and made every h1 break badly; 68px
+     fits the same headline in fewer, better lines. */
+  --text-xs: 13px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 21px;
+  --text-xl: clamp(23px, 2.4vw, 27px);
+  --text-2xl: clamp(27px, 3.2vw, 35px);
+  --text-3xl: clamp(31px, 4.2vw, 44px);
+  --text-hero: clamp(38px, 5.2vw, 68px);
 
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 18px;
-  --motion-fast: 140ms;
-  --motion-base: 260ms;
+  /* Motion, slowed and given one easing curve (2026-09-21).
+
+     Everything used to run at 140-260ms on an ease that snaps hard at the
+     end, which is why the site felt clipped rather than calm. These are the
+     durations that read as deliberate at this scale: a hover still answers
+     immediately, but anything that moves a whole element takes long enough
+     to be followed.
+
+     One curve, named once. `ease-out` is the standard expo-out: fast
+     departure, long settle, nothing overshoots. */
+  --motion-fast: 180ms;
+  --motion-base: 420ms;
+  --motion-slow: 720ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 /* ------------------------------------------------------------------ */
@@ -182,6 +225,8 @@
   --orb-3: 234 242 253;
   --orb-alpha: 0.65;
   --orb-blur: 90px;
+  --wash-alpha: 0.16;
+  --band-glow: 0.14;
 }
 
 html,
@@ -290,10 +335,13 @@ body > footer {
    atmosphere behind other content. As the hero's entire background they
    simply disappeared, so the hero variant gets more saturated stops. Still
    light enough that #000 body text clears its contrast floor over them. */
+/* These three stops were still violet from the Aurora palette, two
+   repalettes later -- the one place on the site where the banned hue
+   survived. Pale blue, matching the light theme's own wash. */
 .light .orb-field--hero {
-  --orb-1: 167 139 250;
-  --orb-2: 196 181 253;
-  --orb-3: 221 214 254;
+  --orb-1: 168 199 247;
+  --orb-2: 201 221 250;
+  --orb-3: 226 236 250;
   --orb-alpha: 0.5;
 }
 
@@ -349,12 +397,12 @@ body > footer {
 /* white.                                                               */
 /* ------------------------------------------------------------------ */
 :root {
-  --grad-a: 31 95 209;   /* #1F5FD1 — white clears 5.81:1 */
-  --grad-b: 17 58 133;   /* #113A85 — white clears 9.6:1 */
+  --grad-a: 47 107 224;  /* #2F6BE0 — white clears 4.88:1 */
+  --grad-b: 21 56 128;   /* #153880 — white clears 9.9:1 */
 
   /* Band grounds: the page run to near-black with a little warmth. */
-  --band-a: 8 27 48;     /* #081B30 */
-  --band-b: 11 33 57;    /* #0B2139 */
+  --band-a: 10 9 12;     /* #0A090C */
+  --band-b: 13 12 15;    /* #0D0C0F */
 }
 
 .light {
@@ -605,17 +653,17 @@ body > footer {
    that is the LCP element and animating it is what put the old build at
    3.71s. Each step is 60ms behind the last, opacity + an 18px rise. */
 @keyframes hero-in {
-  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
   to { opacity: 1; transform: none; }
 }
 
 .hero-in {
-  animation: hero-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-in var(--motion-slow) var(--ease-out) both;
 }
 
-.hero-in-1 { animation-delay: 60ms; }
-.hero-in-2 { animation-delay: 120ms; }
-.hero-in-3 { animation-delay: 180ms; }
+.hero-in-1 { animation-delay: 90ms; }
+.hero-in-2 { animation-delay: 180ms; }
+.hero-in-3 { animation-delay: 270ms; }
 
 /* Domain panel transition (motion plan E). Keyed on the active tab, so it
    replays on every change rather than only on mount. */
@@ -625,7 +673,7 @@ body > footer {
 }
 
 .panel-in {
-  animation: panel-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: panel-in var(--motion-base) var(--ease-out) both;
 }
 
 /* Pinned sequence steps. Only meaningful once JS has set an active one, so
@@ -634,7 +682,7 @@ body > footer {
 [data-pin-sequence]:has(.is-step-active) .pin-step {
   opacity: 0.55;
   transform: scale(0.985);
-  transition: opacity 320ms ease, transform 320ms ease;
+  transition: opacity var(--motion-base) var(--ease-soft), transform var(--motion-base) var(--ease-soft);
 }
 
 [data-pin-sequence] .pin-step.is-step-active {
@@ -642,24 +690,26 @@ body > footer {
   transform: none;
 }
 
-/* The footer is navy whatever the theme, so it re-declares the tokens its
-   subtree reads rather than hard-coding colours into the markup. On the
-   dark theme these already match, so it is a no-op there. */
-.footer-navy {
-  --color-bg: 8 27 48;           /* #081B30 */
-  --color-surface: 14 42 71;     /* #0E2A47 */
-  --color-surface-2: 11 33 57;
-  --color-text: 255 255 255;     /* 17.36:1 on #081B30 */
-  --color-muted: 159 179 200;    /* #9FB3C8 8.06:1 on #081B30 */
-  --color-link: 111 168 255;     /* #6FA8FF 7.21:1 */
-  --color-border: rgb(255 255 255 / 0.12);
+/* The footer is the one dark band in the light theme, so it re-declares the
+   tokens its subtree reads rather than hard-coding colours into the markup.
+   It was navy; it is graphite now, in both themes, because "not navy" has
+   to include the one place navy was load-bearing. On the dark theme this is
+   a near no-op -- a shade below the page, which is what a footer wants. */
+.footer-deep {
+  --color-bg: 10 9 12;           /* #0A090C */
+  --color-surface: 22 21 25;     /* #161519 */
+  --color-surface-2: 13 12 15;
+  --color-text: 246 245 247;     /* 18.44:1 on #0A090C */
+  --color-muted: 166 163 173;    /* #A6A3AD 8.08:1 on #0A090C */
+  --color-link: 138 180 255;     /* #8AB4FF 9.60:1 */
+  --color-border: rgb(255 255 255 / 0.13);
 
   background-color: rgb(var(--color-bg));
   color: rgb(var(--color-text));
 }
 
 .menu-pop {
-  animation: menu-pop 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: menu-pop 240ms var(--ease-out) both;
   transform-origin: top center;
 }
 
@@ -694,8 +744,8 @@ body > footer {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(60% 70% at 12% 0%, rgb(var(--color-brand) / 0.16), transparent 62%),
-    radial-gradient(52% 64% at 92% 28%, rgb(var(--color-accent) / 0.16), transparent 66%);
+    radial-gradient(60% 70% at 12% 0%, rgb(var(--color-brand) / var(--wash-alpha)), transparent 62%),
+    radial-gradient(52% 64% at 92% 28%, rgb(var(--color-accent) / var(--wash-alpha)), transparent 66%);
 }
 
 /* The flat #191D2A fill read as a washed-out blue-grey slab. The band is a
@@ -706,7 +756,7 @@ body > footer {
 .ground-band {
   background-color: rgb(var(--band-a));
   background-image:
-    radial-gradient(46% 62% at 88% 0%, rgb(var(--color-brand) / 0.14), transparent 70%),
+    radial-gradient(46% 62% at 88% 0%, rgb(var(--color-brand) / var(--band-glow)), transparent 70%),
     linear-gradient(
       168deg,
       rgb(var(--band-a)) 0%,
@@ -770,7 +820,7 @@ body > footer {
    section renders visible -- content must never depend on an animation. */
 .js-reveal [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 18px, 0);
+  transform: translate3d(0, 24px, 0);
   will-change: transform, opacity;
 }
 
@@ -785,7 +835,7 @@ body > footer {
 }
 
 .rise {
-  animation: rise var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise var(--motion-base) var(--ease-out) both;
 }
 
 @keyframes slab-fill {
@@ -794,7 +844,7 @@ body > footer {
 }
 
 .slab-fill {
-  animation: slab-fill 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: slab-fill var(--motion-slow) var(--ease-out) both;
 }
 
 /* A dual ring, because a single violet one disappears on the thing people

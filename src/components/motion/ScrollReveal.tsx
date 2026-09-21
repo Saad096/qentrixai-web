@@ -74,11 +74,17 @@ export function ScrollReveal() {
           return gsap.to(el, {
             opacity: 1,
             y: 0,
-            duration: 0.62,
+            // Slowed from 0.62s on the owner's note that the motion felt
+            // clipped. expo.out over power3.out for the same reason: it
+            // spends more of the duration settling and less of it moving,
+            // which is what reads as smooth rather than merely slow.
+            duration: 0.95,
             delay,
-            ease: "power3.out",
+            ease: "expo.out",
             onStart: () => el.classList.add("is-revealed"),
-            scrollTrigger: { trigger: el, start: "top 88%", once: true },
+            // Fires a little later too, so the element travels while it is
+            // comfortably on screen instead of finishing before you reach it.
+            scrollTrigger: { trigger: el, start: "top 90%", once: true },
           });
         });
 
@@ -193,8 +199,8 @@ export function ScrollReveal() {
           if (nodes.length) {
             tl.fromTo(
               nodes,
-              { opacity: 0.2, y: 14 },
-              { opacity: 1, y: 0, ease: "power2.out", stagger: 0.12 },
+              { opacity: 0.2, y: 16 },
+              { opacity: 1, y: 0, ease: "power2.out", stagger: 0.16 },
               0
             );
           }

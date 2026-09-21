@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { Stat } from "@/components/ui/Stat";
 import { company } from "@/data/company";
 import { clients } from "@/data/clients";
+import { products } from "@/data/products";
 import { PRIMARY_CTA } from "@/data/navigation";
 
 export function Hero() {
@@ -58,7 +59,7 @@ export function Hero() {
 
             <p className="hero-in hero-in-1 mt-7 max-w-[52ch] text-md text-muted">
               We design, build and run agentic systems, retrieval pipelines and voice AI — and we
-              operate nine of our own products on the same discipline we sell.
+              operate {products.length} of our own products on the same discipline we sell.
             </p>
           </div>
 

@@ -1,6 +1,10 @@
 # QentrixAI — Design system
 
-> **Direction: Meridian** — set by the owner on 2026-09-21, sampled from axcelerate.ai. Navy grounds, cool paper light theme, one blue. Supersedes the amber pass; the earlier directions remain documented in `docs/revamp/04-design.md`.
+> **Direction: Graphite** — dark base chosen by the owner on 2026-09-21: *not navy*. A warm-tinted near-black carries the dark theme; the light theme is unchanged cool paper; the blue stays as the brand fill in both. Supersedes Meridian's navy, which supersedes the amber pass. Earlier directions remain in `docs/revamp/04-design.md`.
+
+**Why a neutral base.** On a coloured ground every product screenshot competes with the page for saturation. On graphite the only saturated things on screen are the work and the CTA, which is the argument the site is making anyway. It also removes the last place navy was load-bearing: the footer band, which is graphite now in both themes.
+
+Nothing is pure black. `#000` under white type produces the halation the first audit flagged, and a warm tint (R two points above B) is what keeps a near-black from reading as "unstyled".
 
 ## The idea
 
@@ -44,24 +48,34 @@ Sampled from the reference rather than eyeballed.
 
 | Role | Dark (default) | Light |
 |---|---|---|
-| `bg` | `#0E2A47` navy | `#F5F7FA` cool paper |
-| `surface` | `#143152` | `#FFFFFF` |
-| `surface-2` | `#0B2139` | `#EBEFF4` |
-| `art-ground` | `#081B30` | `#EAF2FD` |
-| `text` | `#FFFFFF` (14.57:1) | `#13263A` (14.32:1) |
-| `muted` | `#9FB3C8` (6.77:1) | `#566779` (5.42:1) |
-| `brand` — fills only in dark | `#1F5FD1` | `#1F5FD1` |
-| `link` — text | `#6FA8FF` (6.05:1) | `#1F5FD1` (5.41:1) |
-| `on-brand` | `#FFFFFF` (5.81:1) | `#FFFFFF` |
+| `bg` | `#121114` graphite | `#F5F7FA` cool paper |
+| `surface` | `#1B1A1E` | `#FFFFFF` |
+| `surface-2` | `#0D0C0F` | `#EBEFF4` |
+| `art-ground` | `#0A090C` | `#EAF2FD` |
+| `text` | `#F6F5F7` (17.31:1) | `#13263A` (14.32:1) |
+| `muted` | `#A6A3AD` (7.58:1) | `#566779` (5.42:1) |
+| `brand` — fills only in dark | `#2F6BE0` | `#1F5FD1` |
+| `link` — text | `#8AB4FF` (9.01:1) | `#1F5FD1` (5.41:1) |
+| `on-brand` | `#FFFFFF` (4.88:1) | `#FFFFFF` |
+
+Footer band (`.footer-deep`, both themes): `#0A090C` ground, text 18.28:1,
+muted 8.08:1, link 9.60:1.
 
 **The rule that keeps breaking, written down.** `brand` is a fill token. On
-the navy it measures **2.51:1 as text** — it has failed an audit twice now,
-once as amber-on-graphite and once here. Foreground on a page ground is
+graphite it measures **3.85:1 as text** — enough for a 3:1 non-text element,
+not enough for type. It has now failed an audit three times: amber on
+graphite, blue on navy, and blue on graphite. Foreground on a page ground is
 always `link`. The same applies to non-text UI that has to clear 3:1: the
 inference dial arc and the radar's range inputs both use `link`.
 
 `brand` as a foreground is legal in exactly one place: on `bg-on-brand`
 (white), where blue on white is 5.81:1.
+
+**Decorative washes are tokenised per theme.** `--wash-alpha` and
+`--band-glow` are 0.07/0.06 in dark against 0.16/0.14 in light. On navy a
+brand wash was the same hue as the page and merely lifted it; on graphite it
+is a different hue, and the light theme's value read as a blue stain on
+grey.
 
 ## Type
 
@@ -69,7 +83,16 @@ inference dial arc and the radar's range inputs both use `link`.
 
 Self-hosted through `next/font`, variable where available, `display: swap`, latin subset.
 
-- Scale: 12 / 13 / 15 / 17 / 20 / 26 / 34 / 46 / 60–78.
+- Scale: **13 / 14 / 16 / 18 / 21** / 23–27 / 27–35 / 31–44 / 38–68.
+- Raised one step on 2026-09-21 on the owner's readability note. 15px body is
+  the size a design tool shows you and a reader squints at; 16px is the
+  browser default for a reason. Mono labels went 12 → 13 because DM Mono runs
+  small for its point size and those labels carry real information.
+- The display end moved the other way. The hero was capped at 78px, which put
+  four words on a line and made every h1 break badly; 68px fits the same
+  headline in fewer, better lines. Heading leading loosened with it — `3xl`
+  from 1.05 to 1.14, because 1.05 was set for a one-line heading and nearly
+  every heading on the site wraps.
 - Line length under 80 characters; serif body gets extra line-height.
 - Monospace is for numbers, identifiers and machine strings **only** — never for prose labels.
 
@@ -87,6 +110,13 @@ The ambient orb field is the one infinite animation. It animates `transform` onl
   of truth; the animation only replaces it after mount, and digits are
   tabular so a counter can never contribute to CLS.
 - One orchestrated page-load moment per page. Scroll reveals are subtle and respect `prefers-reduced-motion`.
+- **Durations and easing are tokens, not literals** (2026-09-21, owner note
+  that the motion felt clipped): `--motion-fast` 180ms, `--motion-base`
+  420ms, `--motion-slow` 720ms, on one curve — `--ease-out`
+  `cubic-bezier(0.22, 1, 0.36, 1)`. Scroll reveals run 0.95s on `expo.out`,
+  which spends most of its duration settling rather than moving; that is what
+  reads as smooth rather than merely slow. A hover still answers at
+  `--motion-fast`.
 - Animate `transform` and `opacity`. Never `width`, `top` or `height` on a scroll ticker.
 - Hover communicates affordance. It does not perform.
 

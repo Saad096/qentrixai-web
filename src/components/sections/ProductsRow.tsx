@@ -14,7 +14,7 @@ export function ProductsRow() {
     <Section
       eyebrow="Our own products"
       heading="We run the kind of software we sell."
-      lede="Nine products built and operated in-house, on the same evals, tracing and on-call discipline we hand to clients."
+      lede={`${products.length} products built and operated in-house, on the same evals, tracing and on-call discipline we hand to clients.`}
       ground="band"
     >
       <ul className="mt-12 grid gap-9 md:grid-cols-3">
@@ -50,7 +50,7 @@ export function ProductsRow() {
 
       <p className="mt-9">
         <Link href="/products" className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110">
-          All nine products
+          {`All ${products.length} products`}
         </Link>
       </p>
     </Section>

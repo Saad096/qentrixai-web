@@ -22,7 +22,7 @@ export const metadata = buildMetadata({
   title: "About QentrixAI",
   path: "/about",
   description:
-    "An AI product studio in Lahore. Nine products operated in-house, six production systems shipped for clients, and a handover at the end of every engagement.",
+    "An AI product studio in Lahore. Eleven products operated in-house, six production systems shipped for clients, and a handover at the end of every engagement.",
 });
 
 /**
