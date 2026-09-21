@@ -37,34 +37,58 @@ export const company = {
 export type Phase = {
   step: string;
   title: string;
+  /** The lede. One sentence that says what the phase decides. */
   body: string;
+  /** Two or three sentences of substance. Prose, not a comma-spliced list. */
+  detail: string;
+  /** Completes "You own ...". */
   artifact: string;
 };
 
+/**
+ * Rewritten 2026-09-21. The previous four bodies were noun lists --
+ * "System architecture, model and retrieval strategy, integration plan,
+ * security and compliance posture" -- four fragments with no verb and no
+ * reader in them. They scanned as a checklist someone pasted from a
+ * proposal template, which is exactly the generated-copy tell the brief
+ * bans, and they said nothing a competitor could not also say.
+ *
+ * Each phase now leads with the decision it exists to make, then says what
+ * that costs you and what it saves. The artifact line is unchanged in
+ * substance because the artifacts are real.
+ */
 export const phases: Phase[] = [
   {
     step: "01",
     title: "Frame",
-    body: "Stakeholder interviews, a data audit, and a measurable target agreed before any model is chosen.",
-    artifact: "a written problem framing with the success metric.",
+    body: "We agree what better looks like, in a number, before anyone picks a model.",
+    detail:
+      "Two weeks of interviews with the people who will actually use the thing, and an audit of the data you have rather than the data the plan assumed. Most projects that fail were never given a target they could miss. This phase ends when we can write down the metric, its current value and what it has to reach.",
+    artifact: "a written problem framing with the success metric, and the number it starts at.",
   },
   {
     step: "02",
     title: "Design",
-    body: "System architecture, model and retrieval strategy, integration plan, security and compliance posture.",
-    artifact: "an architecture decision record, including what we rejected.",
+    body: "The architecture, and a written record of what we turned down.",
+    detail:
+      "Retrieval strategy, model selection, integration surface, and where the data is allowed to be processed. Security posture is decided here rather than added later, because it constrains the architecture and not the other way round. The options we rejected are written down with the reason, so in six months nobody re-litigates a decision from memory.",
+    artifact: "an architecture decision record, including the options we rejected and why.",
   },
   {
     step: "03",
     title: "Build",
-    body: "Weekly demos against the metric. Typed code, clean repos, evaluation harnesses for prompts and agents.",
-    artifact: "the repo and a regression suite running in your CI.",
+    body: "Weekly demos against the metric, on your data, in your repo.",
+    detail:
+      "Typed code, small reviewable pull requests, and an evaluation harness for prompts and agents from the first week rather than the last. A change that drops a metric fails the build instead of reaching a user. You see working software every week, which is also how scope gets cut while cutting it is still cheap.",
+    artifact: "the repo, and a regression suite running in your CI.",
   },
   {
     step: "04",
     title: "Run",
-    body: "Dockerised rollout to your cloud or VPC, tracing and alerting wired, then a supervised handover and an improvement loop.",
-    artifact: "a runbook, dashboards, and a rollback path.",
+    body: "Deployed to your cloud, instrumented, then handed over on purpose.",
+    detail:
+      "Dockerised rollout into your account or VPC, tracing on every call, alerting with thresholds that mean something, and a rollback that has been tested rather than assumed. Then a supervised handover: your team runs a deploy and a rollback with us watching. If knowledge transfer did not happen, the engagement failed regardless of what shipped.",
+    artifact: "a runbook, dashboards, and a rollback path your team has used once.",
   },
 ];
 

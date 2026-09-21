@@ -17,7 +17,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ShieldCheck } from "lucide-react";
 import { services, SERVICE_GROUPS } from "@/data/services";
 import { cn } from "@/lib/utils";
 
@@ -131,6 +131,26 @@ export function ServicesMenu({ active }: { active: boolean }) {
               </div>
             ))}
           </div>
+
+          {/* Sovereign AI was one line in a list of twenty-one, which is not
+              where the market is. It gets the promoted slot: the one card in
+              the panel, with its own page behind it. */}
+          <Link
+            href="/services/sovereign-ai"
+            className="mt-7 flex flex-col gap-1.5 rounded-md bg-brand p-5 text-on-brand transition-[filter] hover:brightness-110 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+          >
+            <span>
+              <span className="flex items-center gap-2.5">
+                <ShieldCheck aria-hidden="true" className="size-[18px]" />
+                <span className="text-md font-bold">Sovereign and private AI</span>
+              </span>
+              <span className="mt-1.5 block text-base opacity-90">
+                Open-weight models air-gapped on your servers, in your own cloud account, or at
+                the edge. Inference stays inside your boundary, not just storage.
+              </span>
+            </span>
+            <span className="shrink-0 whitespace-nowrap font-mono text-xs">{"Read more \u2192"}</span>
+          </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-8 border-t border-[color:var(--color-border)] pt-4">
             <Link

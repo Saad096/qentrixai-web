@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
@@ -77,13 +78,14 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">
-              <Link
-                href="/industries"
-                className="inline-flex min-h-[44px] items-center font-mono text-xs text-muted hover:text-text"
-              >
-                Industries
-              </Link>
-              <h1 className="mt-3 max-w-[18ch] text-3xl font-bold text-text">{ind.name}</h1>
+              <Breadcrumb
+                trail={[
+                  { name: "Home", href: "/" },
+                  { name: "Industries", href: "/industries" },
+                  { name: ind.name },
+                ]}
+              />
+              <h1 className="mt-4 max-w-[18ch] text-3xl font-bold text-text">{ind.name}</h1>
               <p className="mt-6 max-w-measure text-md text-muted">{detail.intro}</p>
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Button href={PRIMARY_CTA.href} size="lg">

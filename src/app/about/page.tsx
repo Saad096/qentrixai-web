@@ -286,14 +286,27 @@ export default function AboutPage() {
       <Section eyebrow="Who you will work with" heading="Senior people, named." ground="band">
         <div className="mt-10 grid gap-9 md:grid-cols-12">
           <div className="md:col-span-4">
-            <Image
-              src="/team/saad-alam.jpeg"
-              alt="Saad Alam"
-              width={853}
-              height={1280}
-              sizes="(min-width: 768px) 33vw, 100vw"
-              className="aspect-square w-full max-w-[360px] rounded-md object-cover object-top"
-            />
+            {/* A drawing, not a photograph -- owner's direction. Generated
+                from the original with a colour-dodge sketch pass, so it is
+                still him and not a stock illustration of a founder.
+
+                It sits on its own paper plate rather than on the page,
+                because a sketch is ink on paper: dropped straight onto the
+                dark theme a near-white image glares, and inverting it to
+                white-on-black stops reading as pencil. The plate is the
+                same in both themes, which is the point of it. */}
+            <figure className="m-0 w-full max-w-[360px]">
+              <div className="rounded-md bg-[#FCFAF4] p-3 shadow-2 ring-1 ring-[color:var(--color-border)]">
+                <Image
+                  src="/team/saad-alam-sketch.png"
+                  alt="Saad Alam, drawn in pencil"
+                  width={800}
+                  height={800}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="aspect-square w-full rounded-sm object-cover"
+                />
+              </div>
+            </figure>
           </div>
           <div className="md:col-span-8">
             <h3 className="text-lg font-semibold text-text">{publicEnv.profile.name}</h3>

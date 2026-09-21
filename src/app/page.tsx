@@ -1,12 +1,12 @@
 import { Hero } from "@/components/sections/Hero";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { TheGap } from "@/components/sections/TheGap";
-import { WhatWeBuild } from "@/components/sections/WhatWeBuild";
+import { CapabilityCards } from "@/components/sections/CapabilityCards";
 import { Sovereign } from "@/components/sections/Sovereign";
 import { InferenceEconomics } from "@/components/sections/InferenceEconomics";
 import { ProductsRow } from "@/components/sections/ProductsRow";
 import { HowWeWork } from "@/components/sections/HowWeWork";
-import { Industries } from "@/components/sections/Industries";
+import { IndustryCards } from "@/components/sections/IndustryCards";
 import { WhyUs } from "@/components/sections/WhyUs";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { OutcomeNumbers } from "@/components/sections/OutcomeNumbers";
@@ -31,12 +31,12 @@ export default function HomePage() {
       <Hero />
       <SelectedWork />
       <TheGap />
-      <WhatWeBuild />
+      <CapabilityCards />
       <Sovereign />
       <InferenceEconomics />
       <ProductsRow />
       <HowWeWork />
-      <Industries />
+      <IndustryCards />
       <OutcomeNumbers />
       <WhyUs />
       <Testimonials />

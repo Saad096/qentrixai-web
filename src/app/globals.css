@@ -725,25 +725,43 @@ body > footer {
 }
 
 /* ------------------------------------------------------------------ */
-/* The header pill.                                                     */
+/* The header bar.                                                      */
 /*                                                                      */
-/* Narrow and centred at the top of a page; full bleed once you have    */
-/* scrolled. The interpolation is a scroll-driven animation, so the     */
-/* browser owns it: it runs off the main thread, it is exactly          */
-/* proportional to scroll position, and scrolling back up reverses it   */
-/* at the same ratio without any code arranging that.                   */
+/* A centred pill at the top of a page; a flat, full-bleed masthead      */
+/* once you have scrolled. The interpolation is a scroll-driven          */
+/* animation, so the browser owns it: it runs off the main thread, it    */
+/* is exactly proportional to scroll position, and scrolling back up     */
+/* reverses it at the same ratio without any code arranging that.        */
 /*                                                                      */
-/* This replaces a GSAP ticker that wrote width, top and border-radius  */
-/* every frame. Those are layout properties; that version relaid out    */
-/* the document on every frame of every scroll and was a P0 in the      */
-/* audit. The properties here are the same, but the browser is          */
-/* interpolating them against a timeline rather than JavaScript setting */
-/* them from a scroll handler, and there is no listener in the path.    */
+/* This replaces a GSAP ticker that wrote width, top and border-radius   */
+/* every frame. Those are layout properties; that version relaid out     */
+/* the document on every frame of every scroll and was a P0 in the       */
+/* audit. The browser is interpolating the same properties here, but     */
+/* against a timeline rather than from a scroll handler, and there is    */
+/* no listener in the path.                                              */
 /*                                                                      */
-/* The range is 0 -> 220px rather than the whole document. Tied to      */
-/* total page length the bar would creep open over thousands of pixels  */
-/* and never read as a response to anything.                            */
+/* Corrections after the first pass, all from the owner:                 */
+/*                                                                      */
+/*  - 220px finished the whole transition inside a quarter of a screen,  */
+/*    which reads as a twitch. 85vh is long enough that the bar is       */
+/*    visibly responding to the scroll rather than snapping between two  */
+/*    states, and it is tied to the viewport so it behaves the same on   */
+/*    a laptop and a phone.                                              */
+/*  - The widened bar kept its gap above it, so it never docked. The     */
+/*    top inset animates to zero with everything else, and the bar ends  */
+/*    flat against the top edge with square corners.                     */
+/*  - It was too short to read as a masthead. It ends at 76px and        */
+/*    *loses* height on the way, rather than starting short.             */
 /* ------------------------------------------------------------------ */
+.header-shell {
+  padding-top: var(--header-inset, 14px);
+}
+
+.header-row {
+  height: var(--header-h, 76px);
+  transition: height var(--motion-base) var(--ease-out);
+}
+
 .header-pill {
   width: min(100% - 2rem, var(--container, 1260px));
   border-radius: 999px;
@@ -752,9 +770,9 @@ body > footer {
 }
 
 @supports (animation-timeline: scroll()) {
-  @keyframes header-expand {
+  @keyframes header-dock {
     from {
-      width: min(100% - 2rem, 980px);
+      width: min(100% - 2rem, 1040px);
       border-radius: 999px;
     }
     to {
@@ -763,33 +781,76 @@ body > footer {
     }
   }
 
-  .header-pill {
-    animation: header-expand linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0 220px;
+  /* The inset and the height ride the same timeline on the shell, so the
+     bar reaches the top edge and its final height together rather than in
+     two separate movements. */
+  @keyframes header-dock-shell {
+    from { --header-inset: 14px; --header-h: 88px; }
+    to { --header-inset: 0px; --header-h: 76px; }
   }
 
-  /* The open mobile panel is not a scroll position, it is a state, so it
-     stays a pill and does not take the timeline. */
+  /* px, not rem. @property requires a computationally independent
+     initial-value, and rem depends on the root font size -- the whole
+     registration is dropped as invalid, the property falls back to being
+     unregistered, and an unregistered custom property does not interpolate.
+     The height animated and the inset did not, which is how this surfaced. */
+  @property --header-inset {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 14px;
+  }
+
+  @property --header-h {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 88px;
+  }
+
+  .header-shell,
+  .header-pill {
+    animation-timeline: scroll(root block);
+    animation-range: 0 85vh;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+  }
+
+  .header-shell { animation-name: header-dock-shell; }
+  .header-pill { animation-name: header-dock; }
+
+  .header-row { transition: none; }
+
+  /* The open mobile panel is a state, not a scroll position, so it stays a
+     pill and does not take the timeline. */
   #mobile-menu.header-pill {
     animation: none;
-    width: min(100% - 2rem, 980px);
+    width: min(100% - 2rem, 1040px);
     border-radius: var(--radius-lg);
   }
 }
 
-/* Without scroll timelines the pill rests at its widened state. A resting
-   layout, not a broken one. */
+/* Without scroll timelines the bar rests docked. A resting layout, not a
+   broken one. */
 @supports not (animation-timeline: scroll()) {
+  .header-shell {
+    --header-inset: 0px;
+    --header-h: 76px;
+  }
   .header-pill {
-    width: min(100% - 2rem, var(--container, 1260px));
+    width: 100%;
+    border-radius: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .header-shell {
+    animation: none !important;
+    --header-inset: 0px;
+    --header-h: 76px;
+  }
   .header-pill {
     animation: none !important;
-    width: min(100% - 2rem, var(--container, 1260px));
+    width: 100%;
+    border-radius: 0;
   }
 }
 

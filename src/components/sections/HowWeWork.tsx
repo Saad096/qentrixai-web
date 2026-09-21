@@ -47,7 +47,7 @@ export function HowWeWork() {
       </div>
 
       <ol className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {phases.map((p, i) => (
+        {phases.map((p) => (
           <Card as="li" key={p.step} data-pin-step className="pin-step">
             {/* No data-reveal here. Inside the pin the reveal trigger never
                 fires -- a pinned element stops satisfying "top 88%" -- so the
@@ -67,7 +67,8 @@ export function HowWeWork() {
                 <span className="font-mono text-xs text-link">{p.step}</span>
               </span>
               <h3 className="text-lg font-semibold text-text">{p.title}</h3>
-              <p className="text-base text-muted">{p.body}</p>
+              <p className="text-base text-text">{p.body}</p>
+              <p className="text-base text-muted">{p.detail}</p>
               <p className="mt-auto border-t border-[color:var(--color-border)] pt-4 text-base text-text">
                 <span className="font-mono text-xs text-muted">You own </span>
                 {p.artifact}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { ModelRadar } from "@/components/sections/ModelRadar";
@@ -110,13 +111,14 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
-              <Link
-                href="/services"
-                className="inline-flex min-h-[44px] items-center font-mono text-xs text-muted hover:text-text"
-              >
-                What we build
-              </Link>
-              <h1 className="mt-3 max-w-[18ch] text-3xl font-bold text-text">{service.title}</h1>
+              <Breadcrumb
+                trail={[
+                  { name: "Home", href: "/" },
+                  { name: "What we build", href: "/services" },
+                  { name: service.title },
+                ]}
+              />
+              <h1 className="mt-4 max-w-[18ch] text-3xl font-bold text-text">{service.title}</h1>
               <p className="mt-6 max-w-measure text-md text-muted">{service.description}</p>
               <div className="mt-9">
                 <Button href={PRIMARY_CTA.href} size="lg">

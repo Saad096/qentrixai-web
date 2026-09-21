@@ -11,7 +11,7 @@ export type NavItem = { label: string; href: string };
 export const primaryNav: NavItem[] = [
   { label: "What we build", href: "/services" },
   { label: "Case studies", href: "/case-studies" },
-  { label: "Products", href: "/products" },
+  { label: "Solutions", href: "/products" },
   { label: "How we work", href: "/about" },
   { label: "Insights", href: "/blogs" },
 ];

@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * Kiln header: a floating pill that widens to full bleed as you scroll and
- * narrows back to centre as you scroll up, in proportion.
+ * Kiln header: a floating pill that widens to a flat, full-bleed bar as you
+ * scroll and narrows back to centre as you scroll up, in proportion.
  *
  * The owner asked for this and the old build already had a version of it --
  * animated on a GSAP ticker, writing `width`, `top` and `border-radius`
@@ -16,7 +16,14 @@
  * it is what a scroll timeline is. There is no scroll listener, no rAF
  * loop and no JavaScript in the path at all.
  *
- * Browsers without scroll timelines get the pill at its widened state and
+ * Three things the owner corrected after the first pass: the transition
+ * finished inside half a screen, which made it read as a twitch rather than
+ * a response; the widened bar kept a gap above it, so it never actually
+ * docked; and the bar was too short to look like a masthead. The range is
+ * longer now, the top inset and the corner radius both animate to zero, and
+ * the bar loses height rather than starting short.
+ *
+ * Browsers without scroll timelines get the bar at its widened state and
  * no animation, which is a resting layout rather than a broken one. The
  * rule lives in globals.css under @supports.
  *
@@ -99,7 +106,7 @@ export function Header() {
     pathname === href || (href !== "/" && pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-50 pt-3 md:pt-4">
+    <header className="header-shell sticky top-0 z-50">
       {/* The pill. `header-pill` owns the width and radius interpolation;
           everything inside it is ordinary layout. */}
       <div
@@ -110,36 +117,12 @@ export function Header() {
           open && "bg-bg"
         )}
       >
-        <div className="flex h-[60px] flex-1 items-center gap-3 md:gap-4">
+        <div className="header-row flex flex-1 items-center gap-4">
           <Logo />
-
-          {/* Actions sit with the mark, on the left, per the owner's
-              direction. The nav takes the right end of the pill. */}
-          <div className="flex items-center gap-1.5">
-            <Button
-              href={PRIMARY_CTA.href}
-              size="sm"
-              className="hidden whitespace-nowrap sm:inline-flex"
-            >
-              {PRIMARY_CTA.label}
-            </Button>
-            <ThemeToggle />
-            <button
-              ref={triggerRef}
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              aria-label={open ? "Close menu" : "Open menu"}
-              className="grid size-11 place-items-center rounded-full text-text lg:hidden"
-            >
-              {open ? <X className="size-5" /> : <Menu className="size-5" />}
-            </button>
-          </div>
 
           <nav
             aria-label="Primary"
-            className="ml-auto hidden items-center gap-6 lg:flex xl:gap-7"
+            className="mx-auto hidden items-center gap-6 lg:flex xl:gap-7"
           >
             {primaryNav.map((item) =>
               item.href === "/services" ? (
@@ -159,6 +142,28 @@ export function Header() {
               )
             )}
           </nav>
+
+          <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
+            <ThemeToggle />
+            <Button
+              href={PRIMARY_CTA.href}
+              size="sm"
+              className="hidden whitespace-nowrap sm:inline-flex"
+            >
+              {PRIMARY_CTA.label}
+            </Button>
+            <button
+              ref={triggerRef}
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="grid size-11 place-items-center rounded-full text-text lg:hidden"
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
       </div>
 
