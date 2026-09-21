@@ -38,7 +38,12 @@ const COLUMNS = [
   },
   {
     title: "Industries",
-    links: industries.slice(0, 6).map((i) => ({ label: i.name, href: "/#industries" })),
+    // Every one of these used to point at /#industries -- six labels, one
+    // destination. They have their own pages now.
+    links: [
+      ...industries.slice(0, 5).map((i) => ({ label: i.name, href: `/industries/${i.slug}` })),
+      { label: "All industries", href: "/industries" },
+    ],
   },
   {
     title: "Company",

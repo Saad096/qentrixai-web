@@ -16,6 +16,8 @@
 const DIR = "/images/industries";
 
 export type Industry = {
+  /** URL segment under /industries. The detail copy lives in industryDetail.ts. */
+  slug: string;
   name: string;
   line: string;
   /** Slugs in caseStudies.ts. */
@@ -30,6 +32,7 @@ export type Industry = {
 
 export const industries: Industry[] = [
   {
+    slug: "customer-operations",
     name: "Customer operations",
     image: `${DIR}/customer-operations.webp`,
     imageAlt: "A headset resting on a desk beside an open laptop",
@@ -38,6 +41,7 @@ export const industries: Industry[] = [
     products: ["voxroute", "voicebot"],
   },
   {
+    slug: "healthcare",
     name: "Healthcare",
     image: `${DIR}/healthcare.webp`,
     imageAlt: "A hospital room with monitoring equipment beside the bed",
@@ -46,6 +50,7 @@ export const industries: Industry[] = [
     products: ["medaculous"],
   },
   {
+    slug: "financial-services",
     name: "Financial services",
     image: `${DIR}/financial-services.webp`,
     imageAlt: "Trading screens showing candlestick charts and market data",
@@ -54,6 +59,7 @@ export const industries: Industry[] = [
     products: ["fintelia"],
   },
   {
+    slug: "regulated-industries",
     name: "Regulated industries",
     image: `${DIR}/regulated-industries.webp`,
     imageAlt: "A person signing a printed contract at a desk",
@@ -62,6 +68,7 @@ export const industries: Industry[] = [
     products: ["documentai"],
   },
   {
+    slug: "professional-services",
     name: "Professional services",
     image: `${DIR}/professional-services.webp`,
     imageAlt: "Colleagues meeting in a glass-walled conference room",
@@ -70,6 +77,7 @@ export const industries: Industry[] = [
     products: ["minutely"],
   },
   {
+    slug: "sales-and-revenue",
     name: "Sales and revenue",
     image: `${DIR}/sales-and-revenue.webp`,
     imageAlt: "An abstract visualisation of streaming data",
@@ -78,6 +86,7 @@ export const industries: Industry[] = [
     products: ["salespire"],
   },
   {
+    slug: "enterprise-it-and-workforce",
     name: "Enterprise IT and workforce",
     image: `${DIR}/enterprise-it.webp`,
     imageAlt: "Server racks with patched network cabling",
@@ -85,6 +94,7 @@ export const industries: Industry[] = [
     cases: ["computer-vision-systems"],
   },
   {
+    slug: "consumer-ai",
     name: "Consumer AI",
     image: `${DIR}/consumer-ai.webp`,
     imageAlt: "A customer browsing shelves in a shop",
@@ -93,6 +103,7 @@ export const industries: Industry[] = [
     products: ["rosenode", "ala", "multiagent-chatbot"],
   },
   {
+    slug: "public-sector",
     name: "Public sector",
     image: `${DIR}/public-sector.webp`,
     imageAlt: "The facade of a civic government building",
@@ -100,6 +111,7 @@ export const industries: Industry[] = [
     cases: [],
   },
   {
+    slug: "logistics",
     name: "Logistics",
     image: `${DIR}/logistics.webp`,
     imageAlt: "An aerial view of a container port stacked with freight",

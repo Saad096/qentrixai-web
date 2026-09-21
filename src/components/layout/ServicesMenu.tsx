@@ -132,12 +132,18 @@ export function ServicesMenu({ active }: { active: boolean }) {
             ))}
           </div>
 
-          <div className="mt-6 border-t border-[color:var(--color-border)] pt-4">
+          <div className="mt-6 flex flex-wrap items-center gap-x-8 border-t border-[color:var(--color-border)] pt-4">
             <Link
               href="/services"
               className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
             >
               {`View all ${services.length} capabilities \u2192`}
+            </Link>
+            <Link
+              href="/industries"
+              className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
+            >
+              {"Browse by industry \u2192"}
             </Link>
           </div>
         </div>

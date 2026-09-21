@@ -92,6 +92,17 @@ export function Industries() {
                   No published engagement in this sector yet.
                 </p>
               )}
+
+              {/* Each domain has a page of its own now; the tab is the
+                  summary, not the destination. */}
+              <p className="mt-6">
+                <Link
+                  href={`/industries/${current.slug}`}
+                  className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
+                >
+                  {`${current.name} in depth \u2192`}
+                </Link>
+              </p>
             </div>
 
             <div className="lg:col-span-7">
