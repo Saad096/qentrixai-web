@@ -116,7 +116,7 @@ export function TabRail({
     <div
       {...rest}
       className={cn(
-        "no-scrollbar -mx-1 flex snap-x snap-mandatory gap-1 overflow-x-auto rounded-full bg-surface-2 p-1.5",
+        "tab-rail no-scrollbar -mx-1 flex snap-x snap-mandatory gap-1 overflow-x-auto rounded-full bg-surface-2 p-1.5",
         "ring-1 ring-[color:var(--color-border)]",
         className
       )}

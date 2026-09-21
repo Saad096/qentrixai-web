@@ -13,6 +13,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { OrbField } from "@/components/ui/OrbField";
 import { buildMetadata, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { publicEnv } from "@/lib/env";
 
@@ -32,9 +33,11 @@ const dmMono = DM_Mono({
 export const metadata: Metadata = buildMetadata();
 
 export const viewport: Viewport = {
+  // Aurora. These were still the Kiln values, so the browser chrome did not
+  // match the page it framed.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#E3E1D8" },
-    { media: "(prefers-color-scheme: dark)", color: "#262621" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#050609" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -89,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
 
+        <OrbField className="orb-field--page" />
         <Header />
         <main id="main">{children}</main>
         <Footer />

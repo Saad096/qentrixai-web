@@ -180,6 +180,16 @@ body {
 /* animation on the site; the marquees that cost the old build its      */
 /* main thread are not coming back.                                     */
 /* ------------------------------------------------------------------ */
+/* The tab rail scrolls horizontally on narrow screens. Without a fade the
+   clipped tab at the edge just looks cut off; the mask says "there is more",
+   and it is removed once every tab fits. */
+@media (max-width: 767px) {
+  .tab-rail {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 26px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 26px), transparent 100%);
+  }
+}
+
 .orb-field {
   position: absolute;
   inset: 0;
@@ -188,13 +198,30 @@ body {
   z-index: 0;
 }
 
+/* Mounted once in the layout so inner pages get the ambient too -- it used
+   to exist only on the homepage hero and the closing CTA, so /services and
+   the rest were flat. Fixed rather than absolute: it stays put while the
+   page scrolls and adds no height. */
+.orb-field--page {
+  position: fixed;
+}
+
+/* The page field sits behind everything, so the content needs a layer of its
+   own: a positioned z-index:0 element paints above static block content. */
+body > header,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
 .orb {
   position: absolute;
   border-radius: 9999px;
   filter: blur(var(--orb-blur));
   will-change: transform;
   opacity: var(--orb-alpha);
-  animation: orb-drift 26s ease-in-out infinite;
+  animation: orb-drift 17s ease-in-out infinite;
 }
 
 .orb-a {
@@ -215,7 +242,7 @@ body {
   top: 6%;
   right: -10%;
   background: radial-gradient(circle, rgb(var(--orb-2)) 0%, rgb(var(--orb-2) / 0) 70%);
-  animation-duration: 32s;
+  animation-duration: 21s;
   animation-direction: reverse;
 }
 
@@ -227,8 +254,8 @@ body {
   bottom: -18%;
   left: 28%;
   background: radial-gradient(circle, rgb(var(--orb-3)) 0%, rgb(var(--orb-3) / 0) 70%);
-  animation-duration: 38s;
-  animation-delay: -8s;
+  animation-duration: 25s;
+  animation-delay: -6s;
 }
 
 /* ------------------------------------------------------------------ */
@@ -287,8 +314,9 @@ body {
 
 @keyframes orb-drift {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  33% { transform: translate3d(5%, -4%, 0) scale(1.08); }
-  66% { transform: translate3d(-4%, 3%, 0) scale(0.95); }
+  25% { transform: translate3d(9%, -7%, 0) scale(1.14); }
+  50% { transform: translate3d(-6%, 6%, 0) scale(0.92); }
+  75% { transform: translate3d(7%, 4%, 0) scale(1.08); }
   100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
@@ -470,17 +498,25 @@ body {
   }
 }
 
-/* The plate unDraw illustrations sit on. Light in BOTH themes on purpose --
-   the art is drawn for light grounds, so a themed plate would hide half of
-   every figure on dark. Aurora's lavender tint, so it reads as a chosen
-   surface and not as bare white. */
-.bg-illus-plate {
-  background-color: #f1effb;
-  background-image: radial-gradient(
-    80% 70% at 50% 8%,
-    rgb(105 4 242 / 0.10),
-    transparent 70%
-  );
+/* The plate unDraw illustrations sit on.
+   Now themed, because each illustration has a dark twin: the plate follows
+   --art-ground and the art follows the theme with it. Only the variant the
+   theme resolves is ever fetched. */
+.illus-plate {
+  background-color: rgb(var(--art-ground));
+  background-image: var(--illus-dark),
+    radial-gradient(82% 74% at 50% 6%, rgb(var(--color-brand) / 0.16), transparent 72%);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  /* Height-based, with an auto width: sizing both axes in percent squashes
+     the art, because each axis resolves against a different box dimension. */
+  background-size: auto var(--illus-scale, 72%), cover;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.light .illus-plate {
+  background-image: var(--illus-light),
+    radial-gradient(82% 74% at 50% 6%, rgb(var(--color-brand) / 0.10), transparent 72%);
 }
 
 /* The gradient plate a product screenshot is inset on. Two offset radials
@@ -644,9 +680,17 @@ body {
   animation: slab-fill 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* A dual ring, because a single violet one disappears on the thing people
+   focus most. `link` on the brand fill measures 1.72:1 in dark and 1:1 in
+   light -- the primary CTA is brand-filled, so its focus state was invisible.
+   The halo sits between the element and the ring, so whatever is underneath,
+   both adjacent pairs contrast:
+     dark   ring #F8F9FA vs brand 4.66, halo #050609 vs brand 4.13
+     light  ring #000000 vs halo 21,    halo #FFFFFF vs brand 7.24 */
 :focus-visible {
-  outline: 2px solid rgb(var(--color-link));
+  outline: 2px solid rgb(var(--color-text));
   outline-offset: 3px;
+  box-shadow: 0 0 0 3px rgb(var(--color-bg));
   border-radius: 4px;
 }
 

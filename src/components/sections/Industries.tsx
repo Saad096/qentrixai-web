@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Illustration } from "@/components/ui/Illustration";
 import { Section } from "@/components/ui/Section";
 import { TabPill, TabRail, useTabs } from "@/components/ui/Tabs";
 import { industries } from "@/data/industries";
@@ -59,12 +59,15 @@ export function Industries() {
             <p className="mx-auto max-w-measure text-lg text-text">{current.line}</p>
 
             {linked.length > 0 ? (
-              <ul className="mt-4 flex flex-wrap justify-center gap-x-8">
+              // gap-y matters as much as gap-x: at 390px these titles each
+              // wrap to two lines and, with no vertical gap, three of them
+              // read as one block of violet text.
+              <ul className="mt-5 flex flex-col items-center gap-y-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8 sm:gap-y-1">
                 {linked.map((c) => (
                   <li key={c.slug}>
                     <Link
                       href={`/case-studies/${c.slug}`}
-                      className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110"
+                      className="inline-flex min-h-[44px] items-center text-center text-base font-semibold text-link underline-offset-4 hover:underline"
                     >
                       {c.title}
                     </Link>
@@ -78,16 +81,16 @@ export function Industries() {
             )}
           </div>
 
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg shadow-2">
-            <Image
-              key={current.image}
-              src={current.image}
-              alt={current.imageAlt}
-              fill
-              sizes="(min-width: 1260px) 1180px, 100vw"
-              className="object-cover"
-            />
-          </div>
+          {/* Illustration, not photography: the stock tiles here were
+              generic -- a street crowd stood in for "customer operations" --
+              and they were the only photography left on the page. */}
+          <Illustration
+            key={current.art}
+            src={current.art}
+            ratio="aspect-[4/3] sm:aspect-[16/9] lg:aspect-[16/7]"
+            scale="78%"
+            className="mx-auto max-w-3xl rounded-lg shadow-2"
+          />
         </div>
       </div>
     </Section>
