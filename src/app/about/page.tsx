@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Check } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -11,6 +12,7 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { FaqCta } from "@/components/sections/FaqCta";
 import { company } from "@/data/company";
 import { services, SERVICE_GROUPS } from "@/data/services";
+import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
 import { clients } from "@/data/clients";
 import { publicEnv } from "@/lib/env";
@@ -78,60 +80,75 @@ export default function AboutPage() {
         }}
       />
 
+      {/* Split hero, on the reference's pattern: the argument on the left,
+          the evidence on the right. The four tiles are real interfaces from
+          products we operate, which is why they can sit in the first
+          viewport -- there is nothing to caption around. */}
       <section className="py-16 md:py-24">
         <Container>
-          <h1 className="max-w-[18ch] text-hero font-bold text-text">About QentrixAI</h1>
-          <p className="mt-7 max-w-measure text-md text-muted">{company.mission}</p>
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+            <div className="lg:col-span-6">
+              <p className="font-mono text-xs text-muted">About us</p>
+              <h1 className="mt-4 max-w-[20ch] text-hero font-bold text-text">
+                We build AI products <span className="text-link">and then run them</span>
+              </h1>
+              <p className="mt-7 max-w-measure text-md text-muted">{company.mission}</p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <Button href="/book" size="lg">
-              Book a strategy call
-            </Button>
-            <Button href="/case-studies" size="lg" variant="secondary">
-              See the work
-            </Button>
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <Button href="/book" size="lg">
+                  Book a strategy call
+                </Button>
+                <Button href="/case-studies" size="lg" variant="secondary">
+                  See the work
+                </Button>
+              </div>
+
+              <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-3">
+                {[
+                  "Senior engineers only, no junior bench",
+                  "Lahore, serving 12 geographies",
+                  "You own the code and the weights",
+                ].map((c) => (
+                  <li key={c} className="flex items-center gap-2.5 text-base text-text">
+                    <Check aria-hidden className="size-4 shrink-0 text-link" />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <figure className="m-0 lg:col-span-6">
+              <ul className="grid grid-cols-2 gap-4">
+                {shots.map((p, i) => (
+                  <li key={p.slug}>
+                    <Link
+                      href={`/products/${p.slug}`}
+                      data-reveal
+                      data-reveal-delay={i * 60}
+                      className="group relative block overflow-hidden rounded-md"
+                    >
+                      <DeviceFrame
+                        src={p.cover}
+                        alt={`${p.name} interface`}
+                        orientation={p.orientation}
+                        sizes="(min-width: 1024px) 25vw, 45vw"
+                        priority={i < 2}
+                      />
+                      <span className="absolute bottom-3 left-3 rounded-full bg-surface/95 px-3 py-1 font-mono text-xs text-text shadow-1 group-hover:text-link">
+                        {p.name}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <figcaption className="mt-4 font-mono text-xs text-muted">
+                Interfaces from four of the {products.length} products we build and operate
+                in-house.
+              </figcaption>
+            </figure>
           </div>
-
-          <ul className="mt-14 grid gap-5 sm:grid-cols-3">
-            {[
-              { v: `${products.length}`, k: "products built and operated in-house" },
-              { v: "Lahore", k: "engineering hub, serving 12 geographies" },
-              { v: "Yours", k: "code, weights, eval sets and audit logs" },
-            ].map((s, i) => (
-              <Card as="li" key={s.k}>
-                <div data-reveal data-reveal-delay={i * 60} className="p-7">
-                  <span className="block text-2xl font-bold text-text">{s.v}</span>
-                  <span className="mt-2 block text-base text-muted">{s.k}</span>
-                </div>
-              </Card>
-            ))}
-          </ul>
         </Container>
       </section>
-
-      <Section
-        eyebrow="What it looks like"
-        heading="Software we built and still run."
-        lede="Not mockups. These are the interfaces behind four of the products we operate."
-        ground="band"
-      >
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2">
-          {shots.map((p, i) => (
-            <li key={p.slug}>
-              <Link href={`/products/${p.slug}`} className="group block" data-reveal data-reveal-delay={i * 60}>
-                <DeviceFrame
-                  src={p.cover}
-                  alt={`${p.name} interface`}
-                  orientation={p.orientation}
-                  sizes="(min-width: 640px) 50vw, 100vw"
-                />
-                <p className="mt-4 text-lg font-semibold text-text group-hover:text-link">{p.name}</p>
-                <p className="mt-1 text-base text-muted">{p.tagline}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Section>
 
       <Section eyebrow="How we started" heading="Founded in 2024, in Lahore." ground="base">
         <div className="mt-8 max-w-measure space-y-5 text-md text-muted">
@@ -148,6 +165,37 @@ export default function AboutPage() {
           </p>
         </div>
       </Section>
+
+      {/* One bar rather than a row of separate cards: four figures that
+          belong to the same claim read as one object, and each is derived
+          from the data file behind it rather than typed in here. */}
+      <section className="pb-4">
+        <Container>
+          <Card>
+            <dl className="grid gap-px sm:grid-cols-2 xl:grid-cols-4">
+              {[
+                [`${products.length}`, "products built and operated in-house"],
+                [`${caseStudies.length}`, "client systems in production"],
+                [`${services.length}`, "capabilities across four groups"],
+                ["12", "geographies served from one hub"],
+              ].map(([v, k], i) => (
+                <div
+                  key={k}
+                  data-reveal
+                  data-reveal-delay={i * 60}
+                  className="p-7 xl:border-l xl:border-[color:var(--color-border)] xl:first:border-l-0"
+                >
+                  <dt className="sr-only">{k}</dt>
+                  <dd>
+                    <span className="block text-2xl font-bold text-text">{v}</span>
+                    <span className="mt-2 block text-base text-muted">{k}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </Card>
+        </Container>
+      </section>
 
       <Section eyebrow="Teams we have built for" heading="Named, because they said yes." ground="band">
         {/* Names and sectors, not logo files. The marks sit in
