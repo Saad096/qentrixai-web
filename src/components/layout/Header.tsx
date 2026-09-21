@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Container } from "@/components/ui/Container";
 import { primaryNav, PRIMARY_CTA } from "@/data/navigation";
+import { ServicesMenu } from "./ServicesMenu";
 import { cn } from "@/lib/utils";
 
 const FOCUSABLE = 'a[href], button:not([disabled])';
@@ -103,7 +104,10 @@ export function Header() {
           <Logo />
 
           <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
-            {primaryNav.map((item) => (
+            {primaryNav.map((item) =>
+              item.href === "/services" ? (
+                <ServicesMenu key={item.href} active={isActive(item.href)} />
+              ) : (
               <Link
                 key={item.href}
                 href={item.href}
@@ -115,7 +119,8 @@ export function Header() {
               >
                 {item.label}
               </Link>
-            ))}
+              )
+            )}
           </nav>
 
           <div className="flex items-center gap-1.5">

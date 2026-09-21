@@ -18,8 +18,22 @@ import {
   Languages,
   Boxes,
   ShieldCheck,
+  Search,
+  Users,
+  LifeBuoy,
+  GraduationCap,
   type LucideIcon,
 } from "lucide-react";
+
+export type ServiceGroup = "Build" | "Deploy and operate" | "Models and data" | "Advise and staff";
+
+/** Column order in the header menu and on the hub. */
+export const SERVICE_GROUPS: ServiceGroup[] = [
+  "Build",
+  "Deploy and operate",
+  "Models and data",
+  "Advise and staff",
+];
 
 export type Service = {
   slug: string;
@@ -27,6 +41,8 @@ export type Service = {
   short: string;
   description: string;
   icon: LucideIcon;
+  /** Column this sits under in the header menu and on the services hub. */
+  group: ServiceGroup;
   /** Shown on the homepage "What we build" row. Six are featured. */
   featured?: boolean;
   outcomes: string[];
@@ -37,6 +53,7 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "generative-ai",
+    group: "Build",
     featured: true,
     title: "Ship custom LLM products",
     short: "The whole product, not the model call: auth, billing, limits, admin and the eval suite.",
@@ -59,6 +76,7 @@ export const services: Service[] = [
   },
   {
     slug: "agentic-ai",
+    group: "Build",
     featured: true,
     title: "Put agents to work",
     short: "Agents with typed tools, retries and approval checkpoints on anything irreversible.",
@@ -81,6 +99,7 @@ export const services: Service[] = [
   },
   {
     slug: "rag-enterprise-search",
+    group: "Build",
     featured: true,
     title: "Make your knowledge answer",
     short: "Hybrid BM25 and vector retrieval with re-ranking, so answers carry citations you can check.",
@@ -103,6 +122,7 @@ export const services: Service[] = [
   },
   {
     slug: "voice-ai",
+    group: "Build",
     featured: true,
     title: "Automate calls with voice AI",
     short: "Streaming speech agents that hold a real conversation and hand off to a human when confidence drops.",
@@ -125,6 +145,7 @@ export const services: Service[] = [
   },
   {
     slug: "computer-vision",
+    group: "Build",
     title: "See what your cameras see",
     short: "Detection, recognition, OCR, and video understanding for real environments.",
     description:
@@ -146,6 +167,7 @@ export const services: Service[] = [
   },
   {
     slug: "nlp-document-ai",
+    group: "Build",
     featured: true,
     title: "Turn documents into data",
     short: "Structured data out of contracts, forms and manuals, with the extraction measured.",
@@ -168,6 +190,7 @@ export const services: Service[] = [
   },
   {
     slug: "ai-mvp-development",
+    group: "Build",
     title: "Launch an AI MVP in weeks",
     short: "Idea to shippable AI product in 6 to 10 weeks.",
     description:
@@ -189,6 +212,7 @@ export const services: Service[] = [
   },
   {
     slug: "sovereign-ai",
+    group: "Deploy and operate",
     featured: true,
     title: "Keep the model inside your border",
     short:
@@ -212,6 +236,7 @@ export const services: Service[] = [
   },
   {
     slug: "inference-engineering",
+    group: "Deploy and operate",
     featured: true,
     title: "Make inference cost what it should",
     short:
@@ -235,6 +260,7 @@ export const services: Service[] = [
   },
   {
     slug: "ai-saas-and-mobile",
+    group: "Build",
     title: "Ship the product around the model",
     short:
       "SaaS and mobile applications with the AI inside them, not bolted to the side.",
@@ -256,7 +282,99 @@ export const services: Service[] = [
     ],
   },
   {
+    slug: "model-training",
+    group: "Models and data",
+    title: "Train a model on your own data",
+    short:
+      "Fine-tunes and custom vision models where an off-the-shelf one keeps getting your domain wrong.",
+    description:
+      "Supervised fine-tuning, LoRA adapters and custom detection or classification models, trained on your labelled data and measured against a held-out set you agree before training starts.",
+    icon: GraduationCap,
+    outcomes: [
+      "A held-out benchmark agreed before the first run",
+      "A model card recording data, method and known failure modes",
+      "Weights and training code handed over",
+    ],
+    technologies: ["PyTorch", "LoRA", "Ultralytics", "Hugging Face", "Weights & Biases"],
+    bullets: [
+      "Data audit, labelling strategy and inter-annotator checks",
+      "Fine-tuning and adapter training on open-weight models",
+      "Custom detection, segmentation and classification",
+      "Evaluation against the baseline you are replacing",
+      "Retraining schedule and drift monitoring",
+    ],
+  },
+  {
+    slug: "managed-ai-services",
+    group: "Deploy and operate",
+    title: "Let us run it after launch",
+    short:
+      "On-call, evals and cost control for systems already live, whether or not we built them.",
+    description:
+      "An operating retainer for AI in production: someone watching the traces, the eval suite and the bill, with a named response time rather than a best effort.",
+    icon: LifeBuoy,
+    outcomes: [
+      "A named response time, not a best effort",
+      "Monthly eval and cost review with the numbers attached",
+      "Drift and regression caught before your users report it",
+    ],
+    technologies: ["Langfuse", "Grafana", "Prometheus", "PagerDuty", "GitHub Actions"],
+    bullets: [
+      "On-call rota and incident response",
+      "Regression suite maintained as the product changes",
+      "Token, inference and infrastructure spend reviewed monthly",
+      "Model upgrades tested against your evals before they land",
+      "Handover back to your team whenever you want it",
+    ],
+  },
+  {
+    slug: "hire-ai-engineers",
+    group: "Advise and staff",
+    title: "Add senior AI engineers to your team",
+    short:
+      "Embedded engineers who work in your repo, your review process and your standup.",
+    description:
+      "Senior people placed into your team for a defined stretch. They use your tooling and your definition of done, and they write things down so the knowledge stays when the engagement ends.",
+    icon: Users,
+    outcomes: [
+      "Working in your repo and your CI from week one",
+      "Documentation as a deliverable, not an afterthought",
+      "No junior bench quietly attached to the invoice",
+    ],
+    technologies: ["Python", "TypeScript", "PyTorch", "Kubernetes", "Terraform"],
+    bullets: [
+      "AI, platform, data and MLOps engineers",
+      "Your sprint cadence, your review standards",
+      "A written handover at the end of every rotation",
+      "Scale the pod up or down at a month's notice",
+    ],
+  },
+  {
+    slug: "aeo-and-geo",
+    group: "Advise and staff",
+    title: "Get cited by the answer engines",
+    short:
+      "Structured data, entity clarity and content built to be quoted by AI search, not just ranked.",
+    description:
+      "Buyers increasingly arrive through an assistant rather than a results page. That traffic is won by being the source an answer engine is willing to cite, which is a structured-data and content problem before it is a keyword one.",
+    icon: Search,
+    outcomes: [
+      "Structured data an engine can parse without guessing",
+      "Question-shaped content that answers in the first sentence",
+      "Visibility tracked across assistants, not only search",
+    ],
+    technologies: ["JSON-LD", "Schema.org", "Next.js Metadata", "Sitemaps"],
+    bullets: [
+      "Organization, Service, FAQPage, Article and Breadcrumb markup",
+      "Entity and topical clustering across the site",
+      "Content rewritten to answer, then elaborate",
+      "Citation tracking across assistants",
+      "Technical crawlability and render checks",
+    ],
+  },
+  {
     slug: "blockchain-web3",
+    group: "Advise and staff",
     title: "Build on-chain with confidence",
     short: "Smart contracts, dApps, tokenomics, and AI agents that operate on-chain.",
     description:
@@ -278,6 +396,7 @@ export const services: Service[] = [
   },
   {
     slug: "edge-ai",
+    group: "Deploy and operate",
     title: "Run models on the edge",
     short: "Inference close to the data on phones, kiosks, cameras, and IoT.",
     description:
@@ -299,6 +418,7 @@ export const services: Service[] = [
   },
   {
     slug: "cloud-devops-mlops",
+    group: "Deploy and operate",
     featured: true,
     title: "Keep AI alive in production",
     short: "Tracing, evals and dashboards wired before launch, so you can see what the system is doing.",
@@ -321,6 +441,7 @@ export const services: Service[] = [
   },
   {
     slug: "data-science-ml",
+    group: "Models and data",
     title: "Predict with classic ML",
     short: "Forecasting, classification, and recommendations, productionized.",
     description:
@@ -342,6 +463,7 @@ export const services: Service[] = [
   },
   {
     slug: "responsible-ai",
+    group: "Models and data",
     title: "Prove your AI is safe",
     short: "Safety, evaluation, bias, and privacy built into the system.",
     description:
@@ -363,6 +485,7 @@ export const services: Service[] = [
   },
   {
     slug: "no-code-automation",
+    group: "Advise and staff",
     title: "Automate ops without a rebuild",
     short: "Internal workflows automated on the tools you already use.",
     description:
@@ -384,6 +507,7 @@ export const services: Service[] = [
   },
   {
     slug: "ai-strategy-consulting",
+    group: "Advise and staff",
     title: "Decide before you build",
     short: "Roadmap, prioritization, and architecture review for AI initiatives.",
     description:
