@@ -8,6 +8,8 @@ import { ProductsRow } from "@/components/sections/ProductsRow";
 import { HowWeWork } from "@/components/sections/HowWeWork";
 import { Industries } from "@/components/sections/Industries";
 import { WhyUs } from "@/components/sections/WhyUs";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { OutcomeNumbers } from "@/components/sections/OutcomeNumbers";
 import { InsightsRow } from "@/components/sections/InsightsRow";
 import { FaqCta } from "@/components/sections/FaqCta";
 import { buildMetadata, faqJsonLd } from "@/lib/seo";
@@ -35,7 +37,9 @@ export default function HomePage() {
       <ProductsRow />
       <HowWeWork />
       <Industries />
+      <OutcomeNumbers />
       <WhyUs />
+      <Testimonials />
       <InsightsRow />
       <FaqCta />
     </>

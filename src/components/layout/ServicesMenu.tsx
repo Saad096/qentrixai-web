@@ -113,7 +113,7 @@ export function ServicesMenu({ active }: { active: boolean }) {
           <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICE_GROUPS.map((group) => (
               <div key={group}>
-                <p className="font-mono text-xs text-muted">{group}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.1em] text-link">{group}</p>
                 <ul className="mt-3">
                   {services
                     .filter((s) => s.group === group)
@@ -121,7 +121,7 @@ export function ServicesMenu({ active }: { active: boolean }) {
                       <li key={s.slug}>
                         <Link
                           href={`/services/${s.slug}`}
-                          className="flex min-h-[40px] items-center rounded-sm text-base text-text transition-colors hover:text-link"
+                          className="flex min-h-[40px] items-center rounded-sm text-base font-medium text-text transition-colors hover:text-link"
                         >
                           {s.title}
                         </Link>
@@ -137,7 +137,7 @@ export function ServicesMenu({ active }: { active: boolean }) {
               href="/services"
               className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
             >
-              {`View all ${services.length} capabilities`}
+              {`View all ${services.length} capabilities \u2192`}
             </Link>
           </div>
         </div>

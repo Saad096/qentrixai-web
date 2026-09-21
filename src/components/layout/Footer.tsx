@@ -13,6 +13,9 @@ import { publicEnv } from "@/lib/env";
  * line and the two ways to make contact, then link columns, then the office
  * block, then the legal row.
  *
+ * Navy in both themes, which is how the reference does it: the site is
+ * light and the footer is the one deep band that closes it.
+ *
  * What is deliberately NOT carried across from the reference: its two office
  * addresses (QentrixAI has one, in Lahore, and inventing a US HQ would be a
  * lie a buyer can check) and its "Reviewed on Clutch 5.0" badge (we have no
@@ -60,7 +63,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-[color:var(--color-border)] bg-surface-2">
+    <footer className="footer-navy border-t border-[color:var(--color-border)]">
       <Container>
         <div className="grid gap-12 py-16 md:py-20 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">

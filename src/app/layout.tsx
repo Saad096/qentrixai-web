@@ -36,8 +36,8 @@ export const viewport: Viewport = {
   // Aurora. These were still the Kiln values, so the browser chrome did not
   // match the page it framed.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#050609" },
+    { media: "(prefers-color-scheme: light)", color: "#F5F7FA" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E2A47" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -48,14 +48,14 @@ export const viewport: Viewport = {
  * bootstrap only ever adds `.light` — a failure leaves the page on the
  * default rather than flashing.
  */
-const themeBootstrap = `(function(){try{var t=localStorage.getItem("qx-theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}document.documentElement.classList.toggle("light",t==="light");}catch(e){}})();`;
+const themeBootstrap = `(function(){try{var t=localStorage.getItem("qx-theme");if(t!=="light"&&t!=="dark"){t="light";}document.documentElement.classList.toggle("light",t==="light");}catch(e){document.documentElement.classList.add("light");}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const plausible = publicEnv.analytics.plausibleDomain;
   const gaId = publicEnv.analytics.gaId;
 
   return (
-    <html lang="en" className={`${jakarta.variable} ${dmMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`light ${jakarta.variable} ${dmMono.variable}`} suppressHydrationWarning>
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <Script id="theme-bootstrap" strategy="beforeInteractive">
           {themeBootstrap}
