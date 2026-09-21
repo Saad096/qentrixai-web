@@ -12,13 +12,11 @@
  * first place. Mono-set names theme perfectly and read as a stack list, which
  * is what they are.
  */
-const MODELS = [
-  { label: "GPT-4o", angle: -90 },
-  { label: "Claude", angle: -18 },
-  { label: "Gemini", angle: 54 },
-  { label: "Llama", angle: 126 },
-  { label: "DeepSeek", angle: 198 },
-];
+/* Seven, not five, and refreshed to what buyers are actually weighing now.
+   The point of the picture is that the model is a swappable component, and
+   five names understated the choice. Evenly spaced, so the ring reads as a
+   rotation rather than a cluster. */
+const MODELS = ["GPT-5", "Claude", "Gemini", "Llama", "DeepSeek", "Qwen", "Kimi"];
 
 /* Separate radii per axis. A percentage margin resolves against the
    containing block's WIDTH on every side, top included, so one radius on a
@@ -30,7 +28,10 @@ const RADIUS_Y = 31;
 
 export function ModelOrbit() {
   return (
-    <div className="relative size-full">
+    /* `group` so the whole orbit pauses when the pointer is anywhere on the
+       card, and `focus-within` so it also pauses for a keyboard user who has
+       tabbed into the card. A name you cannot stop to read is decoration. */
+    <div className="orbit group relative size-full">
       {/* Two dashed rings, turning at different rates. Decorative: the chips
           are positioned against the panel, not against the rings, so their
           labels never rotate. */}
@@ -46,21 +47,32 @@ export function ModelOrbit() {
         </svg>
       </span>
 
-      {MODELS.map((m) => {
-        const rad = (m.angle * Math.PI) / 180;
-        return (
-          <span
-            key={m.label}
-            className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-surface px-2.5 py-1 font-mono text-[10px] text-text shadow-1"
-            style={{
-              left: `${50 + Math.cos(rad) * RADIUS_X}%`,
-              top: `${50 + Math.sin(rad) * RADIUS_Y}%`,
-            }}
-          >
-            {m.label}
-          </span>
-        );
-      })}
+      {/* The chips ride a rotating layer; each chip then counter-rotates by
+          the same amount so the type stays upright and readable the whole way
+          round. Both are transforms, so the orbit stays on the compositor. */}
+      <span className="orbit-ring absolute inset-0 block">
+        {MODELS.map((label, i) => {
+          const deg = (360 / MODELS.length) * i - 90;
+          const rad = (deg * Math.PI) / 180;
+          return (
+            <span
+              key={label}
+              /* Positioning only. The counter-rotation lives on the inner
+                 span: both would write `transform`, and the animation wins,
+                 which would drop the centring translate. */
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{
+                left: `${50 + Math.cos(rad) * RADIUS_X}%`,
+                top: `${50 + Math.sin(rad) * RADIUS_Y}%`,
+              }}
+            >
+              <span className="orbit-chip block whitespace-nowrap rounded-full bg-surface px-2.5 py-1 font-mono text-[10px] text-text shadow-1">
+                {label}
+              </span>
+            </span>
+          );
+        })}
+      </span>
     </div>
   );
 }

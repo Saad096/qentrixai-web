@@ -575,6 +575,36 @@ body > footer {
   }
 }
 
+/* Model orbit. One rotation on the ring, an equal and opposite one on every
+   chip, so the chips travel the circle while their type stays upright.
+   48s is deliberately slow -- fast enough to notice, slow enough that a name
+   is readable as it passes. Pauses on hover and on focus-within. */
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+.orbit-ring {
+  animation: orbit-spin 48s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.orbit-chip {
+  animation: orbit-spin-reverse 48s linear infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.orbit:hover .orbit-ring,
+.orbit:hover .orbit-chip,
+.orbit:focus-within .orbit-ring,
+.orbit:focus-within .orbit-chip {
+  animation-play-state: paused;
+}
+
 .menu-pop {
   animation: menu-pop 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
   transform-origin: top center;
@@ -745,7 +775,9 @@ body > footer {
     scroll-behavior: auto !important;
   }
 
-  .orb { animation: none; }
+  .orb,
+  .orbit-ring,
+  .orbit-chip { animation: none; }
 
   .js-reveal [data-reveal] {
     opacity: 1 !important;
