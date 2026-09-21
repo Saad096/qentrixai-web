@@ -59,46 +59,48 @@ export function Industries() {
           ))}
         </TabRail>
 
-        <div {...tabs.panelProps("ind")} className="pt-9">
-          {/* Stacked, not a row. Side by side, three case-study titles as long
-              as "Voice AI Recruitment Screening & CRM Automation" take the
-              whole line and squeeze the paragraph to one word per row. */}
-          <div className="pb-8 text-center">
-            <p className="mx-auto max-w-measure text-lg text-text">{current.line}</p>
+        <div {...tabs.panelProps("ind")} className="pt-10">
+          {/* Two columns, not stacked. Stacked, a sector with no engagement
+              put one short paragraph above a near-empty full-width panel --
+              mostly blank screen with a line of text floating in it. Side by
+              side the panel is always paired with copy. */}
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-5">
+              <p className="text-lg text-text">{current.line}</p>
 
-            {linked.length > 0 ? (
-              // gap-y matters as much as gap-x: at 390px these titles each
-              // wrap to two lines and, with no vertical gap, three of them
-              // read as one block of violet text.
-              <ul className="mt-5 flex flex-col items-center gap-y-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8 sm:gap-y-1">
-                {linked.map((c) => (
-                  <li key={c.href}>
-                    <Link
-                      href={c.href}
-                      className="inline-flex min-h-[44px] items-center text-center text-base font-semibold text-link underline-offset-4 hover:underline"
-                    >
-                      {c.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="mt-4 font-mono text-xs text-muted">
-                No published engagement in this sector yet.
-              </p>
-            )}
+              {linked.length > 0 ? (
+                <>
+                  <p className="mt-6 font-mono text-xs text-muted">What we have shipped here</p>
+                  <ul className="mt-2 flex flex-col gap-y-1">
+                    {linked.map((c) => (
+                      <li key={c.href}>
+                        <Link
+                          href={c.href}
+                          className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
+                        >
+                          {c.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p className="mt-5 font-mono text-xs text-muted">
+                  No published engagement in this sector yet.
+                </p>
+              )}
+            </div>
+
+            <div className="lg:col-span-7">
+              <Illustration
+                key={current.art}
+                src={current.art}
+                ratio="aspect-[4/3] sm:aspect-[16/10]"
+                scale="74%"
+                className="rounded-lg shadow-2"
+              />
+            </div>
           </div>
-
-          {/* Illustration, not photography: the stock tiles here were
-              generic -- a street crowd stood in for "customer operations" --
-              and they were the only photography left on the page. */}
-          <Illustration
-            key={current.art}
-            src={current.art}
-            ratio="aspect-[4/3] sm:aspect-[16/9] lg:aspect-[16/7]"
-            scale="78%"
-            className="mx-auto max-w-3xl rounded-lg shadow-2"
-          />
         </div>
       </div>
     </Section>

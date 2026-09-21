@@ -116,7 +116,15 @@ export function TabRail({
     <div
       {...rest}
       className={cn(
-        "tab-rail no-scrollbar -mx-1 flex snap-x snap-mandatory gap-1 overflow-x-auto rounded-full bg-surface-2 p-1.5",
+        // Ten tabs will not fit one row at any desktop width, and a rail
+        // that scrolls on a 1440px screen just looks clipped -- there is no
+        // affordance saying "drag me", so it reads as broken. Above lg it
+        // wraps into a centred group instead and every tab is visible; the
+        // scrolling rail is kept for narrow screens, where sideways scroll
+        // is an understood gesture.
+        "tab-rail no-scrollbar -mx-1 flex gap-1 rounded-full bg-surface-2 p-1.5",
+        "snap-x snap-mandatory overflow-x-auto",
+        "lg:flex-wrap lg:justify-center lg:gap-1.5 lg:overflow-visible lg:rounded-[1.75rem]",
         "ring-1 ring-[color:var(--color-border)]",
         className
       )}
