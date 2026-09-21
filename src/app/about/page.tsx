@@ -1,45 +1,78 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import { HowWeWork } from "@/components/sections/HowWeWork";
 import { StackTabs } from "@/components/sections/StackTabs";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { FaqCta } from "@/components/sections/FaqCta";
 import { company } from "@/data/company";
+import { services, SERVICE_GROUPS } from "@/data/services";
+import { products } from "@/data/products";
+import { clients } from "@/data/clients";
 import { publicEnv } from "@/lib/env";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "How we work",
+  title: "About QentrixAI",
   path: "/about",
   description:
-    "Four phases, each ending with an artifact you own: a problem framing, an architecture decision record, an eval harness in your CI, and a runbook.",
+    "An AI product studio in Lahore. Nine products operated in-house, six production systems shipped for clients, and a handover at the end of every engagement.",
 });
 
-const beliefs = [
+/**
+ * Structured on the reference the owner supplied, filled with our own facts.
+ *
+ * Two sections from that structure are deliberately absent. It has an
+ * open-source section built around a project with 580+ GitHub stars -- we do
+ * not have one, and inventing a repo is the easiest lie on this page to
+ * check, so the handover artifacts take that slot instead. And its client
+ * wall is fourteen named logos; ours is three, because three is how many we
+ * can name.
+ */
+const FOCUS = [
   {
-    title: "The metric comes before the model.",
-    body: "If we cannot say what number should move, we are not ready to build. That conversation happens in week one, not at the review.",
+    slug: "sovereign-ai",
+    title: "Sovereign and private deployment",
+    line: "The whole lifecycle inside a boundary you own, inference included — not just storage residency.",
   },
   {
-    title: "A system you cannot observe is a system you do not own.",
-    body: "Tracing and evals are part of the build, not a follow-on project. They are the difference between fixing a regression and guessing at one.",
+    slug: "inference-engineering",
+    title: "Inference economics",
+    line: "Batching, cache reuse, quantisation and routing, for the point where the API bill overtakes self-hosting.",
   },
   {
-    title: "Handover is the deliverable.",
-    body: "The engagement ends with your team able to change the thing without us. Anything else is a dependency we sold you.",
+    slug: "voice-ai",
+    title: "Voice AI in production",
+    line: "Streaming agents that hold a real conversation and hand to a human when confidence drops.",
+  },
+  {
+    slug: "rag-enterprise-search",
+    title: "Retrieval you can audit",
+    line: "Hybrid retrieval with citations, measured against an eval set on every change.",
   },
 ];
 
+const GALLERY = ["minutely", "neuromesh", "fintelia", "medaculous"];
+
 export default function AboutPage() {
+  const shots = GALLERY.map((slug) => products.find((p) => p.slug === slug)).filter(
+    (p): p is (typeof products)[number] => Boolean(p)
+  );
+
   return (
     <>
-      <script id="ld-breadcrumb"
+      <script
+        id="ld-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbJsonLd([
               { name: "Home", path: "/" },
-              { name: "How we work", path: "/about" },
+              { name: "About", path: "/about" },
             ])
           ),
         }}
@@ -47,25 +80,162 @@ export default function AboutPage() {
 
       <section className="py-16 md:py-24">
         <Container>
-          <h1 className="max-w-[16ch] text-hero font-bold text-text">How we work</h1>
+          <h1 className="max-w-[18ch] text-hero font-bold text-text">About QentrixAI</h1>
           <p className="mt-7 max-w-measure text-md text-muted">{company.mission}</p>
+
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <Button href="/book" size="lg">
+              Book a strategy call
+            </Button>
+            <Button href="/case-studies" size="lg" variant="secondary">
+              See the work
+            </Button>
+          </div>
+
+          <ul className="mt-14 grid gap-5 sm:grid-cols-3">
+            {[
+              { v: `${products.length}`, k: "products built and operated in-house" },
+              { v: "Lahore", k: "engineering hub, serving 12 geographies" },
+              { v: "Yours", k: "code, weights, eval sets and audit logs" },
+            ].map((s, i) => (
+              <Card as="li" key={s.k}>
+                <div data-reveal data-reveal-delay={i * 60} className="p-7">
+                  <span className="block text-2xl font-bold text-text">{s.v}</span>
+                  <span className="mt-2 block text-base text-muted">{s.k}</span>
+                </div>
+              </Card>
+            ))}
+          </ul>
         </Container>
       </section>
 
-      <HowWeWork />
-
-      <Section heading="What we believe" className="rule">
-        <ul className="mt-10 grid gap-10 md:grid-cols-3">
-          {beliefs.map((b) => (
-            <li key={b.title}>
-              <h3 className="text-lg font-semibold text-text">{b.title}</h3>
-              <p className="mt-3 text-base text-muted">{b.body}</p>
+      <Section
+        eyebrow="What it looks like"
+        heading="Software we built and still run."
+        lede="Not mockups. These are the interfaces behind four of the products we operate."
+        ground="band"
+      >
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2">
+          {shots.map((p, i) => (
+            <li key={p.slug}>
+              <Link href={`/products/${p.slug}`} className="group block" data-reveal data-reveal-delay={i * 60}>
+                <DeviceFrame
+                  src={p.cover}
+                  alt={`${p.name} interface`}
+                  orientation={p.orientation}
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                />
+                <p className="mt-4 text-lg font-semibold text-text group-hover:text-link">{p.name}</p>
+                <p className="mt-1 text-base text-muted">{p.tagline}</p>
+              </Link>
             </li>
           ))}
         </ul>
       </Section>
 
-      <Section heading="Who you will work with" className="rule">
+      <Section eyebrow="How we started" heading="Founded in 2024, in Lahore." ground="base">
+        <div className="mt-8 max-w-measure space-y-5 text-md text-muted">
+          <p>
+            QentrixAI began as a small senior team doing the part of AI work that nobody demos: the
+            evaluation harness, the tracing, the rollback path. The engagements that followed were
+            mostly rescues — systems that answered well in a notebook and fell over under real load.
+          </p>
+          <p>
+            We started building our own products for the same reason. Operating {products.length} of
+            them means we live with our own architecture decisions, which is why we argue about them
+            early and why the handover at the end of a client engagement is a deliverable rather
+            than a formality.
+          </p>
+        </div>
+      </Section>
+
+      <Section eyebrow="Teams we have built for" heading="Named, because they said yes." ground="band">
+        {/* Names and sectors, not logo files. The marks sit in
+            /public/products from the original media drop, but a logo wall is
+            a use of someone else's trademark and we have no written
+            permission on file for it. The names are already public on the
+            case studies. */}
+        <ul className="mt-12 grid gap-5 sm:grid-cols-3">
+          {clients.map((c, i) => (
+            <Card as="li" key={c.name}>
+              <div data-reveal data-reveal-delay={i * 60} className="p-7">
+                <span className="block text-xl font-bold text-text">{c.name}</span>
+                {c.industry && (
+                  <span className="mt-2 block font-mono text-xs text-muted">{c.industry}</span>
+                )}
+              </div>
+            </Card>
+          ))}
+        </ul>
+        <p className="mt-6 max-w-measure text-base text-muted">
+          Several more engagements are under NDA and appear in the case studies described by sector
+          rather than by name.
+        </p>
+      </Section>
+
+      <Testimonials />
+      <Section
+        eyebrow="What we build"
+        heading={`${services.length} capabilities, in four groups.`}
+        ground="band"
+      >
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {SERVICE_GROUPS.map((group, i) => {
+            const inGroup = services.filter((s) => s.group === group);
+            return (
+              <Card as="li" key={group}>
+                <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
+                  <h3 className="text-lg font-semibold text-text">{group}</h3>
+                  <p className="font-mono text-xs text-muted">{inGroup.length} capabilities</p>
+                  <ul className="mt-2 space-y-1">
+                    {inGroup.slice(0, 4).map((s) => (
+                      <li key={s.slug} className="text-base text-muted">
+                        {s.title}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Card>
+            );
+          })}
+        </ul>
+        <p className="mt-9">
+          <Link
+            href="/services"
+            className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
+          >
+            {`All ${services.length} capabilities →`}
+          </Link>
+        </p>
+      </Section>
+
+      <StackTabs />
+
+      <Section
+        eyebrow="Where we go deepest"
+        heading="Four things we are asked to fix most."
+        ground="band"
+      >
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2">
+          {FOCUS.map((f, i) => (
+            <Card as="li" key={f.slug} interactive>
+              <Link
+                href={`/services/${f.slug}`}
+                data-reveal
+                data-reveal-delay={i * 60}
+                className="flex h-full flex-col gap-3 p-7"
+              >
+                <h3 className="text-lg font-semibold text-text">{f.title}</h3>
+                <p className="text-base text-muted">{f.line}</p>
+              </Link>
+            </Card>
+          ))}
+        </ul>
+      </Section>
+
+      <HowWeWork />
+
+      <Section eyebrow="Who you will work with" heading="Senior people, named." ground="band">
         <div className="mt-10 grid gap-9 md:grid-cols-12">
           <div className="md:col-span-4">
             <Image
@@ -113,15 +283,14 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <StackTabs />
-
-      <Section heading="Where we are" className="rule">
+      <Section eyebrow="Where we are" heading="One hub, twelve time zones." ground="base">
         <dl className="mt-8 grid max-w-measure gap-px">
           {[
             ["Based in", company.location],
             ["Founded", company.founded],
             ["Hours", company.hours],
             ["Email", publicEnv.profile.email],
+            ["Phone", publicEnv.profile.phone],
           ].map(([k, v]) => (
             <div
               key={k}
