@@ -20,13 +20,21 @@ import { Section } from "@/components/ui/Section";
 import { TabPill, TabRail, useTabs } from "@/components/ui/Tabs";
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
+import { products } from "@/data/products";
 
 export function Industries() {
   const tabs = useTabs(industries.length);
   const current = industries[tabs.active];
-  const linked = current.cases
-    .map((slug) => caseStudies.find((c) => c.slug === slug))
-    .filter((c): c is (typeof caseStudies)[number] => Boolean(c));
+  const linked = [
+    ...current.cases.map((slug) => {
+      const c = caseStudies.find((x) => x.slug === slug);
+      return c && { href: `/case-studies/${c.slug}`, title: c.title };
+    }),
+    ...(current.products ?? []).map((slug) => {
+      const pr = products.find((x) => x.slug === slug);
+      return pr && { href: `/products/${pr.slug}`, title: pr.name };
+    }),
+  ].filter((x): x is { href: string; title: string } => Boolean(x));
 
   return (
     <Section
@@ -64,9 +72,9 @@ export function Industries() {
               // read as one block of violet text.
               <ul className="mt-5 flex flex-col items-center gap-y-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8 sm:gap-y-1">
                 {linked.map((c) => (
-                  <li key={c.slug}>
+                  <li key={c.href}>
                     <Link
-                      href={`/case-studies/${c.slug}`}
+                      href={c.href}
                       className="inline-flex min-h-[44px] items-center text-center text-base font-semibold text-link underline-offset-4 hover:underline"
                     >
                       {c.title}

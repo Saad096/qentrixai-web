@@ -9,7 +9,7 @@ export const metadata = buildMetadata({
   title: "AI systems built for production",
   path: "/services",
   description:
-    "Fourteen capabilities, from agentic systems and retrieval to voice AI and MLOps. Each one ships with evals, tracing and a handover.",
+    "Seventeen capabilities, from sovereign deployments and inference engineering to agentic systems, retrieval, voice and computer vision. Each one ships with evals, tracing and a handover.",
 });
 
 export default function ServicesPage() {
@@ -31,7 +31,7 @@ export default function ServicesPage() {
         <Container>
           <h1 className="max-w-[16ch] text-hero font-bold text-text">What we build</h1>
           <p className="mt-7 max-w-measure text-md text-muted">
-            Fourteen capabilities. Each one ships with the same production discipline: evals,
+            {services.length} capabilities. Each one ships with the same production discipline: evals,
             tracing, and a handover.
           </p>
         </Container>

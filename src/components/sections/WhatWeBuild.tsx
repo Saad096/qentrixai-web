@@ -16,7 +16,7 @@ import { services } from "@/data/services";
  * diagram is the point: a row of cards distinguished only by a line-icon is
  * the pattern DESIGN.md bans, and it is what the six-item list amounted to.
  * The two featured services that come off the row are still reachable, and
- * the link below still leads to all fourteen.
+ * the link below still leads to the full list.
  *
  * Which four: the capabilities buyers open a conversation with, and which
  * each have something specific to draw. Cloud/MLOps is deliberately not here
@@ -40,8 +40,8 @@ export function WhatWeBuild() {
   return (
     <Section
       eyebrow="What we build"
-      heading="Four things we are asked for most."
-      lede="Fourteen capabilities in total. These are the ones that start most engagements."
+      heading={`${cards.length} things we are asked for most.`}
+      lede={`${services.length} capabilities in total. These are the ones that start most engagements.`}
       ground="base"
       headerClassName="mx-auto text-center"
     >
@@ -73,7 +73,7 @@ export function WhatWeBuild() {
           href="/services"
           className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110"
         >
-          All fourteen capabilities
+          {`All ${services.length} capabilities`}
         </Link>
       </p>
     </Section>

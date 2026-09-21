@@ -188,6 +188,74 @@ export const services: Service[] = [
     ],
   },
   {
+    slug: "sovereign-ai",
+    featured: true,
+    title: "Keep the model inside your border",
+    short:
+      "The whole lifecycle inside boundaries you control -- inference included, not just storage.",
+    description:
+      "Sovereign deployments where the data, the model and the inference all stay inside a jurisdiction and an estate you own. Residency for stored data is the easy half; the half that gets missed is where the tokens are actually processed.",
+    icon: ShieldCheck,
+    outcomes: [
+      "Inference-time residency, not just storage residency",
+      "A named list of every sub-processor in the path",
+      "Exportable prompts, eval sets, traces and audit logs",
+    ],
+    technologies: ["vLLM", "Llama", "Mistral", "Qwen", "Kubernetes", "Postgres", "Langfuse"],
+    bullets: [
+      "On-prem, private VPC or in-country cloud region",
+      "Open-weight models served on your own hardware",
+      "Jurisdiction mapping against EU AI Act, GDPR, DPDP and local rules",
+      "Key management and tenancy isolation",
+      "Exit plan written before the build starts",
+    ],
+  },
+  {
+    slug: "inference-engineering",
+    featured: true,
+    title: "Make inference cost what it should",
+    short:
+      "Serving, batching, quantisation and routing, so the bill tracks usage instead of outrunning it.",
+    description:
+      "Self-hosted and hybrid inference tuned for throughput and tail latency. Past a certain volume the API bill overtakes the cost of running it yourself, and this is the work that makes that crossover pay.",
+    icon: Cpu,
+    outcomes: [
+      "Throughput and p99 latency measured, not estimated",
+      "Cost per thousand requests tracked per route",
+      "Smaller models carrying the traffic that does not need a large one",
+    ],
+    technologies: ["vLLM", "TensorRT-LLM", "Triton", "ONNX Runtime", "Ray", "Prometheus"],
+    bullets: [
+      "KV-cache reuse, continuous batching and speculative decoding",
+      "Quantisation with a quality gate on the eval suite",
+      "Model routing: small model first, escalate only when it fails",
+      "GPU sizing and autoscaling against real traffic shape",
+      "Cost ceilings and per-route alerting",
+    ],
+  },
+  {
+    slug: "ai-saas-and-mobile",
+    title: "Ship the product around the model",
+    short:
+      "SaaS and mobile applications with the AI inside them, not bolted to the side.",
+    description:
+      "Full product builds -- web and mobile -- where the model is one component among auth, billing, offline state, notifications and an admin surface. The parts nobody demos and every user depends on.",
+    icon: Boxes,
+    outcomes: [
+      "One codebase shipping to web, iOS and Android",
+      "Offline-first behaviour where the network cannot be trusted",
+      "An operator dashboard from day one",
+    ],
+    technologies: ["Next.js", "React Native", "FastAPI", "Postgres", "Stripe", "Expo"],
+    bullets: [
+      "Cross-platform mobile with native modules where they earn it",
+      "Auth, roles, billing and usage metering",
+      "Offline cache and conflict-safe sync",
+      "Admin and analytics surfaces for the team running it",
+      "App Store and Play submission",
+    ],
+  },
+  {
     slug: "blockchain-web3",
     title: "Build on-chain with confidence",
     short: "Smart contracts, dApps, tokenomics, and AI agents that operate on-chain.",

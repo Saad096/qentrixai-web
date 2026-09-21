@@ -2,6 +2,7 @@ import { Hero } from "@/components/sections/Hero";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { TheGap } from "@/components/sections/TheGap";
 import { WhatWeBuild } from "@/components/sections/WhatWeBuild";
+import { Sovereign } from "@/components/sections/Sovereign";
 import { ProductsRow } from "@/components/sections/ProductsRow";
 import { HowWeWork } from "@/components/sections/HowWeWork";
 import { Industries } from "@/components/sections/Industries";
@@ -28,6 +29,7 @@ export default function HomePage() {
       <SelectedWork />
       <TheGap />
       <WhatWeBuild />
+      <Sovereign />
       <ProductsRow />
       <HowWeWork />
       <Industries />
