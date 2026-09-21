@@ -2,6 +2,14 @@ export type StackGroup = { name: string; items: string[] };
 
 export const techStack: StackGroup[] = [
   {
+    name: "Mobile",
+    items: ["React Native", "Expo", "Flutter", "Swift", "Kotlin", "SQLite"],
+  },
+  {
+    name: "Systems",
+    items: ["Rust", "Go", "C++", "WebAssembly", "gRPC"],
+  },
+  {
     name: "Frontend",
     items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
   },

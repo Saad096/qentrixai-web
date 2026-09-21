@@ -31,8 +31,9 @@ const MARKS: Record<string, typeof Boxes> = {
 export function WhyUs() {
   return (
     <Section
-      eyebrow="Why QentrixAI"
+      eyebrow="Why clients choose us"
       heading="Six reasons, and the receipts for each."
+      lede="Every one of these points at something on this site you can check, not an adjective."
       ground="band"
       headerClassName="mx-auto text-center"
     >

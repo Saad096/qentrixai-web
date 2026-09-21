@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import Link from "next/link";
-import { Illustration } from "@/components/ui/Illustration";
+import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { TabPill, TabRail, useTabs } from "@/components/ui/Tabs";
 import { industries } from "@/data/industries";
@@ -94,13 +94,16 @@ export function Industries() {
             </div>
 
             <div className="lg:col-span-7">
-              <Illustration
-                key={current.art}
-                src={current.art}
-                ratio="aspect-[4/3] sm:aspect-[16/10]"
-                scale="74%"
-                className="rounded-lg shadow-2"
-              />
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2 sm:aspect-[16/10]">
+                <Image
+                  key={current.image}
+                  src={current.image}
+                  alt={current.imageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 58vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
