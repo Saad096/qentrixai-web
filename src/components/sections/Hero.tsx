@@ -3,8 +3,9 @@
  * component whose <h1> was animated by Framer Motion, which made the headline
  * the LCP element *and* gated it behind hydration -- 3.71s on mobile.
  *
- * The slab is the only thing that performs, and it animates clip-path, which
- * the compositor handles without touching layout.
+ * Arrival is staggered (motion plan A) across the proof line, the lede and
+ * the slab -- everything except the <h1>, which stays untouched because it
+ * is the LCP element. Stat numerals count up via CountUp.
  */
 import { Container } from "@/components/ui/Container";
 import { OrbField } from "@/components/ui/OrbField";
@@ -39,7 +40,7 @@ export function Hero() {
             {/* Proof, then claim. Both reference sites lead with evidence and
                 put the headline second; the trusted-by line used to sit below
                 the fold where nobody weighing us up would reach it. */}
-            <p className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-base text-muted">
+            <p className="hero-in mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-base text-muted">
               <span className="inline-flex items-center gap-2 rounded-full bg-surface px-3.5 py-1.5 shadow-1">
                 <span className="size-1.5 rounded-full bg-link" aria-hidden="true" />
                 <span className="font-mono text-xs text-text">
@@ -55,7 +56,7 @@ export function Hero() {
               AI systems that survive real users, real load, and handover.
             </h1>
 
-            <p className="mt-7 max-w-[52ch] text-md text-muted">
+            <p className="hero-in hero-in-1 mt-7 max-w-[52ch] text-md text-muted">
               We design, build and run agentic systems, retrieval pipelines and voice AI — and we
               operate nine of our own products on the same discipline we sell.
             </p>
@@ -67,7 +68,7 @@ export function Hero() {
             on a short viewport. */}
         <div className="h-8 md:h-24" aria-hidden="true" />
 
-        <div className="slab-fill brand-gradient mt-12 rounded-lg p-7 text-on-brand md:mt-14 md:p-9">
+        <div className="hero-in hero-in-3 slab-fill brand-gradient mt-12 rounded-lg p-7 text-on-brand md:mt-14 md:p-9">
           <div className="flex flex-col gap-9 lg:flex-row lg:items-center lg:justify-between">
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:gap-10">
               {company.stats.map((s) => (

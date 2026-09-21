@@ -605,6 +605,47 @@ body > footer {
   animation-play-state: paused;
 }
 
+/* Hero arrival (motion plan A). A stagger on everything EXCEPT the h1 --
+   that is the LCP element and animating it is what put the old build at
+   3.71s. Each step is 60ms behind the last, opacity + an 18px rise. */
+@keyframes hero-in {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.hero-in {
+  animation: hero-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-in-1 { animation-delay: 60ms; }
+.hero-in-2 { animation-delay: 120ms; }
+.hero-in-3 { animation-delay: 180ms; }
+
+/* Domain panel transition (motion plan E). Keyed on the active tab, so it
+   replays on every change rather than only on mount. */
+@keyframes panel-in {
+  from { opacity: 0; transform: translate3d(14px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.panel-in {
+  animation: panel-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Pinned sequence steps. Only meaningful once JS has set an active one, so
+   the resting state is fully legible: no dimming is applied until the driver
+   adds .is-step-active to a sibling. */
+[data-pin-sequence]:has(.is-step-active) .pin-step {
+  opacity: 0.55;
+  transform: scale(0.985);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+[data-pin-sequence] .pin-step.is-step-active {
+  opacity: 1;
+  transform: none;
+}
+
 .menu-pop {
   animation: menu-pop 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
   transform-origin: top center;
@@ -778,6 +819,15 @@ body > footer {
   .orb,
   .orbit-ring,
   .orbit-chip { animation: none; }
+
+  .hero-in,
+  .panel-in,
+  .menu-pop { animation: none; }
+
+  [data-pin-sequence]:has(.is-step-active) .pin-step {
+    opacity: 1;
+    transform: none;
+  }
 
   .js-reveal [data-reveal] {
     opacity: 1 !important;

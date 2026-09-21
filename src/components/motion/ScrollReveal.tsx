@@ -120,6 +120,49 @@ export function ScrollReveal() {
           )
         );
 
+        // Scroll-linked sequence (motion plan D, without the pin).
+        //
+        // The plan called for pinning the phases for a viewport. Built that
+        // way it positioned wrong: the pinned element reported
+        // `position: fixed; top: 162px` while its rect sat 1674px down the
+        // page, so the sequence played to an empty screen. Pinning was the
+        // riskiest item in the plan and this is the fallback it was flagged
+        // for -- scroll still advances the phase 1 -> 4 and the active card
+        // still lifts while the others recede, which is the part that
+        // matters. The page simply keeps scrolling normally underneath.
+        //
+        // Wrapped in matchMedia so it is desktop-only and GSAP tears it down
+        // cleanly on resize below the breakpoint.
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 1024px)", () => {
+          const sections = Array.from(
+            document.querySelectorAll<HTMLElement>("[data-pin-sequence]")
+          );
+          const triggers = sections.map((section) => {
+            const steps = Array.from(
+              section.querySelectorAll<HTMLElement>("[data-pin-step]")
+            );
+            if (steps.length < 2) return null;
+            const apply = (i: number) =>
+              steps.forEach((el, n) => el.classList.toggle("is-step-active", n === i));
+            apply(0);
+            return ScrollTrigger.create({
+              trigger: section,
+              start: "top 75%",
+              end: "bottom 45%",
+              scrub: true,
+              onUpdate: (self) =>
+                apply(Math.min(steps.length - 1, Math.floor(self.progress * steps.length))),
+            });
+          });
+          return () => {
+            triggers.forEach((t) => t?.kill());
+            document
+              .querySelectorAll<HTMLElement>("[data-pin-step]")
+              .forEach((el) => el.classList.remove("is-step-active"));
+          };
+        });
+
         // Pipelines: the rail draws left to right as the block passes, and
         // each stage arrives just behind the rail head. Scrubbed, so scrolling
         // back up runs it in reverse rather than replaying.
@@ -159,6 +202,7 @@ export function ScrollReveal() {
         });
 
         cleanup = () => {
+          mm.revert();
           [...tweens, ...parallax, ...lines, ...pipelines].forEach((t) => {
             t.scrollTrigger?.kill();
             t.kill();

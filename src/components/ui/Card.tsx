@@ -22,15 +22,20 @@ export function Card({
   interactive = false,
   className,
   children,
+  ...rest
 }: {
   as?: "div" | "li" | "article";
   elevation?: 1 | 2;
   interactive?: boolean;
   className?: string;
   children: React.ReactNode;
-}) {
+  /* Anything else -- data-* hooks in particular -- lands on the element.
+     Without this a `data-pin-step` passed by a caller is silently dropped
+     and the selector that drives the animation matches nothing. */
+} & React.HTMLAttributes<HTMLElement>) {
   return (
     <Tag
+      {...rest}
       className={cn(
         "rounded-md bg-surface surface-sheen",
         elevation === 1 ? "shadow-1" : "shadow-2",

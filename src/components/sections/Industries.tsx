@@ -64,7 +64,9 @@ export function Industries() {
               put one short paragraph above a near-empty full-width panel --
               mostly blank screen with a line of text floating in it. Side by
               side the panel is always paired with copy. */}
-          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          {/* Keyed on the active tab so the transition replays on every
+              change, not only on mount (motion plan E). */}
+          <div key={current.name} className="panel-in grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-5">
               <p className="text-lg text-text">{current.line}</p>
 

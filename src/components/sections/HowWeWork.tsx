@@ -30,6 +30,12 @@ export function HowWeWork() {
       lede="Every phase ends with an artifact in your repo, not a status call."
       ground="base"
     >
+      {/* Pinned progression (motion plan D). The wrapper holds still for
+          about a viewport while the active phase advances 1 -> 4; the
+          heading above it scrolls away as normal. Desktop only -- pinning on
+          a phone fights the browser's own scroll, which is the usual way
+          this pattern goes wrong. */}
+      <div data-pin-sequence>
       {/* The line only reads as a sequence when the four phases sit on one
           row, so it is desktop-only rather than shown and meaningless. */}
       <div className="relative mt-12 hidden h-px bg-[color:var(--color-border)] xl:block">
@@ -42,8 +48,12 @@ export function HowWeWork() {
 
       <ol className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {phases.map((p, i) => (
-          <Card as="li" key={p.step}>
-            <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-4 p-7">
+          <Card as="li" key={p.step} data-pin-step className="pin-step">
+            {/* No data-reveal here. Inside the pin the reveal trigger never
+                fires -- a pinned element stops satisfying "top 88%" -- so the
+                cards stayed at opacity 0 for the whole sequence. The pin owns
+                their appearance. */}
+            <div className="flex h-full flex-col gap-4 p-7">
               <span className="flex items-center gap-3">
                 <span
                   className="grid size-10 shrink-0 place-items-center rounded-full bg-brand/12 text-link"
@@ -66,6 +76,7 @@ export function HowWeWork() {
           </Card>
         ))}
       </ol>
+      </div>
     </Section>
   );
 }
