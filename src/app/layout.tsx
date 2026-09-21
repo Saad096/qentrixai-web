@@ -36,8 +36,8 @@ export const viewport: Viewport = {
   // Aurora. These were still the Kiln values, so the browser chrome did not
   // match the page it framed.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F5F7FA" },
-    { media: "(prefers-color-scheme: dark)", color: "#0E2A47" },
+    { media: "(prefers-color-scheme: light)", color: "#E3E1D8" },
+    { media: "(prefers-color-scheme: dark)", color: "#262621" },
   ],
   width: "device-width",
   initialScale: 1,

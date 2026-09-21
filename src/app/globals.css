@@ -73,39 +73,44 @@
  * card surface, no better than before. Fills only, `link` for text.
  */
 :root {
-  /* Graphite (2026-09-21). The owner's call: the dark theme should not be
-     navy. So the base stops being a colour at all -- a warm-tinted near
-     black, with the blue kept for the brand fill and links. On a coloured
-     base every screenshot has to fight the page for saturation; on this one
-     the only saturated things on screen are the product shots and the CTA,
-     which is the point.
+  /* Kiln (2026-09-21, second pass). The owner picked this off the original
+     GATE 3 direction mocks -- warm graphite with a verdigris slab -- over
+     both the navy it replaced and the neutral graphite that replaced that.
+     `docs/revamp/screenshots/directions/c-kiln-*.png` are the reference and
+     these values are sampled from them, not eyeballed.
 
-     The tint is warm (R > B by two points) rather than the cool grey that
-     reads as "unstyled". Nothing here is pure black: #000 with white on it
-     is the halation complaint from the first audit. */
-  --color-bg: 18 17 20;          /* #121114 page */
-  --color-surface: 27 26 30;     /* #1B1A1E card, lifted off the page */
-  --color-surface-2: 13 12 15;   /* #0D0C0F band, set below the page */
-  --art-ground: 10 9 12;         /* #0A090C deepest, the stage art sits on */
-  --color-text: 246 245 247;     /* #F6F5F7 17.31:1 on the base */
-  --color-muted: 166 163 173;    /* #A6A3AD 7.58:1 base, 6.98:1 on a card */
+     Two things make it read differently from an ordinary dark theme. The
+     base is warm and mid-tone rather than near-black: #262621 is anodised
+     metal, not a hole in the screen. And the band sits *above* the page
+     rather than below it -- surface-2 is lighter than bg here, so sections
+     lift instead of sinking. */
+  --color-bg: 38 38 33;          /* #262621 warm graphite */
+  --color-surface: 47 47 41;     /* #2F2F29 card */
+  --color-surface-2: 58 58 50;   /* #3A3A32 band, lighter than the page */
+  --art-ground: 30 30 26;        /* #1E1E1A deepest, the stage art sits on */
+  --color-text: 240 238 230;     /* #F0EEE6 chalk, 13.08:1 on the base */
+  --color-muted: 176 173 160;    /* #B0ADA0 6.75:1 base, 5.98:1 card, 5.10:1 band */
 
   /* The reference blue #1F5FD1 works as a FILL here -- white on it clears
      5.81:1 -- but measures only 2.51:1 as text on the navy, so text gets a
      lighter step. The same split the amber needed, in reverse. */
-  /* brand is a FILL. It is never text on a dark ground -- #2F6BE0 as type
-     measures 3.85:1 there. Foregrounds use `link`. */
-  --color-brand: 47 107 224;     /* #2F6BE0 fill, 3.85:1 vs page (non-text ok) */
-  --color-link: 138 180 255;     /* #8AB4FF text, 9.01:1 base / 8.29:1 on a card */
-  --color-accent: 138 180 255;   /* #8AB4FF */
-  --color-on-brand: 255 255 255; /* white on #2F6BE0, 4.88:1 */
+  /* brand is a FILL. Verdigris clears 5.07:1 as text on the page but only
+     4.49:1 on a card and 3.82:1 on a band, and most of our type sits on
+     cards -- so the rule survives the repalette unchanged. Foregrounds use
+     `link`, which is the same hue two steps up. */
+  --color-brand: 15 168 140;     /* #0FA88C verdigris fill */
+  --color-link: 47 192 165;      /* #2FC0A5 text, 6.66 base / 5.90 card / 5.03 band */
+  --color-accent: 47 192 165;    /* #2FC0A5 */
+  /* Ink, not white. White on verdigris is 3.00:1 -- exactly the failure the
+     first audit found on the live site. */
+  --color-on-brand: 11 43 36;    /* #0B2B24 on #0FA88C, 5.05:1 */
 
-  --color-success: 63 207 142;
-  --color-warn: 232 169 74;
-  --color-danger: 240 106 87;
-  --color-info: 138 180 255;
+  --color-success: 63 207 142;   /* #3FCF8E 7.62:1 */
+  --color-warn: 224 163 63;      /* #E0A33F 6.86:1 */
+  --color-danger: 239 111 92;    /* #EF6F5C 5.14:1 */
+  --color-info: 47 192 165;      /* #2FC0A5 6.66:1 */
 
-  --color-border: rgb(255 255 255 / 0.11);
+  --color-border: rgb(240 238 230 / 0.13);
 
   /* Elevation. The old single inset hairline is why cards read as outlines:
      there was no depth to read, only an edge. */
@@ -133,18 +138,18 @@
      merely lifted navy would read here as a blue stain on grey. Two brand
      stops well down in opacity plus one neutral lift, blurred further so no
      edge of an orb is ever findable. */
-  --orb-1: 47 107 224;   /* brand blue */
-  --orb-2: 138 180 255;  /* light blue */
-  --orb-3: 62 60 70;     /* neutral lift, no hue */
-  --orb-alpha: 0.11;
+  --orb-1: 15 168 140;   /* verdigris */
+  --orb-2: 47 192 165;   /* pale verdigris */
+  --orb-3: 58 58 50;     /* the warm stone, no second hue */
+  --orb-alpha: 0.12;
   --orb-blur: 130px;
 
   /* How hard the section grounds are tinted. On navy a brand wash was the
      same hue as the page and simply lifted it; on graphite it is a
      different hue and the same value reads as a blue stain on grey. Halved
      for the dark theme, unchanged for light. */
-  --wash-alpha: 0.07;
-  --band-glow: 0.06;
+  --wash-alpha: 0.09;
+  --band-glow: 0.08;
 
   /* Scale raised one step across the board (2026-09-21), on the owner's
      readability note. 15px body is the size a design tool shows you and a
@@ -190,24 +195,29 @@
 /* the same reason cold grey is -- 2026's neutral is warm and tactile.   */
 /* ------------------------------------------------------------------ */
 .light {
-  --color-bg: 245 247 250;       /* #F5F7FA cool paper, their page ground */
-  --color-surface: 255 255 255;  /* white cards on it */
-  --color-surface-2: 235 239 244;/* #EBEFF4 */
-  --art-ground: 234 242 253;     /* #EAF2FD pale blue tint */
-  --color-text: 19 38 58;        /* #13263A 14.32:1 on the base */
-  --color-muted: 86 103 121;     /* #566779 5.42:1 on base, 5.81:1 on card */
+  /* Kiln light: stone, not paper. Pure white is out for the same reason
+     pure black is -- 2026's neutral is warm and has a material to it. */
+  --color-bg: 227 225 216;       /* #E3E1D8 stone */
+  --color-surface: 242 241 234;  /* #F2F1EA card, a shade above the page */
+  --color-surface-2: 213 211 200;/* #D5D3C8 band, a shade below */
+  --art-ground: 237 236 228;     /* #EDECE4 */
+  --color-text: 35 35 31;        /* #23231F 12.04:1 on the base */
+  --color-muted: 85 85 77;       /* #55554D 5.74:1 base, 6.64:1 card, 5.01:1 band */
 
-  --color-brand: 31 95 209;      /* #1F5FD1 — 5.41:1 as text, white on it 5.81:1 */
-  --color-link: 31 95 209;
-  --color-accent: 31 95 209;
-  --color-on-brand: 255 255 255;
+  /* Same split as dark, and for the same reason: the fill matches the slab
+     in the mock, and #0B6B5C as text on a band is 4.27:1 -- under the floor.
+     `link` is one step darker so it clears everywhere. */
+  --color-brand: 11 107 92;      /* #0B6B5C pine fill */
+  --color-link: 10 97 82;        /* #0A6152 text, 5.63 base / 6.52 card / 4.91 band */
+  --color-accent: 10 97 82;
+  --color-on-brand: 242 241 234; /* bone on #0B6B5C, 5.67:1 */
 
-  --color-success: 11 107 79;
-  --color-warn: 176 120 40;
-  --color-danger: 168 64 43;
-  --color-info: 31 95 209;
+  --color-success: 11 107 78;    /* #0B6B4E 4.97:1 */
+  --color-warn: 138 90 18;       /* #8A5A12 4.51:1 */
+  --color-danger: 163 58 41;     /* #A33A29 5.02:1 */
+  --color-info: 10 97 82;        /* #0A6152 5.63:1 */
 
-  --color-border: rgb(0 0 0 / 0.12);
+  --color-border: rgb(35 35 31 / 0.16);
 
   --shadow-1:
     0 0 0 1px rgb(0 0 0 / 0.09),
@@ -220,9 +230,9 @@
     0 18px 44px -20px rgb(31 95 209 / 0.24);
   --shadow-card: var(--shadow-1);
 
-  --orb-1: 198 219 252;  /* pale blue wash */
-  --orb-2: 226 236 250;
-  --orb-3: 234 242 253;
+  --orb-1: 180 206 196;  /* pale verdigris wash on stone */
+  --orb-2: 208 222 214;
+  --orb-3: 237 236 228;
   --orb-alpha: 0.65;
   --orb-blur: 90px;
   --wash-alpha: 0.16;
@@ -339,14 +349,17 @@ body > footer {
    repalettes later -- the one place on the site where the banned hue
    survived. Pale blue, matching the light theme's own wash. */
 .light .orb-field--hero {
-  --orb-1: 168 199 247;
-  --orb-2: 201 221 250;
-  --orb-3: 226 236 250;
-  --orb-alpha: 0.5;
+  --orb-1: 158 195 182;
+  --orb-2: 196 216 206;
+  --orb-3: 224 228 218;
+  --orb-alpha: 0.42;
 }
 
+/* 1.55 was set against a near-black base where the wash had somewhere to
+   go. Kiln's base is a warm mid-tone, so the same multiplier greys the
+   hero rather than lighting it. */
 .orb-field--hero .orb {
-  opacity: calc(var(--orb-alpha) * 1.55);
+  opacity: calc(var(--orb-alpha) * 1.15);
   filter: blur(calc(var(--orb-blur) * 1.25));
 }
 
@@ -397,22 +410,25 @@ body > footer {
 /* white.                                                               */
 /* ------------------------------------------------------------------ */
 :root {
-  --grad-a: 47 107 224;  /* #2F6BE0 — white clears 4.88:1 */
-  --grad-b: 21 56 128;   /* #153880 — white clears 9.9:1 */
+  /* The slab runs lighter, not darker: on-brand is ink here, and ink on a
+     darker verdigris fails. #0B2B24 clears 5.05 on the first stop and 6.05
+     on the second. */
+  --grad-a: 15 168 140;  /* #0FA88C */
+  --grad-b: 31 184 154;  /* #1FB89A */
 
   /* Band grounds: the page run to near-black with a little warmth. */
-  --band-a: 10 9 12;     /* #0A090C */
-  --band-b: 13 12 15;    /* #0D0C0F */
+  --band-a: 43 43 37;    /* #2B2B25 — above the page, not below it */
+  --band-b: 50 50 43;    /* #32322B */
 }
 
 .light {
-  --grad-a: 31 95 209;   /* #1F5FD1 — white clears 5.81:1 */
-  --grad-b: 17 58 133;   /* #113A85 — white clears 9.6:1 */
+  --grad-a: 11 107 92;   /* #0B6B5C — bone clears 5.67:1 */
+  --grad-b: 9 90 76;     /* #095A4C — bone clears 7.19:1 */
 
   /* Black is not an option on the light theme, so the band gets the same
      treatment in kind: a gradient rather than one flat fill. */
-  --band-a: 245 247 250; /* #F5F7FA */
-  --band-b: 234 242 253; /* #EAF2FD */
+  --band-a: 220 218 209; /* #DCDAD1 */
+  --band-b: 233 231 223; /* #E9E7DF */
 }
 
 .brand-gradient {
@@ -696,16 +712,85 @@ body > footer {
    to include the one place navy was load-bearing. On the dark theme this is
    a near no-op -- a shade below the page, which is what a footer wants. */
 .footer-deep {
-  --color-bg: 10 9 12;           /* #0A090C */
-  --color-surface: 22 21 25;     /* #161519 */
-  --color-surface-2: 13 12 15;
-  --color-text: 246 245 247;     /* 18.44:1 on #0A090C */
-  --color-muted: 166 163 173;    /* #A6A3AD 8.08:1 on #0A090C */
-  --color-link: 138 180 255;     /* #8AB4FF 9.60:1 */
-  --color-border: rgb(255 255 255 / 0.13);
+  --color-bg: 30 30 26;          /* #1E1E1A */
+  --color-surface: 38 38 33;     /* #262621 */
+  --color-surface-2: 47 47 41;
+  --color-text: 240 238 230;     /* 14.39:1 on #1E1E1A */
+  --color-muted: 176 173 160;    /* #B0ADA0 7.43:1 */
+  --color-link: 47 192 165;      /* #2FC0A5 7.33:1 */
+  --color-border: rgb(240 238 230 / 0.15);
 
   background-color: rgb(var(--color-bg));
   color: rgb(var(--color-text));
+}
+
+/* ------------------------------------------------------------------ */
+/* The header pill.                                                     */
+/*                                                                      */
+/* Narrow and centred at the top of a page; full bleed once you have    */
+/* scrolled. The interpolation is a scroll-driven animation, so the     */
+/* browser owns it: it runs off the main thread, it is exactly          */
+/* proportional to scroll position, and scrolling back up reverses it   */
+/* at the same ratio without any code arranging that.                   */
+/*                                                                      */
+/* This replaces a GSAP ticker that wrote width, top and border-radius  */
+/* every frame. Those are layout properties; that version relaid out    */
+/* the document on every frame of every scroll and was a P0 in the      */
+/* audit. The properties here are the same, but the browser is          */
+/* interpolating them against a timeline rather than JavaScript setting */
+/* them from a scroll handler, and there is no listener in the path.    */
+/*                                                                      */
+/* The range is 0 -> 220px rather than the whole document. Tied to      */
+/* total page length the bar would creep open over thousands of pixels  */
+/* and never read as a response to anything.                            */
+/* ------------------------------------------------------------------ */
+.header-pill {
+  width: min(100% - 2rem, var(--container, 1260px));
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  transition: box-shadow var(--motion-base) var(--ease-out);
+}
+
+@supports (animation-timeline: scroll()) {
+  @keyframes header-expand {
+    from {
+      width: min(100% - 2rem, 980px);
+      border-radius: 999px;
+    }
+    to {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+
+  .header-pill {
+    animation: header-expand linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 220px;
+  }
+
+  /* The open mobile panel is not a scroll position, it is a state, so it
+     stays a pill and does not take the timeline. */
+  #mobile-menu.header-pill {
+    animation: none;
+    width: min(100% - 2rem, 980px);
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* Without scroll timelines the pill rests at its widened state. A resting
+   layout, not a broken one. */
+@supports not (animation-timeline: scroll()) {
+  .header-pill {
+    width: min(100% - 2rem, var(--container, 1260px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-pill {
+    animation: none !important;
+    width: min(100% - 2rem, var(--container, 1260px));
+  }
 }
 
 .menu-pop {

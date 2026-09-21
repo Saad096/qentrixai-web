@@ -1,10 +1,10 @@
 # QentrixAI — Design system
 
-> **Direction: Graphite** — dark base chosen by the owner on 2026-09-21: *not navy*. A warm-tinted near-black carries the dark theme; the light theme is unchanged cool paper; the blue stays as the brand fill in both. Supersedes Meridian's navy, which supersedes the amber pass. Earlier directions remain in `docs/revamp/04-design.md`.
+> **Direction: Kiln** — restored by the owner on 2026-09-21 from the original GATE 3 direction mocks (`docs/revamp/screenshots/directions/c-kiln-*.png`), which they judged the most readable of everything tried. Warm graphite and stone, verdigris slab. Supersedes neutral Graphite, which superseded Meridian navy, which superseded the amber pass. The rejected directions remain in `docs/revamp/04-design.md`.
 
-**Why a neutral base.** On a coloured ground every product screenshot competes with the page for saturation. On graphite the only saturated things on screen are the work and the CTA, which is the argument the site is making anyway. It also removes the last place navy was load-bearing: the footer band, which is graphite now in both themes.
+**Values are sampled from the mocks, not eyeballed.** `#262621`, `#E3E1D8`, `#0FA88C` and `#0B6B5C` were read out of the PNGs pixel by pixel, which is also how we confirmed the mocks already carry the GATE 3 verdigris adjustment rather than the original jade.
 
-Nothing is pure black. `#000` under white type produces the halation the first audit flagged, and a warm tint (R two points above B) is what keeps a near-black from reading as "unstyled".
+**Two things make it read differently from an ordinary dark theme.** The base is warm and mid-tone rather than near-black — `#262621` is anodised metal, not a hole punched in the screen. And in dark the band sits *above* the page rather than below it: `surface-2` is lighter than `bg`, so sections lift instead of sinking. Light inverts that, as light should.
 
 ## The idea
 
@@ -48,31 +48,32 @@ Sampled from the reference rather than eyeballed.
 
 | Role | Dark (default) | Light |
 |---|---|---|
-| `bg` | `#121114` graphite | `#F5F7FA` cool paper |
-| `surface` | `#1B1A1E` | `#FFFFFF` |
-| `surface-2` | `#0D0C0F` | `#EBEFF4` |
-| `art-ground` | `#0A090C` | `#EAF2FD` |
-| `text` | `#F6F5F7` (17.31:1) | `#13263A` (14.32:1) |
-| `muted` | `#A6A3AD` (7.58:1) | `#566779` (5.42:1) |
-| `brand` — fills only in dark | `#2F6BE0` | `#1F5FD1` |
-| `link` — text | `#8AB4FF` (9.01:1) | `#1F5FD1` (5.41:1) |
-| `on-brand` | `#FFFFFF` (4.88:1) | `#FFFFFF` |
+| `bg` | `#262621` warm graphite | `#E3E1D8` stone |
+| `surface` | `#2F2F29` | `#F2F1EA` |
+| `surface-2` | `#3A3A32` (lifts) | `#D5D3C8` (sinks) |
+| `art-ground` | `#1E1E1A` | `#EDECE4` |
+| `text` | `#F0EEE6` (13.08:1) | `#23231F` (12.04:1) |
+| `muted` | `#B0ADA0` (6.75:1) | `#55554D` (5.74:1) |
+| `brand` — fill | `#0FA88C` verdigris | `#0B6B5C` pine |
+| `link` — text | `#2FC0A5` (6.66:1) | `#0A6152` (5.63:1) |
+| `on-brand` | `#0B2B24` **ink** (5.05:1) | `#F2F1EA` bone (5.67:1) |
 
-Footer band (`.footer-deep`, both themes): `#0A090C` ground, text 18.28:1,
-muted 8.08:1, link 9.60:1.
+Footer band (`.footer-deep`, both themes): `#1E1E1A` ground, text 14.39:1,
+muted 7.43:1, link 7.33:1.
 
-**The rule that keeps breaking, written down.** `brand` is a fill token. On
-graphite it measures **3.85:1 as text** — enough for a 3:1 non-text element,
-not enough for type. It has now failed an audit three times: amber on
-graphite, blue on navy, and blue on graphite. Foreground on a page ground is
-always `link`. The same applies to non-text UI that has to clear 3:1: the
-inference dial arc and the radar's range inputs both use `link`.
+**White on brand is 3.00:1 and does not ship.** In dark the label on a
+verdigris fill is ink. This is the same failure the first audit found on the
+live site at 3.96:1, and it is why `on-brand` is a token rather than a habit.
 
-`brand` as a foreground is legal in exactly one place: on `bg-on-brand`
-(white), where blue on white is 5.81:1.
+**The rule that keeps breaking, written down.** `brand` is a fill token.
+Verdigris clears 5.07:1 as text on the page but only **4.49:1 on a card** and
+**3.82:1 on a band** — and most of our type sits on cards. The same holds in
+light, where `#0B6B5C` as text on a band is 4.27:1. So the brand/link split
+survives every repalette: amber on graphite, blue on navy, blue on graphite,
+and now verdigris on warm graphite. Foreground on any ground is `link`.
 
 **Decorative washes are tokenised per theme.** `--wash-alpha` and
-`--band-glow` are 0.07/0.06 in dark against 0.16/0.14 in light. On navy a
+`--band-glow` are 0.09/0.08 in dark against 0.16/0.14 in light. On navy a
 brand wash was the same hue as the page and merely lifted it; on graphite it
 is a different hue, and the light theme's value read as a blue stain on
 grey.
@@ -110,6 +111,14 @@ The ambient orb field is the one infinite animation. It animates `transform` onl
   of truth; the animation only replaces it after mount, and digits are
   tabular so a counter can never contribute to CLS.
 - One orchestrated page-load moment per page. Scroll reveals are subtle and respect `prefers-reduced-motion`.
+- **The header pill is a scroll-driven CSS animation**, not a ticker. It is
+  narrow and centred at the top of a page and full-bleed once scrolled, on
+  `animation-timeline: scroll(root block)` over a 0–220px range. The browser
+  runs it off the main thread and reverses it at the same ratio on the way
+  back up, so no code arranges that. The old build did this on a GSAP ticker
+  writing `width`, `top` and `border-radius` every frame — layout properties,
+  so every frame of every scroll relaid out the document. That was a P0.
+  Browsers without scroll timelines rest at the widened state.
 - **Durations and easing are tokens, not literals** (2026-09-21, owner note
   that the motion felt clipped): `--motion-fast` 180ms, `--motion-base`
   420ms, `--motion-slow` 720ms, on one curve — `--ease-out`

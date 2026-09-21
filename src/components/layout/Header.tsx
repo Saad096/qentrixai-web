@@ -1,14 +1,28 @@
 "use client";
 
 /**
- * Kiln header. Deliberately boring: a sticky bar with a rule under it.
+ * Kiln header: a floating pill that widens to full bleed as you scroll and
+ * narrows back to centre as you scroll up, in proportion.
  *
- * What the old header did and this one does not: animate `width`, `top` and
- * `borderRadius` on a GSAP ticker every frame (non-composited properties, so
- * every frame hit layout), and leave the closed mobile panel focusable.
+ * The owner asked for this and the old build already had a version of it --
+ * animated on a GSAP ticker, writing `width`, `top` and `border-radius`
+ * every frame. Those are layout properties, so every frame of every scroll
+ * hit layout on the whole document. It was one of the P0s in the audit.
  *
- * Accessibility fixes from audit B-10: `inert` when closed, Escape to close,
- * a focus trap while open, and `aria-controls` on the trigger.
+ * This is the same effect with none of that cost. The interpolation is a
+ * scroll-driven CSS animation (`animation-timeline: scroll()`), which the
+ * browser runs off the main thread and reverses for free when you scroll
+ * back up -- "the same ratio" is not something the code has to arrange,
+ * it is what a scroll timeline is. There is no scroll listener, no rAF
+ * loop and no JavaScript in the path at all.
+ *
+ * Browsers without scroll timelines get the pill at its widened state and
+ * no animation, which is a resting layout rather than a broken one. The
+ * rule lives in globals.css under @supports.
+ *
+ * Accessibility fixes from audit B-10 are unchanged: the panel is rendered
+ * only when open, Escape closes, focus is trapped while open, and the
+ * trigger carries `aria-controls`.
  */
 import * as React from "react";
 import Link from "next/link";
@@ -17,7 +31,6 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { Container } from "@/components/ui/Container";
 import { primaryNav, PRIMARY_CTA } from "@/data/navigation";
 import { ServicesMenu } from "./ServicesMenu";
 import { cn } from "@/lib/utils";
@@ -34,11 +47,9 @@ export function Header() {
   React.useEffect(() => setOpen(false), [pathname]);
 
   /**
-   * Transparent at the top of the page, glass once scrolled.
-   *
-   * Passive listener writing a boolean, so it cannot block scrolling, and the
-   * state only changes twice per page — crossing the threshold in either
-   * direction — rather than on every frame.
+   * One boolean, crossing a threshold, for the things a scroll timeline
+   * cannot express: the shadow under the pill. Passive, so it cannot block
+   * scrolling, and it changes twice per page rather than every frame.
    */
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -88,46 +99,31 @@ export function Header() {
     pathname === href || (href !== "/" && pathname.startsWith(href));
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 transition-colors duration-200",
-        // Transparent over the hero, glass once you have scrolled past it.
-        // While the mobile panel is open the bar must be opaque regardless,
-        // or the menu reads on top of the page content behind it.
-        scrolled || open
-          ? "border-b border-[color:var(--color-border)] bg-bg/80 backdrop-blur-md supports-[not(backdrop-filter:blur(0))]:bg-bg"
-          : "border-b border-transparent bg-transparent"
-      )}
-    >
-      <Container>
-        <div className="flex h-[68px] items-center justify-between gap-4">
+    <header className="sticky top-0 z-50 pt-3 md:pt-4">
+      {/* The pill. `header-pill` owns the width and radius interpolation;
+          everything inside it is ordinary layout. */}
+      <div
+        className={cn(
+          "header-pill mx-auto flex items-center gap-4 bg-bg/85 px-4 backdrop-blur-md md:px-5",
+          "supports-[not(backdrop-filter:blur(0))]:bg-bg",
+          scrolled || open ? "shadow-2" : "shadow-1",
+          open && "bg-bg"
+        )}
+      >
+        <div className="flex h-[60px] flex-1 items-center gap-3 md:gap-4">
           <Logo />
 
-          <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
-            {primaryNav.map((item) =>
-              item.href === "/services" ? (
-                <ServicesMenu key={item.href} active={isActive(item.href)} />
-              ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isActive(item.href) ? "page" : undefined}
-                className={cn(
-                  "inline-flex min-h-[44px] items-center text-base transition-colors",
-                  isActive(item.href) ? "text-text" : "text-muted hover:text-text"
-                )}
-              >
-                {item.label}
-              </Link>
-              )
-            )}
-          </nav>
-
+          {/* Actions sit with the mark, on the left, per the owner's
+              direction. The nav takes the right end of the pill. */}
           <div className="flex items-center gap-1.5">
-            <ThemeToggle />
-            <Button href={PRIMARY_CTA.href} size="sm" className="hidden lg:inline-flex">
+            <Button
+              href={PRIMARY_CTA.href}
+              size="sm"
+              className="hidden whitespace-nowrap sm:inline-flex"
+            >
               {PRIMARY_CTA.label}
             </Button>
+            <ThemeToggle />
             <button
               ref={triggerRef}
               type="button"
@@ -140,8 +136,31 @@ export function Header() {
               {open ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>
           </div>
+
+          <nav
+            aria-label="Primary"
+            className="ml-auto hidden items-center gap-6 lg:flex xl:gap-7"
+          >
+            {primaryNav.map((item) =>
+              item.href === "/services" ? (
+                <ServicesMenu key={item.href} active={isActive(item.href)} />
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={cn(
+                    "inline-flex min-h-[44px] items-center whitespace-nowrap text-base transition-colors",
+                    isActive(item.href) ? "text-text" : "text-muted hover:text-text"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
+          </nav>
         </div>
-      </Container>
+      </div>
 
       {/* Rendered only while open. Keeping it in the DOM behind aria-hidden
           duplicates every nav link and trips aria-hidden-focus; the old header
@@ -150,9 +169,9 @@ export function Header() {
       <div
         id="mobile-menu"
         ref={panelRef}
-        className="overflow-hidden border-t border-[color:var(--color-border)] bg-bg lg:hidden"
+        className="header-pill mx-auto mt-2 overflow-hidden bg-bg shadow-2 lg:hidden"
       >
-        <Container>
+        <div className="px-5">
           <nav aria-label="Primary" className="flex flex-col py-3">
             {primaryNav.map((item) => (
               <Link
@@ -171,7 +190,7 @@ export function Header() {
               {PRIMARY_CTA.label}
             </Button>
           </nav>
-        </Container>
+        </div>
       </div>
       )}
     </header>
