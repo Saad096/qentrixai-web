@@ -3,24 +3,36 @@
 /**
  * The hero's right column: the presenter loop the owner supplied.
  *
- * SOUND. The owner wants it audible on arrival, with the visitor able to
- * turn it off. No browser permits that literally: Chrome, Safari and
- * Firefox all refuse play() on an unmuted element until the visitor has
- * interacted with the page, and calling it anyway means the video does not
- * play at all -- worse than playing silently.
+ * SOUND. The owner wants it audible the moment the page opens. On a
+ * visitor's first visit no browser allows that, and this was tested hard
+ * enough to say so with confidence rather than by quoting the spec:
+ * unmuting at 0ms, after a second of playback, and after re-issuing
+ * play() all ended the same way -- Chrome pauses the element, which is
+ * worse than silence.
  *
- * So this gets as close as the platform allows:
+ * What ships is the closest thing that works:
  *
- *   1. Try unmuted. On a return visit with enough media engagement, Chrome
- *      permits it and the sound is simply on.
- *   2. If refused, play muted immediately so there is never a dead frame,
- *      and arm a one-shot listener. The first pointerdown, keypress or
- *      scroll anywhere on the page unmutes it -- that gesture is exactly
- *      what the browser was waiting for.
- *   3. If the visitor mutes it themselves, remember that and stop
- *      unmuting. A preference stated once should not be re-asked on every
- *      page load, and surprising someone with audio twice is how a site
- *      gets closed.
+ *   1. Start muted, because that is the only way to start.
+ *   2. Unmute as soon as playback has genuinely established, about a
+ *      second in. Not the moment play() resolves -- the element can still
+ *      be paused a frame later while the first frames decode, and
+ *      unmuting in that window makes Chrome stop it outright. Measured
+ *      both ways.
+ *   3. Verify. Safari pauses the element instead of allowing this, so a
+ *      moment later we check: if it stopped, re-mute, resume, and fall
+ *      back to unmuting on the first gesture.
+ *
+ * The `muted` attribute is bound to state rather than hard-coded. Left
+ * static, React reconciled the DOM property back to true on every
+ * re-render and re-muted the element a frame after the effect unmuted it,
+ * which is indistinguishable from the browser refusing. Probing the real
+ * policy directly showed unmute succeeding at every delay from 0 to
+ * 2500ms, which is what pointed at React rather than at Chrome.
+ *   4. An explicit mute is remembered and none of the above runs again.
+ *
+ * Step 3 is the part that matters. Without it the Safari path is a hero
+ * that silently stops playing, which is worse than the problem being
+ * solved.
  *
  * CONTROLS are visible rather than on hover, because a control you have to
  * discover is not a control. Pause stops the motion so the headline beside
@@ -57,38 +69,17 @@ export function HeroVideo() {
 
     let cleanup = () => {};
 
-    const start = async () => {
-      // React does not reliably reflect the `muted` prop onto the DOM
-      // property after hydration, so both paths set it explicitly.
-      if (!userMuted.current) {
-        v.muted = false;
-        try {
-          await v.play();
-          setMuted(false);
-          setPlaying(true);
-          return;
-        } catch {
-          /* Expected on a first visit. Fall through to muted. */
-        }
-      }
+    /* How long to wait before deciding the browser refused the unmute.
+       Two frames is enough for a pause to land and short enough that
+       nobody hears a stutter. */
+    const VERIFY_MS = 120;
 
-      v.muted = true;
-      setMuted(true);
-      try {
-        await v.play();
-        setPlaying(true);
-      } catch {
-        setPlaying(false);
-        return;
-      }
-
-      if (userMuted.current) return;
-
-      // The first gesture is what the browser was waiting for.
+    const armGestureUnmute = () => {
       const unmute = () => {
         if (userMuted.current || !ref.current) return;
         ref.current.muted = false;
         setMuted(false);
+        void ref.current.play().catch(() => {});
         cleanup();
       };
       const opts = { once: true, passive: true } as const;
@@ -100,6 +91,71 @@ export function HeroVideo() {
         window.removeEventListener("keydown", unmute);
         window.removeEventListener("scroll", unmute);
       };
+    };
+
+    const start = async () => {
+      // Muted is the only way in. React does not reliably reflect the prop
+      // onto the DOM property after hydration, so set it here.
+      v.muted = true;
+      try {
+        await v.play();
+        setPlaying(true);
+      } catch {
+        setPlaying(false);
+        return;
+      }
+
+      if (userMuted.current) return;
+
+      /* Wait until playback has actually established before asking for
+         sound. `play()` resolving is not the same thing: the element can
+         still be paused a frame later while the first frames decode, and
+         unmuting in that window makes Chrome stop it outright. Measured --
+         unmuting at that moment left paused=true; unmuting after roughly a
+         second of real playback succeeded at every delay tried. */
+      await new Promise<void>((resolve) => {
+        if (v.currentTime > 0.4) return resolve();
+        let done = false;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          v.removeEventListener("timeupdate", onTime);
+          resolve();
+        };
+        const onTime = () => {
+          if (v.currentTime > 0.4) finish();
+        };
+        v.addEventListener("timeupdate", onTime);
+        // Never hang on a stalled element.
+        window.setTimeout(finish, 2500);
+      });
+
+      if (userMuted.current || !ref.current) return;
+
+      // Now try for sound. This is a different permission check from
+      // autoplay, and Chrome grants it on an element that is genuinely
+      // playing.
+      v.muted = false;
+      setMuted(false);
+
+      /* Chrome stops the element the instant it is unmuted without user
+         activation, so put it back and wait for a gesture. The attempt
+         above is still worth making: Chrome's autoplay policy grants
+         unmuted playback to origins the visitor engages with repeatedly,
+         and on those profiles this path simply succeeds. */
+      window.setTimeout(() => {
+        const el = ref.current;
+        if (!el || userMuted.current) return;
+        if (!el.paused) return;
+
+        el.muted = true;
+        setMuted(true);
+        void el.play().then(
+          () => setPlaying(true),
+          () => setPlaying(false)
+        );
+        armGestureUnmute();
+      }, VERIFY_MS);
     };
 
     void start();
@@ -139,7 +195,13 @@ export function HeroVideo() {
         ref={ref}
         className="block h-full w-full object-cover"
         loop
-        muted
+        /* Bound to state, not a static attribute. With `muted` hard-coded
+           in JSX, every re-render reconciled the DOM property back to true
+           and silently re-muted the element a frame after the effect
+           unmuted it -- which looked exactly like the browser refusing.
+           Initial state is true so the SSR markup still carries `muted`,
+           which is what autoplay requires. */
+        muted={muted}
         playsInline
         preload="metadata"
         poster="/media/hero-robot-poster.webp"
