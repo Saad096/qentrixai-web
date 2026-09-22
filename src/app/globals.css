@@ -153,6 +153,23 @@
      same hue as the page and simply lifted it; on graphite it is a
      different hue and the same value reads as a blue stain on grey. Halved
      for the dark theme, unchanged for light. */
+  /* Illustration palette. Separate from the UI tokens on purpose: artwork
+     needs more than one accent to read as a scene rather than a diagram,
+     but those extra hues must never leak into buttons or type. They are
+     scoped to the drawings and nothing else reads them.
+
+     Measured against the art ground they sit on, #0A090C here, so every
+     hue clears 3:1 as a non-text element. The light theme uses deeper
+     versions of the same hues for the same reason in reverse. */
+  --ill-1: 47 192 165;    /* #2FC0A5 verdigris   8.71 */
+  --ill-2: 15 168 140;    /* #0FA88C brand       6.62 */
+  --ill-3: 232 201 138;   /* #E8C98A sand       12.44 */
+  --ill-4: 224 144 107;   /* #E0906B clay        7.92 */
+  --ill-5: 131 180 222;   /* #83B4DE sky         9.03 */
+  --ill-6: 184 181 170;   /* #B8B5AA stone       9.67 */
+  --ill-panel: 30 30 26;  /* #1E1E1A panels inside a scene */
+  --ill-line: 240 238 230;/* strokes, used at low opacity */
+
   --wash-alpha: 0.09;
   --band-glow: 0.08;
 
@@ -244,6 +261,15 @@
   --orb-3: 237 236 228;
   --orb-alpha: 0.65;
   --orb-blur: 90px;
+  --ill-1: 11 107 92;     /* #0B6B5C pine        5.42 */
+  --ill-2: 10 140 118;    /* #0A8C76             3.53 */
+  --ill-3: 154 107 21;    /* #9A6B15 deep sand   3.95 */
+  --ill-4: 176 86 47;     /* #B0562F deep clay   4.20 */
+  --ill-5: 42 102 144;    /* #2A6690 deep sky    5.21 */
+  --ill-6: 110 108 98;    /* #6E6C62 stone       4.45 */
+  --ill-panel: 250 249 243;
+  --ill-line: 35 35 31;
+
   --wash-alpha: 0.16;
   --band-glow: 0.14;
 }
@@ -942,6 +968,38 @@ body > footer {
 
 @media (prefers-reduced-motion: reduce) {
   .domain-flow__rail { animation: none; }
+}
+
+/* Scene animation. Transform and opacity only, so every one of these stays
+   on the compositor, and all of them stop under prefers-reduced-motion.
+   A scene should read fully when still: motion adds a second beat, it never
+   carries the meaning. */
+@keyframes scene-sweep {
+  0%, 100% { transform: translateX(-6%); }
+  50% { transform: translateX(6%); }
+}
+@keyframes scene-rise {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes scene-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1); }
+}
+@keyframes scene-trace {
+  to { stroke-dashoffset: -44; }
+}
+
+.scene__sweep { animation: scene-sweep 5.5s ease-in-out infinite; }
+.scene__rise  { animation: scene-rise 4.5s ease-in-out infinite; }
+.scene__pulse { animation: scene-pulse 2.8s ease-in-out infinite; transform-origin: center; }
+.scene__trace { animation: scene-trace 3s linear infinite; }
+.scene__d1 { animation-delay: 0.4s; }
+.scene__d2 { animation-delay: 0.9s; }
+.scene__d3 { animation-delay: 1.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scene__sweep, .scene__rise, .scene__pulse, .scene__trace { animation: none; }
 }
 
 .menu-pop {
