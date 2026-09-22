@@ -14,6 +14,22 @@ import {
   InferenceScene,
   SovereignScene,
 } from "./batch1";
+import {
+  DocumentAiScene,
+  MvpScene,
+  SaasMobileScene,
+  TrainingScene,
+  ManagedScene,
+  HiringScene,
+  AeoScene,
+  BlockchainScene,
+  EdgeScene,
+  MlopsScene,
+  DataScienceScene,
+  ResponsibleScene,
+  AutomationScene,
+  StrategyScene,
+} from "./batch2";
 
 export const SCENES = {
   "computer-vision": ComputerVisionScene,
@@ -23,6 +39,20 @@ export const SCENES = {
   "voice-ai": VoiceAiScene,
   "inference-engineering": InferenceScene,
   "sovereign-ai": SovereignScene,
+  "nlp-document-ai": DocumentAiScene,
+  "ai-mvp-development": MvpScene,
+  "ai-saas-and-mobile": SaasMobileScene,
+  "model-training": TrainingScene,
+  "managed-ai-services": ManagedScene,
+  "hire-ai-engineers": HiringScene,
+  "aeo-and-geo": AeoScene,
+  "blockchain-web3": BlockchainScene,
+  "edge-ai": EdgeScene,
+  "cloud-devops-mlops": MlopsScene,
+  "data-science-ml": DataScienceScene,
+  "responsible-ai": ResponsibleScene,
+  "no-code-automation": AutomationScene,
+  "ai-strategy-consulting": StrategyScene,
 };
 
 export type SceneKey = keyof typeof SCENES;
