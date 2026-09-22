@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Illustration } from "@/components/ui/Illustration";
 import { BLOG_ART } from "@/data/illustrations";
+import { Scene, SCENES, type SceneKey } from "@/components/art/scenes";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { blogs, getBlog } from "@/data/blogs";
@@ -36,6 +37,7 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
   if (!blog) notFound();
 
   const art = BLOG_ART[blog.slug];
+  const scene = (blog.slug in SCENES ? blog.slug : undefined) as SceneKey | undefined;
 
   const related = blogs.filter((b) => b.slug !== blog.slug).slice(0, 3);
 
@@ -84,7 +86,15 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
 
           {/* A banner between the masthead and the body. The article opened
               straight into prose, so every post looked like the last one. */}
-          {art ? (
+          {/* A drawn scene where the article has one. The 21:9 illustration
+              plate it replaces was a small drawing centred in a very wide
+              box, which is the same shape that measured 782px of blank on
+              the case studies. */}
+          {scene ? (
+            <div className="mt-10 max-w-[640px]">
+              <Scene name={scene} />
+            </div>
+          ) : art ? (
             <Illustration
               src={art}
               ratio="aspect-[21/9]"
@@ -96,7 +106,7 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
 
           <div className="mt-12 max-w-measure space-y-6">
             {blog.content.map((para, i) => (
-              <p key={i} className="text-md leading-relaxed text-muted">
+              <p key={i} className="text-md leading-relaxed text-text-2">
                 {para}
               </p>
             ))}

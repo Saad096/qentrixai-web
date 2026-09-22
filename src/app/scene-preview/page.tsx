@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { SCENES, type SceneKey } from "@/components/art/scenes";
 
-/** Throwaway contact sheet while the scene set is drawn. Delete before ship. */
+/**
+ * Contact sheet for the scene set. A working tool, not a page: it is kept
+ * out of the sitemap and marked noindex so it cannot be landed on from
+ * search. Delete it once the set stops changing.
+ */
+export const metadata: Metadata = { robots: { index: false, follow: false } };
+
 export default function ScenePreview() {
   const keys = Object.keys(SCENES) as SceneKey[];
   return (

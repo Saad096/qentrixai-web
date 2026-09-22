@@ -30,6 +30,20 @@ import {
   AutomationScene,
   StrategyScene,
 } from "./batch2";
+import {
+  JevScene,
+  McpScene,
+  ContextScene,
+  ComputerUseScene,
+  ProductionScene,
+  AgenticAutomationScene,
+  RagEnterpriseScene,
+  CallCentreScene,
+  ObservabilityScene,
+  MvpSafelyScene,
+  RoadmapScene,
+  EdgeVsCloudScene,
+} from "./batch3";
 
 export const SCENES = {
   "computer-vision": ComputerVisionScene,
@@ -53,6 +67,20 @@ export const SCENES = {
   "responsible-ai": ResponsibleScene,
   "no-code-automation": AutomationScene,
   "ai-strategy-consulting": StrategyScene,
+
+  // Articles. Keyed by blog slug.
+  "jev-typed-decisions-not-text": JevScene,
+  "mcp-how-agents-reach-your-systems": McpScene,
+  "context-engineering-beat-prompting": ContextScene,
+  "computer-use-agents-narrow-work": ComputerUseScene,
+  "production-ready-ai-not-demos": ProductionScene,
+  "agentic-ai-business-automation": AgenticAutomationScene,
+  "rag-enterprise-knowledge-search": RagEnterpriseScene,
+  "voice-ai-call-centers": CallCentreScene,
+  "mlops-observability-llm-systems": ObservabilityScene,
+  "build-ai-mvp-safely": MvpSafelyScene,
+  "ai-product-roadmap-startups": RoadmapScene,
+  "edge-ai-when-cloud-isnt-enough": EdgeVsCloudScene,
 };
 
 export type SceneKey = keyof typeof SCENES;

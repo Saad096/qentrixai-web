@@ -1,5 +1,5 @@
 import { SceneFrame, ill, panel, line } from "./Scene";
-import { Panel, Window, Bar, Chip, Node, Doc, Flow, Bars, Wave, Shield } from "./primitives";
+import { Panel, Window, Bar, Chip, Node, Flow, Bars, Shield } from "./primitives";
 
 /** /services/nlp-document-ai — per field, not per document. */
 export function DocumentAiScene() {
