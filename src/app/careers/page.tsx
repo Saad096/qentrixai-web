@@ -68,6 +68,8 @@ export default function CareersPage() {
             eyebrow="Careers"
             title="Work with senior people on AI systems that ship."
             lede="No army-of-juniors model, no busywork. Real engineering, real outcomes, real upside."
+            art="pairing"
+            artLabel="Two chairs at one desk facing a single monitor, with a whiteboard behind"
           />
         </Container>
       </section>

@@ -40,7 +40,13 @@ for (const route of paths) {
       const hasInk =
         (el.childNodes.length &&
           [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) ||
-        ["IMG", "SVG", "VIDEO", "CANVAS", "INPUT", "TEXTAREA", "SELECT"].includes(el.tagName);
+        // tagName is lowercase for inline SVG in an HTML document, so an
+        // uppercase-only comparison silently misses every drawing on the
+        // page -- which made each hero with art on its right read as a
+        // half-empty section.
+        ["IMG", "SVG", "VIDEO", "CANVAS", "INPUT", "TEXTAREA", "SELECT"].includes(
+          el.tagName.toUpperCase()
+        );
       if (!hasInk) continue;
       const r = el.getBoundingClientRect();
       if (r.height < 2 || r.width < 2) continue;

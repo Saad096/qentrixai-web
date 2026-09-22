@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
 import { FaqCta } from "@/components/sections/FaqCta";
 import { caseStudies } from "@/data/caseStudies";
@@ -27,15 +27,18 @@ export default function CaseStudiesPage() {
         }}
       />
 
-      <section className="py-16 md:py-24">
-        <Container>
-          <h1 className="max-w-[16ch] text-hero font-bold text-text">Selected work</h1>
-          <p className="mt-7 max-w-measure text-md text-text-2">
+      <PageHero
+        title="Selected work"
+        art="timeline"
+        artLabel="A delivery timeline with the artifact handed over at each phase"
+        lede={
+          <>
             Six production systems. Where a client is under NDA we describe the shape of the
             business. We do not invent a logo.
-          </p>
-        </Container>
-      </section>
+          </>
+        }
+      />
+
 
       <Section className="rule">
         <ul>

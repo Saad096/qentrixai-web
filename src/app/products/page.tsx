@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/sections/PageHero";
 import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
 import { FaqCta } from "@/components/sections/FaqCta";
@@ -28,15 +28,18 @@ export default function ProductsPage() {
         }}
       />
 
-      <section className="py-16 md:py-24">
-        <Container>
-          <h1 className="max-w-[18ch] text-hero font-bold text-text">Products we build and run</h1>
-          <p className="mt-7 max-w-measure text-md text-text-2">
+      <PageHero
+        title="Products we build and run"
+        art="device-shelf"
+        artLabel="A laptop, a tablet and a phone on a shelf, screens blank"
+        lede={
+          <>
             {products.length} products, operated in-house on the same discipline we sell.
             Several started as client work and earned their own roadmap.
-          </p>
-        </Container>
-      </section>
+          </>
+        }
+      />
+
 
       <Section className="rule">
         <ul className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">

@@ -38,6 +38,8 @@ export default function ContactPage() {
             eyebrow="Contact"
             title="Tell us about the problem. We'll tell you straight."
             lede="A 30-minute strategy call, a brief by email, or a quick WhatsApp ping, whichever fits how you work. We read every message and respond within one business day."
+            art="correspondence"
+            artLabel="An envelope with a reply arrow, beside two location pins for the Delaware and Lahore offices"
           />
         </Container>
       </section>

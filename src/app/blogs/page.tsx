@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
 import { FaqCta } from "@/components/sections/FaqCta";
 import { blogs } from "@/data/blogs";
@@ -30,14 +30,17 @@ export default function BlogsPage() {
         }}
       />
 
-      <section className="py-16 md:py-24">
-        <Container>
-          <h1 className="max-w-[16ch] text-hero font-bold text-text">Insights</h1>
-          <p className="mt-7 max-w-measure text-md text-text-2">
+      <PageHero
+        title="Insights"
+        art="desk"
+        artLabel="A desk with a notebook, a terminal window and a mug"
+        lede={
+          <>
             Field notes from the work. Written by the people doing it.
-          </p>
-        </Container>
-      </section>
+          </>
+        }
+      />
+
 
       <Section className="rule">
         <ul>
