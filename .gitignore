@@ -119,3 +119,6 @@ $RECYCLE.BIN/
 
 # Playwright MCP scratch output (snapshots, console logs, ad-hoc screenshots)
 .playwright-mcp/
+
+# Scratch harnesses (the keepers are scripts/axe*.mjs, readability.mjs, shot.mjs)
+scripts/.*.tmp.mjs
