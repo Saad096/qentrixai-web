@@ -936,16 +936,19 @@ body > footer {
   }
 }
 
-/* The hero video panel. Portrait-ish on a phone where it sits under the
-   copy, landscape beside it on a wide screen -- the source is 16:9 and a
-   16:9 box next to a three-line headline leaves the column short. */
+/* The hero video panel.
+   It was 3:4 on desktop, which suited the abstract plexus loop that
+   replaced it -- cropping the sides of a field of dots costs nothing. The
+   footage now is a centred figure, and a 3:4 crop of a 16:9 source cut its
+   arms off. 16:10 keeps the figure whole and still fills the column beside
+   a three-line headline. */
 .hero-video {
   aspect-ratio: 4 / 3;
 }
 
 @media (min-width: 1024px) {
   .hero-video {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 16 / 10;
   }
 }
 
@@ -960,8 +963,23 @@ body > footer {
   animation: domain-flow-rail 2.4s linear infinite;
 }
 
+/* Each node lights as the pulse reaches it. Six seconds for four stages,
+   which is slow enough to follow and slow enough to ignore. */
+@keyframes domain-flow-node {
+  0%, 14%, 100% { stroke-width: 2; }
+  4%, 9% { stroke-width: 3.5; }
+}
+
+.domain-flow__node {
+  animation: domain-flow-node 6s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .domain-flow__rail { animation: none; }
+  .domain-flow__rail,
+  .domain-flow__node { animation: none; }
+  /* SVG animateMotion is not covered by the animation reset, so the pulse
+     is hidden outright rather than left travelling. */
+  .domain-flow__pulse { display: none; }
 }
 
 /* Scene animation. Transform and opacity only, so every one of these stays

@@ -7,29 +7,37 @@ sources are not lost.
 | Source | Derivative | How |
 |---|---|---|
 | `saad-alam-portrait-lineart.png` (941×1671) | `public/team/saad-alam-portrait.webp`, `saad-alam-avatar.webp` | trim the white margin, pad to 3:4, resize, WebP q90 |
-| `../Hero_sections_aniamtion.mp4` (12 MB, 1280×720, 24fps, h264+aac) | `public/media/hero-plexus.mp4`, `hero-plexus-poster.webp` | see below |
+| `../Hero_sections_aniamtion.mp4` (81 MB, 1920×1080, 30fps, h264+aac) | `public/media/hero-robot.mp4`, `hero-robot-poster.webp` | see below |
 
 ## Hero video
 
-```sh
-# 900px wide, no audio, CRF 34 -> 759 KB
-ffmpeg -i media/Hero_sections_aniamtion.mp4 -an -vf "scale=900:-2" \
-  -c:v libx264 -profile:v high -crf 34 -preset slower \
-  -movflags +faststart -pix_fmt yuv420p public/media/hero-plexus.mp4
+The owner replaced the source on 2026-09-22: it is a 34-second 1920x1080
+presenter animation now, not the 12-second plexus loop, and it carries a
+voiceover.
 
-# poster, frame at 4s
-ffmpeg -ss 4 -i media/Hero_sections_aniamtion.mp4 -frames:v 1 \
-  -vf "scale=1024:-2" /tmp/poster.png
+```sh
+# 1000px wide, audio kept at 96k, CRF 28 -> 1.4 MB
+ffmpeg -i media/Hero_sections_aniamtion.mp4 -vf "scale=1000:-2" \
+  -c:v libx264 -profile:v high -crf 28 -preset slow \
+  -c:a aac -b:a 96k -ac 2 \
+  -movflags +faststart -pix_fmt yuv420p public/media/hero-robot.mp4
+
+# poster, frame at 8s
+ffmpeg -ss 8 -i media/Hero_sections_aniamtion.mp4 -frames:v 1 \
+  -vf "scale=1000:-2" /tmp/poster.png
 ```
 
-Encoder notes, so nobody redoes the measuring:
+Notes, so nobody redoes the measuring:
 
-- **No WebM.** VP9 was consistently *larger* than h264 on this footage — 1.6 MB
-  at CRF 44 against 768 KB for h264 at CRF 34 — so the second source element
-  would have cost bytes and bought nothing. h264 is universal anyway.
-- **CRF 34, not 28.** A plexus on black hides compression. CRF 28 is 1.7 MB,
-  CRF 31 is 1.1 MB, CRF 34 is 768 KB, and at the size the panel actually
-  renders there is nothing to see between them.
-- **Audio stripped.** The source carries an AAC track. An autoplaying hero
-  has no business with one, and muted autoplay is the only kind browsers
-  allow.
+- **Audio is kept this time.** The previous source had an incidental AAC
+  track and it was stripped; this one has a voiceover the owner wants
+  available. Autoplay is only permitted muted, so it starts muted and the
+  player exposes a Sound control. Unmuting is the viewer choosing to hear
+  it, which is the only decent way to ship audio on a landing page.
+- **CRF 28, not 31.** 1.4 MB against 1.1 MB. A white studio background shows
+  banding that a dark plexus hid, and the 300 KB is worth not seeing it.
+- **No WebM.** VP9 measured larger than h264 on the previous source and
+  there is no reason to expect otherwise here.
+- **16:10, not 3:4.** The panel was portrait for the abstract loop, where
+  cropping the sides costs nothing. A 3:4 crop of this 16:9 source cut the
+  figure's arms off.
