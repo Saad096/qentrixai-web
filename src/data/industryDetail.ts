@@ -470,4 +470,106 @@ export const industryDetail: Record<string, IndustryDetail> = {
     ],
     services: ["ai-saas-and-mobile", "cloud-devops-mlops", "ai-mvp-development"],
   },
+
+  "ai-automation": {
+    intro:
+      "Every company has a layer of work that is too small for a project and too repetitive to keep doing by hand: the handoff between two systems, the weekly report, the exception that always gets routed the same way. It is documented, it is repeated hundreds of times a month, and almost none of it needs a model. The interesting part is telling which parts do.",
+    pressures: [
+      {
+        title: "It never reaches the backlog",
+        body: "Each instance is fifteen minutes, so it never justifies a ticket. The cost only becomes visible when someone adds up the year.",
+      },
+      {
+        title: "The documented process is not the real one",
+        body: "The exceptions people handle silently are where the value is, and they are the part no runbook records.",
+      },
+      {
+        title: "A silent failure is worse than the manual version",
+        body: "An automation that stops working without telling anyone erodes trust faster than the process it replaced ever cost.",
+      },
+    ],
+    build: [
+      {
+        title: "Rules where it is rules",
+        body: "Most of this work is deterministic and belongs in code. Reaching for a model on a branch that an if-statement handles makes it slower, dearer and harder to debug.",
+      },
+      {
+        title: "A model only at the judgement",
+        body: "Classification, extraction and routing, with a confidence threshold and a human on the other side of it. That is usually one or two steps out of a dozen.",
+      },
+      {
+        title: "Loud failure and a manual path",
+        body: "Alerting with thresholds that mean something, and the old process still available. An automation you cannot fall back from is a dependency.",
+      },
+    ],
+    services: ["agentic-ai", "no-code-automation", "managed-ai-services"],
+  },
+
+  "legal-tech": {
+    intro:
+      "Legal work is reading under time pressure, and the cost of a miss is asymmetric. A system that summarises a contract confidently and cites nothing is worse than no system, because it produces something that looks checked. Everything here is built so the reviewer can verify in one click rather than re-read.",
+    pressures: [
+      {
+        title: "A summary without a clause is unusable",
+        body: "Nobody signs off on a paraphrase. The answer has to arrive with the paragraph it came from, in the version of the document that governs.",
+      },
+      {
+        title: "Obligations hide in the exhibits",
+        body: "The terms that matter are rarely in the body. Extraction that only reads the main agreement misses the ones that create liability.",
+      },
+      {
+        title: "Privilege and confidentiality set the architecture",
+        body: "Where the documents may be processed is decided before any model is chosen, not configured afterwards.",
+      },
+    ],
+    build: [
+      {
+        title: "Clause-level retrieval with citations",
+        body: "Chunked on document structure so a clause is never split across two passages, with the pin-cite travelling alongside the answer.",
+      },
+      {
+        title: "Obligation and date extraction, scored per field",
+        body: "Renewal windows, notice periods, caps and indemnities pulled as typed values, each with its own confidence, low ones routed to review.",
+      },
+      {
+        title: "Deployment inside the firm's boundary",
+        body: "On-prem or in your tenant, with an audit trail of every prompt, source and answer, because that is the question a regulator or an opposing party will ask.",
+      },
+    ],
+    services: ["nlp-document-ai", "rag-enterprise-search", "sovereign-ai"],
+  },
+
+  "insurance-tech": {
+    intro:
+      "Insurance runs on documents nobody controls: submissions in whatever format the broker sends, claims with photographs attached, policies with endorsements stacked on top. Accuracy quoted as an average across fields is the wrong measure here, because one wrong value on one claim is not something the other ninety-nine average away.",
+    pressures: [
+      {
+        title: "Submissions arrive in every format there is",
+        body: "Spreadsheets, PDFs, scans and email bodies, from hundreds of counterparties, none of whom will change how they send them.",
+      },
+      {
+        title: "Triage is where the loss ratio moves",
+        body: "Getting a claim to the right handler on the first pass is worth more than any downstream efficiency, and it is a decision made on incomplete information.",
+      },
+      {
+        title: "Every decision has to be explainable",
+        body: "Declines and pricing are regulated outcomes. The system has to show what it read and why, months later, without a reconstruction.",
+      },
+    ],
+    build: [
+      {
+        title: "Intake that handles the long tail",
+        body: "One pipeline for scans, photographs and structured files, with layout treated as a variable rather than an assumption.",
+      },
+      {
+        title: "Per-field extraction with routing",
+        body: "Each value scored on its own. Low confidence goes to a human before it reaches a pricing model, not after.",
+      },
+      {
+        title: "A decision trail per outcome",
+        body: "Source document, extracted value, confidence and the rule applied, queryable later. That is what makes the system defensible rather than merely fast.",
+      },
+    ],
+    services: ["nlp-document-ai", "responsible-ai", "agentic-ai"],
+  },
 };

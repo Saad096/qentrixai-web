@@ -24,8 +24,7 @@ export default function BookPage() {
             eyebrow="Book a call"
             title="Pick a slot. We'll take it from there."
             lede="A free 30-minute strategy call. No pitch deck, no pressure. Bring a goal, leave with a candid architecture and a realistic timeline."
-            art="calendar"
-            artLabel="A month grid with one slot marked, beside a clock reading thirty minutes"
+            art="index-book"
           />
         </Container>
       </section>

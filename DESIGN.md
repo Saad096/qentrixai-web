@@ -48,12 +48,13 @@ Sampled from the reference rather than eyeballed.
 
 | Role | Dark (default) | Light |
 |---|---|---|
-| `bg` | `#262621` warm graphite | `#E3E1D8` stone |
-| `surface` | `#2F2F29` | `#F2F1EA` |
-| `surface-2` | `#3A3A32` (lifts) | `#D5D3C8` (sinks) |
-| `art-ground` | `#1E1E1A` | `#EDECE4` |
-| `text` | `#F0EEE6` (13.08:1) | `#23231F` (12.04:1) |
-| `muted` | `#B0ADA0` (6.75:1) | `#55554D` (5.74:1) |
+| `bg` | `#1A1A1C` neutral grey | `#E3E1D8` stone |
+| `surface` | `#232326` | `#F2F1EA` |
+| `surface-2` | `#2C2C30` (lifts) | `#D5D3C8` (sinks) |
+| `art-ground` | `#141416` | `#EDECE4` |
+| `text` | `#F4F4F5` (15.81:1) | `#23231F` (12.04:1) |
+| `text-2` | `#CFCFD4` (11.20:1) | `#35352F` (9.42:1) |
+| `muted` | `#A6A6AB` (7.17:1) | `#55554D` (5.74:1) |
 | `brand` — fill | `#0FA88C` verdigris | `#0B6B5C` pine |
 | `link` — text | `#2FC0A5` (6.66:1) | `#0A6152` (5.63:1) |
 | `on-brand` | `#0B2B24` **ink** (5.05:1) | `#F2F1EA` bone (5.67:1) |

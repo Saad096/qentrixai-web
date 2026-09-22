@@ -29,8 +29,7 @@ export default function CaseStudiesPage() {
 
       <PageHero
         title="Selected work"
-        art="timeline"
-        artLabel="A delivery timeline with the artifact handed over at each phase"
+        art="index-case-studies"
         lede={
           <>
             Six production systems. Where a client is under NDA we describe the shape of the

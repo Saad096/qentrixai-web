@@ -32,8 +32,7 @@ export default function BlogsPage() {
 
       <PageHero
         title="Insights"
-        art="desk"
-        artLabel="A desk with a notebook, a terminal window and a mug"
+        art="index-blogs"
         lede={
           <>
             Field notes from the work. Written by the people doing it.

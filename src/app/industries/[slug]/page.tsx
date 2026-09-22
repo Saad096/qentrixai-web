@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Scene, SCENES, type SceneKey } from "@/components/art/scenes";
 import { DomainFlow } from "@/components/art/DomainFlow";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Container } from "@/components/ui/Container";
@@ -117,7 +118,11 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                   />
                 </div>
               ) : (
-                <DomainFlow stages={ind.flow ?? []} className="shadow-2" />
+                ind.slug in SCENES ? (
+                  <Scene name={ind.slug as SceneKey} />
+                ) : (
+                  <DomainFlow stages={ind.flow ?? []} className="shadow-2" />
+                )
               )}
             </div>
           </div>

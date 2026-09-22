@@ -36,7 +36,7 @@ export const viewport: Viewport = {
   // match the page it framed.
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#E3E1D8" },
-    { media: "(prefers-color-scheme: dark)", color: "#262621" },
+    { media: "(prefers-color-scheme: dark)", color: "#1A1A1C" },
   ],
   width: "device-width",
   initialScale: 1,

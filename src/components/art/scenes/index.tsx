@@ -44,6 +44,18 @@ import {
   RoadmapScene,
   EdgeVsCloudScene,
 } from "./batch3";
+import {
+  SaasPlatformScene,
+  AiAutomationScene,
+  ServicesIndexScene,
+  IndustriesIndexScene,
+  CaseStudiesIndexScene,
+  ProductsIndexScene,
+  BlogsIndexScene,
+  ContactIndexScene,
+  BookIndexScene,
+  CareersIndexScene,
+} from "./batch4";
 
 export const SCENES = {
   "computer-vision": ComputerVisionScene,
@@ -81,6 +93,20 @@ export const SCENES = {
   "build-ai-mvp-safely": MvpSafelyScene,
   "ai-product-roadmap-startups": RoadmapScene,
   "edge-ai-when-cloud-isnt-enough": EdgeVsCloudScene,
+
+  // Industries with no honest photograph.
+  "saas-and-platform": SaasPlatformScene,
+  "ai-automation": AiAutomationScene,
+
+  // Top-level routes. These replace the line-art pass.
+  "index-services": ServicesIndexScene,
+  "index-industries": IndustriesIndexScene,
+  "index-case-studies": CaseStudiesIndexScene,
+  "index-products": ProductsIndexScene,
+  "index-blogs": BlogsIndexScene,
+  "index-contact": ContactIndexScene,
+  "index-book": BookIndexScene,
+  "index-careers": CareersIndexScene,
 };
 
 export type SceneKey = keyof typeof SCENES;

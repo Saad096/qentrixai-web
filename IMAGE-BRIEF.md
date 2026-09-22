@@ -34,7 +34,7 @@ them up and generate the dark variants where they are needed.
 | `/` | AI systems that survive real users, load and handover | **Done.** The looping plexus video, top right of the hero. |
 | `/about` | Who builds it, how, and where we are | **Done.** Founder line art on a paper plate. |
 | `/services` | 21 capabilities in four groups | A drawn capability map: four clusters, lines between the ones that ship together. |
-| `/industries` | 13 domains, and what shapes the system in each | A drawn grid of domain glyphs — a field, a ward, a warehouse, a call centre — one line weight throughout. |
+| `/industries` | 16 domains, and what shapes the system in each | A drawn grid of domain glyphs — a field, a ward, a warehouse, a call centre — one line weight throughout. |
 | `/case-studies` | 6 production systems, problem to outcome | A drawn timeline: brief, build, handover, with the artifacts hanging off it. |
 | `/products` | 11 products we build and run ourselves | A drawn shelf of device outlines, screens blank. Real screenshots already sit in the cards below. |
 | `/blogs` | Field notes from the work | A drawn desk: notebook, terminal window, coffee. Nothing branded. |
@@ -72,7 +72,7 @@ them up and generate the dark variants where they are needed.
 
 ## Industries
 
-13 routes. These are the pages where real photography beats illustration.
+16 routes. These are the pages where real photography beats illustration.
 
 | Route | What the page argues | What the image should show |
 |---|---|---|
@@ -88,6 +88,9 @@ them up and generate the dark variants where they are needed.
 | `/industries/agriculture-and-agritech` | We have not published an agritech engagement. What we would build: disease and stress detection that runs on the drone or the handset, because the field i… | **Has an image.** Replace only if a better one turns up. |
 | `/industries/education-and-learning` | Assistants that teach from a corpus someone vetted, answer with the passage attached, and decline rather than improvise when the question runs past what t… | **Has an image.** Replace only if a better one turns up. |
 | `/industries/saas-and-platform` | The product around the model: web and mobile clients, tenancy, billing, integrations and the deployment pipeline. Most of an AI product is ordinary softwa… | A photograph of the setting works better here than a drawing. Currently rendering a drawn pipeline as the stand-in. |
+| `/industries/ai-automation` | The processes a person currently carries between four systems: documented, repetitive, and full of small judgements. Rules where it can be deterministic,… | A photograph of the setting works better here than a drawing. Currently rendering a drawn pipeline as the stand-in. |
+| `/industries/legal-tech` | Contract review, obligation extraction and clause search, where the answer has to cite the clause it came from and a reviewer stays in the loop on anythin… | **Has an image.** Replace only if a better one turns up. |
+| `/industries/insurance-tech` | Submission intake, claims triage and policy question answering, measured per field rather than in aggregate, because one wrong value on a claim is not an… | **Has an image.** Replace only if a better one turns up. |
 | `/industries/logistics` | We have not published a logistics engagement. What we would build: document extraction across manifests and customs paperwork, with accuracy measured per… | **Has an image.** Replace only if a better one turns up. |
 
 ## Case studies

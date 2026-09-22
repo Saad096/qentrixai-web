@@ -29,8 +29,7 @@ export default function ServicesPage() {
 
       <PageHero
         title="What we build"
-        art="capability-map"
-        artLabel="Four groups of capabilities, wired together where they ship as one engagement"
+        art="index-services"
         lede={
           <>
             {services.length} capabilities. Each one ships with the same production discipline: evals,

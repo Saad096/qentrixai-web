@@ -1,7 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { LineArt } from "@/components/art/lineart/LineArt";
-import type { DrawingKey } from "@/components/art/lineart/drawings";
+import { Scene, type SceneKey } from "@/components/art/scenes";
 
 /**
  * The shared page hero: argument on the left, drawing on the right.
@@ -20,16 +19,13 @@ export function PageHero({
   title,
   lede,
   art,
-  artLabel,
   trail,
   children,
 }: {
   eyebrow?: string;
   title: string;
   lede?: React.ReactNode;
-  art?: DrawingKey;
-  /** Describes the drawing. Required whenever `art` is set. */
-  artLabel?: string;
+  art?: SceneKey;
   trail?: { name: string; href?: string }[];
   /** Buttons, stats, anything that belongs under the lede. */
   children?: React.ReactNode;
@@ -56,7 +52,7 @@ export function PageHero({
 
           {art && (
             <div className="lg:col-span-6">
-              <LineArt name={art} label={artLabel ?? ""} className="shadow-2" />
+              <Scene name={art} />
             </div>
           )}
         </div>

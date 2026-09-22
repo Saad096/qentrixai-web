@@ -30,8 +30,7 @@ export default function ProductsPage() {
 
       <PageHero
         title="Products we build and run"
-        art="device-shelf"
-        artLabel="A laptop, a tablet and a phone on a shelf, screens blank"
+        art="index-products"
         lede={
           <>
             {products.length} products, operated in-house on the same discipline we sell.

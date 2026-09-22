@@ -1,6 +1,5 @@
 import { Container } from "./Container";
-import { LineArt } from "@/components/art/lineart/LineArt";
-import type { DrawingKey } from "@/components/art/lineart/drawings";
+import { Scene, type SceneKey } from "@/components/art/scenes";
 
 /**
  * Page-level heading. Every page opens with exactly one h1 -- nine of the old
@@ -16,14 +15,11 @@ export function PageHeading({
   title,
   lede,
   art,
-  artLabel,
 }: {
   eyebrow?: string;
   title: string;
   lede?: string;
-  art?: DrawingKey;
-  /** Describes the drawing. Required whenever `art` is set. */
-  artLabel?: string;
+  art?: SceneKey;
 }) {
   const head = (
     <>
@@ -44,7 +40,7 @@ export function PageHeading({
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">{head}</div>
             <div className="lg:col-span-6">
-              <LineArt name={art} label={artLabel ?? ""} className="shadow-2" />
+              <Scene name={art} />
             </div>
           </div>
         ) : (
