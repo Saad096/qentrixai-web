@@ -10,7 +10,7 @@ import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
 import { PRIMARY_CTA } from "@/data/navigation";
-import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 
 /**
  * The industries hub, 2026-09-21.
@@ -24,7 +24,7 @@ export const metadata = buildMetadata({
   title: "Industries we build for",
   path: "/industries",
   description:
-    "Ten domains, each with the constraint that shapes the system: clinical offline-first, per-field extraction for regulated work, on-device biometrics, cost per conversation for consumer AI.",
+    "Sixteen domains, each with the constraint that shapes the system: offline-first clinical, per-field extraction, on-device biometrics, cost per conversation.",
 });
 
 export default function IndustriesPage() {
@@ -32,6 +32,15 @@ export default function IndustriesPage() {
 
   return (
     <>
+      <script
+        id="ld-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListJsonLd("Industries we build for", industries.map((i) => ({ name: i.name, path: `/industries/${i.slug}` })))
+          ),
+        }}
+      />
       <script
         id="ld-breadcrumb"
         type="application/ld+json"

@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Button } from "@/components/ui/Button";
 import { CtaBlock } from "@/components/sections/FaqCta";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { publicEnv } from "@/lib/env";
 
 export const metadata = buildMetadata({
@@ -62,6 +62,18 @@ const openRoles = [
 export default function CareersPage() {
   return (
     <>
+      <script
+        id="ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Careers", path: "/careers" },
+            ])
+          ),
+        }}
+      />
       <section className="pt-16 md:pt-24 pb-12">
         <Container>
           <PageHeading

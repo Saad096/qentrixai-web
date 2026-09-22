@@ -3,7 +3,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { caseStudies } from "@/data/caseStudies";
-import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Six AI systems running in production",
@@ -15,6 +15,15 @@ export const metadata = buildMetadata({
 export default function CaseStudiesPage() {
   return (
     <>
+      <script
+        id="ld-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListJsonLd("Selected work", caseStudies.map((c) => ({ name: c.title, path: `/case-studies/${c.slug}` })))
+          ),
+        }}
+      />
       <script id="ld-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -4,7 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { blogs } from "@/data/blogs";
 import { formatDate } from "@/lib/utils";
-import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Field notes on shipping AI",
@@ -18,6 +18,15 @@ export default function BlogsPage() {
 
   return (
     <>
+      <script
+        id="ld-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListJsonLd("Insights", blogs.map((b) => ({ name: b.title, path: `/blogs/${b.slug}` })))
+          ),
+        }}
+      />
       <script id="ld-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{

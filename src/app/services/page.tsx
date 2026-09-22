@@ -3,18 +3,27 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { services } from "@/data/services";
-import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "AI systems built for production",
   path: "/services",
   description:
-    "Seventeen capabilities, from sovereign deployments and inference engineering to agentic systems, retrieval, voice and computer vision. Each one ships with evals, tracing and a handover.",
+    "Twenty-one AI capabilities across build, deploy, models and advice. Each ships with evals, tracing and a handover, not a demo.",
 });
 
 export default function ServicesPage() {
   return (
     <>
+      <script
+        id="ld-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListJsonLd("What we build", services.map((s) => ({ name: s.title, path: `/services/${s.slug}` })))
+          ),
+        }}
+      />
       <script id="ld-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{

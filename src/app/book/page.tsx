@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { BookingCalendar } from "@/components/booking/BookingCalendar";
 import { publicEnv } from "@/lib/env";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Book a strategy call",
@@ -18,6 +18,18 @@ export default function BookPage() {
 
   return (
     <>
+      <script
+        id="ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Book a call", path: "/book" },
+            ])
+          ),
+        }}
+      />
       <section className="pt-16 md:pt-24 pb-12">
         <Container>
           <PageHeading

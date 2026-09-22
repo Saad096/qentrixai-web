@@ -20,7 +20,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const { slug } = await params;
   const p = products.find((x) => x.slug === slug);
   if (!p) return buildMetadata({ title: "Product not found", path: `/products/${slug}` });
-  return buildMetadata({ title: p.name, description: p.tagline, path: `/products/${p.slug}` });
+  /* A tagline alone is often under the 70 characters Google will render,
+     so the category and our relationship to it carry the rest. Measured:
+     Minutely's tagline is 68 characters on its own. */
+  return buildMetadata({
+    title: p.name,
+    description: `${p.tagline} ${p.category} built and operated in-house by QentrixAI.`,
+    path: `/products/${p.slug}`,
+  });
 }
 
 export default async function ProductDetail({ params }: { params: Promise<Params> }) {

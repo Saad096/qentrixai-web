@@ -38,6 +38,25 @@ type SeoInput = {
   publishedTime?: string;
 };
 
+/**
+ * Google renders roughly 60 characters of a title and 160 of a description,
+ * and cuts the rest mid-word. Most of our descriptions come from data
+ * fields written to be read on the page -- an industry `intro` is three
+ * sentences, an article `excerpt` is two -- so they arrive here well over
+ * the limit. Measured before this: 330 characters on one industry page.
+ *
+ * Clamping centrally means every one of the seventy-odd routes is covered
+ * and a new data field cannot quietly reintroduce the problem. It trims at
+ * a word boundary, never mid-word, and only when it has to.
+ */
+function clamp(text: string, max: number): string {
+  const t = text.replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
+  const at = cut.lastIndexOf(" ");
+  return (at > max * 0.6 ? cut.slice(0, at) : cut).replace(/[ ,;:.\u2014-]+$/, "") + "\u2026";
+}
+
 export function buildMetadata({
   title,
   description = defaultDescription,
@@ -47,18 +66,26 @@ export function buildMetadata({
   type = "website",
   publishedTime,
 }: SeoInput = {}): Metadata {
-  const fullTitle = title
-    ? `${title} | ${publicEnv.siteName}`
-    : `${publicEnv.siteName} — AI systems that survive production`;
+  /* The brand suffix is dropped when the page title already fills the
+     budget on its own. A title cut to "...Operational Workflows | Qentri"
+     is worse than one with no suffix at all. */
+  const bare = title ?? `${publicEnv.siteName} \u2014 AI systems that survive production`;
+  const withBrand = title ? `${title} | ${publicEnv.siteName}` : bare;
+  const fullTitle = clamp(withBrand.length <= 60 ? withBrand : bare, 60);
   const url = abs(path);
-  // When no image is passed we deliberately omit `images` so Next's
-  // opengraph-image.tsx file convention supplies the generated card. The old
-  // site hard-coded /og.png here, and that file 404'd in production.
+  /* Every route points at the generated card explicitly.
+     Omitting `images` was supposed to let Next's opengraph-image.tsx file
+     convention fill it in, and on the home page it does. It does not
+     inherit into any route that exports its own `openGraph` object, which
+     is all of them -- measured: 1 of 12 routes shipped an og:image. Naming
+     it here is one line and cannot silently stop working. */
+  const card = image ?? abs("/opengraph-image");
+  const desc = clamp(description, 158);
 
   return {
     metadataBase: new URL(base()),
     title: fullTitle,
-    description,
+    description: desc,
     keywords: keywords ?? defaultKeywords,
     alternates: { canonical: url },
     authors: [{ name: publicEnv.siteName, url: base() }],
@@ -68,16 +95,16 @@ export function buildMetadata({
       type,
       url,
       title: fullTitle,
-      description,
+      description: desc,
       siteName: publicEnv.siteName,
-      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: fullTitle }] } : {}),
+      images: [{ url: card, width: 1200, height: 630, alt: fullTitle }],
       ...(publishedTime ? { publishedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
-      description,
-      ...(image ? { images: [image] } : {}),
+      description: desc,
+      images: [card],
     },
     robots: {
       index: true,
@@ -212,6 +239,32 @@ export function articleJsonLd(a: {
     publisher: { "@id": `${base()}/#organization` },
     ...(a.image ? { image: abs(a.image) } : {}),
     mainEntityOfPage: { "@type": "WebPage", "@id": abs(`/blogs/${a.slug}`) },
+  };
+}
+
+/**
+ * Marks an index page as the collection it is. Without this a crawler sees
+ * /services as a page containing twenty-one links and has to infer the
+ * relationship; with it, the set and its order are stated.
+ *
+ * `url` is absolute because ItemList entries are resolved independently of
+ * the page they sit on.
+ */
+export function itemListJsonLd(
+  name: string,
+  items: { name: string; path: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    numberOfItems: items.length,
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      url: abs(it.path),
+    })),
   };
 }
 

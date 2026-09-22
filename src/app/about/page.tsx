@@ -22,7 +22,7 @@ export const metadata = buildMetadata({
   title: "About QentrixAI",
   path: "/about",
   description:
-    "An AI product studio with offices in Wilmington, Delaware and Lahore. Eleven products operated in-house, six production systems shipped for clients, and a handover at the end of every engagement.",
+    "An AI product studio in Delaware and Lahore. Eleven products run in-house, six client systems in production, and a handover at the end of every engagement.",
 });
 
 /**

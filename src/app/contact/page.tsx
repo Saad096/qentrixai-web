@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/Button";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { FaqCta } from "@/components/sections/FaqCta";
 import { publicEnv, getBookingUrl } from "@/lib/env";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Contact",
@@ -32,6 +32,18 @@ export default function ContactPage() {
 
   return (
     <>
+      <script
+        id="ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Contact", path: "/contact" },
+            ])
+          ),
+        }}
+      />
       <section className="pt-16 md:pt-24 pb-12">
         <Container>
           <PageHeading

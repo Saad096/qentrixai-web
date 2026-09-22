@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Terms of Service",
   path: "/terms",
-  description: "Terms governing your use of the QentrixAI website.",
+  description: "The terms governing your use of the QentrixAI website, including acceptable use, intellectual property and limitation of liability."
 });
 
 export default function TermsPage() {

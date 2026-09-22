@@ -4,7 +4,7 @@ import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { products } from "@/data/products";
-import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Products we build and run ourselves",
@@ -16,6 +16,15 @@ export const metadata = buildMetadata({
 export default function ProductsPage() {
   return (
     <>
+      <script
+        id="ld-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListJsonLd("Products we build and run", products.map((p) => ({ name: p.name, path: `/products/${p.slug}` })))
+          ),
+        }}
+      />
       <script id="ld-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
