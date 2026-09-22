@@ -3,54 +3,107 @@
 /**
  * The hero's right column: the presenter loop the owner supplied.
  *
- * It plays on arrival without anyone asking, which is what was wanted, and
- * it can be stopped, which is the part that matters. A moving figure beside
- * a headline competes with the headline, and the owner's note was exactly
- * that -- people should be able to settle it and read.
+ * SOUND. The owner wants it audible on arrival, with the visitor able to
+ * turn it off. No browser permits that literally: Chrome, Safari and
+ * Firefox all refuse play() on an unmuted element until the visitor has
+ * interacted with the page, and calling it anyway means the video does not
+ * play at all -- worse than playing silently.
  *
- * Two controls, both visible rather than on hover, because a control you
- * have to discover is not a control:
+ * So this gets as close as the platform allows:
  *
- *   Pause   stops the motion. The poster frame stays, so the column keeps
- *           its shape and nothing reflows.
- *   Sound   the file has a voiceover. Autoplay is only permitted muted, so
- *           it starts muted and this is the way in. Unmuting also means the
- *           viewer chose to hear it, which is the only decent way to ship
- *           audio on a landing page.
+ *   1. Try unmuted. On a return visit with enough media engagement, Chrome
+ *      permits it and the sound is simply on.
+ *   2. If refused, play muted immediately so there is never a dead frame,
+ *      and arm a one-shot listener. The first pointerdown, keypress or
+ *      scroll anywhere on the page unmutes it -- that gesture is exactly
+ *      what the browser was waiting for.
+ *   3. If the visitor mutes it themselves, remember that and stop
+ *      unmuting. A preference stated once should not be re-asked on every
+ *      page load, and surprising someone with audio twice is how a site
+ *      gets closed.
  *
- * It autoplays for everyone, including under `prefers-reduced-motion`, on
- * the owner's instruction. That is a considered position rather than an
- * oversight: WCAG 2.2.2 asks that motion over five seconds can be paused,
- * not that it never starts, and the Pause control above satisfies it. The
- * reduced-motion suppression that used to live here was the stricter
- * reading, and it meant a visitor with that preference set at OS level saw
- * a still frame and reported the autoplay as broken -- which is how this
- * surfaced.
+ * CONTROLS are visible rather than on hover, because a control you have to
+ * discover is not a control. Pause stops the motion so the headline beside
+ * it can be read; Sound is the manual way in and out.
  *
- * Everything else on the site still honours the preference. This is one
- * element with an explicit control attached, not a licence to animate.
+ * It autoplays under `prefers-reduced-motion` too, on the owner's
+ * instruction. WCAG 2.2.2 asks that motion over five seconds can be
+ * paused, not that it never starts, and the Pause control satisfies that.
+ * Everything else on the site still honours the preference.
  */
 import * as React from "react";
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+
+/** Set once the visitor mutes on purpose. Survives reloads. */
+const MUTE_KEY = "qx-hero-muted";
 
 export function HeroVideo() {
   const ref = React.useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = React.useState(true);
   const [muted, setMuted] = React.useState(true);
+  /* Set when the visitor mutes deliberately, so the first-gesture unmute
+     does not undo their choice a moment later. */
+  const userMuted = React.useRef(false);
 
   React.useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    // Belt and braces on muted. React does not reliably reflect the `muted`
-    // prop onto the DOM property after hydration, and an unmuted video is
-    // refused autoplay by every browser.
-    v.muted = true;
-    // Autoplay can still be refused. If it is, show the true state rather
-    // than a pause button over a stopped video.
-    v.play().then(
-      () => setPlaying(true),
-      () => setPlaying(false)
-    );
+
+    try {
+      userMuted.current = window.localStorage.getItem(MUTE_KEY) === "1";
+    } catch {
+      /* Private mode or blocked storage. Default to asking for sound. */
+    }
+
+    let cleanup = () => {};
+
+    const start = async () => {
+      // React does not reliably reflect the `muted` prop onto the DOM
+      // property after hydration, so both paths set it explicitly.
+      if (!userMuted.current) {
+        v.muted = false;
+        try {
+          await v.play();
+          setMuted(false);
+          setPlaying(true);
+          return;
+        } catch {
+          /* Expected on a first visit. Fall through to muted. */
+        }
+      }
+
+      v.muted = true;
+      setMuted(true);
+      try {
+        await v.play();
+        setPlaying(true);
+      } catch {
+        setPlaying(false);
+        return;
+      }
+
+      if (userMuted.current) return;
+
+      // The first gesture is what the browser was waiting for.
+      const unmute = () => {
+        if (userMuted.current || !ref.current) return;
+        ref.current.muted = false;
+        setMuted(false);
+        cleanup();
+      };
+      const opts = { once: true, passive: true } as const;
+      window.addEventListener("pointerdown", unmute, opts);
+      window.addEventListener("keydown", unmute, opts);
+      window.addEventListener("scroll", unmute, opts);
+      cleanup = () => {
+        window.removeEventListener("pointerdown", unmute);
+        window.removeEventListener("keydown", unmute);
+        window.removeEventListener("scroll", unmute);
+      };
+    };
+
+    void start();
+    return () => cleanup();
   }, []);
 
   const toggle = () => {
@@ -67,10 +120,17 @@ export function HeroVideo() {
   const toggleSound = () => {
     const v = ref.current;
     if (!v) return;
-    v.muted = !v.muted;
-    setMuted(v.muted);
-    // Unmuting is an explicit ask to hear it, so start it if it is stopped.
-    if (!v.muted && v.paused) v.play().then(() => setPlaying(true), () => {});
+    const next = !v.muted;
+    v.muted = next;
+    setMuted(next);
+    userMuted.current = next;
+    try {
+      if (next) window.localStorage.setItem(MUTE_KEY, "1");
+      else window.localStorage.removeItem(MUTE_KEY);
+    } catch {
+      /* Nothing to do. The in-memory ref still holds for this visit. */
+    }
+    if (!next && v.paused) v.play().then(() => setPlaying(true), () => {});
   };
 
   return (
