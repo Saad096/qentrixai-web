@@ -89,7 +89,7 @@ export function ServicesMenu({ active }: { active: boolean }) {
           setOpen((v) => !v);
         }}
         className={cn(
-          "inline-flex min-h-[44px] items-center gap-1.5 text-base transition-colors",
+          "inline-flex min-h-[44px] items-center gap-1.5 text-sm transition-colors xl:text-base",
           active || open ? "text-text" : "text-muted hover:text-text"
         )}
       >
@@ -108,7 +108,7 @@ export function ServicesMenu({ active }: { active: boolean }) {
           /* Fixed and centred on the viewport, not on the trigger. Anchored
              to the trigger the 960px panel hangs off the left edge, because
              the trigger sits at about x=400 in a 1440 window. */
-          className="menu-pop fixed left-1/2 top-[76px] z-50 w-[min(94vw,980px)] -translate-x-1/2 rounded-lg bg-surface p-7 shadow-3 ring-1 ring-[color:var(--color-border)]"
+          className="menu-pop fixed left-1/2 top-[var(--menu-top,72px)] z-50 w-[min(94vw,980px)] -translate-x-1/2 rounded-lg bg-surface p-7 shadow-3 ring-1 ring-[color:var(--color-border)]"
         >
           <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICE_GROUPS.map((group) => (

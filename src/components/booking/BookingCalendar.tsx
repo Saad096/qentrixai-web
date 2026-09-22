@@ -196,13 +196,13 @@ export function BookingCalendar() {
           })}
         </div>
 
-        <p className="mt-4 text-[12.5px] text-muted">
+        <p className="mt-4 text-xs text-muted">
           Mon – Sat · 9:00 AM – 7:00 PM PKT. Sundays are off.
         </p>
 
         {selectedDate && (
           <div className="mt-6">
-            <p className="flex items-center gap-2 text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
+            <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.08em] text-muted">
               <Clock className="size-3.5" /> Pick a time — {formatDateLabel(selectedDate)}
             </p>
             <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -240,7 +240,7 @@ export function BookingCalendar() {
         ) : (
           <form onSubmit={onSubmit} className="grid gap-4">
             <div className="rounded-2xl border border-brand bg-gradient-to-br from-brand/10 via-transparent to-brand/5 px-4 py-3">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-link">Your slot</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-link">Your slot</p>
               <p className="mt-1 text-[14.5px] font-medium text-text">
                 {formatDateLabel(selectedDate)} · {formatTime12h(selectedTime)} PKT
               </p>
@@ -329,7 +329,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
+      <span className="block text-xs font-medium uppercase tracking-[0.08em] text-muted">
         {label}
         {required && <span className="text-link"> *</span>}
       </span>

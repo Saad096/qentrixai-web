@@ -72,7 +72,10 @@ export function InsightsRow() {
                 ) : BLOG_ART[post.slug] ? (
                   <div className="relative">
                     <Illustration src={BLOG_ART[post.slug]} sizes="(min-width: 768px) 33vw, 100vw" />
-                    <span className="absolute bottom-3 left-3 rounded-full bg-black/45 px-2.5 py-1 font-mono text-xs text-white backdrop-blur-sm">
+                    {/* Solid, not a 45% black scrim. Over a photograph a translucent
+                        chip has whatever contrast the photograph happens to
+                        give it -- measured at 1.13:1 against a light frame. */}
+                    <span className="absolute bottom-3 left-3 rounded-full bg-surface px-3 py-1 font-mono text-xs text-text shadow-1">
                       {post.category}
                     </span>
                   </div>

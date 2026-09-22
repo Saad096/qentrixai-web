@@ -11,6 +11,7 @@ import { Container } from "@/components/ui/Container";
 import { OrbField } from "@/components/ui/OrbField";
 import { Button } from "@/components/ui/Button";
 import { Stat } from "@/components/ui/Stat";
+import { HeroVideo } from "@/components/ui/HeroVideo";
 import { company } from "@/data/company";
 import { clients } from "@/data/clients";
 import { products } from "@/data/products";
@@ -36,8 +37,8 @@ export function Hero() {
           It animates transform only, so it stays on the compositor. */}
       <OrbField className="orb-field--hero" />
       <Container className="above-orbs">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-8">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
             {/* Proof, then claim. Both reference sites lead with evidence and
                 put the headline second; the trusted-by line used to sit below
                 the fold where nobody weighing us up would reach it. */}
@@ -63,11 +64,14 @@ export function Hero() {
             </p>
           </div>
 
+          {/* The right five columns were empty from the masthead to the stat
+              slab -- roughly a third of the first viewport carrying nothing.
+              Below `lg` the video sits under the copy rather than beside it,
+              where a 16:10 panel would squeeze the headline. */}
+          <div className="hero-in hero-in-2 lg:col-span-5">
+            <HeroVideo />
+          </div>
         </div>
-
-        {/* The hero needs vertical room for the background art to read at all
-            on a short viewport. */}
-        <div className="h-8 md:h-24" aria-hidden="true" />
 
         <div className="hero-in hero-in-3 slab-fill brand-gradient mt-12 rounded-lg p-7 text-on-brand md:mt-14 md:p-9">
           <div className="flex flex-col gap-9 lg:flex-row lg:items-center lg:justify-between">

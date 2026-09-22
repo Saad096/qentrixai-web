@@ -134,7 +134,7 @@ export default function AboutPage() {
                         sizes="(min-width: 1024px) 25vw, 45vw"
                         priority={i < 2}
                       />
-                      <span className="absolute bottom-3 left-3 rounded-full bg-surface/95 px-3 py-1 font-mono text-xs text-text shadow-1 group-hover:text-link">
+                      <span className="absolute bottom-3 left-3 rounded-full bg-surface px-3 py-1 font-mono text-xs text-text shadow-1 group-hover:text-link">
                         {p.name}
                       </span>
                     </Link>
@@ -286,24 +286,23 @@ export default function AboutPage() {
       <Section eyebrow="Who you will work with" heading="Senior people, named." ground="band">
         <div className="mt-10 grid gap-9 md:grid-cols-12">
           <div className="md:col-span-4">
-            {/* A drawing, not a photograph -- owner's direction. Generated
-                from the original with a colour-dodge sketch pass, so it is
-                still him and not a stock illustration of a founder.
+            {/* Line art the owner supplied, not the photograph and not the
+                colour-dodge sketch that stood in for it. Kept on a paper
+                plate for the same reason as before: a near-white image
+                dropped straight onto the dark theme glares, and inverting
+                line art to white-on-black stops reading as a drawing.
 
-                It sits on its own paper plate rather than on the page,
-                because a sketch is ink on paper: dropped straight onto the
-                dark theme a near-white image glares, and inverting it to
-                white-on-black stops reading as pencil. The plate is the
-                same in both themes, which is the point of it. */}
-            <figure className="m-0 w-full max-w-[360px]">
+                The source lives in media/source/ so the derivative can be
+                regenerated. */}
+            <figure className="m-0 w-full max-w-[340px]">
               <div className="rounded-md bg-[#FCFAF4] p-3 shadow-2 ring-1 ring-[color:var(--color-border)]">
                 <Image
-                  src="/team/saad-alam-sketch.png"
-                  alt="Saad Alam, drawn in pencil"
-                  width={800}
-                  height={800}
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="aspect-square w-full rounded-sm object-cover"
+                  src="/team/saad-alam-portrait.webp"
+                  alt="Saad Alam, drawn in line art"
+                  width={1074}
+                  height={1535}
+                  sizes="(min-width: 768px) 30vw, 100vw"
+                  className="aspect-[3/4] w-full rounded-sm object-cover object-top"
                 />
               </div>
             </figure>

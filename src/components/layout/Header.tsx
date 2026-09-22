@@ -111,9 +111,9 @@ export function Header() {
           everything inside it is ordinary layout. */}
       <div
         className={cn(
-          "header-pill mx-auto flex items-center gap-4 bg-bg/85 px-4 backdrop-blur-md md:px-5",
+          "header-pill mx-auto flex items-center gap-4 bg-bg/80 px-3.5 backdrop-blur-md md:px-5",
           "supports-[not(backdrop-filter:blur(0))]:bg-bg",
-          scrolled || open ? "shadow-2" : "shadow-1",
+          scrolled || open ? "shadow-1" : "shadow-none",
           open && "bg-bg"
         )}
       >
@@ -122,7 +122,7 @@ export function Header() {
 
           <nav
             aria-label="Primary"
-            className="mx-auto hidden items-center gap-6 lg:flex xl:gap-7"
+            className="mx-auto hidden items-center gap-5 lg:flex xl:gap-6"
           >
             {primaryNav.map((item) =>
               item.href === "/services" ? (
@@ -133,7 +133,7 @@ export function Header() {
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "inline-flex min-h-[44px] items-center whitespace-nowrap text-base transition-colors",
+                    "inline-flex min-h-[44px] items-center whitespace-nowrap text-sm transition-colors xl:text-base",
                     isActive(item.href) ? "text-text" : "text-muted hover:text-text"
                   )}
                 >
@@ -159,7 +159,7 @@ export function Header() {
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="grid size-11 place-items-center rounded-full text-text lg:hidden"
+              className="grid size-10 place-items-center rounded-full text-text lg:hidden"
             >
               {open ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>

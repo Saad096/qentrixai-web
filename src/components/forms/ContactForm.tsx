@@ -185,7 +185,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
+      <span className="block text-xs font-medium uppercase tracking-[0.08em] text-muted">
         {label}
         {required && <span className="text-link"> *</span>}
       </span>
@@ -216,7 +216,7 @@ function Field({
 function Select({ label, name, options }: { label: string; name: string; options: string[] }) {
   return (
     <label className="block">
-      <span className="block text-[12.5px] font-medium uppercase tracking-[0.12em] text-muted">
+      <span className="block text-xs font-medium uppercase tracking-[0.08em] text-muted">
         {label}
       </span>
       <select

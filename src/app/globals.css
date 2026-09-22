@@ -779,15 +779,22 @@ body > footer {
 /*  - The widened bar kept its gap above it, so it never docked. The     */
 /*    top inset animates to zero with everything else, and the bar ends  */
 /*    flat against the top edge with square corners.                     */
-/*  - It was too short to read as a masthead. It ends at 76px and        */
-/*    *loses* height on the way, rather than starting short.             */
+/*  - It was too short to read as a masthead, then too heavy once it     */
+/*    was not. 68px at rest settling to 60px docked is where it reads    */
+/*    as a bar rather than a band: tall enough for a 44px hit area with  */
+/*    air around it, short enough that it is not the loudest object on   */
+/*    the page.                                                          */
 /* ------------------------------------------------------------------ */
 .header-shell {
-  padding-top: var(--header-inset, 14px);
+  padding-top: var(--header-inset, 12px);
+  /* Where the mega-menu hangs from. It was pinned to 76px, which was the
+     old bar height; the panel floated away from the bar the moment that
+     changed. Derived now. */
+  --menu-top: calc(var(--header-inset, 12px) + var(--header-h, 60px) + 8px);
 }
 
 .header-row {
-  height: var(--header-h, 76px);
+  height: var(--header-h, 60px);
   transition: height var(--motion-base) var(--ease-out);
 }
 
@@ -814,8 +821,8 @@ body > footer {
      bar reaches the top edge and its final height together rather than in
      two separate movements. */
   @keyframes header-dock-shell {
-    from { --header-inset: 14px; --header-h: 88px; }
-    to { --header-inset: 0px; --header-h: 76px; }
+    from { --header-inset: 12px; --header-h: 68px; }
+    to { --header-inset: 0px; --header-h: 60px; }
   }
 
   /* px, not rem. @property requires a computationally independent
@@ -826,13 +833,13 @@ body > footer {
   @property --header-inset {
     syntax: "<length>";
     inherits: true;
-    initial-value: 14px;
+    initial-value: 12px;
   }
 
   @property --header-h {
     syntax: "<length>";
     inherits: true;
-    initial-value: 88px;
+    initial-value: 68px;
   }
 
   .header-shell,
@@ -862,7 +869,7 @@ body > footer {
 @supports not (animation-timeline: scroll()) {
   .header-shell {
     --header-inset: 0px;
-    --header-h: 76px;
+    --header-h: 60px;
   }
   .header-pill {
     width: 100%;
@@ -874,12 +881,25 @@ body > footer {
   .header-shell {
     animation: none !important;
     --header-inset: 0px;
-    --header-h: 76px;
+    --header-h: 60px;
   }
   .header-pill {
     animation: none !important;
     width: 100%;
     border-radius: 0;
+  }
+}
+
+/* The hero video panel. Portrait-ish on a phone where it sits under the
+   copy, landscape beside it on a wide screen -- the source is 16:9 and a
+   16:9 box next to a three-line headline leaves the column short. */
+.hero-video {
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 1024px) {
+  .hero-video {
+    aspect-ratio: 3 / 4;
   }
 }
 
