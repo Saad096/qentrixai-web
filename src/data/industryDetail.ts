@@ -371,7 +371,7 @@ export const industryDetail: Record<string, IndustryDetail> = {
 
   "agriculture-and-agritech": {
     intro:
-      "We have not published an agritech engagement, so this page describes what we would build. The constraint that shapes everything here is that the decision is needed in the field, where connectivity is worst, on hardware that has to survive being carried around a farm.",
+      "We have not published an agritech engagement, so this page describes what we would build. One constraint shapes everything: the decision is needed in the field. That is where connectivity is worst, on hardware that has to survive being carried around a farm.",
     pressures: [
       {
         title: "The field has no network",

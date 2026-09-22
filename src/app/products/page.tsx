@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
-import { FaqCta } from "@/components/sections/FaqCta";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { products } from "@/data/products";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
@@ -75,7 +75,7 @@ export default function ProductsPage() {
         </ul>
       </Section>
 
-      <FaqCta />
+      <CtaBlock />
     </>
   );
 }

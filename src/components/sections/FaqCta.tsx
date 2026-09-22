@@ -1,21 +1,26 @@
-/**
- * Native <details> rather than a JS accordion: it is keyboard accessible and
- * screen-reader correct for free, and it costs no client JavaScript.
- */
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { faqs } from "@/data/faqs";
 import { PRIMARY_CTA } from "@/data/navigation";
 
-export function FaqCta() {
+/**
+ * Split in two on 2026-09-22.
+ *
+ * `FaqCta` rendered both halves and was on twelve route files, which after
+ * the dynamic routes meant the same twelve questions and answers appeared
+ * on about fifty pages. Three problems in one: it is a wall of duplicate
+ * content for a crawler, it breaks the copy deck's "say it once" rule
+ * fifty times, and it puts nine hundred words of boilerplate under every
+ * short page.
+ *
+ * `Faq` now renders only where someone is deciding -- home, about, contact
+ * -- and everywhere else `CtaBlock` carries the ask on its own. Capability
+ * pages already have their own two specific questions, which is the right
+ * amount of FAQ for a page about one capability.
+ */
+export function Faq() {
   return (
-    <>
-      {/* Two columns rather than one.
-          The accordion was capped at `max-w-measure` and left-aligned, which
-          left the entire right half of the section empty — on /contact that
-          dead space is most of the page. The heading and a standing offer to
-          just ask now hold the left column, the questions fill the right. */}
       <Section id="faq" ground="band">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5" data-reveal>
@@ -62,7 +67,11 @@ export function FaqCta() {
           </ul>
         </div>
       </Section>
+  );
+}
 
+export function CtaBlock() {
+  return (
       <section className="relative isolate overflow-hidden py-12 md:py-16">
         <Container className="above-orbs">
           {/* Reported as "not centred and very big", and measurement showed it
@@ -102,6 +111,18 @@ export function FaqCta() {
           </div>
         </Container>
       </section>
+  );
+}
+
+/**
+ * Both halves, for the three pages that want them. Kept as a named export
+ * so those call sites read as intent rather than as two adjacent imports.
+ */
+export function FaqCta() {
+  return (
+    <>
+      <Faq />
+      <CtaBlock />
     </>
   );
 }

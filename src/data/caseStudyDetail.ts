@@ -34,7 +34,7 @@ export type CaseStudyDetail = {
 export const caseStudyDetail: Record<string, CaseStudyDetail> = {
   "multi-agent-ai-platform": {
     context:
-      "An operations team was running the same multi-step process dozens of times a day across a CRM, a helpdesk and two back-office tools, with a human carrying state between them. The process was already documented, which is the signal that it can be automated. What made it a project rather than a script is that four of the steps needed judgement and the rest did not.",
+      "An operations team ran the same process dozens of times a day across a CRM, a helpdesk and two back-office tools, with a human carrying the state between them. It was already documented, which is the signal that it can be automated. What made it a project rather than a script: four of the steps needed judgement and the rest did not.",
     constraints: [
       "Several steps write to systems of record, so a retry could double-charge or double-notify. Idempotency was a requirement, not a refinement.",
       "The team needed to know afterwards why a run did what it did, at the level of individual tool calls, months later.",

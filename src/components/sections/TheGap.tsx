@@ -32,8 +32,8 @@ export function TheGap() {
       <div className="mt-9 grid gap-x-14 gap-y-5 text-md text-muted lg:grid-cols-2">
         <p>
           A model that answers well in a notebook is not a system. Production means retrieval that
-          stays fresh, agents that fail safely, traces you can read at 3am, evals that catch a
-          regression before your customer does, and a rollback path when they don&apos;t.
+          stays fresh and agents that fail safely. It means traces you can read at 3am, evals that
+          catch a regression before your customer does, and a rollback path when they do.
         </p>
         <p>
           That work is unglamorous and it is most of the job. We are not a slide-deck consultancy,

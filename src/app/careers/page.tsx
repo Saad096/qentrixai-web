@@ -2,7 +2,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Button } from "@/components/ui/Button";
-import { FaqCta } from "@/components/sections/FaqCta";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { buildMetadata } from "@/lib/seo";
 import { publicEnv } from "@/lib/env";
 
@@ -131,7 +131,7 @@ export default function CareersPage() {
         </Container>
       </section>
 
-      <FaqCta />
+      <CtaBlock />
     </>
   );
 }

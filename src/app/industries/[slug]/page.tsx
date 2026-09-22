@@ -9,7 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
-import { FaqCta } from "@/components/sections/FaqCta";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { industries } from "@/data/industries";
 import { industryDetail } from "@/data/industryDetail";
 import { caseStudies } from "@/data/caseStudies";
@@ -293,7 +293,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         </ul>
       </Section>
 
-      <FaqCta />
+      <CtaBlock />
     </>
   );
 }

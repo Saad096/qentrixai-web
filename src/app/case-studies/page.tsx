@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
-import { FaqCta } from "@/components/sections/FaqCta";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { caseStudies } from "@/data/caseStudies";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
@@ -72,7 +72,7 @@ export default function CaseStudiesPage() {
         </ul>
       </Section>
 
-      <FaqCta />
+      <CtaBlock />
     </>
   );
 }

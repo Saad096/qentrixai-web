@@ -100,8 +100,8 @@ export function ModelRadar() {
         </h2>
         <p className="mt-5 max-w-measure text-md text-muted">
           Move the weights and the shortlist rescores. Push sovereignty up and the hosted frontier
-          models leave the Adopt ring on their own — which is the whole argument for doing this
-          with numbers in front of you rather than by reputation.
+          models leave the Adopt ring on their own. That is the whole argument for doing this with
+          numbers in front of you rather than by reputation.
         </p>
 
         <div className="mt-11 grid gap-10 lg:grid-cols-12 lg:gap-12">

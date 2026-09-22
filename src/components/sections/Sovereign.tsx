@@ -52,13 +52,13 @@ export function Sovereign() {
       <div className="mt-12 max-w-measure space-y-5 text-md text-text-2">
         <p>
           Storage residency is the half that gets written into contracts. Inference residency is the
-          half that gets missed: where the tokens are actually processed, which sub-processors sit in
+          half that gets missed. Where are the tokens actually processed, which sub-processors sit in
           the path, and who could be compelled to hand any of it over.
         </p>
         <p>
           We build the whole lifecycle inside a boundary you own. Open-weight models on your own
-          hardware or in an in-country region, keys you hold, and an exit plan written before the
-          build starts rather than negotiated at the end of it.
+          hardware or in an in-country region, and keys you hold. The exit plan is written before the
+          build starts, not negotiated at the end of it.
         </p>
       </div>
 

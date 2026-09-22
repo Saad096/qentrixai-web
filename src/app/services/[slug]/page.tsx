@@ -15,7 +15,7 @@ import { Scene, SCENES, type SceneKey } from "@/components/art/scenes";
 import { caseStudies } from "@/data/caseStudies";
 import { PRIMARY_CTA } from "@/data/navigation";
 import { Card } from "@/components/ui/Card";
-import { FaqCta } from "@/components/sections/FaqCta";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { buildMetadata, serviceJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 
 type Params = { slug: string };
@@ -367,7 +367,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
         </Section>
       )}
 
-      <FaqCta />
+      <CtaBlock />
     </>
   );
 }

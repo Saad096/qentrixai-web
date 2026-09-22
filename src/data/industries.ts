@@ -125,7 +125,7 @@ export const industries: Industry[] = [
       { label: "Score", sub: "per field" },
       { label: "Act", sub: "spray plan" },
     ],
-    line: "We have not published an agritech engagement. What we would build: disease and stress detection that runs on the drone or the handset, because the field is where the connection is worst and the decision is needed fastest.",
+    line: "We have not published an agritech engagement. What we would build: disease and stress detection running on the drone or the handset. The field is where the connection is worst and the decision is needed fastest.",
     cases: [],
   },
   {
@@ -174,7 +174,7 @@ export const industries: Industry[] = [
     name: "Legal and compliance",
     image: `${DIR}/legal-tech.webp`,
     imageAlt: "A lawyer working at a laptop beside a digital scales-of-justice icon",
-    line: "Contract review, obligation extraction and clause search, where the answer has to cite the clause it came from and a reviewer stays in the loop on anything that binds the firm.",
+    line: "Contract review, obligation extraction and clause search. Every answer cites the clause it came from, and a reviewer stays in the loop on anything that binds the firm.",
     cases: ["enterprise-document-intelligence"],
     products: ["documentai"],
   },

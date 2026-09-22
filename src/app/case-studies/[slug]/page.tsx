@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { DomainFlow } from "@/components/art/DomainFlow";
-import { FaqCta } from "@/components/sections/FaqCta";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { caseStudyDetail } from "@/data/caseStudyDetail";
@@ -219,7 +219,7 @@ export default async function CaseStudyDetail({ params }: { params: Promise<Para
           ))}
         </ul>
       </Section>
-      <FaqCta />
+      <CtaBlock />
     </>
   );
 }

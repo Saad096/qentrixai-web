@@ -159,9 +159,9 @@ export default function AboutPage() {
           </p>
           <p>
             We started building our own products for the same reason. Operating {products.length} of
-            them means we live with our own architecture decisions, which is why we argue about them
-            early and why the handover at the end of a client engagement is a deliverable rather
-            than a formality.
+            them means living with our own architecture decisions, which is why we argue about them
+            early. It is also why the handover at the end of a client engagement is a deliverable
+            rather than a formality.
           </p>
         </div>
       </Section>

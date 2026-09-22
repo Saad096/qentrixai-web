@@ -34,7 +34,7 @@ export type ServiceDetail = {
 export const serviceDetail: Record<string, ServiceDetail> = {
   "generative-ai": {
     problem:
-      "A wrapper around a chat API demos beautifully and then meets real inputs. The failure is rarely the model: it is that nobody defined what a correct answer looks like, so there is no way to tell whether a prompt change made things better or worse. Six weeks later the team is tuning by vibes and nobody will sign off on a release.",
+      "A wrapper around a chat API demos beautifully and then meets real inputs. The failure is rarely the model. It is that nobody defined what a correct answer looks like, so nothing can tell you whether a prompt change helped. Six weeks later the team is tuning by vibes and nobody will sign off on a release.",
     signals: [
       "The prototype works and nobody can say by how much",
       "Prompt changes fix one case and quietly break two others",
@@ -70,7 +70,7 @@ export const serviceDetail: Record<string, ServiceDetail> = {
 
   "agentic-ai": {
     problem:
-      "An agent that can call tools can also call them wrongly, in a loop, at three in the morning. Most agent projects stall at the same point: the happy path works, and there is no answer for what happens when a step fails, when the model picks the wrong tool, or when someone needs to know afterwards what it did and why.",
+      "An agent that can call tools can also call them wrongly, in a loop, at three in the morning. Most agent projects stall at the same place. The happy path works. Then a step fails, or the model picks the wrong tool, and there is no answer for what happens next or for how anyone finds out afterwards.",
     signals: [
       "A multi-step process where each step is simple and the sequence is not",
       "Work that already has a runbook a human follows",

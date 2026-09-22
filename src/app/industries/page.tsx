@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { FaqCta } from "@/components/sections/FaqCta";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
@@ -55,9 +55,9 @@ export default function IndustriesPage() {
               </h1>
               <p className="mt-7 max-w-measure text-md text-text-2">
                 A retrieval system for a hospital and one for a sales team share a diagram and
-                almost nothing else. What differs is the constraint that comes first: where the
-                data may be processed, what a wrong answer costs, and whether the thing has to
-                keep working when the network does not.
+                almost nothing else. What differs is the constraint that comes first. Where may the
+                data be processed, what does a wrong answer cost, and does the thing have to keep
+                working when the network does not?
               </p>
               <div className="mt-9">
                 <Button href={PRIMARY_CTA.href} size="lg">
@@ -141,7 +141,7 @@ export default function IndustriesPage() {
         </p>
       </Section>
 
-      <FaqCta />
+      <CtaBlock />
     </>
   );
 }
