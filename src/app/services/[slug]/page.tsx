@@ -11,6 +11,7 @@ import { serviceDetail } from "@/data/serviceDetail";
 import { industries } from "@/data/industries";
 import { industryDetail } from "@/data/industryDetail";
 import { SERVICE_ART } from "@/data/illustrations";
+import { Scene, SCENES, type SceneKey } from "@/components/art/scenes";
 import { caseStudies } from "@/data/caseStudies";
 import { PRIMARY_CTA } from "@/data/navigation";
 import { Card } from "@/components/ui/Card";
@@ -36,6 +37,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
   if (!service) notFound();
 
   const art = SERVICE_ART[service.slug];
+  const scene = (service.slug in SCENES ? service.slug : undefined) as SceneKey | undefined;
   const detail = serviceDetail[service.slug];
 
   // Which domains name this capability. Generated, so a new industry that
@@ -127,7 +129,15 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
               </div>
             </div>
 
-            {art ? (
+            {/* A drawn scene where one exists, the old illustration set
+                where it does not yet. The scenes are being added a batch at
+                a time; this keeps every page rendering something while that
+                happens rather than gating the whole set on the last drawing. */}
+            {scene ? (
+              <div className="lg:col-span-5">
+                <Scene name={scene} />
+              </div>
+            ) : art ? (
               <div className="lg:col-span-5">
                 <Illustration
                   src={art}

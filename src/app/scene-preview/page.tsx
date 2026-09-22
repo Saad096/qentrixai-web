@@ -1,20 +1,24 @@
 import { Container } from "@/components/ui/Container";
-import { ComputerVisionScene } from "@/components/art/scenes/ComputerVisionScene";
+import { SCENES, type SceneKey } from "@/components/art/scenes";
 
-/** Throwaway preview while the scene set is being drawn. Delete before ship. */
+/** Throwaway contact sheet while the scene set is drawn. Delete before ship. */
 export default function ScenePreview() {
+  const keys = Object.keys(SCENES) as SceneKey[];
   return (
     <section className="py-16">
       <Container>
-        <h1 className="text-3xl font-bold text-text">Scene preview</h1>
-        <div className="mt-10 grid gap-8 lg:grid-cols-2">
-          <ComputerVisionScene />
-          <div className="rounded-lg bg-surface p-7 shadow-1">
-            <p className="text-md text-text-2">
-              Same drawing, on a card, to check it holds up against a different ground.
-            </p>
-          </div>
-        </div>
+        <h1 className="text-3xl font-bold text-text">Scenes ({keys.length})</h1>
+        <ul className="mt-10 grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+          {keys.map((k) => {
+            const S = SCENES[k];
+            return (
+              <li key={k}>
+                <S />
+                <p className="mt-3 font-mono text-xs text-muted">{k}</p>
+              </li>
+            );
+          })}
+        </ul>
       </Container>
     </section>
   );
