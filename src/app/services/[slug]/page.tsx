@@ -119,7 +119,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
                 ]}
               />
               <h1 className="mt-4 max-w-[18ch] text-3xl font-bold text-text">{service.title}</h1>
-              <p className="mt-6 max-w-measure text-md text-muted">{service.description}</p>
+              <p className="mt-6 max-w-measure text-md text-text-2">{service.description}</p>
               <div className="mt-9">
                 <Button href={PRIMARY_CTA.href} size="lg">
                   {PRIMARY_CTA.label}
@@ -188,7 +188,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="text-lg font-semibold text-text">{st.title}</h3>
-                  <p className="text-base text-muted">{st.body}</p>
+                  <p className="text-base text-text-2">{st.body}</p>
                 </div>
               </Card>
             ))}
@@ -254,7 +254,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
                   className="flex h-full flex-col gap-3 p-7"
                 >
                   <h3 className="text-lg font-semibold text-text">{d.name}</h3>
-                  <p className="text-base text-muted">{d.line}</p>
+                  <p className="text-base text-text-2">{d.line}</p>
                 </Link>
               </Card>
             ))}
@@ -268,7 +268,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
             <div className="lg:col-span-5" data-reveal>
               <p className="mb-4 font-mono text-xs text-muted">Before the call</p>
               <h2 className="text-3xl font-bold text-text">Two questions that always come up.</h2>
-              <p className="mt-5 text-md text-muted">
+              <p className="mt-5 text-md text-text-2">
                 The general ones -- ownership, lock-in, run cost, residency -- are answered at the
                 bottom of this page. These two are specific to this capability.
               </p>
@@ -311,7 +311,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
                   className="flex h-full flex-col gap-3 p-7"
                 >
                   <h3 className="text-lg font-semibold text-text">{sib.title}</h3>
-                  <p className="text-base text-muted">{sib.short}</p>
+                  <p className="text-base text-text-2">{sib.short}</p>
                 </Link>
               </Card>
             ))}

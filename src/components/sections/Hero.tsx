@@ -59,8 +59,8 @@ export function Hero() {
             </h1>
 
             <p className="hero-in hero-in-1 mt-7 max-w-[52ch] text-md text-muted">
-              We design, build and run agentic systems, retrieval pipelines and voice AI — and we
-              operate {products.length} of our own products on the same discipline we sell.
+              We design, build and run agentic systems, retrieval pipelines and voice AI. We also
+              operate {products.length} products of our own, on the same discipline we sell you.
             </p>
           </div>
 

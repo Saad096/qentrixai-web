@@ -39,7 +39,7 @@ const FOCUS = [
   {
     slug: "sovereign-ai",
     title: "Sovereign and private deployment",
-    line: "The whole lifecycle inside a boundary you own, inference included — not just storage residency.",
+    line: "The whole lifecycle inside a boundary you own, inference included, not just storage residency.",
   },
   {
     slug: "inference-engineering",
@@ -92,7 +92,7 @@ export default function AboutPage() {
               <h1 className="mt-4 max-w-[20ch] text-hero font-bold text-text">
                 We build AI products <span className="text-link">and then run them</span>
               </h1>
-              <p className="mt-7 max-w-measure text-md text-muted">{company.mission}</p>
+              <p className="mt-7 max-w-measure text-md text-text-2">{company.mission}</p>
 
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Button href="/book" size="lg">
@@ -155,7 +155,7 @@ export default function AboutPage() {
           <p>
             QentrixAI began as a small senior team doing the part of AI work that nobody demos: the
             evaluation harness, the tracing, the rollback path. The engagements that followed were
-            mostly rescues — systems that answered well in a notebook and fell over under real load.
+            mostly rescues: systems that answered well in a notebook and fell over under real load.
           </p>
           <p>
             We started building our own products for the same reason. Operating {products.length} of
@@ -237,7 +237,7 @@ export default function AboutPage() {
                   <p className="font-mono text-xs text-muted">{inGroup.length} capabilities</p>
                   <ul className="mt-2 space-y-1">
                     {inGroup.slice(0, 4).map((s) => (
-                      <li key={s.slug} className="text-base text-muted">
+                      <li key={s.slug} className="text-base text-text-2">
                         {s.title}
                       </li>
                     ))}
@@ -274,7 +274,7 @@ export default function AboutPage() {
                 className="flex h-full flex-col gap-3 p-7"
               >
                 <h3 className="text-lg font-semibold text-text">{f.title}</h3>
-                <p className="text-base text-muted">{f.line}</p>
+                <p className="text-base text-text-2">{f.line}</p>
               </Link>
             </Card>
           ))}

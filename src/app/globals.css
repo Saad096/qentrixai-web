@@ -90,6 +90,11 @@
   --art-ground: 30 30 26;        /* #1E1E1A deepest, the stage art sits on */
   --color-text: 240 238 230;     /* #F0EEE6 chalk, 13.08:1 on the base */
   --color-muted: 176 173 160;    /* #B0ADA0 6.75:1 base, 5.98:1 card, 5.10:1 band */
+  /* A third tier, added after a review found body copy and captions sharing
+     one colour. `text-2` carries card and section body; `muted` drops back
+     to captions, sources and metadata only. Nothing on the site is lighter
+     than muted. */
+  --color-text-2: 207 204 193;   /* #CFCCC1 9.45:1 base, 8.37:1 card, 7.13:1 band */
 
   /* The reference blue #1F5FD1 works as a FILL here -- white on it clears
      5.81:1 -- but measures only 2.51:1 as text on the navy, so text gets a
@@ -110,7 +115,7 @@
   --color-danger: 239 111 92;    /* #EF6F5C 5.14:1 */
   --color-info: 47 192 165;      /* #2FC0A5 6.66:1 */
 
-  --color-border: rgb(240 238 230 / 0.13);
+  --color-border: rgb(240 238 230 / 0.16);
 
   /* Elevation. The old single inset hairline is why cards read as outlines:
      there was no depth to read, only an edge. */
@@ -170,9 +175,9 @@
   --text-3xl: clamp(31px, 4.2vw, 44px);
   --text-hero: clamp(38px, 5.2vw, 68px);
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
   /* Motion, slowed and given one easing curve (2026-09-21).
 
      Everything used to run at 140-260ms on an ease that snaps hard at the
@@ -203,6 +208,7 @@
   --art-ground: 237 236 228;     /* #EDECE4 */
   --color-text: 35 35 31;        /* #23231F 12.04:1 on the base */
   --color-muted: 85 85 77;       /* #55554D 5.74:1 base, 6.64:1 card, 5.01:1 band */
+  --color-text-2: 53 53 47;      /* #35352F 9.42:1 base, 10.90:1 card, 8.22:1 band */
 
   /* Same split as dark, and for the same reason: the fill matches the slab
      in the mock, and #0B6B5C as text on a band is 4.27:1 -- under the floor.
@@ -217,17 +223,20 @@
   --color-danger: 163 58 41;     /* #A33A29 5.02:1 */
   --color-info: 10 97 82;        /* #0A6152 5.63:1 */
 
-  --color-border: rgb(35 35 31 / 0.16);
+  --color-border: rgb(35 35 31 / 0.20);
 
   --shadow-1:
-    0 0 0 1px rgb(0 0 0 / 0.09),
-    0 1px 2px rgb(0 0 0 / 0.04);
+    0 0 0 1px var(--color-border),
+    0 1px 2px 0 rgb(20 30 25 / 0.06),
+    0 6px 16px -10px rgb(20 30 25 / 0.14);
   --shadow-2:
-    0 0 0 1px rgb(0 0 0 / 0.10),
-    0 12px 32px -18px rgb(19 38 58 / 0.16);
+    0 0 0 1px var(--color-border),
+    0 2px 4px 0 rgb(20 30 25 / 0.07),
+    0 18px 40px -22px rgb(20 30 25 / 0.26);
   --shadow-3:
-    0 0 0 1px rgb(var(--color-brand) / 0.34),
-    0 18px 44px -20px rgb(31 95 209 / 0.24);
+    0 0 0 1px rgb(var(--color-brand) / 0.45),
+    0 2px 4px 0 rgb(20 30 25 / 0.08),
+    0 24px 60px -26px rgb(20 30 25 / 0.32);
   --shadow-card: var(--shadow-1);
 
   --orb-1: 180 206 196;  /* pale verdigris wash on stone */
@@ -237,6 +246,19 @@
   --orb-blur: 90px;
   --wash-alpha: 0.16;
   --band-glow: 0.14;
+}
+
+/* Kills the one-word last line: "Here are / three.", "Sovereign by default,
+   not by / exception." Supported everywhere we care about, and where it is
+   not the heading simply wraps as before. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 html,
@@ -747,6 +769,7 @@ body > footer {
   --color-text: 240 238 230;     /* 14.39:1 on #1E1E1A */
   --color-muted: 176 173 160;    /* #B0ADA0 7.43:1 */
   --color-link: 47 192 165;      /* #2FC0A5 7.33:1 */
+  --color-text-2: 207 204 193;
   --color-border: rgb(240 238 230 / 0.15);
 
   background-color: rgb(var(--color-bg));
@@ -932,15 +955,17 @@ body > footer {
   isolation: isolate;
 }
 
+/* `wash` is now the same ground as `band`. The two offset radials it used
+   to draw were the blurred smudges a review called accidental, and it was
+   right: they sat at different positions and intensities from section to
+   section with nothing deciding where. The only glow left on the site is
+   inside the hero, behind the video, where it has a job. */
 .ground-wash::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 70% at 12% 0%, rgb(var(--color-brand) / var(--wash-alpha)), transparent 62%),
-    radial-gradient(52% 64% at 92% 28%, rgb(var(--color-accent) / var(--wash-alpha)), transparent 66%);
+  content: none;
+}
+
+.ground-wash {
+  background-color: rgb(var(--band-a));
 }
 
 /* The flat #191D2A fill read as a washed-out blue-grey slab. The band is a
@@ -951,7 +976,6 @@ body > footer {
 .ground-band {
   background-color: rgb(var(--band-a));
   background-image:
-    radial-gradient(46% 62% at 88% 0%, rgb(var(--color-brand) / var(--band-glow)), transparent 70%),
     linear-gradient(
       168deg,
       rgb(var(--band-a)) 0%,

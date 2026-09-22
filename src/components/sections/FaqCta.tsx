@@ -4,7 +4,6 @@
  */
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
-import { OrbField } from "@/components/ui/OrbField";
 import { Button } from "@/components/ui/Button";
 import { faqs } from "@/data/faqs";
 import { PRIMARY_CTA } from "@/data/navigation";
@@ -22,12 +21,12 @@ export function FaqCta() {
           <div className="lg:col-span-5" data-reveal>
             <p className="mb-4 font-mono text-xs text-muted">Before the call</p>
             <h2 className="text-3xl font-bold text-text">Questions buyers actually ask.</h2>
-            <p className="mt-5 text-md text-muted">
+            <p className="mt-5 text-md text-text-2">
               If yours is not here, ask it on the call. We answer scoping and architecture
               questions before there is a contract.
             </p>
             <div className="mt-8 rounded-md bg-surface p-7 shadow-1">
-              <p className="text-base text-muted">
+              <p className="text-base text-text-2">
                 Thirty minutes, no pitch deck. If we are not the right fit, we will say so.
               </p>
               <Button href={PRIMARY_CTA.href} size="lg" className="mt-5 w-full sm:w-auto">
@@ -37,9 +36,10 @@ export function FaqCta() {
           </div>
 
           <ul className="lg:col-span-7">
-          {faqs.map((faq) => (
+          {faqs.map((faq, i) => (
             <li key={faq.question} className="border-t border-[color:var(--color-border)]">
-              <details className="group">
+              {/* First one open, so the pattern is visible without a click. */}
+              <details className="group" open={i === 0}>
                 <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-6 py-4 text-md font-semibold text-text marker:content-none">
                   {faq.question}
                   <span
@@ -64,7 +64,6 @@ export function FaqCta() {
       </Section>
 
       <section className="relative isolate overflow-hidden py-12 md:py-16">
-        <OrbField />
         <Container className="above-orbs">
           {/* Reported as "not centred and very big", and measurement showed it
               was already centred to the pixel -- 126px of gutter on each side

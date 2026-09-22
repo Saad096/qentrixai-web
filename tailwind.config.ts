@@ -20,6 +20,7 @@ const config: Config = {
         },
         text: "rgb(var(--color-text) / <alpha-value>)",
         muted: "rgb(var(--color-muted) / <alpha-value>)",
+        "text-2": "rgb(var(--color-text-2) / <alpha-value>)",
         brand: "rgb(var(--color-brand) / <alpha-value>)",
         link: "rgb(var(--color-link) / <alpha-value>)",
         accent: "rgb(var(--color-accent) / <alpha-value>)",
@@ -49,8 +50,8 @@ const config: Config = {
         DEFAULT: "var(--color-border)",
       },
       fontFamily: {
-        sans: ["var(--font-schibsted)", "system-ui", "sans-serif"],
-        display: ["var(--font-schibsted)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-dm-mono)", "ui-monospace", "monospace"],
       },
       fontSize: {

@@ -75,7 +75,7 @@ export function CapabilityCards() {
                 </span>
 
                 <h3 className="text-lg font-semibold text-text">{service.title}</h3>
-                <p className="text-base text-muted">{service.description.split(". ")[0]}.</p>
+                <p className="text-base text-text-2">{service.description.split(". ")[0]}.</p>
 
                 <p className="mt-auto border-t border-[color:var(--color-border)] pt-4 text-base text-muted">
                   <span className="font-semibold text-text">Example: </span>

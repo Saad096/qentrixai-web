@@ -60,17 +60,16 @@ export function SelectedWork() {
                 <div className="flex flex-1 flex-col gap-4 p-7">
                 <span className="font-mono text-xs text-link">{study.category}</span>
                 <h3 className="text-lg font-semibold text-text">{study.title}</h3>
-                <p className="text-base text-muted">{study.problem}</p>
-                {study.metric ? (
-                  <p className="mt-auto pt-5">
-                    <span className="block text-3xl font-bold text-text">{study.metric.value}</span>
-                    <span className="mt-1 block font-mono text-xs text-muted">
-                      {study.metric.label}
-                    </span>
-                  </p>
-                ) : (
-                  <p className="mt-auto pt-5 text-base text-muted">{study.outcome}</p>
-                )}
+                <p className="text-base text-text-2">{study.problem}</p>
+                {/* No metric slot here. One of the three has a published
+                    figure and two do not, so the row rendered at three
+                    different heights and the two without read as the weak
+                    ones. Inventing the other two is out, so none of them
+                    leads with a number on this row -- the outcome line does
+                    the work and the figure still leads its own page. */}
+                <p className="mt-auto border-t border-[color:var(--color-border)] pt-5 text-base text-text-2">
+                  {study.outcome}
+                </p>
                 </div>
               </Link>
             </div>

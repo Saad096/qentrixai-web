@@ -60,7 +60,7 @@ export default async function CaseStudyDetail({ params }: { params: Promise<Para
           </Link>
           <h1 className="mt-3 max-w-[20ch] text-3xl font-bold text-text">{study.title}</h1>
           <p className="mt-5 font-mono text-xs text-muted">
-            {study.category} — {study.client}
+            {study.category} · {study.client}
           </p>
 
           {/* These engagements are under NDA, so there is no screenshot to

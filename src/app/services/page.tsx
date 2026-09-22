@@ -30,7 +30,7 @@ export default function ServicesPage() {
       <section className="py-16 md:py-24">
         <Container>
           <h1 className="max-w-[16ch] text-hero font-bold text-text">What we build</h1>
-          <p className="mt-7 max-w-measure text-md text-muted">
+          <p className="mt-7 max-w-measure text-md text-text-2">
             {services.length} capabilities. Each one ships with the same production discipline: evals,
             tracing, and a handover.
           </p>

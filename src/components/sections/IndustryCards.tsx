@@ -41,9 +41,14 @@ export function IndustryCards() {
       lede="If the problem involves documents, calls, images or a knowledge base someone cannot search, we have built something close to it."
       ground="band"
     >
-      <ul className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <ul className="mt-12 grid gap-5 sm:grid-cols-2">
         {rows.map(({ ind, chips }, i) => (
-          <Card as="li" key={ind.slug}>
+          <Card
+            as="li"
+            key={ind.slug}
+            /* An odd count would leave the last card alone on its row. */
+            className={i === rows.length - 1 && rows.length % 2 === 1 ? "sm:col-span-2" : undefined}
+          >
             <div data-reveal data-reveal-delay={i * 40} className="flex h-full flex-col gap-3 p-7">
               <h3 className="text-lg font-semibold text-text">
                 <Link
@@ -53,7 +58,7 @@ export function IndustryCards() {
                   {ind.name}
                 </Link>
               </h3>
-              <p className="text-base text-muted">{ind.line}</p>
+              <p className="text-base text-text-2">{ind.line}</p>
 
               {chips.length > 0 ? (
                 <ul className="mt-auto flex flex-wrap gap-2 pt-4">

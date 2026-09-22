@@ -124,7 +124,7 @@ export function BookingCalendar() {
       }
       setState({
         status: "success",
-        message: json?.message || "Thanks — we'll confirm your slot by email within one business day.",
+        message: json?.message || "Thanks. We will confirm your slot by email within one business day.",
       });
       form.reset();
       setSelectedDate(null);
@@ -203,7 +203,7 @@ export function BookingCalendar() {
         {selectedDate && (
           <div className="mt-6">
             <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.08em] text-muted">
-              <Clock className="size-3.5" /> Pick a time — {formatDateLabel(selectedDate)}
+              <Clock className="size-3.5" /> Pick a time on {formatDateLabel(selectedDate)}
             </p>
             <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
               {TIME_SLOTS.map((t) => {

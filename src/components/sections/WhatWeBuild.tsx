@@ -43,7 +43,6 @@ export function WhatWeBuild() {
       heading={`${cards.length} things we are asked for most.`}
       lede={`${services.length} capabilities in total. These are the ones that start most engagements.`}
       ground="base"
-      headerClassName="mx-auto text-center"
     >
       <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map(({ service, Art }, i) => (

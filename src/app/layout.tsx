@@ -13,13 +13,12 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { OrbField } from "@/components/ui/OrbField";
 import { buildMetadata, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { publicEnv } from "@/lib/env";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-schibsted",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -92,7 +91,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
 
-        <OrbField className="orb-field--page" />
         <Header />
         <main id="main">{children}</main>
         <Footer />

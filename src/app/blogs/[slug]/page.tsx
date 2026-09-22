@@ -79,7 +79,7 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
           </Link>
           <h1 className="mt-3 max-w-[22ch] text-3xl font-bold text-text">{blog.title}</h1>
           <p className="mt-5 font-mono text-xs text-muted">
-            {formatDate(blog.date)} — {blog.readingTime} — {blog.author}
+            {formatDate(blog.date)} · {blog.readingTime} · {blog.author}
           </p>
 
           {/* A banner between the masthead and the body. The article opened

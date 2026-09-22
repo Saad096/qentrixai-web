@@ -73,9 +73,13 @@ export function HowWeWork() {
                   Weight carries the difference instead. */}
               <p className="text-base font-medium text-text">{p.body}</p>
               <p className="text-base text-text">{p.detail}</p>
-              <p className="mt-auto border-t border-[color:var(--color-border)] pt-4 text-base text-text">
-                <span className="font-mono text-xs text-muted">You own </span>
-                {p.artifact}
+              {/* The most valuable sentence on the card, so it stops looking
+                  like a footnote. */}
+              <p className="mt-auto border-t border-[color:var(--color-border)] pt-4">
+                <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-muted">
+                  You own
+                </span>
+                <span className="mt-1.5 block text-base font-semibold text-link">{p.artifact}</span>
               </p>
             </div>
           </Card>

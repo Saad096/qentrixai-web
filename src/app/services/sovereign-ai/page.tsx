@@ -268,10 +268,10 @@ export default function SovereignAiPage() {
                 Sovereign AI: <span className="text-link">private models</span> on infrastructure
                 you own
               </h1>
-              <p className="mt-7 max-w-measure text-md text-muted">
+              <p className="mt-7 max-w-measure text-md text-text-2">
                 When the data cannot go to a public API, the model has to come to the data. We
                 build open-weight systems and deploy them air-gapped, inside your VPC or in an
-                in-country region — and the inference runs there too, not just the storage.
+                in-country region. The inference runs there too, not just the storage.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -308,12 +308,12 @@ export default function SovereignAiPage() {
             <h2 className="text-3xl font-bold text-text">
               Some data cannot be sent to a public API.
             </h2>
-            <p className="mt-6 text-md text-muted">
+            <p className="mt-6 text-md text-text-2">
               Patient records, unreleased research, contracts and engineering drawings arrive with
               legal or competitive limits on where they can be processed. A hosted chatbot is the
               wrong tool for that data, and no amount of configuration makes it the right one.
             </p>
-            <p className="mt-5 text-md text-muted">
+            <p className="mt-5 text-md text-text-2">
               Storage residency is the half that makes it into contracts. Inference residency is
               the half that gets missed: where the tokens are actually processed, and who could be
               compelled to produce them.
@@ -331,7 +331,7 @@ export default function SovereignAiPage() {
                     <Icon className="size-[18px]" />
                   </span>
                   <h3 className="mt-1 text-lg font-semibold text-text">{title}</h3>
-                  <p className="text-base text-muted">{body}</p>
+                  <p className="text-base text-text-2">{body}</p>
                 </div>
               </Card>
             ))}
@@ -418,7 +418,7 @@ export default function SovereignAiPage() {
               <h2 className="text-3xl font-bold text-text">
                 Six stages, all of them inside your estate.
               </h2>
-              <p className="mt-6 text-md text-muted">
+              <p className="mt-6 text-md text-text-2">
                 Most sovereign projects are retrieval systems: an open model that reads your
                 documents at question time and cites where each answer came from. Every stage below
                 runs on hardware you control.
@@ -442,7 +442,7 @@ export default function SovereignAiPage() {
                     {`Stage ${String(i + 1).padStart(2, "0")}`}
                   </span>
                   <h3 className="text-lg font-semibold text-text">{s.title}</h3>
-                  <p className="text-base text-muted">{s.body}</p>
+                  <p className="text-base text-text-2">{s.body}</p>
                   <ul className="mt-2 flex flex-wrap gap-2">
                     {s.chips.map((c) => (
                       <li
@@ -477,7 +477,7 @@ export default function SovereignAiPage() {
                   <Icon className="size-[18px]" />
                 </span>
                 <h3 className="mt-1 text-lg font-semibold text-text">{title}</h3>
-                <p className="text-base text-muted">{body}</p>
+                <p className="text-base text-text-2">{body}</p>
                 <p className="mt-auto border-t border-[color:var(--color-border)] pt-4 text-base text-text">
                   <span className="font-mono text-xs text-muted">Good fit </span>
                   {fit}
@@ -506,7 +506,7 @@ export default function SovereignAiPage() {
             <Card as="li" key={k.title}>
               <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
                 <h3 className="text-lg font-semibold text-text">{k.title}</h3>
-                <p className="text-base text-muted">{k.body}</p>
+                <p className="text-base text-text-2">{k.body}</p>
               </div>
             </Card>
           ))}
@@ -580,7 +580,7 @@ export default function SovereignAiPage() {
             <h2 className="text-3xl font-bold text-text">
               Answered before there is a contract.
             </h2>
-            <p className="mt-5 text-md text-muted">
+            <p className="mt-5 text-md text-text-2">
               If a reviewer needs something that is not here, ask on the call. We answer
               architecture and data-handling questions before anyone signs anything.
             </p>
@@ -621,7 +621,7 @@ export default function SovereignAiPage() {
                 >
                   <span className="font-mono text-xs text-link">{s.group}</span>
                   <h3 className="text-lg font-semibold text-text">{s.title}</h3>
-                  <p className="text-base text-muted">{s.short}</p>
+                  <p className="text-base text-text-2">{s.short}</p>
                 </Link>
               </Card>
             ))}

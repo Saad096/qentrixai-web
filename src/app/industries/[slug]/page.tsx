@@ -86,7 +86,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 ]}
               />
               <h1 className="mt-4 max-w-[18ch] text-3xl font-bold text-text">{ind.name}</h1>
-              <p className="mt-6 max-w-measure text-md text-muted">{detail.intro}</p>
+              <p className="mt-6 max-w-measure text-md text-text-2">{detail.intro}</p>
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Button href={PRIMARY_CTA.href} size="lg">
                   {PRIMARY_CTA.label}
@@ -129,7 +129,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h2 className="text-lg font-semibold text-text">{p.title}</h2>
-                <p className="text-base text-muted">{p.body}</p>
+                <p className="text-base text-text-2">{p.body}</p>
               </div>
             </Card>
           ))}
@@ -142,7 +142,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             <Card as="li" key={b.title}>
               <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
                 <h2 className="text-lg font-semibold text-text">{b.title}</h2>
-                <p className="text-base text-muted">{b.body}</p>
+                <p className="text-base text-text-2">{b.body}</p>
               </div>
             </Card>
           ))}
@@ -171,7 +171,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                   >
                     <span className="font-mono text-xs text-link">{c.category}</span>
                     <h3 className="text-md font-semibold text-text">{c.title}</h3>
-                    <p className="text-base text-muted">{c.problem}</p>
+                    <p className="text-base text-text-2">{c.problem}</p>
                     {c.metric && (
                       <p className="mt-auto pt-4">
                         <span className="block text-2xl font-bold text-text">{c.metric.value}</span>
@@ -215,7 +215,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                         <h3 className="mt-5 text-lg font-semibold text-text group-hover:text-link">
                           {p.name}
                         </h3>
-                        <p className="mt-2 text-base text-muted">{p.tagline}</p>
+                        <p className="mt-2 text-base text-text-2">{p.tagline}</p>
                       </Link>
                     </li>
                   );
@@ -255,7 +255,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               >
                 <span className="font-mono text-xs text-link">{s.group}</span>
                 <h2 className="text-lg font-semibold text-text">{s.title}</h2>
-                <p className="text-base text-muted">{s.short}</p>
+                <p className="text-base text-text-2">{s.short}</p>
               </Link>
             </Card>
           ))}

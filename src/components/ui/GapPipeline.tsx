@@ -47,8 +47,8 @@ export function GapPipeline() {
               aria-hidden="true"
               className="block size-[27px] rounded-full border-[7px] border-brand bg-bg"
             />
-            <p className="mt-5 font-mono text-xs text-link">{stage.name}</p>
-            <p className="mt-2 text-base text-muted">{stage.note}</p>
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.08em] text-text">{stage.name}</p>
+            <p className="mt-2 text-base text-text-2">{stage.note}</p>
           </li>
         ))}
       </ol>

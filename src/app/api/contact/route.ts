@@ -46,7 +46,7 @@ export async function POST(req: Request) {
 
   if (honeypot.length > 0) {
     // Silently accept spam
-    return NextResponse.json({ ok: true, message: "Thanks — we'll be in touch." }, { headers: corsHeaders() });
+    return NextResponse.json({ ok: true, message: "Thanks. We will be in touch." }, { headers: corsHeaders() });
   }
 
   if (!name || !email || !message) {
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRe.test(email)) {
     return NextResponse.json(
-      { ok: false, message: "That email address looks off — please double-check." },
+      { ok: false, message: "That email address looks off. Please double-check it." },
       { status: 400, headers: corsHeaders() }
     );
   }
@@ -88,7 +88,7 @@ export async function POST(req: Request) {
   }
 
   return NextResponse.json(
-    { ok: true, message: "Thanks — we received your message and will reply within one business day." },
+    { ok: true, message: "Thanks. We received your message and will reply within one business day." },
     { headers: corsHeaders() }
   );
 }

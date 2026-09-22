@@ -46,7 +46,12 @@ export type Phase = {
 };
 
 /**
- * Rewritten 2026-09-21. The previous four bodies were noun lists --
+ * Rewritten 2026-09-21, cut again 2026-09-22 after a review called them
+ * walls of eighty words that nobody reads. Two sentences each now; the
+ * artifact line underneath is the most valuable sentence on the card and it
+ * is styled to say so.
+ *
+ * The previous four bodies were noun lists --
  * "System architecture, model and retrieval strategy, integration plan,
  * security and compliance posture" -- four fragments with no verb and no
  * reader in them. They scanned as a checklist someone pasted from a
@@ -63,7 +68,7 @@ export const phases: Phase[] = [
     title: "Frame",
     body: "We agree what better looks like, in a number, before anyone picks a model.",
     detail:
-      "Two weeks of interviews with the people who will actually use the thing, and an audit of the data you have rather than the data the plan assumed. Most projects that fail were never given a target they could miss. This phase ends when we can write down the metric, its current value and what it has to reach.",
+      "We interview the people who will use it and audit the data you actually have, not the data the plan assumed. Most failed projects were never given a target they could miss.",
     artifact: "a written problem framing with the success metric, and the number it starts at.",
   },
   {
@@ -71,7 +76,7 @@ export const phases: Phase[] = [
     title: "Design",
     body: "The architecture, and a written record of what we turned down.",
     detail:
-      "Retrieval strategy, model selection, integration surface, and where the data is allowed to be processed. Security posture is decided here rather than added later, because it constrains the architecture and not the other way round. The options we rejected are written down with the reason, so in six months nobody re-litigates a decision from memory.",
+      "Retrieval, model choice, integration surface, and where the data may be processed. Security is decided here, not bolted on, because it constrains the architecture rather than the reverse.",
     artifact: "an architecture decision record, including the options we rejected and why.",
   },
   {
@@ -79,7 +84,7 @@ export const phases: Phase[] = [
     title: "Build",
     body: "Weekly demos against the metric, on your data, in your repo.",
     detail:
-      "Typed code, small reviewable pull requests, and an evaluation harness for prompts and agents from the first week rather than the last. A change that drops a metric fails the build instead of reaching a user. You see working software every week, which is also how scope gets cut while cutting it is still cheap.",
+      "Typed code, small pull requests, and an eval harness from week one. A change that drops a metric fails the build instead of reaching a user.",
     artifact: "the repo, and a regression suite running in your CI.",
   },
   {
@@ -87,7 +92,7 @@ export const phases: Phase[] = [
     title: "Run",
     body: "Deployed to your cloud, instrumented, then handed over on purpose.",
     detail:
-      "Dockerised rollout into your account or VPC, tracing on every call, alerting with thresholds that mean something, and a rollback that has been tested rather than assumed. Then a supervised handover: your team runs a deploy and a rollback with us watching. If knowledge transfer did not happen, the engagement failed regardless of what shipped.",
+      "Dockerised rollout into your account, tracing on every call, and a rollback we have tested rather than assumed. Then your team runs a deploy and a rollback while we watch.",
     artifact: "a runbook, dashboards, and a rollback path your team has used once.",
   },
 ];

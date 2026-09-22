@@ -42,7 +42,6 @@ export function Industries() {
       eyebrow="Where this lands"
       heading="Domain shapes the system, not just the wording."
       ground="wash"
-      headerClassName="mx-auto text-center"
     >
       <div className="mt-11">
         <TabRail {...tabs.tablistProps("Industries")}>

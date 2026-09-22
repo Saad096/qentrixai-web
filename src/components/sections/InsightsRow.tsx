@@ -96,7 +96,7 @@ export function InsightsRow() {
                     {formatDate(post.date)} · {post.readingTime}
                   </span>
                   <h3 className="text-lg font-semibold text-text">{post.title}</h3>
-                  <p className="text-base text-muted">{post.excerpt}</p>
+                  <p className="text-base text-text-2">{post.excerpt}</p>
                 </div>
               </Link>
             </div>

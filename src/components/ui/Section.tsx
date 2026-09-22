@@ -47,7 +47,16 @@ export function Section({
       <Container>
         {(eyebrow || heading || lede) && (
           <header data-reveal className={cn("max-w-measure", headerClassName)}>
-            {eyebrow && <p className="mb-4 font-mono text-xs text-muted">{eyebrow}</p>}
+            {/* Not mono. A section label was 13px, monospaced and muted --
+                three legibility penalties on the same four words, and mono
+                is meant to be reserved for figures, identifiers and machine
+                strings. Uppercase sans with tracking reads as a label
+                without any of that. */}
+            {eyebrow && (
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.1em] text-text-2">
+                {eyebrow}
+              </p>
+            )}
             {heading && (
               <Heading className="text-3xl font-bold text-text">{heading}</Heading>
             )}

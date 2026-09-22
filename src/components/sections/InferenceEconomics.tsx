@@ -128,7 +128,6 @@ export function InferenceEconomics() {
       heading="Inference cost is engineering, not a pricing tier."
       lede="Past a certain volume the API bill overtakes the cost of running it yourself. This is the work that makes the crossover pay."
       ground="base"
-      headerClassName="mx-auto text-center"
     >
       <div ref={rootRef} className="mt-12 grid items-center gap-12 lg:grid-cols-12">
         <div className="lg:col-span-5">
@@ -151,7 +150,7 @@ export function InferenceEconomics() {
               </span>
             </div>
           </div>
-          <p className="mt-6 text-center font-mono text-xs text-muted">
+          <p className="mt-6 font-mono text-xs text-muted">
             Illustrative. Indexed to a baseline of 100, not a measured client result.
           </p>
         </div>

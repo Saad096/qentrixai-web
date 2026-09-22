@@ -36,7 +36,6 @@ export function Sovereign() {
       heading="Sovereign by default, not by exception."
       lede="Cloud-first became sovereign-first. The part most vendors still get wrong is that residency has to cover inference, not just storage."
       ground="band"
-      headerClassName="mx-auto text-center"
     >
       <ul className="mt-12 grid gap-5 md:grid-cols-3">
         {EVIDENCE.map((e, i) => (
@@ -50,19 +49,20 @@ export function Sovereign() {
         ))}
       </ul>
 
-      <div className="mx-auto mt-12 max-w-measure space-y-5 text-center text-md text-muted">
+      <div className="mt-12 max-w-measure space-y-5 text-md text-text-2">
         <p>
           Storage residency is the half that gets written into contracts. Inference residency is the
           half that gets missed: where the tokens are actually processed, which sub-processors sit in
           the path, and who could be compelled to hand any of it over.
         </p>
         <p>
-          We build the whole lifecycle inside a boundary you own — open-weight models on your
-          hardware or in-country region, keys you hold, an exit plan written before the build starts.
+          We build the whole lifecycle inside a boundary you own. Open-weight models on your own
+          hardware or in an in-country region, keys you hold, and an exit plan written before the
+          build starts rather than negotiated at the end of it.
         </p>
       </div>
 
-      <p className="mt-9 text-center">
+      <p className="mt-9">
         <Link
           href="/services/sovereign-ai"
           className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"

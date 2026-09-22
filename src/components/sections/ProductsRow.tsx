@@ -40,7 +40,7 @@ export function ProductsRow() {
                   <h3 className="mt-5 text-lg font-semibold text-text group-hover:text-link">
                     {p.name}
                   </h3>
-                  <p className="mt-2 text-base text-muted">{p.tagline}</p>
+                  <p className="mt-2 text-base text-text-2">{p.tagline}</p>
                 </Link>
               </div>
             </li>

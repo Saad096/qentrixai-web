@@ -70,7 +70,7 @@ export default async function ProductDetail({ params }: { params: Promise<Params
           <h1 className="mt-3 text-3xl font-bold text-text">{product.name}</h1>
           <p className="mt-4 max-w-measure text-md text-muted">{product.tagline}</p>
           <p className="mt-5 font-mono text-xs text-muted">
-            {product.category} — {product.status}
+            {product.category} · {product.status}
           </p>
 
           {shots[0] ? (

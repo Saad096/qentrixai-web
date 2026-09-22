@@ -35,7 +35,6 @@ export function WhyUs() {
       heading="Six reasons, and the receipts for each."
       lede="Every one of these points at something on this site you can check, not an adjective."
       ground="band"
-      headerClassName="mx-auto text-center"
     >
       {/* The rules are drawn per cell rather than by a `gap-px` grid over a
           background, so they stop at the grid edge instead of bleeding past
@@ -77,7 +76,7 @@ export function WhyUs() {
 
           return (
             <li key={r.title} className={`border-[color:var(--color-border)] ${edges}`}>
-              <div data-reveal data-reveal-delay={i * 60} className="h-full px-7 py-10 text-center">
+              <div data-reveal data-reveal-delay={i * 60} className="h-full px-7 py-10">
                 {r.href ? (
                   <Link
                     href={r.href}

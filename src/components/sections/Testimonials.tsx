@@ -8,15 +8,21 @@ import { testimonials } from "@/data/testimonials";
  * said them -- which is exactly what happened here before.
  */
 export function Testimonials() {
+  // Nothing renders until at least one quote is real. The flagged chip was
+  // honest but it put "Placeholder" and "Sample attribution" in front of a
+  // buyer, which reads as an unfinished site rather than as candour. The
+  // section reappears by itself the moment a `placeholder` flag comes off.
+  const real = testimonials.filter((t) => !t.placeholder);
+  if (real.length === 0) return null;
+
   return (
     <Section
       eyebrow="What clients say"
       heading="In their words."
       ground="base"
-      headerClassName="mx-auto text-center"
     >
       <ul className="mt-12 grid gap-5 md:grid-cols-3">
-        {testimonials.map((t, i) => (
+        {real.map((t, i) => (
           <Card as="li" key={t.quote}>
             <figure data-reveal data-reveal-delay={i * 70} className="flex h-full flex-col gap-5 p-7">
               {t.placeholder && (

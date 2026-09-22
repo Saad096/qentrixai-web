@@ -72,12 +72,33 @@ light, where `#0B6B5C` as text on a band is 4.27:1. So the brand/link split
 survives every repalette: amber on graphite, blue on navy, blue on graphite,
 and now verdigris on warm graphite. Foreground on any ground is `link`.
 
+**Three text tiers, and a job for each.** `text` for headings and anything
+that carries the point. `text-2` for body and card copy. `muted` for
+captions, sources and metadata only. Nothing on the site is lighter than
+`muted`. The tier was added after a review found body copy and captions
+sharing one colour, which flattens a page even when every pairing passes.
+
+**Mono is for figures, identifiers and machine strings.** Not for section
+labels. A 13px monospaced muted eyebrow stacks three legibility penalties on
+four words; uppercase sans with tracking reads as a label without any of
+them.
+
+**One glow, behind the hero.** The page-wide orb field and the per-section
+washes are gone. They put blurred smudges at different positions and
+intensities behind sections that had no reason for them, which reads as an
+accident rather than as atmosphere. Sections are told apart by alternating
+grounds and a hairline, not by gradients.
+
 **Never dim text with opacity.** Not on a card, not on a parent, not at
 90%. Opacity composites the element and everything in it against whatever is
 behind, and the result is always below the number the token was chosen for.
+This includes an animation's *from-state*: a scrubbed timeline sits at its
+from-state for every scroll position before its trigger, so `opacity: 0.2`
+on a label is what a reader sees most of the time they are on the page.
 Measured instances removed so far: the sequence steps at 0.55 (2.87:1 dark,
-2.52:1 light — and 3.67:1 even for primary text), the mega-menu's promoted
-card at 0.90 (4.32:1), and the 41 the first audit found on the old site. A
+2.52:1 light, and 3.67:1 even for primary text), the pipeline stages whose
+scrub started at 0.2, the mega-menu's promoted card at 0.90 (4.32:1), and
+the 41 the first audit found on the old site. A
 state that needs marking gets a border, a fill, a shadow or a transform —
 something that is not the copy. Disabled controls are the one exemption,
 because WCAG exempts them.
@@ -90,7 +111,7 @@ grey.
 
 ## Type
 
-**Schibsted Grotesk** for display and text — one family, two clearly separated roles by size and weight. **DM Mono** for small factual strings only: stat labels, timestamps, identifiers, locations.
+**Plus Jakarta Sans** for display and text — one family, two clearly separated roles by size and weight. **DM Mono** for small factual strings only: stat labels, timestamps, identifiers, locations.
 
 Self-hosted through `next/font`, variable where available, `display: swap`, latin subset.
 

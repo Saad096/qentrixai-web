@@ -197,10 +197,19 @@ export function ScrollReveal() {
 
           if (rail) tl.fromTo(rail, { scaleX: 0 }, { scaleX: 1, ease: "none" }, 0);
           if (nodes.length) {
+            // Movement only. The from-state used to be opacity 0.2, and a
+            // scrubbed timeline sits at its from-state for every scroll
+            // position before the trigger -- so these labels rendered at 20%
+            // opacity most of the time a reader was on the page. Reported
+            // twice as "the timeline labels are near-invisible", and both
+            // times it was this rather than a colour.
+            //
+            // The rail still draws and the stages still arrive behind it, so
+            // the sequence reads the same. Nothing that carries words fades.
             tl.fromTo(
               nodes,
-              { opacity: 0.2, y: 16 },
-              { opacity: 1, y: 0, ease: "power2.out", stagger: 0.16 },
+              { y: 18 },
+              { y: 0, ease: "power2.out", stagger: 0.16 },
               0
             );
           }

@@ -10,7 +10,7 @@ export const metadata = buildMetadata({
   title: "Products we build and run ourselves",
   path: "/products",
   description:
-    "Minutely, NeuroMesh, SalesPire, ALA, DocumentAI, VoxRoute and more — operated in-house on the same evals, tracing and on-call discipline we hand to clients.",
+    "Minutely, NeuroMesh, SalesPire, ALA, DocumentAI, VoxRoute and more, operated in-house on the same evals, tracing and on-call discipline we hand to clients.",
 });
 
 export default function ProductsPage() {
@@ -31,7 +31,7 @@ export default function ProductsPage() {
       <section className="py-16 md:py-24">
         <Container>
           <h1 className="max-w-[18ch] text-hero font-bold text-text">Products we build and run</h1>
-          <p className="mt-7 max-w-measure text-md text-muted">
+          <p className="mt-7 max-w-measure text-md text-text-2">
             {products.length} products, operated in-house on the same discipline we sell.
             Several started as client work and earned their own roadmap.
           </p>
@@ -65,7 +65,7 @@ export default function ProductsPage() {
                     </h2>
                     <span className="font-mono text-xs text-muted">{p.category}</span>
                   </div>
-                  <p className="mt-2 text-base text-muted">{p.tagline}</p>
+                  <p className="mt-2 text-base text-text-2">{p.tagline}</p>
                 </Link>
               </li>
             );

@@ -52,7 +52,7 @@ export default function IndustriesPage() {
               <h1 className="mt-4 max-w-[20ch] text-hero font-bold text-text">
                 Domain shapes the system, not just the wording
               </h1>
-              <p className="mt-7 max-w-measure text-md text-muted">
+              <p className="mt-7 max-w-measure text-md text-text-2">
                 A retrieval system for a hospital and one for a sales team share a diagram and
                 almost nothing else. What differs is the constraint that comes first: where the
                 data may be processed, what a wrong answer costs, and whether the thing has to
@@ -85,14 +85,21 @@ export default function IndustriesPage() {
       </section>
 
       <Section ground="band">
-        <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className="grid gap-5 sm:grid-cols-2">
           {industries.map((ind, i) => {
             const evidence =
               ind.cases.length + (ind.products?.length ?? 0) > 0
                 ? `${ind.cases.length + (ind.products?.length ?? 0)} shipped`
                 : "No published engagement";
             return (
-              <Card as="li" key={ind.slug} interactive className="overflow-hidden">
+              <Card
+                as="li"
+                key={ind.slug}
+                interactive
+                className={`overflow-hidden${
+                  i === industries.length - 1 && industries.length % 2 === 1 ? " sm:col-span-2" : ""
+                }`}
+              >
                 <Link
                   href={`/industries/${ind.slug}`}
                   data-reveal
@@ -113,7 +120,7 @@ export default function IndustriesPage() {
                     <h2 className="text-lg font-semibold text-text">{ind.name}</h2>
                     {/* `line` and not pressures[0], which is written to be
                         read under a heading and reads as a fragment here. */}
-                    <p className="text-base text-muted">{ind.line}</p>
+                    <p className="text-base text-text-2">{ind.line}</p>
                   </div>
                 </Link>
               </Card>

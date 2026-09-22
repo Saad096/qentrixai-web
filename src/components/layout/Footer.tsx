@@ -133,7 +133,7 @@ export function Footer() {
         <div className="grid gap-8 border-t border-[color:var(--color-border)] py-10 sm:grid-cols-2">
           <div>
             <h2 className="text-base font-semibold text-text">Engineering hub, Lahore</h2>
-            <p className="mt-1 text-base text-muted">
+            <p className="mt-1 text-base text-text-2">
               {publicEnv.profile.location} ·{" "}
               <a href={`tel:${publicEnv.profile.phone}`} className="hover:text-link">
                 {publicEnv.profile.phone}
@@ -142,7 +142,7 @@ export function Footer() {
           </div>
           <div>
             <h2 className="text-base font-semibold text-text">Hours</h2>
-            <p className="mt-1 text-base text-muted">{company.hours}</p>
+            <p className="mt-1 text-base text-text-2">{company.hours}</p>
           </div>
         </div>
 
