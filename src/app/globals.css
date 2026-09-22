@@ -794,11 +794,13 @@ body > footer {
 /*                                                                      */
 /* Corrections after the first pass, all from the owner:                 */
 /*                                                                      */
-/*  - 220px finished the whole transition inside a quarter of a screen,  */
-/*    which reads as a twitch. 85vh is long enough that the bar is       */
-/*    visibly responding to the scroll rather than snapping between two  */
-/*    states, and it is tied to the viewport so it behaves the same on   */
-/*    a laptop and a phone.                                              */
+/*  - The range is the whole document, not a fixed distance. 220px, then */
+/*    85vh, both finished the transition in the first screen or two and  */
+/*    the bar then sat docked for the remaining nine -- which is not     */
+/*    "shrinks as you scroll the page", it is "snaps near the top".      */
+/*    Omitting animation-range entirely maps the animation across the    */
+/*    full scroll range, so the bar reaches its docked state exactly as  */
+/*    you reach the footer, and reverses at the same rate going back up. */
 /*  - The widened bar kept its gap above it, so it never docked. The     */
 /*    top inset animates to zero with everything else, and the bar ends  */
 /*    flat against the top edge with square corners.                     */
@@ -868,7 +870,8 @@ body > footer {
   .header-shell,
   .header-pill {
     animation-timeline: scroll(root block);
-    animation-range: 0 85vh;
+    /* No animation-range: the default covers the entire scroll range, so
+       progress is literally "how far down the page you are". */
     animation-timing-function: linear;
     animation-fill-mode: both;
   }

@@ -12,6 +12,28 @@ export type Blog = {
 
 export const blogs: Blog[] = [
   {
+    slug: "jev-typed-decisions-not-text",
+    title: "Jev, and the case for models that do not talk",
+    category: "Inference",
+    excerpt:
+      "TypeSafe AI shipped a model that cannot write a sentence. It returns a typed value and a calibrated confidence, in 70 to 500ms. Here is where that belongs in a production system, and where it does not.",
+    date: "2026-09-22",
+    readingTime: "7 min read",
+    cover: "",
+    author: "Saad Alam",
+    content: [
+      "TypeSafe AI released Jev on 15 September and dropped the waitlist five days later. It is a transformer that does not generate text. You hand it unstructured input plus a schema you defined in advance, and it hands back a typed value with a calibrated confidence score. It cannot write an article, generate code, or explain itself.",
+      "That sounds like a limitation until you count how much of a production system is not a conversation. Three primitives cover most of it. Choice picks one option from up to 255. Score rates against ordered levels. Noul returns a probability between zero and one. Every answer carries a confidence derived from the shape of the probability distribution, which is the part that matters.",
+      "The numbers TypeSafe publishes are 70 to 500ms end to end, $42 per billion input tokens, and output tokens free. They claim 193.6 times faster and 444.6 times cheaper than GPT-5.6 Terra on their own benchmarks. Treat vendor benchmarks as a hypothesis rather than a result, but the shape of the claim is credible: a model that emits one typed value instead of a paragraph is not doing the expensive part of generation.",
+      "Here is why we care. Most of the retrieval and agent systems we run do not fail because the prose was poor. They fail at a decision. Is this ticket about billing. Is this command safe to execute. Does this passage answer the question. Should this call go to a human. Every one of those is a classification with a confidence threshold behind it, and every one of them is currently being answered by asking a large language model to write the word yes and then parsing it.",
+      "Parsing a model's prose to recover a decision is the weakest joint in most AI systems we are asked to fix. The model says Yes, definitely, though it depends on the account tier and the code takes the first three characters. A typed return removes that joint. So does a calibrated confidence: escalation stops being a regex over hedging language and becomes a number you can threshold and tune.",
+      "The catch, and it is a real one, is deployment. Jev is an early-access API with no open weights and no self-hosting. For a client with residency obligations, or one running air-gapped, that rules it out no matter how fast it is. This is the trade we spend most of our time on: the cheapest token is the one you never send, but the cheapest token you cannot send at all is worth nothing.",
+      "Where we would reach for it today: high-volume routing and triage in a system that already calls hosted APIs, where latency is felt by a user and the decision is small and well specified. Where we would not: anything inside a boundary that cannot make outbound calls, and anything where the decision has to be explained to a regulator rather than merely logged.",
+      "The broader point outlives this particular model. Classification, scoring, routing and extraction are decisions, not essays, and the industry has spent three years paying generation prices for them. Whether Jev is the model that wins is a separate question from whether that pattern is correct. It is correct. We are already sizing small typed models against the large ones in client systems, and the gap is not close on the decisions that do not need prose.",
+      "If you are running a large model for something that could return an enum, that is worth measuring before your next invoice. We do that as part of inference engineering, and it is usually the largest single saving on the list.",
+    ],
+  },
+  {
     slug: "mcp-how-agents-reach-your-systems",
     title: "MCP is now how agents reach your systems",
     category: "MCP",

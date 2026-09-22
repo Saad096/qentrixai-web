@@ -323,7 +323,7 @@ export default function AboutPage() {
               {[
                 { label: "LinkedIn", href: publicEnv.team.saadLinkedIn || publicEnv.socials.linkedin },
                 { label: "GitHub", href: publicEnv.socials.github },
-                { label: "Upwork", href: publicEnv.socials.upwork },
+                { label: "Instagram", href: publicEnv.socials.instagram },
               ]
                 .filter((l) => l.href)
                 .map((l) => (

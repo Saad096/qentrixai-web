@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, ArrowUpRight, Linkedin, Github, Briefcase } from "lucide-react";
+import { Mail, ArrowUpRight, Linkedin, Github, Instagram, Facebook } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
 import { PRIMARY_CTA } from "@/data/navigation";
@@ -61,7 +61,8 @@ const COLUMNS = [
 const SOCIALS = [
   { label: "LinkedIn", href: publicEnv.socials.linkedin, Icon: Linkedin },
   { label: "GitHub", href: publicEnv.socials.github, Icon: Github },
-  { label: "Upwork", href: publicEnv.socials.upwork, Icon: Briefcase },
+  { label: "Instagram", href: publicEnv.socials.instagram, Icon: Instagram },
+  { label: "Facebook", href: publicEnv.socials.facebook, Icon: Facebook },
 ].filter((s) => s.href);
 
 export function Footer() {
@@ -79,7 +80,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${publicEnv.profile.email}`}
-                  className="inline-flex min-h-[44px] items-center gap-3 text-base text-text hover:text-link"
+                  className="inline-flex min-h-[44px] items-center gap-3 text-base text-text-2 transition-colors hover:text-link"
                 >
                   <span
                     aria-hidden="true"
@@ -110,7 +111,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 lg:col-span-8 lg:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h2 className="font-mono text-xs uppercase tracking-[0.08em] text-muted">
+                <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
                   {col.title}
                 </h2>
                 <ul className="mt-3">
@@ -118,7 +119,7 @@ export function Footer() {
                     <li key={col.title + link.label}>
                       <Link
                         href={link.href}
-                        className="flex min-h-[40px] items-center text-base text-text hover:text-link"
+                        className="flex min-h-[40px] items-center text-base text-text-2 transition-colors hover:text-link"
                       >
                         {link.label}
                       </Link>
@@ -147,7 +148,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-5 border-t border-[color:var(--color-border)] py-7 sm:flex-row sm:items-center sm:justify-between">
-          <p className="flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-xs text-muted">
+          <p className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-text-2">
             <span>{year} QentrixAI. All rights reserved.</span>
             <Link href="/privacy" className="inline-flex min-h-[44px] items-center hover:text-text">
               Privacy

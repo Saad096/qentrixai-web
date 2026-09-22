@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, Cloud, Cpu, Lock, MapPin, X } from "lucide-react";
+import { Check, Cloud, Cpu, Gauge, Layers, Lock, MapPin, Wallet, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
@@ -171,6 +171,48 @@ const DEPLOYMENTS = [
   },
 ];
 
+/**
+ * Running it yourself is where the cost argument is won or lost, so the page
+ * says how rather than asserting that it is cheaper.
+ *
+ * Every figure here belongs to somebody else and is attributed on the card.
+ * None of them are our results.
+ */
+const ECONOMICS = [
+  {
+    Icon: Layers,
+    title: "KV cache, the biggest single lever",
+    body:
+      "Past about 32K tokens the KV cache outgrows the model weights in memory, and past 128K it dominates. Paged attention, prefix caching, and INT8 or FP8 cache quantisation are what make a long-context workload fit on hardware you can actually buy.",
+    note: "Google's TurboQuant reports 3-bit KV at no measured accuracy cost.",
+    source: "TurboQuant, March 2026",
+  },
+  {
+    Icon: Wallet,
+    title: "Token budgets, not token counts",
+    body:
+      "Requests are not interchangeable. Routing each one to a right-sized pool by its estimated token budget, rather than sending everything to one large model, is where the savings are. We size the pools against your traffic, not a benchmark.",
+    note: "Published pool-routing work reports 17 to 39% GPU reduction at fleet scale.",
+    source: "arXiv 2604.09613",
+  },
+  {
+    Icon: Gauge,
+    title: "P99, because that is what users feel",
+    body:
+      "Median latency looks fine on every dashboard while the slowest request in twenty is the one that loses the user. We budget time-to-first-token and inter-token latency separately, then size the prefill budget against your P99 prompt length rather than your average.",
+    note: "Continuous batching typically buys 3 to 5x throughput at the same hardware.",
+    source: "vLLM continuous batching",
+  },
+  {
+    Icon: Cpu,
+    title: "Small typed models where they fit",
+    body:
+      "Not everything needs a large model. Classification, routing, scoring and extraction are decisions rather than essays, and a small model returning a typed answer with a calibrated confidence is faster and cheaper for them by orders of magnitude.",
+    note: "TypeSafe's Jev quotes 70 to 500ms and $42 per billion input tokens. It is API-only with no open weights, so it cannot come inside an air-gapped boundary. That trade is the decision, and we will say which way it falls for you.",
+    source: "TypeSafe AI, September 2026",
+  },
+];
+
 const KEEP = [
   {
     title: "Weights you own outright",
@@ -217,6 +259,12 @@ const EXTRA_FAQ = [
 ];
 
 export default function SovereignAiPage() {
+  /* Grounds alternate in render order rather than being hard-coded, so
+     inserting a section mid-page cannot put two of the same next to each
+     other. Same helper as the capability template. */
+  let groundIndex = 0;
+  const nextGround = (): "band" | "base" => (groundIndex++ % 2 === 0 ? "band" : "base");
+
   const pageFaqs = [
     ...PAGE_FAQ_SLUGS.map((q) => faqs.find((f) => f.question === q)!),
     ...EXTRA_FAQ,
@@ -301,7 +349,7 @@ export default function SovereignAiPage() {
       </section>
 
       {/* Why now: argument left, four reasons right. */}
-      <Section ground="band">
+      <Section ground={nextGround()}>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5" data-reveal>
             <p className="mb-4 font-mono text-xs text-muted">Why sovereign AI</p>
@@ -356,7 +404,7 @@ export default function SovereignAiPage() {
       <Section
         eyebrow="The difference"
         heading="Public API against sovereign deployment."
-        ground="base"
+        ground={nextGround()}
       >
         {/* The table scrolls sideways below ~720px, and a scroll container
             with no focusable child is unreachable from the keyboard. tabIndex
@@ -410,7 +458,7 @@ export default function SovereignAiPage() {
       </Section>
 
       {/* Stages: sticky argument on the left, the sequence on the right. */}
-      <Section ground="band">
+      <Section ground={nextGround()}>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-28" data-reveal>
@@ -464,7 +512,7 @@ export default function SovereignAiPage() {
         eyebrow="Deployment options"
         heading="Run it where the data already lives."
         lede="Which option fits depends on your rules, your latency target and who will operate it. Teams often mix them: train in a private cloud, serve on-premises or at the edge."
-        ground="base"
+        ground={nextGround()}
       >
         <ul className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {DEPLOYMENTS.map(({ Icon, title, body, fit, href }, i) => (
@@ -497,9 +545,48 @@ export default function SovereignAiPage() {
       </Section>
 
       <Section
+        eyebrow="What it costs to run"
+        heading="Owning the hardware is the start, not the saving."
+        lede="Self-hosting only pays if the serving layer is engineered. These are the four levers that decide whether it does, with the published work behind each one."
+        ground={nextGround()}
+      >
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2">
+          {ECONOMICS.map(({ Icon, title, body, note, source }, i) => (
+            <Card as="li" key={title}>
+              <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
+                <span
+                  aria-hidden
+                  className="grid size-11 place-items-center rounded-md bg-brand/12 text-link"
+                >
+                  <Icon className="size-5" />
+                </span>
+                <h3 className="mt-1 text-lg font-semibold text-text">{title}</h3>
+                <p className="text-base text-text-2">{body}</p>
+                <p className="mt-auto border-t border-[color:var(--color-border)] pt-4 text-base text-text-2">
+                  {note}
+                </p>
+                <p className="text-xs font-semibold uppercase tracking-[0.08em] text-muted">
+                  {source}
+                </p>
+              </div>
+            </Card>
+          ))}
+        </ul>
+
+        <p className="mt-9">
+          <Link
+            href="/services/inference-engineering"
+            className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
+          >
+            {"How we do inference engineering \u2192"}
+          </Link>
+        </p>
+      </Section>
+
+      <Section
         eyebrow="What you keep"
         heading="Your models, your data, your control."
-        ground="band"
+        ground={nextGround()}
       >
         <ul className="mt-12 grid gap-5 sm:grid-cols-2">
           {KEEP.map((k, i) => (
@@ -518,7 +605,7 @@ export default function SovereignAiPage() {
       <Section
         eyebrow="Private AI we have shipped"
         heading="On-device, with nothing sensitive leaving the device."
-        ground="base"
+        ground={nextGround()}
       >
         <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
@@ -571,7 +658,7 @@ export default function SovereignAiPage() {
 
       {/* Two columns, same reason as the homepage FAQ: a single left-aligned
           accordion leaves the right half of a 1440 viewport empty. */}
-      <Section ground="band">
+      <Section ground={nextGround()}>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5" data-reveal>
             <p className="mb-4 font-mono text-xs text-muted">
@@ -607,7 +694,7 @@ export default function SovereignAiPage() {
         </div>
       </Section>
 
-      <Section eyebrow="Keep reading" heading="Related capabilities." ground="base">
+      <Section eyebrow="Keep reading" heading="Related capabilities." ground={nextGround()}>
         <ul className="mt-10 grid gap-5 sm:grid-cols-3">
           {["inference-engineering", "edge-ai", "responsible-ai"]
             .map((slug) => services.find((s) => s.slug === slug)!)
@@ -628,7 +715,7 @@ export default function SovereignAiPage() {
         </ul>
       </Section>
 
-      <Section ground="band">
+      <Section ground={nextGround()}>
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7" data-reveal>
             <h2 className="text-3xl font-bold text-text">Book a private AI assessment.</h2>

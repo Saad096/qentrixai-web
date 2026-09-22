@@ -16,6 +16,7 @@
 const DIR = "/images/undraw";
 
 export const BLOG_ART: Record<string, string> = {
+  "jev-typed-decisions-not-text": `${DIR}/ai-code-assistant.svg`,
   "mcp-how-agents-reach-your-systems": `${DIR}/connection.svg`,
   "context-engineering-beat-prompting": `${DIR}/ai-context.svg`,
   "computer-use-agents-narrow-work": `${DIR}/ai-code-assistant.svg`,

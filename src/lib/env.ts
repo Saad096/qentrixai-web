@@ -33,25 +33,24 @@ export const publicEnv = {
   },
 
   socials: {
+    /* Company accounts. The freelance marketplaces are gone on the owner's
+       instruction: Upwork, Fiverr and Freelancer were a personal profile
+       under a studio's masthead, and they undercut the thing the rest of the
+       site argues. Instagram and Facebook are the studio's own. */
     linkedin: pick(
       process.env.NEXT_PUBLIC_PROFILE_LINKEDIN,
       "https://www.linkedin.com/company/qentrixai"
     ),
-    upwork: pick(
-      process.env.NEXT_PUBLIC_PROFILE_UPWORK,
-      "https://www.upwork.com/freelancers/~016509a74d546ffb23"
-    ),
-    fiverr: pick(process.env.NEXT_PUBLIC_PROFILE_FIVERR, "https://www.fiverr.com/saadalam340"),
-    freelancer: pick(
-      process.env.NEXT_PUBLIC_PROFILE_FREELANCER,
-      "https://www.freelancer.com/u/SaadAlam106"
-    ),
     github: pick(process.env.NEXT_PUBLIC_PROFILE_GITHUB, "https://github.com/Saad096"),
-    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP, "https://wa.me/923196828506"),
     instagram: pick(
       process.env.NEXT_PUBLIC_PROFILE_INSTAGRAM,
-      "https://www.instagram.com/saadalam9657"
+      "https://www.instagram.com/qentrixai/"
     ),
+    facebook: pick(
+      process.env.NEXT_PUBLIC_PROFILE_FACEBOOK,
+      "https://www.facebook.com/Qentrixai"
+    ),
+    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP, "https://wa.me/923196828506"),
   },
 
   team: {

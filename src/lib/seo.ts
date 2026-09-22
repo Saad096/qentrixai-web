@@ -116,7 +116,12 @@ export function organizationJsonLd() {
       addressLocality: "Lahore",
       addressCountry: "PK",
     },
-    sameAs: [publicEnv.socials.linkedin, publicEnv.socials.github, publicEnv.socials.upwork].filter(
+    sameAs: [
+      publicEnv.socials.linkedin,
+      publicEnv.socials.instagram,
+      publicEnv.socials.facebook,
+      publicEnv.socials.github,
+    ].filter(
       Boolean
     ),
   };

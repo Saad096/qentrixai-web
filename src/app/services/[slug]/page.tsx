@@ -166,16 +166,57 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
       )}
 
       <Section eyebrow="Deliverables" heading="What you get." ground={nextGround()}>
-        <ul className="mt-9 max-w-measure">
-          {service.outcomes.map((o) => (
-            <li
-              key={o}
-              className="border-t border-[color:var(--color-border)] py-5 text-md text-text"
-            >
-              {o}
-            </li>
-          ))}
-        </ul>
+        {/* Two columns. A list of three outcomes capped at `max-w-measure`
+            left the right half of the section empty, which is what the
+            owner's screenshot was pointing at. The tools sit beside the
+            outcomes now: the same information the page already carried,
+            moved to where it fills the row and answers the obvious next
+            question. */}
+        <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <ul className="lg:col-span-7">
+            {service.outcomes.map((o, i) => (
+              <li
+                key={o}
+                data-reveal
+                data-reveal-delay={i * 60}
+                className="flex gap-5 border-t border-[color:var(--color-border)] py-6"
+              >
+                <span
+                  aria-hidden
+                  className="mt-0.5 text-xs font-semibold uppercase tracking-[0.08em] text-muted"
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="text-md text-text">{o}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="lg:col-span-5">
+            <Card>
+              <div className="p-7">
+                <p className="text-xs font-semibold uppercase tracking-[0.08em] text-muted">
+                  Tools we reach for
+                </p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {service.technologies.map((t) => (
+                    <li
+                      key={t}
+                      className="rounded-full border border-[color:var(--color-border)] px-3.5 py-1.5 font-mono text-xs text-text-2"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 border-t border-[color:var(--color-border)] pt-5 text-base text-text-2">
+                  Chosen per engagement rather than by preference, and swapped
+                  when something measures better. Model access sits behind an
+                  interface, so changing one is configuration and not a rewrite.
+                </p>
+              </div>
+            </Card>
+          </div>
+        </div>
       </Section>
 
       {detail && (
@@ -202,17 +243,6 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
             <li key={b} className="flex gap-4 text-base text-muted">
               <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-brand" />
               {b}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-10 font-mono text-xs text-muted">Tools we reach for</p>
-        <ul className="mt-3 flex flex-wrap gap-2">
-          {service.technologies.map((t) => (
-            <li
-              key={t}
-              className="rounded-full border border-[color:var(--color-border)] px-3.5 py-1.5 font-mono text-xs text-muted"
-            >
-              {t}
             </li>
           ))}
         </ul>

@@ -1,4 +1,15 @@
-import { Mail, Phone, MapPin, Clock, MessageCircle, Linkedin, Github, CalendarClock } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  MessageCircle,
+  Linkedin,
+  Github,
+  Instagram,
+  Facebook,
+  CalendarClock,
+} from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Button } from "@/components/ui/Button";
@@ -98,7 +109,7 @@ export default function ContactPage() {
                       href={s.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-muted hover:bg-surface"
+                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
                     >
                       <Linkedin className="size-3.5" /> LinkedIn
                     </a>
@@ -108,39 +119,29 @@ export default function ContactPage() {
                       href={s.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-muted hover:bg-surface"
+                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
                     >
                       <Github className="size-3.5" /> GitHub
                     </a>
                   )}
-                  {s.upwork && (
+                  {s.instagram && (
                     <a
-                      href={s.upwork}
+                      href={s.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-muted hover:bg-surface"
+                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
                     >
-                      Upwork
+                      <Instagram className="size-3.5" /> Instagram
                     </a>
                   )}
-                  {s.fiverr && (
+                  {s.facebook && (
                     <a
-                      href={s.fiverr}
+                      href={s.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-muted hover:bg-surface"
+                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
                     >
-                      Fiverr
-                    </a>
-                  )}
-                  {s.freelancer && (
-                    <a
-                      href={s.freelancer}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-muted hover:bg-surface"
-                    >
-                      Freelancer
+                      <Facebook className="size-3.5" /> Facebook
                     </a>
                   )}
                 </div>
