@@ -93,9 +93,9 @@ Senior engineers who ship, writing to someone who has been burned before.
 
 - **Eyebrow:** `Our own products`
 - **H2:** `We run the kind of software we sell.`
-- **Lede:** `Nine products built and operated in-house. The same evals, tracing and on-call discipline we hand to clients.`
+- **Lede:** `{products.length} products built and operated in-house. The same evals, tracing and on-call discipline we hand to clients.` (count read from the data, not typed)
 - Featured three: **Minutely** — `Meeting intelligence: transcripts, minutes, action items, decisions.` · **NeuroMesh** — `A builder for complex multi-agent workflows.` · **VoxRoute** — `IVR and voice call automation that knows when to transfer.`
-- **Link:** `All nine products` → `/products`
+- **Link:** `All {products.length} products` → `/products`
 
 ### 3.6 How we work
 
@@ -184,7 +184,7 @@ All six problem/solution/outcome texts are preserved as facts and edited only fo
 ## 6. `/products` — hub and 9 detail pages
 
 **Hub H1:** `Products we build and run`
-**Lede:** `Nine products, operated in-house on the same discipline we sell. Several started as client work and earned their own roadmap.`
+**Lede:** `{products.length} products, operated in-house on the same discipline we sell. Several started as client work and earned their own roadmap.`
 
 Taglines stay factual and are tightened: Minutely · NeuroMesh · SalesPire · ALA · MultiAgent Chatbot · DocumentAI · VoxRoute · Realtime Voice Bot · Fintelia. Detail template: `H1` · one-line tagline · `What it does` · `Who it is for` · screenshots · `Under the hood` · CTA.
 

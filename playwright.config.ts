@@ -34,7 +34,15 @@ export default defineConfig({
   webServer: process.env.BASE_URL
     ? undefined
     : {
-        command: "npx next start -p 3311",
+        /* NEXT_DIST_DIR, for the same reason next.config.mjs documents it:
+           a production build into `.next` corrupts the dev server sharing
+           that directory. Without it here the suite served whatever stale
+           build happened to be in `.next` -- on 2026-09-22 that was a build
+           from three days earlier, so tests were failing against images and
+           alt text the site no longer ships. `next start` reads the same
+           variable `next build` writes, so the suite now tests the build we
+           actually produce. */
+        command: "NEXT_DIST_DIR=.next-prod npx next start -p 3311",
         url: "http://127.0.0.1:3311",
         reuseExistingServer: true,
         timeout: 120_000,

@@ -19,24 +19,32 @@ async function settleReveals(page: Page) {
 }
 
 /**
- * Walk every reveal target into view, then report the ones still hidden.
+ * Walk the page the way a reader does, then report any reveal still hidden.
  *
  * Asserting "nothing is hidden" straight after a short scroll is wrong: an
  * element two viewports down is *correctly* still hidden, and the assertion
  * passes or fails on page length rather than on the thing under test. What
  * matters is that each element reveals once it is actually reached.
+ *
+ * This used to scroll each target individually with a 150ms wait each. The
+ * homepage carried 23 reveal targets when that was written and carries 95
+ * now, so the walk alone took ~14s per visit and the spec started failing on
+ * its 45s timeout -- a test that outgrew the page rather than a regression.
+ * Scrolling in viewport steps covers the same ground, is closer to what a
+ * reader does, and is bounded by page height instead of element count.
  */
 async function revealAllAndCountHidden(page: Page) {
-  const count = await page.locator("[data-reveal]").count();
-  for (let i = 0; i < count; i++) {
-    await page.evaluate((idx) => {
-      document
-        .querySelectorAll<HTMLElement>("[data-reveal]")
-        [idx]?.scrollIntoView({ block: "center" });
-    }, i);
-    await page.waitForTimeout(150);
-  }
-  await page.waitForTimeout(1200);
+  await page.evaluate(async () => {
+    const step = Math.round(window.innerHeight * 0.6);
+    for (let y = 0; y < document.body.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 120));
+    }
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+  // Reveals run 0.95s plus a stagger; sample before they land and every
+  // animated block reads as hidden.
+  await page.waitForTimeout(1600);
   return page.evaluate(() =>
     [...document.querySelectorAll<HTMLElement>("[data-reveal]")]
       .filter((el) => parseFloat(getComputedStyle(el).opacity) < 0.05)
@@ -45,6 +53,11 @@ async function revealAllAndCountHidden(page: Page) {
 }
 
 test.describe("scroll reveal survives client-side navigation", () => {
+  /* This one deliberately walks three whole pages, and the homepage alone
+     went from 23 reveal targets to 95 over the revamp. The 45s default is a
+     per-test budget sized for a single route, so this spec buys its own
+     rather than the walk being trimmed until it stops testing anything. */
+  test.setTimeout(150_000);
   test.skip(
     ({ browserName }) => browserName !== "chromium",
     "One engine is enough for a JS-lifecycle regression."
