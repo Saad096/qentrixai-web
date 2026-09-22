@@ -116,6 +116,9 @@ export const industries: Industry[] = [
   {
     slug: "agriculture-and-agritech",
     name: "Agriculture and agritech",
+    image: `${DIR}/agriculture-and-agritech.webp`,
+    imageAlt:
+      "An agronomist reading a tablet at the edge of a crop row while a survey drone passes overhead",
     flow: [
       { label: "Capture", sub: "drone, handset" },
       { label: "Detect", sub: "on device" },
@@ -128,6 +131,8 @@ export const industries: Industry[] = [
   {
     slug: "education-and-learning",
     name: "Education and learning",
+    image: `${DIR}/education-and-learning.webp`,
+    imageAlt: "A student working through a problem beside an on-screen tutoring assistant",
     flow: [
       { label: "Question", sub: "learner asks" },
       { label: "Retrieve", sub: "vetted corpus" },
@@ -137,6 +142,19 @@ export const industries: Industry[] = [
     line: "Assistants that teach from a corpus someone vetted, answer with the passage attached, and decline rather than improvise when the question runs past what the corpus covers.",
     cases: [],
     products: ["ala"],
+  },
+  {
+    slug: "saas-and-platform",
+    name: "SaaS and platform engineering",
+    flow: [
+      { label: "Scope", sub: "one workflow" },
+      { label: "Build", sub: "web, mobile, API" },
+      { label: "Ship", sub: "CI to your cloud" },
+      { label: "Operate", sub: "or hand over" },
+    ],
+    line: "The product around the model: web and mobile clients, tenancy, billing, integrations and the deployment pipeline. Most of an AI product is ordinary software engineering, and it is the part that decides whether the model ever reaches a user.",
+    cases: ["multi-agent-ai-platform", "meeting-intelligence-platform"],
+    products: ["minutely", "fintelia", "salespire"],
   },
   {
     slug: "logistics",

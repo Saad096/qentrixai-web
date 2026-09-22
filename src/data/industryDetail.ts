@@ -436,4 +436,38 @@ export const industryDetail: Record<string, IndustryDetail> = {
     ],
     services: ["rag-enterprise-search", "responsible-ai", "generative-ai"],
   },
+
+  "saas-and-platform": {
+    intro:
+      "The model is usually the part that works. What decides whether an AI product reaches a user is everything around it: auth, tenancy, billing, the integrations, the mobile client that has to behave on a bad network, and a deployment pipeline someone other than its author can run. That is ordinary software engineering, and it is most of the build.",
+    pressures: [
+      {
+        title: "Tenancy cannot be retrofitted",
+        body: "Multi-tenancy decides the data model. Adding it to a product that shipped without it is a rewrite with a migration attached, not a feature.",
+      },
+      {
+        title: "Usage-based pricing needs honest metering",
+        body: "If the meter and the invoice disagree, the finance conversation ends the contract faster than any outage.",
+      },
+      {
+        title: "The deploy is a single point of failure",
+        body: "In most teams we meet, one person knows how the deploy works. That is a capability on the org chart and a risk in practice.",
+      },
+    ],
+    build: [
+      {
+        title: "Web and mobile around the model",
+        body: "Next.js on the web, Flutter or React Native on mobile, chosen on what your team can maintain after we leave rather than on what we prefer. Streaming, cancellation and offline states designed rather than discovered.",
+      },
+      {
+        title: "The commercial layer",
+        body: "Auth, roles, tenancy, quotas and metered billing, wired so the number the customer sees is the number the system counted.",
+      },
+      {
+        title: "A pipeline anyone can run",
+        body: "Dockerised, CI that runs the eval suite, CD that can deploy and revert, infrastructure in code. The deploy stops being one person's knowledge.",
+      },
+    ],
+    services: ["ai-saas-and-mobile", "cloud-devops-mlops", "ai-mvp-development"],
+  },
 };
