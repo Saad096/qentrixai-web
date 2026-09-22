@@ -18,10 +18,17 @@
  *           viewer chose to hear it, which is the only decent way to ship
  *           audio on a landing page.
  *
- * Under `prefers-reduced-motion` it does not autoplay at all. The poster
- * shows and the play control is there for anyone who wants it, which is
- * what that preference is asking for -- not "never", but "not at me
- * unprompted".
+ * It autoplays for everyone, including under `prefers-reduced-motion`, on
+ * the owner's instruction. That is a considered position rather than an
+ * oversight: WCAG 2.2.2 asks that motion over five seconds can be paused,
+ * not that it never starts, and the Pause control above satisfies it. The
+ * reduced-motion suppression that used to live here was the stricter
+ * reading, and it meant a visitor with that preference set at OS level saw
+ * a still frame and reported the autoplay as broken -- which is how this
+ * surfaced.
+ *
+ * Everything else on the site still honours the preference. This is one
+ * element with an explicit control attached, not a licence to animate.
  */
 import * as React from "react";
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
@@ -34,12 +41,10 @@ export function HeroVideo() {
   React.useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      v.pause();
-      setPlaying(false);
-      return;
-    }
+    // Belt and braces on muted. React does not reliably reflect the `muted`
+    // prop onto the DOM property after hydration, and an unmuted video is
+    // refused autoplay by every browser.
+    v.muted = true;
     // Autoplay can still be refused. If it is, show the true state rather
     // than a pause button over a stopped video.
     v.play().then(

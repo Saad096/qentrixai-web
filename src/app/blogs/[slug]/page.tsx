@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Container } from "@/components/ui/Container";
 import { Illustration } from "@/components/ui/Illustration";
 import { BLOG_ART } from "@/data/illustrations";
@@ -73,36 +74,44 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
 
       <article className="py-16 md:py-24">
         <Container>
-          <Link
-            href="/blogs"
-            className="inline-flex min-h-[44px] items-center font-mono text-xs text-muted hover:text-text"
-          >
-            Insights
-          </Link>
-          <h1 className="mt-3 max-w-[22ch] text-3xl font-bold text-text">{blog.title}</h1>
-          <p className="mt-5 font-mono text-xs text-muted">
-            {formatDate(blog.date)} · {blog.readingTime} · {blog.author}
-          </p>
-
-          {/* A banner between the masthead and the body. The article opened
-              straight into prose, so every post looked like the last one. */}
-          {/* A drawn scene where the article has one. The 21:9 illustration
-              plate it replaces was a small drawing centred in a very wide
-              box, which is the same shape that measured 782px of blank on
-              the case studies. */}
-          {scene ? (
-            <div className="mt-10 max-w-[640px]">
-              <Scene name={scene} />
+          {/* Split hero, matching every other route. The article stacked
+              title, meta and then a drawing above the prose, which pushed
+              the first paragraph most of a screen down and left the right
+              half of the masthead empty -- the owner's screenshot. Copy
+              left, drawing top right, body starting where the eye already
+              is. */}
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+            <div className="lg:col-span-7">
+              <Breadcrumb
+                trail={[
+                  { name: "Home", href: "/" },
+                  { name: "Insights", href: "/blogs" },
+                  { name: blog.category },
+                ]}
+              />
+              <h1 className="mt-4 max-w-[22ch] text-3xl font-bold text-text">{blog.title}</h1>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.08em] text-muted">
+                {formatDate(blog.date)} · {blog.readingTime} · {blog.author}
+              </p>
+              <p className="mt-6 max-w-measure text-md text-text-2">{blog.excerpt}</p>
             </div>
-          ) : art ? (
-            <Illustration
-              src={art}
-              ratio="aspect-[21/9]"
-              className="mt-10 rounded-lg shadow-2"
-              sizes="(min-width: 1260px) 1180px, 100vw"
-              priority
-            />
-          ) : null}
+
+            {scene ? (
+              <div className="lg:col-span-5">
+                <Scene name={scene} />
+              </div>
+            ) : art ? (
+              <div className="lg:col-span-5">
+                <Illustration
+                  src={art}
+                  ratio="aspect-[4/3]"
+                  className="rounded-lg shadow-2"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  priority
+                />
+              </div>
+            ) : null}
+          </div>
 
           <div className="mt-12 max-w-measure space-y-6">
             {blog.content.map((para, i) => (
