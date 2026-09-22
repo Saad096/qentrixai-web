@@ -368,4 +368,72 @@ export const industryDetail: Record<string, IndustryDetail> = {
     ],
     services: ["nlp-document-ai", "computer-vision", "managed-ai-services"],
   },
+
+  "agriculture-and-agritech": {
+    intro:
+      "We have not published an agritech engagement, so this page describes what we would build. The constraint that shapes everything here is that the decision is needed in the field, where connectivity is worst, on hardware that has to survive being carried around a farm.",
+    pressures: [
+      {
+        title: "The field has no network",
+        body: "A model that needs a round trip to a data centre is useless standing in a crop at the moment someone has to decide whether to spray.",
+      },
+      {
+        title: "Training data does not generalise",
+        body: "A disease model trained on one region, one variety and one season fails quietly on the next. The labelling cost, not the architecture, is what decides whether it works.",
+      },
+      {
+        title: "A wrong call costs a season",
+        body: "Under-detection loses the crop and over-detection wastes chemical and trust. Both failures need to be visible as numbers before anyone acts on the output.",
+      },
+    ],
+    build: [
+      {
+        title: "Detection on the device",
+        body: "Models quantised and compiled to run on the drone, the handset or a local box, so the answer arrives where the decision is made and nothing depends on a signal.",
+      },
+      {
+        title: "An eval set that covers the variance",
+        body: "Region, variety, growth stage and light, labelled and held out. Accuracy quoted against anything narrower is a number about a benchmark rather than about your farm.",
+      },
+      {
+        title: "Confidence that routes to an agronomist",
+        body: "Low-confidence detections go to a person rather than into a spray plan. The system's job is to shorten the walk, not to replace the judgement.",
+      },
+    ],
+    services: ["computer-vision", "edge-ai", "data-science-ml"],
+  },
+
+  "education-and-learning": {
+    intro:
+      "Learning assistants fail in a way that is specific to the domain: a confident wrong answer teaches the wrong thing, and the learner has no way to tell. So the corpus is vetted before anything is indexed, every answer carries the passage it came from, and the system is built to decline rather than improvise.",
+    pressures: [
+      {
+        title: "A fluent wrong answer is worse than none",
+        body: "A learner cannot audit what they are learning. Confidence without a source is the failure mode that matters here, and it is invisible in any demo.",
+      },
+      {
+        title: "The corpus is the product",
+        body: "What the assistant is allowed to answer from decides everything about whether it is trustworthy, and that is an editorial decision before it is an engineering one.",
+      },
+      {
+        title: "Sensitive subjects need a refusal path",
+        body: "Some questions should be answered with where to look rather than with an answer, and that boundary has to be designed rather than discovered in production.",
+      },
+    ],
+    build: [
+      {
+        title: "Retrieval over a vetted corpus only",
+        body: "Indexed from sources someone signed off, with provenance kept through the pipeline so an answer can always be traced back to a document and an edition.",
+      },
+      {
+        title: "Citations the learner can open",
+        body: "The passage travels with the answer. It is what turns the assistant from an oracle into a reading aid.",
+      },
+      {
+        title: "A designed refusal",
+        body: "Out-of-corpus questions get a route to a human or a source, not a generated guess. We write that boundary with you before the build.",
+      },
+    ],
+    services: ["rag-enterprise-search", "responsible-ai", "generative-ai"],
+  },
 };

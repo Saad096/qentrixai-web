@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { PRIMARY_CTA } from "@/data/navigation";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
-import { company } from "@/data/company";
+import { company, offices } from "@/data/company";
 import { publicEnv } from "@/lib/env";
 
 /**
@@ -17,7 +17,8 @@ import { publicEnv } from "@/lib/env";
  * light and the footer is the one deep band that closes it.
  *
  * What is deliberately NOT carried across from the reference: its two office
- * addresses (QentrixAI has one, in Lahore, and inventing a US HQ would be a
+ * addresses. QentrixAI has two as of 2026-09-22, both supplied by the owner;
+ * the earlier note here said it had one and that inventing a US HQ would be a
  * lie a buyer can check) and its "Reviewed on Clutch 5.0" badge (we have no
  * Clutch rating, and a fabricated review score is the worst thing on a page
  * whose whole argument is that the proof is real).
@@ -131,19 +132,35 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="grid gap-8 border-t border-[color:var(--color-border)] py-10 sm:grid-cols-2">
+        <div className="grid gap-8 border-t border-[color:var(--color-border)] py-10 sm:grid-cols-2 lg:grid-cols-4">
+          {offices.map((o) => (
+            <div key={o.city}>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
+                {o.kind}
+              </h2>
+              <address className="mt-2 not-italic text-base text-text-2">
+                {o.lines.map((l) => (
+                  <span key={l} className="block">
+                    {l}
+                  </span>
+                ))}
+              </address>
+            </div>
+          ))}
           <div>
-            <h2 className="text-base font-semibold text-text">Engineering hub, Lahore</h2>
-            <p className="mt-1 text-base text-text-2">
-              {publicEnv.profile.location} ·{" "}
-              <a href={`tel:${publicEnv.profile.phone}`} className="hover:text-link">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Hours</h2>
+            <p className="mt-2 text-base text-text-2">{company.hours}</p>
+          </div>
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Talk to us</h2>
+            <p className="mt-2 text-base text-text-2">
+              <a href={`mailto:${publicEnv.profile.email}`} className="block hover:text-link">
+                {publicEnv.profile.email}
+              </a>
+              <a href={`tel:${publicEnv.profile.phone}`} className="block hover:text-link">
                 {publicEnv.profile.phone}
               </a>
             </p>
-          </div>
-          <div>
-            <h2 className="text-base font-semibold text-text">Hours</h2>
-            <p className="mt-1 text-base text-text-2">{company.hours}</p>
           </div>
         </div>
 

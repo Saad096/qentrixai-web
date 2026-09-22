@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { DomainFlow } from "@/components/art/DomainFlow";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
@@ -106,15 +107,19 @@ export default function IndustriesPage() {
                   data-reveal-delay={i * 50}
                   className="flex h-full flex-col"
                 >
-                  <div className="relative aspect-[16/9] w-full">
-                    <Image
-                      src={ind.image}
-                      alt={ind.imageAlt}
-                      fill
-                      sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
+                  {ind.image ? (
+                    <div className="relative aspect-[16/9] w-full">
+                      <Image
+                        src={ind.image}
+                        alt={ind.imageAlt ?? ""}
+                        fill
+                        sizes="(min-width: 640px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <DomainFlow stages={ind.flow ?? []} className="rounded-none" />
+                  )}
                   <div className="flex flex-1 flex-col gap-3 p-7">
                     <span className="font-mono text-xs text-link">{evidence}</span>
                     <h2 className="text-lg font-semibold text-text">{ind.name}</h2>

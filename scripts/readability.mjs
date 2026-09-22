@@ -65,7 +65,17 @@ for (const theme of ["dark", "light"]) {
         // state. Measuring it reports every animated block as invisible.
         if (el.closest("[data-reveal]:not(.is-revealed)")) continue;
 
-        const size = parseFloat(cs.fontSize);
+        let size = parseFloat(cs.fontSize);
+        // SVG text is specified in user units, and getComputedStyle reports
+        // those rather than what lands on screen. A 10px label inside a
+        // viewBox="0 0 400 220" drawn 560px wide renders at 14px. Scale by
+        // the viewBox ratio or every diagram reads as a tiny-text failure.
+        const svg = el.ownerSVGElement;
+        if (svg) {
+          const vb = svg.viewBox?.baseVal;
+          const rendered = svg.getBoundingClientRect().width;
+          if (vb && vb.width > 0 && rendered > 0) size = size * (rendered / vb.width);
+        }
         const weight = Number(cs.fontWeight) || 400;
         const op = effOpacity(el);
         const bg = bgOf(el);

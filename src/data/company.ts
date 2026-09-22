@@ -5,6 +5,41 @@
  * artifact they hand over, and six "why us" cards collapse to three pillars
  * that each point at something on the site that proves them.
  */
+/**
+ * Two offices, supplied by the owner on 2026-09-22. Until then the site said
+ * one, and said it in eleven places -- the footer even carried a comment
+ * explaining that inventing a US address would be a lie. It is not invented
+ * now, so the comment and the claim both change.
+ *
+ * `registered` is the legal address and the one that belongs in JSON-LD.
+ * `engineering` is where the team sits. A buyer asking "where are you" means
+ * the second; a procurement form means the first.
+ */
+export type Office = {
+  kind: "Registered office" | "Engineering hub";
+  city: string;
+  region: string;
+  country: string;
+  lines: string[];
+};
+
+export const offices: Office[] = [
+  {
+    kind: "Registered office",
+    city: "Wilmington",
+    region: "Delaware",
+    country: "United States",
+    lines: ["2810 N Church St, STE 89718", "Wilmington, DE 19802", "United States"],
+  },
+  {
+    kind: "Engineering hub",
+    city: "Lahore",
+    region: "Punjab",
+    country: "Pakistan",
+    lines: ["COLABS, 22-N, Block N", "Phase 2, Johar Town", "Lahore, Pakistan"],
+  },
+];
+
 export const company = {
   name: "QentrixAI",
   legalName: "QentrixAI",
@@ -13,7 +48,7 @@ export const company = {
   mission:
     "We design, build and run agentic systems, retrieval pipelines and voice AI, then hand over the repo, the eval harness and the runbook.",
   founded: "2024",
-  location: "Lahore, Pakistan, serving clients worldwide",
+  location: "Wilmington, Delaware and Lahore, Pakistan",
   hours: "Mon to Sat, 9:00-19:00 PKT",
   capabilities: [
     "GenAI",

@@ -19,6 +19,7 @@ import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { TabPill, TabRail, useTabs } from "@/components/ui/Tabs";
 import { industries } from "@/data/industries";
+import { DomainFlow } from "@/components/art/DomainFlow";
 import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
 
@@ -105,16 +106,20 @@ export function Industries() {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2 sm:aspect-[16/10]">
-                <Image
-                  key={current.image}
-                  src={current.image}
-                  alt={current.imageAlt}
-                  fill
-                  sizes="(min-width: 1024px) 58vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
+              {current.image ? (
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2 sm:aspect-[16/10]">
+                  <Image
+                    key={current.image}
+                    src={current.image}
+                    alt={current.imageAlt ?? ""}
+                    fill
+                    sizes="(min-width: 1024px) 58vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <DomainFlow key={current.slug} stages={current.flow ?? []} className="shadow-2" />
+              )}
             </div>
           </div>
         </div>

@@ -111,10 +111,26 @@ export function organizationJsonLd() {
     foundingDate: "2024",
     email: publicEnv.profile.email,
     telephone: publicEnv.profile.phone,
+    /* The registered office is the legal address and belongs here; the
+       engineering hub is a place of business and goes in `location`. Both
+       are real -- see offices[] in data/company.ts. */
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Lahore",
-      addressCountry: "PK",
+      streetAddress: "2810 N Church St, STE 89718",
+      addressLocality: "Wilmington",
+      addressRegion: "DE",
+      postalCode: "19802",
+      addressCountry: "US",
+    },
+    location: {
+      "@type": "Place",
+      name: "QentrixAI engineering hub",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "COLABS, 22-N, Block N, Phase 2, Johar Town",
+        addressLocality: "Lahore",
+        addressCountry: "PK",
+      },
     },
     sameAs: [
       publicEnv.socials.linkedin,

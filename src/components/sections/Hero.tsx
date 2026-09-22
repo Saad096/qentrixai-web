@@ -95,7 +95,9 @@ export function Hero() {
         </div>
 
         <div className="rule mt-7 pt-6">
-          <span className="font-mono text-xs text-muted">Lahore, working across 12 time zones</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.08em] text-muted">
+            Wilmington and Lahore, working across 12 time zones
+          </span>
         </div>
       </Container>
     </section>

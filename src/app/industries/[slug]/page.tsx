@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { DomainFlow } from "@/components/art/DomainFlow";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -100,16 +101,24 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             </div>
 
             <div className="lg:col-span-6">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-2">
-                <Image
-                  src={ind.image}
-                  alt={ind.imageAlt}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 48vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
+              {/* Photograph where we have an honest one, a drawn pipeline
+                  where we do not. The drawing is the better artwork either
+                  way: it shows the shape of the system rather than a stock
+                  image of the sector. */}
+              {ind.image ? (
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-2">
+                  <Image
+                    src={ind.image}
+                    alt={ind.imageAlt ?? ""}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 48vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <DomainFlow stages={ind.flow ?? []} className="shadow-2" />
+              )}
             </div>
           </div>
         </Container>

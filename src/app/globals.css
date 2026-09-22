@@ -929,6 +929,21 @@ body > footer {
   }
 }
 
+/* The one moving part in a DomainFlow: the connector's dash offset, which
+   says the path runs left to right without spending a label on it. No
+   transform and no layout, so it is a paint on the compositor. */
+@keyframes domain-flow-rail {
+  to { stroke-dashoffset: -32; }
+}
+
+.domain-flow__rail {
+  animation: domain-flow-rail 2.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .domain-flow__rail { animation: none; }
+}
+
 .menu-pop {
   animation: menu-pop 240ms var(--ease-out) both;
   transform-origin: top center;

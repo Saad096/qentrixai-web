@@ -24,10 +24,13 @@ export type Industry = {
   cases: string[];
   /** Slugs in products.ts. Things we built and run ourselves. */
   products?: string[];
-  /** Photograph for the tab panel. */
-  image: string;
+  /** Photograph for the tab panel. Optional: a domain with no honest photo
+      renders a drawn pipeline instead, which is the better artwork anyway. */
+  image?: string;
   /** Describes what the photograph shows, not what the tab is called. */
-  imageAlt: string;
+  imageAlt?: string;
+  /** The four stages drawn when there is no photograph. */
+  flow?: { label: string; sub: string }[];
 };
 
 export const industries: Industry[] = [
@@ -109,6 +112,31 @@ export const industries: Industry[] = [
     imageAlt: "The facade of a civic government building",
     line: "We have not published a public-sector engagement. What we would build: open-weight models on infrastructure inside the jurisdiction, keys held by the department, and every sub-processor in the path named before anything ships.",
     cases: [],
+  },
+  {
+    slug: "agriculture-and-agritech",
+    name: "Agriculture and agritech",
+    flow: [
+      { label: "Capture", sub: "drone, handset" },
+      { label: "Detect", sub: "on device" },
+      { label: "Score", sub: "per field" },
+      { label: "Act", sub: "spray plan" },
+    ],
+    line: "We have not published an agritech engagement. What we would build: disease and stress detection that runs on the drone or the handset, because the field is where the connection is worst and the decision is needed fastest.",
+    cases: [],
+  },
+  {
+    slug: "education-and-learning",
+    name: "Education and learning",
+    flow: [
+      { label: "Question", sub: "learner asks" },
+      { label: "Retrieve", sub: "vetted corpus" },
+      { label: "Answer", sub: "with citation" },
+      { label: "Review", sub: "human in loop" },
+    ],
+    line: "Assistants that teach from a corpus someone vetted, answer with the passage attached, and decline rather than improvise when the question runs past what the corpus covers.",
+    cases: [],
+    products: ["ala"],
   },
   {
     slug: "logistics",

@@ -24,7 +24,7 @@ export const publicEnv = {
     ),
     email: pick(process.env.NEXT_PUBLIC_PROFILE_EMAIL, "talk@qentrix-ai.com"),
     phone: pick(process.env.NEXT_PUBLIC_PROFILE_PHONE, "+923196828506"),
-    location: pick(process.env.NEXT_PUBLIC_PROFILE_LOCATION, "Lahore, Pakistan"),
+    location: pick(process.env.NEXT_PUBLIC_PROFILE_LOCATION, "Wilmington, Delaware and Lahore, Pakistan"),
     availability: pick(
       process.env.NEXT_PUBLIC_PROFILE_AVAILABILITY,
       "Open for Projects, Ideas & Remote Positions"

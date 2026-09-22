@@ -10,7 +10,7 @@ import { HowWeWork } from "@/components/sections/HowWeWork";
 import { StackTabs } from "@/components/sections/StackTabs";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { FaqCta } from "@/components/sections/FaqCta";
-import { company } from "@/data/company";
+import { company, offices } from "@/data/company";
 import { services, SERVICE_GROUPS } from "@/data/services";
 import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
@@ -22,7 +22,7 @@ export const metadata = buildMetadata({
   title: "About QentrixAI",
   path: "/about",
   description:
-    "An AI product studio in Lahore. Eleven products operated in-house, six production systems shipped for clients, and a handover at the end of every engagement.",
+    "An AI product studio with offices in Wilmington, Delaware and Lahore. Eleven products operated in-house, six production systems shipped for clients, and a handover at the end of every engagement.",
 });
 
 /**
@@ -106,7 +106,7 @@ export default function AboutPage() {
               <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-3">
                 {[
                   "Senior engineers only, no junior bench",
-                  "Lahore, serving 12 geographies",
+                  "Two offices, 12 geographies served",
                   "You own the code and the weights",
                 ].map((c) => (
                   <li key={c} className="flex items-center gap-2.5 text-base text-text">
@@ -343,10 +343,36 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section eyebrow="Where we are" heading="One hub, twelve time zones." ground="base">
-        <dl className="mt-8 grid max-w-measure gap-px">
+      <Section
+        eyebrow="Where we are"
+        heading="Two offices, twelve time zones."
+        lede="The company is registered in Delaware and built in Lahore. Both addresses are below, because a studio that will not say where it sits is asking for a lot of trust."
+        ground="base"
+      >
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          {offices.map((o, i) => (
+            <Card as="div" key={o.city}>
+              <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
+                <span className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">
+                  {o.kind}
+                </span>
+                <h3 className="text-lg font-semibold text-text">
+                  {o.city}, {o.region}
+                </h3>
+                <address className="not-italic text-base text-text-2">
+                  {o.lines.map((l) => (
+                    <span key={l} className="block">
+                      {l}
+                    </span>
+                  ))}
+                </address>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        <dl className="mt-10 grid max-w-measure gap-px">
           {[
-            ["Based in", company.location],
             ["Founded", company.founded],
             ["Hours", company.hours],
             ["Email", publicEnv.profile.email],
@@ -356,7 +382,7 @@ export default function AboutPage() {
               key={k}
               className="flex flex-wrap justify-between gap-4 border-t border-[color:var(--color-border)] py-4"
             >
-              <dt className="font-mono text-xs text-muted">{k}</dt>
+              <dt className="text-xs font-semibold uppercase tracking-[0.08em] text-muted">{k}</dt>
               <dd className="text-base text-text">{v}</dd>
             </div>
           ))}
