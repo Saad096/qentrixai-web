@@ -34,7 +34,7 @@ export function Breadcrumb({
                 </span>
               )}
               {!last && (
-                <span aria-hidden="true" className="text-muted/60">
+                <span aria-hidden="true" className="text-muted">
                   /
                 </span>
               )}

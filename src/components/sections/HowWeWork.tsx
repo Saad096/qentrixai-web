@@ -67,8 +67,12 @@ export function HowWeWork() {
                 <span className="font-mono text-xs text-link">{p.step}</span>
               </span>
               <h3 className="text-lg font-semibold text-text">{p.title}</h3>
-              <p className="text-base text-text">{p.body}</p>
-              <p className="text-base text-muted">{p.detail}</p>
+              {/* Both paragraphs take `text` rather than one taking `muted`.
+                  Two colours inside one short card read as an inconsistency
+                  rather than a hierarchy, which is how it was reported.
+                  Weight carries the difference instead. */}
+              <p className="text-base font-medium text-text">{p.body}</p>
+              <p className="text-base text-text">{p.detail}</p>
               <p className="mt-auto border-t border-[color:var(--color-border)] pt-4 text-base text-text">
                 <span className="font-mono text-xs text-muted">You own </span>
                 {p.artifact}

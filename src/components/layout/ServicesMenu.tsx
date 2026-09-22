@@ -144,7 +144,10 @@ export function ServicesMenu({ active }: { active: boolean }) {
                 <ShieldCheck aria-hidden="true" className="size-[18px]" />
                 <span className="text-md font-bold">Sovereign and private AI</span>
               </span>
-              <span className="mt-1.5 block text-base opacity-90">
+              {/* No opacity. Ink on verdigris at 90% measures 4.32:1 -- under the
+                  floor, and introduced in the same pass that promoted this
+                  card. */}
+              <span className="mt-1.5 block text-base">
                 Open-weight models air-gapped on your servers, in your own cloud account, or at
                 the edge. Inference stays inside your boundary, not just storage.
               </span>

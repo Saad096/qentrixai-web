@@ -72,6 +72,16 @@ light, where `#0B6B5C` as text on a band is 4.27:1. So the brand/link split
 survives every repalette: amber on graphite, blue on navy, blue on graphite,
 and now verdigris on warm graphite. Foreground on any ground is `link`.
 
+**Never dim text with opacity.** Not on a card, not on a parent, not at
+90%. Opacity composites the element and everything in it against whatever is
+behind, and the result is always below the number the token was chosen for.
+Measured instances removed so far: the sequence steps at 0.55 (2.87:1 dark,
+2.52:1 light — and 3.67:1 even for primary text), the mega-menu's promoted
+card at 0.90 (4.32:1), and the 41 the first audit found on the old site. A
+state that needs marking gets a border, a fill, a shadow or a transform —
+something that is not the copy. Disabled controls are the one exemption,
+because WCAG exempts them.
+
 **Decorative washes are tokenised per theme.** `--wash-alpha` and
 `--band-glow` are 0.09/0.08 in dark against 0.16/0.14 in light. On navy a
 brand wash was the same hue as the page and merely lifted it; on graphite it

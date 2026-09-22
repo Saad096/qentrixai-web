@@ -692,18 +692,47 @@ body > footer {
   animation: panel-in var(--motion-base) var(--ease-out) both;
 }
 
-/* Pinned sequence steps. Only meaningful once JS has set an active one, so
-   the resting state is fully legible: no dimming is applied until the driver
-   adds .is-step-active to a sibling. */
-[data-pin-sequence]:has(.is-step-active) .pin-step {
-  opacity: 0.55;
-  transform: scale(0.985);
-  transition: opacity var(--motion-base) var(--ease-soft), transform var(--motion-base) var(--ease-soft);
+/* Sequence steps.
+ *
+ * This used to dim the inactive cards to opacity 0.55. Opacity composites
+ * the whole card -- text included -- against the page, and the measured
+ * result was 2.87:1 for muted copy in dark and 2.52:1 in light, against a
+ * 4.5 floor. Even primary text failed in light at 3.67. Three of the four
+ * cards were unreadable at any given scroll position, and reported as a
+ * text-colour bug because that is exactly what it looks like.
+ *
+ * It is also the alpha-text mistake this codebase already has a rule
+ * against -- see the note on Stat.tsx, and the 41 instances of it the first
+ * audit found on the old site.
+ *
+ * So the active step is marked with things that are not text: a brand rule
+ * down its leading edge and a lift. Every card stays fully legible at every
+ * scroll position, which is the only acceptable resting state for copy. */
+[data-pin-sequence] .pin-step {
+  position: relative;
+  transition: box-shadow var(--motion-base) var(--ease-soft),
+    transform var(--motion-base) var(--ease-soft);
+}
+
+[data-pin-sequence] .pin-step::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  background: rgb(var(--color-brand));
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-soft);
+  pointer-events: none;
 }
 
 [data-pin-sequence] .pin-step.is-step-active {
+  transform: translate3d(0, -4px, 0);
+  box-shadow: var(--shadow-2);
+}
+
+[data-pin-sequence] .pin-step.is-step-active::before {
   opacity: 1;
-  transform: none;
 }
 
 /* The footer is the one dark band in the light theme, so it re-declares the
@@ -1032,8 +1061,7 @@ body > footer {
   .panel-in,
   .menu-pop { animation: none; }
 
-  [data-pin-sequence]:has(.is-step-active) .pin-step {
-    opacity: 1;
+  [data-pin-sequence] .pin-step.is-step-active {
     transform: none;
   }
 
