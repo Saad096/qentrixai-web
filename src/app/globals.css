@@ -853,7 +853,7 @@ body > footer {
 @supports (animation-timeline: scroll()) {
   @keyframes header-dock {
     from {
-      width: min(100% - 2rem, 1040px);
+      width: min(100% - 2rem, 1180px);
       border-radius: 999px;
     }
     to {
@@ -905,7 +905,7 @@ body > footer {
      pill and does not take the timeline. */
   #mobile-menu.header-pill {
     animation: none;
-    width: min(100% - 2rem, 1040px);
+    width: min(100% - 2rem, 1180px);
     border-radius: var(--radius-lg);
   }
 }

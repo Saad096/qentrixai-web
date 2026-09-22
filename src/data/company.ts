@@ -81,6 +81,13 @@ export type Phase = {
 };
 
 /**
+ * Five phases since 2026-09-22, on the owner's note that monitoring
+ * deserved its own step. It did: Run was carrying both the handover and the
+ * observability, which made the most-skipped phase of an AI engagement look
+ * like a footnote on the deployment one. Run now ends at handover, and
+ * Monitor is the phase that exists because these systems degrade while the
+ * code stays still.
+ *
  * Rewritten 2026-09-21, cut again 2026-09-22 after a review called them
  * walls of eighty words that nobody reads. Two sentences each now; the
  * artifact line underneath is the most valuable sentence on the card and it
@@ -125,10 +132,18 @@ export const phases: Phase[] = [
   {
     step: "04",
     title: "Run",
-    body: "Deployed to your cloud, instrumented, then handed over on purpose.",
+    body: "Deployed to your cloud, then handed over on purpose.",
     detail:
-      "Dockerised rollout into your account, tracing on every call, and a rollback we have tested rather than assumed. Then your team runs a deploy and a rollback while we watch.",
-    artifact: "a runbook, dashboards, and a rollback path your team has used once.",
+      "Dockerised rollout into your account, secrets and access wired properly, and a rollback we have tested rather than assumed. Then your team runs a deploy and a rollback while we watch.",
+    artifact: "a runbook, and a rollback path your team has used once.",
+  },
+  {
+    step: "05",
+    title: "Monitor",
+    body: "Because AI systems degrade while the code stays still.",
+    detail:
+      "Tracing on every call, cost attributed per route, and the eval suite running against live traffic rather than only in CI. Drift gets caught by a report, not by a complaint. This is the phase most engagements skip and the one that decides whether the thing is still working in six months.",
+    artifact: "dashboards, drift alerts, and an eval suite running on a schedule.",
   },
 ];
 

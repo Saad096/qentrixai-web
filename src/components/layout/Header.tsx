@@ -39,7 +39,7 @@ import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { primaryNav, PRIMARY_CTA } from "@/data/navigation";
-import { ServicesMenu } from "./ServicesMenu";
+import { NAV_MENUS } from "./NavPanels";
 import { cn } from "@/lib/utils";
 
 const FOCUSABLE = 'a[href], button:not([disabled])';
@@ -122,11 +122,12 @@ export function Header() {
 
           <nav
             aria-label="Primary"
-            className="mx-auto hidden items-center gap-5 lg:flex xl:gap-6"
+            className="mx-auto hidden items-center gap-3.5 pl-6 lg:flex xl:gap-5"
           >
-            {primaryNav.map((item) =>
-              item.href === "/services" ? (
-                <ServicesMenu key={item.href} active={isActive(item.href)} />
+            {primaryNav.map((item) => {
+              const Menu = NAV_MENUS[item.href];
+              return Menu ? (
+                <Menu key={item.href} active={isActive(item.href)} />
               ) : (
                 <Link
                   key={item.href}
@@ -139,8 +140,8 @@ export function Header() {
                 >
                   {item.label}
                 </Link>
-              )
-            )}
+              );
+            })}
           </nav>
 
           <div className="ml-auto flex items-center gap-1.5 lg:ml-0">

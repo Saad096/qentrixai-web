@@ -5,7 +5,7 @@
  * Numbered because it genuinely is a sequence -- the one case where numbered
  * markers earn their place.
  */
-import { Activity, Hammer, PenTool, Target } from "lucide-react";
+import { Activity, Hammer, LineChart, PenTool, Target } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { phases } from "@/data/company";
@@ -19,6 +19,7 @@ const MARKS: Record<string, typeof Target> = {
   Design: PenTool,
   Build: Hammer,
   Run: Activity,
+  Monitor: LineChart,
 };
 
 export function HowWeWork() {
@@ -26,7 +27,7 @@ export function HowWeWork() {
     <Section
       id="how-we-work"
       eyebrow="How we work"
-      heading="Four phases, and what you own after each one."
+      heading={`${phases.length} phases, and what you own after each one.`}
       lede="Every phase ends with an artifact in your repo, not a status call."
       ground="base"
     >
@@ -36,7 +37,7 @@ export function HowWeWork() {
           a phone fights the browser's own scroll, which is the usual way
           this pattern goes wrong. */}
       <div data-pin-sequence>
-      {/* The line only reads as a sequence when the four phases sit on one
+      {/* The line only reads as a sequence when the phases sit on one
           row, so it is desktop-only rather than shown and meaningless. */}
       <div className="relative mt-12 hidden h-px bg-[color:var(--color-border)] xl:block">
         <span
@@ -46,7 +47,7 @@ export function HowWeWork() {
         />
       </div>
 
-      <ol className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+      <ol className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {phases.map((p) => (
           <Card as="li" key={p.step} data-pin-step className="pin-step">
             {/* No data-reveal here. Inside the pin the reveal trigger never
