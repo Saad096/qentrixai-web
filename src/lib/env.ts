@@ -32,6 +32,14 @@ export const publicEnv = {
     resumeUrl: pick(process.env.NEXT_PUBLIC_PROFILE_RESUME_URL, "/api/resume"),
   },
 
+  /* The scheduling event behind the booking dialog. /book stays a real route
+     for no-JS, for direct links and for search engines; the dialog is what
+     opens when JS is on. */
+  calendlyUrl: pick(
+    process.env.NEXT_PUBLIC_CALENDLY_URL,
+    "https://calendly.com/talk2saad/30-min-growth-strategy-call"
+  ),
+
   socials: {
     /* Company accounts. The freelance marketplaces are gone on the owner's
        instruction: Upwork, Fiverr and Freelancer were a personal profile

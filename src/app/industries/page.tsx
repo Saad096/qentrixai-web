@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DomainFlow } from "@/components/art/DomainFlow";
+import { DomainOrbit } from "@/components/art/DomainOrbit";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
@@ -56,7 +57,7 @@ export default function IndustriesPage() {
 
       <section className="py-16 md:py-24">
         <Container>
-          <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
               <p className="font-mono text-xs text-muted">Industries</p>
               <h1 className="mt-4 max-w-[20ch] text-hero font-bold text-text">
@@ -73,23 +74,30 @@ export default function IndustriesPage() {
                   {PRIMARY_CTA.label}
                 </Button>
               </div>
+
+              {/* The stats sat in the right column, which left three short
+                  numbers holding half a hero. They belong under the copy;
+                  the column they were in now carries the art. */}
+              <dl className="mt-11 grid max-w-measure gap-5 sm:grid-cols-3">
+                {[
+                  [`${industries.length}`, "domains"],
+                  [`${backed.length}`, "backed by shipped work"],
+                  [`${caseStudies.length}`, "case studies"],
+                ].map(([v, k]) => (
+                  <div key={k}>
+                    <dt className="sr-only">{k}</dt>
+                    <dd>
+                      <span className="block text-2xl font-bold text-text">{v}</span>
+                      <span className="mt-1.5 block text-base text-muted">{k}</span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
 
-            <dl className="grid gap-5 sm:grid-cols-3 lg:col-span-5">
-              {[
-                [`${industries.length}`, "domains"],
-                [`${backed.length}`, "backed by shipped work"],
-                [`${caseStudies.length}`, "case studies"],
-              ].map(([v, k]) => (
-                <div key={k}>
-                  <dt className="sr-only">{k}</dt>
-                  <dd>
-                    <span className="block text-2xl font-bold text-text">{v}</span>
-                    <span className="mt-1.5 block text-base text-muted">{k}</span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <div className="lg:col-span-5">
+              <DomainOrbit />
+            </div>
           </div>
         </Container>
       </section>

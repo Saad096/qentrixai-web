@@ -72,8 +72,13 @@ export function Footer() {
   return (
     <footer className="footer-deep border-t border-[color:var(--color-border)]">
       <Container width="footer">
-        <div className="grid gap-12 py-14 md:py-16 lg:grid-cols-12 lg:gap-x-10">
-          <div className="lg:col-span-3">
+        {/* Brand block above the columns, not beside them. Sharing the row
+            left the four link columns about 300px each, and every label here
+            is a sentence rather than a word, so they kept wrapping to two
+            lines however the split was tuned. Full width, four columns, and
+            they fit on one line each. */}
+        <div className="py-14 md:py-16">
+          <div className="max-w-[46ch]">
             <Logo />
             <p className="mt-5 max-w-[40ch] text-base text-muted">{company.mission}</p>
 
@@ -109,11 +114,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 9 of 12, not 8, and a wider gutter. Every one of these labels
-              is a sentence rather than a word -- "Keep the model inside your
-              border" -- so at the old width they all wrapped to two lines
-              and the columns read as a wall. */}
-          <div className="grid grid-cols-2 gap-x-10 gap-y-8 lg:col-span-9 lg:grid-cols-4">
+          <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 lg:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
@@ -136,7 +137,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="grid gap-8 border-t border-[color:var(--color-border)] py-10 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Same four-column grid and same gutter as the link block above, so
+            the two rows line up rather than each finding its own rhythm. */}
+        <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-[color:var(--color-border)] py-10 lg:grid-cols-4">
           {offices.map((o) => (
             <div key={o.city}>
               <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
