@@ -79,7 +79,14 @@ const config: Config = {
         3: "var(--shadow-3)",
       },
       maxWidth: {
-        container: "1260px",
+        // 1260 left 330px of empty margin either side of a 1920 screen, which
+        // is what read as "the padding is too high": the gutter was the
+        // container cap, not the 32px of padding inside it.
+        container: "1440px",
+        // The footer runs wider than the page on purpose. Every label in it
+        // is a sentence rather than a word ("Keep the model inside your
+        // border"), and at container width they all wrapped to two lines.
+        footer: "1600px",
         measure: "62ch",
       },
     },

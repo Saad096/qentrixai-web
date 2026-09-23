@@ -37,6 +37,7 @@ for (const route of paths) {
     for (const el of main.querySelectorAll("*")) {
       const cs = getComputedStyle(el);
       if (cs.visibility === "hidden" || cs.display === "none" || parseFloat(cs.opacity) < 0.05) continue;
+      const bgImage = cs.backgroundImage;
       const hasInk =
         (el.childNodes.length &&
           [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) ||
@@ -46,7 +47,14 @@ for (const route of paths) {
         // half-empty section.
         ["IMG", "SVG", "VIDEO", "CANVAS", "INPUT", "TEXTAREA", "SELECT"].includes(
           el.tagName.toUpperCase()
-        );
+        ) ||
+        // A background-image is ink too. The case-study cards draw their
+        // illustration on `.illus-plate` as a CSS background rather than an
+        // <img>, so a 250px band of artwork on three cards was being
+        // reported as 326px of dead space on every run. Gradients are
+        // excluded: nearly every card and band carries one, and counting
+        // them would mark the whole page as painted.
+        (bgImage !== "none" && bgImage.includes("url("));
       if (!hasInk) continue;
       const r = el.getBoundingClientRect();
       if (r.height < 2 || r.width < 2) continue;

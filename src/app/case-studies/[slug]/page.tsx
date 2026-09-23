@@ -6,10 +6,8 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { DomainFlow } from "@/components/art/DomainFlow";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
 import { caseStudyDetail } from "@/data/caseStudyDetail";
 import { caseStudies } from "@/data/caseStudies";
-import { PRIMARY_CTA } from "@/data/navigation";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 type Params = { slug: string };
@@ -197,11 +195,6 @@ export default async function CaseStudyDetail({ params }: { params: Promise<Para
           )}
         </div>
 
-        <div className="mt-12">
-          <Button href={PRIMARY_CTA.href} size="lg">
-            {PRIMARY_CTA.label}
-          </Button>
-        </div>
       </Section>
 
       <Section eyebrow="More work" heading="Other engagements." ground="band">

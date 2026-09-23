@@ -518,9 +518,15 @@ body > footer {
    One brand-tinted wash falling off the top edge -- enough to give the
    surface a light direction, far too faint to cost any text contrast
    (7% of the brand hue moves the card's luminance by under a point). */
+/* The tint pools at the BOTTOM of the card. It ran 180deg -- brightest at
+   the top edge, fading down -- and in the light theme a green-tinted band
+   along the top edge reads as a shadow falling upward onto the card, which
+   is how the owner reported it. Light comes from above, so the top edge is
+   clean and the weight sits at the bottom, agreeing with the drop shadow
+   underneath rather than fighting it. */
 .surface-sheen {
   background-image: linear-gradient(
-    180deg,
+    0deg,
     rgb(var(--color-brand) / 0.07) 0%,
     rgb(var(--color-brand) / 0) 55%
   );

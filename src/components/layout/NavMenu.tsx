@@ -105,7 +105,12 @@ export function NavMenu({
         }}
         className={cn(
           "inline-flex min-h-[44px] items-center gap-1.5 whitespace-nowrap text-sm transition-colors xl:text-base",
-          active || open ? "text-text" : "text-muted hover:text-text"
+          // text-2, not muted. The header pill is translucent, so the nav
+          // sits on whatever band the page has scrolled under it. On the
+          // pale green of the sovereign-ai hero, muted measured 4.34:1 and
+          // failed. text-2 is the darkest of the secondary tokens and clears
+          // it on every ground the site has.
+          active || open ? "text-text" : "text-text-2 hover:text-text"
         )}
       >
         {label}

@@ -46,21 +46,48 @@ export function Section({
     >
       <Container>
         {(eyebrow || heading || lede) && (
-          <header data-reveal className={cn("max-w-measure", headerClassName)}>
-            {/* Not mono. A section label was 13px, monospaced and muted --
-                three legibility penalties on the same four words, and mono
-                is meant to be reserved for figures, identifiers and machine
-                strings. Uppercase sans with tracking reads as a label
-                without any of that. */}
-            {eyebrow && (
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.1em] text-text-2">
-                {eyebrow}
-              </p>
+          /* Heading and lede sit side by side once there is room for it.
+             Stacked and capped at a 62ch measure, the header used less than
+             half the container and left a hole the width of a column beside
+             it -- which got worse when the container widened to 1440. The
+             measure still caps each column, so nothing gets harder to read;
+             the second column just uses the space the first one was not.
+
+             A caller that passes headerClassName is opting out: it wants a
+             particular width, so the split would fight it. */
+          <header
+            data-reveal
+            className={cn(
+              headerClassName
+                ? cn("max-w-measure", headerClassName)
+                : lede && heading
+                  ? "grid gap-x-12 gap-y-5 lg:grid-cols-12"
+                  : "max-w-measure"
             )}
-            {heading && (
-              <Heading className="text-3xl font-bold text-text">{heading}</Heading>
+          >
+            <div className={cn(!headerClassName && lede && heading && "lg:col-span-7")}>
+              {/* Not mono. A section label was 13px, monospaced and muted --
+                  three legibility penalties on the same four words, and mono
+                  is meant to be reserved for figures, identifiers and machine
+                  strings. Uppercase sans with tracking reads as a label
+                  without any of that. */}
+              {eyebrow && (
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.1em] text-text-2">
+                  {eyebrow}
+                </p>
+              )}
+              {heading && (
+                <Heading className="max-w-measure text-3xl font-bold text-text">{heading}</Heading>
+              )}
+              {/* Stacked layout keeps the lede under the heading. */}
+              {lede && (!heading || headerClassName) && (
+                <p className="mt-5 max-w-measure text-md text-muted">{lede}</p>
+              )}
+            </div>
+
+            {lede && heading && !headerClassName && (
+              <p className="max-w-measure self-end text-md text-muted lg:col-span-5">{lede}</p>
             )}
-            {lede && <p className="mt-5 text-md text-muted">{lede}</p>}
           </header>
         )}
         {children}

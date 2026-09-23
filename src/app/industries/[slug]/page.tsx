@@ -17,6 +17,7 @@ import { products } from "@/data/products";
 import { services } from "@/data/services";
 import { PRIMARY_CTA } from "@/data/navigation";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 type Params = { slug: string };
 
@@ -246,14 +247,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             in the case studies, where the same techniques are applied in a domain we can talk
             about.
           </p>
-          <p className="mt-7">
-            <Link
-              href="/case-studies"
-              className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
-            >
-              {`All ${caseStudies.length} case studies →`}
-            </Link>
-          </p>
+          <SectionCta href="/case-studies">{`All ${caseStudies.length} case studies`}</SectionCta>
         </Section>
       )}
 

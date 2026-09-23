@@ -10,6 +10,7 @@ import { caseStudies } from "@/data/caseStudies";
 import { faqs } from "@/data/faqs";
 import { PRIMARY_CTA } from "@/data/navigation";
 import { buildMetadata, serviceJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 /**
  * Sovereign AI gets a hand-built page instead of the /services/[slug]
@@ -573,14 +574,9 @@ export default function SovereignAiPage() {
           ))}
         </ul>
 
-        <p className="mt-9">
-          <Link
-            href="/services/inference-engineering"
-            className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
-          >
-            {"How we do inference engineering \u2192"}
-          </Link>
-        </p>
+        <SectionCta href="/services/inference-engineering">
+          How we do inference engineering
+        </SectionCta>
       </Section>
 
       <Section

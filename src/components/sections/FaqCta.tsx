@@ -74,20 +74,18 @@ export function CtaBlock() {
   return (
       <section className="relative isolate overflow-hidden py-12 md:py-16">
         <Container className="above-orbs">
-          {/* Reported as "not centred and very big", and measurement showed it
-              was already centred to the pixel -- 126px of gutter on each side
-              at 1440. Two other things were doing the work.
+          {/* Full container width. It was capped at 880px so the panel would
+              not read as an empty slab, but the copy inside is what was
+              narrow, not the panel -- and a card that stops short of the
+              grid every other section lines up to is the thing that reads as
+              misplaced. The copy stays capped by its own measure; the ground
+              runs edge to edge with the page.
 
-              The panel ran the full 1188px container while the copy was capped
-              at 24ch, so most of it was empty gradient: it read as a slab, not
-              a card. It is capped at 880px now, near the width of its own
-              content, and the vertical padding comes down with it.
-
-              And `.brand-gradient` is a 135deg ramp, so its bright end sat in
-              the top-left corner while the text sat in the middle. Centred
-              copy on an off-centre ground reads as off-centre copy. The radial
+              `.brand-gradient` is a 135deg ramp, so its bright end sat in the
+              top-left corner while the text sat in the middle. Centred copy
+              on an off-centre ground reads as off-centre copy. The radial
               variant anchors the light stop on the text instead. */}
-          <div className="brand-gradient-radial mx-auto max-w-[880px] rounded-lg px-9 py-12 text-center text-on-brand md:px-12 md:py-16">
+          <div className="brand-gradient-radial rounded-lg px-9 py-14 text-center text-on-brand md:px-12 md:py-20">
             <h2 className="mx-auto max-w-[24ch] text-2xl font-bold">
               Bring a goal. Leave with an architecture and a timeline.
             </h2>

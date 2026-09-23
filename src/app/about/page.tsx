@@ -17,6 +17,7 @@ import { products } from "@/data/products";
 import { clients } from "@/data/clients";
 import { publicEnv } from "@/lib/env";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 export const metadata = buildMetadata({
   title: "About QentrixAI",
@@ -247,14 +248,7 @@ export default function AboutPage() {
             );
           })}
         </ul>
-        <p className="mt-9">
-          <Link
-            href="/services"
-            className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
-          >
-            {`All ${services.length} capabilities →`}
-          </Link>
-        </p>
+        <SectionCta href="/services">{`All ${services.length} capabilities`}</SectionCta>
       </Section>
 
       <StackTabs />

@@ -71,7 +71,7 @@ export function Footer() {
 
   return (
     <footer className="footer-deep border-t border-[color:var(--color-border)]">
-      <Container>
+      <Container width="footer">
         <div className="grid gap-12 py-14 md:py-16 lg:grid-cols-12 lg:gap-x-10">
           <div className="lg:col-span-3">
             <Logo />

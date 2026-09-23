@@ -17,6 +17,7 @@ import { PRIMARY_CTA } from "@/data/navigation";
 import { Card } from "@/components/ui/Card";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { buildMetadata, serviceJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 type Params = { slug: string };
 
@@ -341,7 +342,15 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
           heading="Usually bought alongside."
           ground="base"
         >
-          <ul className="mt-10 grid gap-5 md:grid-cols-3">
+          {/* Column count follows the item count. Most capabilities have two
+              siblings, and two cards in a three-column grid hug the left edge
+              with a dead third column beside them -- which is what the owner
+              saw. Two siblings now take half the row each. */}
+          <ul
+            className={`mt-10 grid gap-5 ${
+              siblings.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"
+            }`}
+          >
             {siblings.map((sib, i) => (
               <Card as="li" key={sib.slug} interactive>
                 <Link
@@ -356,14 +365,9 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
               </Card>
             ))}
           </ul>
-          <p className="mt-9">
-            <Link
-              href="/services"
-              className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
-            >
-              {`All ${services.length} capabilities across ${SERVICE_GROUPS.length} groups \u2192`}
-            </Link>
-          </p>
+          <SectionCta href="/services">
+            {`All ${services.length} capabilities across ${SERVICE_GROUPS.length} groups`}
+          </SectionCta>
         </Section>
       )}
 
