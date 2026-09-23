@@ -111,6 +111,9 @@ export function ServicesMenu({ active }: { active: boolean }) {
         <Link href="/industries" className={footClass}>
           {"Browse by industry →"}
         </Link>
+        <Link href="/#model-radar" className={footClass}>
+          {"Compare models interactively →"}
+        </Link>
       </PanelFoot>
     </NavMenu>
   );

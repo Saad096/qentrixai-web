@@ -289,6 +289,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* The header is sticky, so an untreated anchor jump parks its target
+   underneath the bar. Every in-page link on the site goes through this:
+   /#model-radar from the Build menu, /about#how-we-work, the service
+   anchors. Scrolled header height plus air. */
+html {
+  scroll-padding-top: 5.5rem;
+  scroll-behavior: smooth;
+}
+
 /* ------------------------------------------------------------------ */
 /* Ambient orb field.                                                   */
 /*                                                                      */

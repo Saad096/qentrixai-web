@@ -4,6 +4,7 @@ import { TheGap } from "@/components/sections/TheGap";
 import { CapabilityCards } from "@/components/sections/CapabilityCards";
 import { Sovereign } from "@/components/sections/Sovereign";
 import { InferenceEconomics } from "@/components/sections/InferenceEconomics";
+import { ModelRadar } from "@/components/sections/ModelRadar";
 import { ProductsRow } from "@/components/sections/ProductsRow";
 import { HowWeWork } from "@/components/sections/HowWeWork";
 import { IndustryCards } from "@/components/sections/IndustryCards";
@@ -34,6 +35,7 @@ export default function HomePage() {
       <CapabilityCards />
       <Sovereign />
       <InferenceEconomics />
+      <ModelRadar />
       <ProductsRow />
       <HowWeWork />
       <IndustryCards />

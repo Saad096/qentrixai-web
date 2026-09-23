@@ -92,7 +92,7 @@ export function ModelRadar() {
   }));
 
   return (
-    <section className="section rule">
+    <section id="model-radar" className="section rule">
       <div className="mx-auto w-full max-w-container px-5 sm:px-8 lg:px-9">
         <p className="mb-4 font-mono text-xs text-muted">How we pick a model</p>
         <h2 className="max-w-[24ch] text-3xl font-bold text-text">
