@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { testimonials } from "@/data/testimonials";
+import { gridCols } from "@/lib/grid";
 
 /**
  * Quote cards. Anything still carrying `placeholder` renders with a visible
@@ -21,7 +22,7 @@ export function Testimonials() {
       heading="In their words."
       ground="base"
     >
-      <ul className="mt-12 grid gap-5 md:grid-cols-3">
+      <ul className={`mt-12 grid gap-5 ${gridCols(real.length)}`}>
         {real.map((t, i) => (
           <Card as="li" key={t.quote}>
             <figure data-reveal data-reveal-delay={i * 70} className="flex h-full flex-col gap-5 p-7">

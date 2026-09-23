@@ -2,6 +2,9 @@
  * The industries hero art: eight domains orbiting the constraint they all
  * share.
  *
+ * Reused by /services with a different set of nodes and a different hub --
+ * same ring, different argument.
+ *
  * Built from tokens rather than traced from the reference the owner sent.
  * That reference is a stock diagram and CLAUDE.md §7.4 rules out reusing
  * other people's assets, but the stronger reason is that it says nothing --
@@ -18,21 +21,31 @@
  * No text in the SVG. Labels are HTML positioned over it -- SVG text will
  * not wrap, which is what clipped the DomainFlow labels twice before.
  */
-const NODES = [
-  { name: "Healthcare", slug: "healthcare", tone: 1 },
-  { name: "Financial services", slug: "financial-services", tone: 2 },
-  { name: "Legal and compliance", slug: "legal-tech", tone: 3 },
-  { name: "Insurance", slug: "insurance-tech", tone: 4 },
-  { name: "Agritech", slug: "agriculture-and-agritech", tone: 5 },
-  { name: "Education", slug: "education-and-learning", tone: 6 },
-  { name: "Logistics", slug: "logistics", tone: 3 },
-  { name: "Public sector", slug: "public-sector", tone: 5 },
+export type OrbitNode = { name: string; key: string; tone: number };
+
+const DOMAIN_NODES: OrbitNode[] = [
+  { name: "Healthcare", key: "healthcare", tone: 1 },
+  { name: "Financial services", key: "financial-services", tone: 2 },
+  { name: "Legal and compliance", key: "legal-tech", tone: 3 },
+  { name: "Insurance", key: "insurance-tech", tone: 4 },
+  { name: "Agritech", key: "agriculture-and-agritech", tone: 5 },
+  { name: "Education", key: "education-and-learning", tone: 6 },
+  { name: "Logistics", key: "logistics", tone: 3 },
+  { name: "Public sector", key: "public-sector", tone: 5 },
 ];
 
-/** Where each node sits on the ring, in degrees clockwise from the top. */
-const STEP = 360 / NODES.length;
+export function DomainOrbit({
+  nodes = DOMAIN_NODES,
+  hub = "The constraint",
+  label = "Eight of the domains QentrixAI builds for, arranged around the constraint they share: where the data may be processed, what a wrong answer costs, and whether it must keep working offline.",
+}: {
+  nodes?: OrbitNode[];
+  hub?: string;
+  label?: string;
+} = {}) {
+  /* Where each node sits on the ring, in degrees clockwise from the top. */
+  const STEP = 360 / nodes.length;
 
-export function DomainOrbit() {
   return (
     <div
       /* overflow-hidden because each node's placement wrapper is a full-size
@@ -43,7 +56,7 @@ export function DomainOrbit() {
              showed up as horizontal overflow on every viewport. */
           className="domain-orbit relative mx-auto aspect-square w-full max-w-[520px] overflow-hidden"
       role="img"
-      aria-label="Eight of the domains QentrixAI builds for, arranged around the constraint they share: where the data may be processed, what a wrong answer costs, and whether it must keep working offline."
+      aria-label={label}
     >
       <svg viewBox="0 0 400 400" className="absolute inset-0 size-full" aria-hidden="true">
         {/* The track the nodes run on. */}
@@ -60,9 +73,9 @@ export function DomainOrbit() {
             their own node. Dashed, because the relationship is a dependency
             rather than a flow. */}
         <g className="domain-orbit__ring" style={{ transformOrigin: "200px 200px" }}>
-          {NODES.map((n, i) => (
+          {nodes.map((n, i) => (
             <line
-              key={n.slug}
+              key={n.key}
               x1="200"
               y1="200"
               x2="200"
@@ -90,8 +103,8 @@ export function DomainOrbit() {
           31% is r=62 of the 400 viewBox, so it matches the ring exactly. */}
       <div className="absolute inset-0 grid place-items-center">
         <div className="grid aspect-square w-[31%] place-items-center rounded-full bg-brand p-3">
-          <p className="max-w-[9ch] text-center text-md font-bold leading-tight text-on-brand">
-            The constraint
+          <p className="max-w-[10ch] text-center text-md font-bold leading-tight text-on-brand">
+            {hub}
           </p>
         </div>
       </div>
@@ -111,9 +124,9 @@ export function DomainOrbit() {
           Radius is 14.5% from the top: the ring sits at r=142 in a 400
           viewBox, so 50% - 35.5%. */}
       <div className="domain-orbit__ring absolute inset-0">
-        {NODES.map((n, i) => (
+        {nodes.map((n, i) => (
           <div
-            key={n.slug}
+            key={n.key}
             className="absolute inset-0"
             style={{ transform: `rotate(${i * STEP}deg)` }}
           >

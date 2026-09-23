@@ -9,6 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { caseStudyDetail } from "@/data/caseStudyDetail";
 import { caseStudies } from "@/data/caseStudies";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { gridCols } from "@/lib/grid";
 
 type Params = { slug: string };
 
@@ -145,7 +146,7 @@ export default async function CaseStudyDetail({ params }: { params: Promise<Para
           lede="The rejected option is the useful half. A decision with no alternative recorded is a preference."
           ground="band"
         >
-          <ol className="mt-12 grid gap-5 md:grid-cols-3">
+          <ol className={`mt-12 grid gap-5 ${gridCols(detail.decisions.length)}`}>
             {detail.decisions.map((d, i) => (
               <Card as="li" key={d.choice}>
                 <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">

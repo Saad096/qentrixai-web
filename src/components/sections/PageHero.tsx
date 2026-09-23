@@ -17,6 +17,7 @@ import { Scene, type SceneKey } from "@/components/art/scenes";
  *
  * `photo` takes precedence over `art` where the owner has supplied a render
  * for a page. It is the LCP element when present, so it carries `priority`.
+ * `visual` beats both, for a hero that is a live component.
  */
 export function PageHero({
   eyebrow,
@@ -24,6 +25,7 @@ export function PageHero({
   lede,
   art,
   photo,
+  visual,
   trail,
   children,
 }: {
@@ -32,6 +34,9 @@ export function PageHero({
   lede?: React.ReactNode;
   art?: SceneKey;
   photo?: { src: string; width: number; height: number; alt: string };
+  /** A live component in the art slot, for pages whose hero is interactive
+      or animated rather than a still. Wins over `photo` and `art`. */
+  visual?: React.ReactNode;
   trail?: { name: string; href?: string }[];
   /** Buttons, stats, anything that belongs under the lede. */
   children?: React.ReactNode;
@@ -39,8 +44,14 @@ export function PageHero({
   return (
     <section className="py-16 md:py-24">
       <Container>
-        <div className={art || photo ? "grid items-center gap-12 lg:grid-cols-12 lg:gap-14" : undefined}>
-          <div className={art || photo ? "lg:col-span-6" : undefined}>
+        <div
+          className={
+            art || photo || visual
+              ? "grid items-center gap-12 lg:grid-cols-12 lg:gap-14"
+              : undefined
+          }
+        >
+          <div className={art || photo || visual ? "lg:col-span-6" : undefined}>
             {trail && <Breadcrumb trail={trail} />}
             {eyebrow && (
               <p
@@ -56,7 +67,9 @@ export function PageHero({
             {children}
           </div>
 
-          {photo ? (
+          {visual ? (
+            <div className="lg:col-span-6">{visual}</div>
+          ) : photo ? (
             <div className="lg:col-span-6">
               <Image
                 src={photo.src}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
+import { DomainOrbit } from "@/components/art/DomainOrbit";
 import { Section } from "@/components/ui/Section";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { services } from "@/data/services";
@@ -38,7 +39,29 @@ export default function ServicesPage() {
 
       <PageHero
         title="What we build"
-        art="index-services"
+        /* The orbit rather than a still. The owner's reference for this slot
+           was a stock four-quadrant AI diagram; the ring already exists on
+           /industries, already carries our palette, and can carry our real
+           capability groups instead of four generic labels. Same ring, a
+           different argument: on /industries the hub is the constraint that
+           shapes a system, here it is the thing all twenty-one capabilities
+           are in service of. */
+        visual={
+          <DomainOrbit
+            hub="One system"
+            nodes={[
+              { name: "Agents", key: "agents", tone: 1 },
+              { name: "Retrieval", key: "retrieval", tone: 2 },
+              { name: "Voice AI", key: "voice", tone: 3 },
+              { name: "Computer vision", key: "vision", tone: 4 },
+              { name: "Data engineering", key: "data", tone: 5 },
+              { name: "Web and mobile", key: "product", tone: 6 },
+              { name: "Cloud and MLOps", key: "cloud", tone: 3 },
+              { name: "Blockchain", key: "chain", tone: 5 },
+            ]}
+            label="Eight of the capabilities QentrixAI builds with, arranged around the one system they are assembled into: agents, retrieval, voice AI, computer vision, data engineering, web and mobile, cloud and MLOps, and blockchain."
+          />
+        }
         lede={
           <>
             {services.length} capabilities. Each one ships with the same production discipline: evals,

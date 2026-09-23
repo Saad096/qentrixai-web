@@ -18,6 +18,7 @@ import { services } from "@/data/services";
 import { PRIMARY_CTA } from "@/data/navigation";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { SectionCta } from "@/components/ui/SectionCta";
+import { gridCols } from "@/lib/grid";
 
 type Params = { slug: string };
 
@@ -152,7 +153,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
         lede="Before any model is involved. These are the constraints the architecture has to answer to."
         ground="band"
       >
-        <ul className="mt-12 grid gap-5 md:grid-cols-3">
+        <ul className={`mt-12 grid gap-5 ${gridCols(detail.pressures.length)}`}>
           {detail.pressures.map((p, i) => (
             <Card as="li" key={p.title}>
               <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
@@ -168,7 +169,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       </Section>
 
       <Section eyebrow="What we build" heading="And what it is shaped by." ground="base">
-        <ul className="mt-12 grid gap-5 md:grid-cols-3">
+        <ul className={`mt-12 grid gap-5 ${gridCols(detail.build.length)}`}>
           {detail.build.map((b, i) => (
             <Card as="li" key={b.title}>
               <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
@@ -191,20 +192,35 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
           ground="band"
         >
           {cases.length > 0 && (
-            <ul className="mt-12 grid gap-5 md:grid-cols-3">
+            <ul className={`mt-12 grid gap-5 ${gridCols(cases.length)}`}>
               {cases.map((c, i) => (
                 <Card as="li" key={c.slug} interactive>
+                  {/* A single case study takes the whole row, so it lays out
+                      along the row rather than stacking into one tall
+                      column with two thirds of the band empty beside it. */}
                   <Link
                     href={`/case-studies/${c.slug}`}
                     data-reveal
                     data-reveal-delay={i * 60}
-                    className="flex h-full flex-col gap-3 p-7"
+                    className={
+                      cases.length === 1
+                        ? "flex h-full flex-col gap-6 p-7 md:flex-row md:items-center md:gap-12 md:p-9"
+                        : "flex h-full flex-col gap-3 p-7"
+                    }
                   >
-                    <span className="font-mono text-xs text-link">{c.category}</span>
-                    <h3 className="text-md font-semibold text-text">{c.title}</h3>
-                    <p className="text-base text-text-2">{c.problem}</p>
+                    <span className={cases.length === 1 ? "flex flex-col gap-3 md:flex-1" : "contents"}>
+                      <span className="font-mono text-xs text-link">{c.category}</span>
+                      <h3 className="text-md font-semibold text-text">{c.title}</h3>
+                      <p className="text-base text-text-2">{c.problem}</p>
+                    </span>
                     {c.metric && (
-                      <p className="mt-auto pt-4">
+                      <p
+                        className={
+                          cases.length === 1
+                            ? "shrink-0 border-t border-[color:var(--color-border)] pt-5 md:w-56 md:border-l md:border-t-0 md:pl-10 md:pt-0"
+                            : "mt-auto pt-4"
+                        }
+                      >
                         <span className="block text-2xl font-bold text-text">{c.metric.value}</span>
                         <span className="mt-1 block font-mono text-xs text-muted">
                           {c.metric.label}
@@ -222,7 +238,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               <p className="mt-14 font-mono text-xs text-muted">
                 Products we built and operate in this domain
               </p>
-              <ul className="mt-5 grid gap-9 md:grid-cols-3">
+              <ul className={`mt-5 grid gap-9 ${gridCols(owned.length)}`}>
                 {owned.map((p, i) => {
                   const shot = p.coverMode === "dark" ? "" : p.cover || p.gallery[0] || "";
                   return (
@@ -231,22 +247,39 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                         href={`/products/${p.slug}`}
                         data-reveal
                         data-reveal-delay={i * 60}
-                        className="group block"
+                        className={
+                          owned.length === 1
+                            ? "group grid items-center gap-8 md:grid-cols-12 md:gap-12"
+                            : "group block"
+                        }
                       >
-                        {shot ? (
-                          <DeviceFrame
-                            src={shot}
-                            alt={`${p.name} interface`}
-                            orientation={p.orientation}
-                            sizes="(min-width: 768px) 33vw, 100vw"
-                          />
-                        ) : (
-                          <DevicePlaceholder name={p.name} />
-                        )}
-                        <h3 className="mt-5 text-lg font-semibold text-text group-hover:text-link">
-                          {p.name}
-                        </h3>
-                        <p className="mt-2 text-base text-text-2">{p.tagline}</p>
+                        <div className={owned.length === 1 ? "md:col-span-7" : undefined}>
+                          {shot ? (
+                            <DeviceFrame
+                              src={shot}
+                              alt={`${p.name} interface`}
+                              orientation={p.orientation}
+                              sizes={
+                                owned.length === 1
+                                  ? "(min-width: 768px) 58vw, 100vw"
+                                  : "(min-width: 768px) 33vw, 100vw"
+                              }
+                            />
+                          ) : (
+                            <DevicePlaceholder name={p.name} />
+                          )}
+                        </div>
+                        <div className={owned.length === 1 ? "md:col-span-5" : undefined}>
+                          <h3
+                            className={
+                              (owned.length === 1 ? "" : "mt-5 ") +
+                              "text-lg font-semibold text-text group-hover:text-link"
+                            }
+                          >
+                            {p.name}
+                          </h3>
+                          <p className="mt-2 text-base text-text-2">{p.tagline}</p>
+                        </div>
                       </Link>
                     </li>
                   );
@@ -268,7 +301,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
       )}
 
       <Section eyebrow="Capabilities" heading="What this work draws on." ground="base">
-        <ul className="mt-12 grid gap-5 md:grid-cols-3">
+        <ul className={`mt-12 grid gap-5 ${gridCols(related.length)}`}>
           {related.map((s, i) => (
             <Card as="li" key={s.slug} interactive>
               <Link

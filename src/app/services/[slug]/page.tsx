@@ -18,6 +18,7 @@ import { Card } from "@/components/ui/Card";
 import { CtaBlock } from "@/components/sections/FaqCta";
 import { buildMetadata, serviceJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 import { SectionCta } from "@/components/ui/SectionCta";
+import { gridCols } from "@/lib/grid";
 
 type Params = { slug: string };
 
@@ -232,7 +233,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
 
       {detail && (
         <Section eyebrow="The work" heading="Three stages, in this order." ground={nextGround()}>
-          <ol className="mt-12 grid gap-5 md:grid-cols-3">
+          <ol className={`mt-12 grid gap-5 ${gridCols(detail.stages.length)}`}>
             {detail.stages.map((st, i) => (
               <Card as="li" key={st.title}>
                 <div data-reveal data-reveal-delay={i * 60} className="flex h-full flex-col gap-3 p-7">
@@ -346,11 +347,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
               siblings, and two cards in a three-column grid hug the left edge
               with a dead third column beside them -- which is what the owner
               saw. Two siblings now take half the row each. */}
-          <ul
-            className={`mt-10 grid gap-5 ${
-              siblings.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"
-            }`}
-          >
+          <ul className={`mt-10 grid gap-5 ${gridCols(siblings.length)}`}>
             {siblings.map((sib, i) => (
               <Card as="li" key={sib.slug} interactive>
                 <Link
