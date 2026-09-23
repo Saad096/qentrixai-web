@@ -292,10 +292,15 @@ body {
 /* The header is sticky, so an untreated anchor jump parks its target
    underneath the bar. Every in-page link on the site goes through this:
    /#model-radar from the Build menu, /about#how-we-work, the service
-   anchors. Scrolled header height plus air. */
+   anchors. Scrolled header height plus air.
+
+   Deliberately no `scroll-behavior: smooth` here. It was added alongside
+   this and had to come out: it animates every programmatic scroll, not just
+   anchor clicks, so scroll-reveal triggers fired hundreds of milliseconds
+   late and sections sat at opacity 0 while the scroll was still in flight.
+   The a11y run caught the how-we-work header mid-tween at 3.84:1. */
 html {
   scroll-padding-top: 5.5rem;
-  scroll-behavior: smooth;
 }
 
 /* ------------------------------------------------------------------ */
@@ -989,6 +994,82 @@ body > footer {
   /* SVG animateMotion is not covered by the animation reset, so the pulse
      is hidden outright rather than left travelling. */
   .domain-flow__pulse { display: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* The demo-to-production pipeline, running.                            */
+/*                                                                      */
+/* The rail already drew itself once on scroll and then sat still, so    */
+/* the section argued that production is a sequence and then showed a    */
+/* static row of dots. A packet now travels the wire and each stage      */
+/* lights as it arrives, which is the claim: work moves through these    */
+/* stages continuously, it does not arrive at one of them and stop.      */
+/*                                                                      */
+/* Twelve seconds for six stages. Slow enough to follow if you watch     */
+/* it, slow enough to ignore while you read the prose beside it.         */
+/* Transform and opacity only, so it costs no main-thread time, and      */
+/* nothing that carries a word moves or fades.                          */
+/* ------------------------------------------------------------------ */
+@keyframes pipe-packet {
+  0%   { transform: translateX(-16%); opacity: 0; }
+  6%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* The animated element is full-width and carries a 16%-wide bar inside it,
+   because a translateX percentage resolves against the element's own width.
+   Sizing the mover to the rail is what lets -16% and 100% mean "one rail
+   width", which is what the node delays below are computed against. */
+.pipe-packet {
+  animation: pipe-packet 12s linear infinite;
+  will-change: transform;
+}
+
+.pipe-packet > span {
+  /* A slice of the rail rather than a dot: a dot on a 1px line reads as
+     dust, a short bright segment reads as something moving. */
+  display: block;
+  width: 16%;
+  height: 100%;
+}
+
+/* The ring that expands out of a node as the packet reaches it. Lives on
+   ::after so the node itself keeps its own border and background. */
+@keyframes pipe-ping {
+  0%        { transform: scale(0.7); opacity: 0; }
+  4%        { opacity: 0.55; }
+  16%       { transform: scale(2.3); opacity: 0; }
+  100%      { transform: scale(2.3); opacity: 0; }
+}
+
+/* And the node breathes as it fires: a short swell, not a throb. */
+@keyframes pipe-swell {
+  0%, 14%, 100% { transform: scale(1); }
+  5%            { transform: scale(1.16); }
+}
+
+.pipe-node {
+  position: relative;
+  animation: pipe-swell 12s ease-in-out infinite;
+  animation-delay: var(--pipe-delay, 0s);
+}
+
+.pipe-node::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  border: 2px solid rgb(var(--color-link));
+  opacity: 0;
+  animation: pipe-ping 12s ease-out infinite;
+  animation-delay: var(--pipe-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipe-packet { display: none; }
+  .pipe-node,
+  .pipe-node::after { animation: none; }
 }
 
 /* Scene animation. Transform and opacity only, so every one of these stays
