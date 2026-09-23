@@ -7,8 +7,11 @@ export function Container({
   className?: string;
   children: React.ReactNode;
 }) {
+  // 20px on a phone, 32px from 640 up. There is no third value: lg:px-9 put
+  // 36px on desktop, which nothing else on the site matched and which the
+  // owner read as the page sitting too far off its own edges.
   return (
-    <div className={cn("mx-auto w-full max-w-container px-5 sm:px-8 lg:px-9", className)}>
+    <div className={cn("mx-auto w-full max-w-container px-5 sm:px-8", className)}>
       {children}
     </div>
   );

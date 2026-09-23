@@ -483,8 +483,13 @@ body > footer {
 
   /* Black is not an option on the light theme, so the band gets the same
      treatment in kind: a gradient rather than one flat fill. */
-  --band-a: 220 218 209; /* #DCDAD1 */
-  --band-b: 233 231 223; /* #E9E7DF */
+  /* Was #DCDAD1 / #E9E7DF, seven RGB units below the #E3E1D8 page. On a
+     stone palette that is invisible, so the light theme read as one flat
+     sheet while the dark theme had rhythm. Seventeen units now, matching
+     the separation the dark theme already had. Contrast re-checked: muted
+     text clears 4.5:1 on the new band. */
+  --band-a: 210 207 194; /* #D2CFC2 */
+  --band-b: 219 216 204; /* #DBD8CC */
 }
 
 .brand-gradient {
@@ -680,14 +685,19 @@ body > footer {
 /* ------------------------------------------------------------------ */
 /* Rhythm                                                               */
 /* ------------------------------------------------------------------ */
+/* Section rhythm. Was 5.5rem / 8.5rem -- 88px on a phone and 136px on
+   desktop between every pair of sections, which the owner read as the page
+   being padded out rather than composed. 72px / 104px still separates two
+   grounds clearly and takes roughly a viewport of dead scroll out of the
+   homepage. */
 .section {
-  padding-top: 5.5rem;
-  padding-bottom: 5.5rem;
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
 }
 @media (min-width: 768px) {
   .section {
-    padding-top: 8.5rem;
-    padding-bottom: 8.5rem;
+    padding-top: 6.5rem;
+    padding-bottom: 6.5rem;
   }
 }
 

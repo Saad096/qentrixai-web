@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 /**
  * Industries as cards rather than a tab strip, on the pattern the owner
@@ -83,14 +84,7 @@ export function IndustryCards() {
         ))}
       </ul>
 
-      <p className="mt-9">
-        <Link
-          href="/industries"
-          className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
-        >
-          {"All industries →"}
-        </Link>
-      </p>
+      <SectionCta href="/industries">All industries</SectionCta>
     </Section>
   );
 }

@@ -6,6 +6,7 @@ import { blogs } from "@/data/blogs";
 import { BLOG_ART } from "@/data/illustrations";
 import { Illustration } from "@/components/ui/Illustration";
 import { formatDate } from "@/lib/utils";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 /**
  * Cover art for a post.
@@ -104,14 +105,7 @@ export function InsightsRow() {
         ))}
       </ul>
 
-      <p className="mt-9">
-        <Link
-          href="/blogs"
-          className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110"
-        >
-          All articles
-        </Link>
-      </p>
+      <SectionCta href="/blogs">All articles</SectionCta>
     </Section>
   );
 }

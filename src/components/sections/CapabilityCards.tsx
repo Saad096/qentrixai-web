@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { services } from "@/data/services";
 import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 /**
  * Six capability cards, on the pattern the owner supplied from the
@@ -95,14 +96,7 @@ export function CapabilityCards() {
         })}
       </ul>
 
-      <p className="mt-9">
-        <Link
-          href="/services"
-          className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
-        >
-          {`All ${services.length} capabilities →`}
-        </Link>
-      </p>
+      <SectionCta href="/services">{`All ${services.length} capabilities`}</SectionCta>
     </Section>
   );
 }

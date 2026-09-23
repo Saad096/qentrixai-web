@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
 import { products } from "@/data/products";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 const FEATURED = ["minutely", "neuromesh", "voxroute"];
 
@@ -48,11 +49,7 @@ export function ProductsRow() {
         })}
       </ul>
 
-      <p className="mt-9">
-        <Link href="/products" className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110">
-          {`All ${products.length} products`}
-        </Link>
-      </p>
+      <SectionCta href="/products">{`All ${products.length} products`}</SectionCta>
     </Section>
   );
 }

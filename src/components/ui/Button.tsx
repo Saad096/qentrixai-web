@@ -15,7 +15,13 @@ type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
   primary: "bg-brand text-on-brand hover:brightness-110",
-  secondary: "border border-[color:var(--color-border)] text-text hover:border-brand hover:text-link",
+  // Fills on hover rather than only tinting its border and label. An
+  // outline button that answers a hover with a 1px colour change does not
+  // read as pressable, which is what the owner meant by "it does not feel
+  // like a button". on-brand is the ink token, not white: white on verdigris
+  // is 3.00:1.
+  secondary:
+    "border border-[color:var(--color-border)] text-text hover:border-brand hover:bg-brand hover:text-on-brand",
   ghost: "text-text hover:text-link",
 };
 
@@ -33,7 +39,7 @@ type Common = {
 };
 
 const shell =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold leading-none transition-[filter,border-color,color] duration-[var(--motion-fast)]";
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold leading-none transition-[filter,border-color,color,background-color] duration-[var(--motion-fast)]";
 
 export function Button(
   props: (Common & { href: string }) | (Common & React.ButtonHTMLAttributes<HTMLButtonElement>)

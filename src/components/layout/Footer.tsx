@@ -72,8 +72,8 @@ export function Footer() {
   return (
     <footer className="footer-deep border-t border-[color:var(--color-border)]">
       <Container>
-        <div className="grid gap-12 py-16 md:py-20 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-4">
+        <div className="grid gap-12 py-14 md:py-16 lg:grid-cols-12 lg:gap-x-10">
+          <div className="lg:col-span-3">
             <Logo />
             <p className="mt-5 max-w-[40ch] text-base text-muted">{company.mission}</p>
 
@@ -109,7 +109,11 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 lg:col-span-8 lg:grid-cols-4">
+          {/* 9 of 12, not 8, and a wider gutter. Every one of these labels
+              is a sentence rather than a word -- "Keep the model inside your
+              border" -- so at the old width they all wrapped to two lines
+              and the columns read as a wall. */}
+          <div className="grid grid-cols-2 gap-x-10 gap-y-8 lg:col-span-9 lg:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
@@ -120,7 +124,7 @@ export function Footer() {
                     <li key={col.title + link.label}>
                       <Link
                         href={link.href}
-                        className="flex min-h-[40px] items-center text-base text-text-2 transition-colors hover:text-link"
+                        className="flex min-h-[44px] items-center py-1.5 text-base leading-snug text-text-2 transition-colors hover:text-link"
                       >
                         {link.label}
                       </Link>

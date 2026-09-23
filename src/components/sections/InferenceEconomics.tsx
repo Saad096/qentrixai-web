@@ -60,6 +60,18 @@ const STEPS: Step[] = [
   },
 ];
 
+/**
+ * A bare "18%" does not say whether 18 is good. Indices here are relative to
+ * a baseline of 100, so the number that carries the meaning is the change:
+ * -82% on cost, and +18% on p99 at step two, where batching genuinely makes
+ * the tail worse before the later steps pull it back. The sign is the whole
+ * point -- it is what stops this being a sales chart.
+ */
+function delta(index: number) {
+  const d = index - 100;
+  return `${d > 0 ? "+" : d < 0 ? "\u2212" : "\u00b1"}${Math.abs(d)}%`;
+}
+
 /** Count between two values so the dial reads as movement, not a jump. */
 function useEased(target: number, ms = 520) {
   const [value, setValue] = React.useState(target);
@@ -138,15 +150,22 @@ export function InferenceEconomics() {
               <circle
                 cx="60" cy="60" r="52" fill="none" strokeWidth="9" strokeLinecap="round"
                 className="stroke-[color:rgb(var(--color-link))] transition-[stroke-dashoffset] duration-500 ease-out"
+                /* The arc draws the saving, not the remaining spend. It used
+                   to fill to `cost`, so at the last step a nearly empty ring
+                   sat next to a headline reading -82%, which is the same fact
+                   drawn backwards. */
                 strokeDasharray={circumference}
-                strokeDashoffset={circumference * (1 - cost / 100)}
+                strokeDashoffset={circumference * (cost / 100)}
               />
             </svg>
             <div className="absolute grid place-items-center text-center">
-              <span className="text-3xl font-bold tabular-nums text-text">{cost}%</span>
-              <span className="mt-1 font-mono text-xs text-muted">cost index</span>
+              <span className="text-3xl font-bold tabular-nums text-text">{delta(cost)}</span>
+              <span className="mt-1 font-mono text-xs text-muted">cost vs baseline</span>
+              <span className="mt-1 font-mono text-xs text-muted">
+                index <span className="tabular-nums text-text-2">{cost}</span>
+              </span>
               <span className="mt-4 font-mono text-xs text-muted">
-                p99 latency <span className="tabular-nums text-text">{p99}%</span>
+                p99 latency <span className="tabular-nums text-text">{delta(p99)}</span>
               </span>
             </div>
           </div>
@@ -175,7 +194,10 @@ export function InferenceEconomics() {
                   <span className="block text-md font-semibold">{s.technique}</span>
                   {i === active && <span className="mt-2 block text-base text-muted">{s.detail}</span>}
                 </span>
-                <span className="font-mono text-xs tabular-nums text-link">{s.cost}%</span>
+                <span className="text-right font-mono text-xs tabular-nums">
+                  <span className="block text-link">{delta(s.cost)}</span>
+                  <span className="mt-1 block text-muted">p99 {delta(s.p99)}</span>
+                </span>
               </button>
             </li>
           ))}

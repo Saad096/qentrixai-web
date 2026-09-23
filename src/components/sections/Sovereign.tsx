@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 /**
  * Sovereign AI, given its own section rather than a line in the capability
@@ -62,14 +62,7 @@ export function Sovereign() {
         </p>
       </div>
 
-      <p className="mt-9">
-        <Link
-          href="/services/sovereign-ai"
-          className="inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline"
-        >
-          How we build sovereign deployments
-        </Link>
-      </p>
+      <SectionCta href="/services/sovereign-ai">How we build sovereign deployments</SectionCta>
     </Section>
   );
 }

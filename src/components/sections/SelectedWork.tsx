@@ -9,6 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { Illustration } from "@/components/ui/Illustration";
 import { caseStudies } from "@/data/caseStudies";
 import { CASE_ART } from "@/data/illustrations";
+import { SectionCta } from "@/components/ui/SectionCta";
 
 const HOME_SLUGS = [
   "multi-agent-ai-platform",
@@ -77,11 +78,7 @@ export function SelectedWork() {
         ))}
       </ul>
 
-      <p className="mt-9">
-        <Link href="/case-studies" className="inline-flex min-h-[44px] items-center text-base font-semibold text-link hover:brightness-110">
-          All six case studies
-        </Link>
-      </p>
+      <SectionCta href="/case-studies">All six case studies</SectionCta>
     </Section>
   );
 }
