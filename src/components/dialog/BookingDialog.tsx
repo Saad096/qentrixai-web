@@ -13,6 +13,11 @@
  *                                      ignored. Verified against their docs.
  *   hide_gdpr_banner=1                 their cookie banner inside our dialog
  *                                      would be a second consent surface.
+ *   hide_event_type_details=1          otherwise it leads with the avatar,
+ *                                      name, duration and description, and
+ *                                      the calendar starts below the fold.
+ *                                      Our dialog header already says all of
+ *                                      that.
  *   background_color / text_color /    so it is our palette, not Calendly's
  *   primary_color                      white. Hex without the #.
  *
@@ -44,6 +49,13 @@ export function BookingDialog({ open, onClose }: { open: boolean; onClose: () =>
     url.searchParams.set("embed_domain", window.location.hostname);
     url.searchParams.set("embed_type", "Inline");
     url.searchParams.set("hide_gdpr_banner", "1");
+    /* Opens straight on "Select a Date & Time". Without this the widget
+       leads with the avatar, the event name, the duration and the full
+       description, so the calendar starts below the fold of the dialog and
+       the first thing a visitor has to do is scroll -- which is what the
+       owner reported. Our own dialog header already says what the call is
+       and how long it takes, so the widget repeating it costs a screen. */
+    url.searchParams.set("hide_event_type_details", "1");
     url.searchParams.set("background_color", hexFromToken("--color-surface", "ffffff"));
     url.searchParams.set("text_color", hexFromToken("--color-text", "1a1a1c"));
     url.searchParams.set("primary_color", hexFromToken("--color-brand", "0fa88c"));

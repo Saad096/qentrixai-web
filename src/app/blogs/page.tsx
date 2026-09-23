@@ -41,7 +41,15 @@ export default function BlogsPage() {
 
       <PageHero
         title="Insights"
-        art="index-blogs"
+        photo={{
+          src: "/images/insights/insights-hero.webp",
+          width: 936,
+          height: 970,
+          /* Cropped from the supplied render. The original carries its own
+             "Insights" title and lede across the left third, which put the
+             page's h1 and its lede on the screen twice. */
+          alt: "An article open on a laptop, with comment, idea and newsletter cards floating above it",
+        }}
         lede={
           <>
             Field notes from the work. Written by the people doing it.

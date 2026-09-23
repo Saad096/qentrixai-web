@@ -8,7 +8,8 @@ import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { Illustration } from "@/components/ui/Illustration";
 import { caseStudies } from "@/data/caseStudies";
-import { CASE_ART } from "@/data/illustrations";
+import Image from "next/image";
+import { CASE_ART, CASE_PHOTO } from "@/data/illustrations";
 import { SectionCta } from "@/components/ui/SectionCta";
 
 const HOME_SLUGS = [
@@ -53,10 +54,24 @@ export function SelectedWork() {
                 href={`/case-studies/${study.slug}`}
                 className="flex h-full flex-col"
               >
-                <Illustration
-                  src={CASE_ART[study.slug]}
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                />
+                {/* A supplied render wins over the unDraw plate. The plate
+                    is still the fallback for any case study without one. */}
+                {CASE_PHOTO[study.slug] ? (
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface-2">
+                    <Image
+                      src={CASE_PHOTO[study.slug].src}
+                      alt={CASE_PHOTO[study.slug].alt}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                    />
+                  </div>
+                ) : (
+                  <Illustration
+                    src={CASE_ART[study.slug]}
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                  />
+                )}
 
                 <div className="flex flex-1 flex-col gap-4 p-7">
                 <span className="font-mono text-xs text-link">{study.category}</span>

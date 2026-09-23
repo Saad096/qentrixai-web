@@ -80,3 +80,37 @@ export const PRODUCT_ART: Record<string, string> = {
   documentai: `${DIR}/file-analysis.svg`,
   voxroute: `${DIR}/voice-interface.svg`,
 };
+
+/**
+ * Photographs, where the owner has supplied one for a case study.
+ *
+ * These take precedence over CASE_ART. A real render of the system beats an
+ * unDraw plate every time, and the reason all three were on the same
+ * treatment before was that we had nothing better -- the note on SelectedWork
+ * said one screenshot beside two illustration plates makes the row look
+ * half-finished. That argument cuts the other way now: all three of the home
+ * page case studies have artwork of their own, so the row is consistent
+ * again and it is consistent on the better material.
+ *
+ * Any slug not listed here still falls back to CASE_ART.
+ */
+export const CASE_PHOTO: Record<string, { src: string; width: number; height: number; alt: string }> = {
+  "multi-agent-ai-platform": {
+    src: "/images/work/multi-agent-ai-platform.webp",
+    width: 1456,
+    height: 734,
+    alt: "A network of specialist agents wired to a shared planner, each holding part of a workflow",
+  },
+  "enterprise-document-intelligence": {
+    src: "/images/work/enterprise-document-intelligence.webp",
+    width: 1024,
+    height: 1024,
+    alt: "Text flowing out of bound books and into a tablet through a reasoning layer",
+  },
+  "voice-recruitment-automation": {
+    src: "/images/work/voice-recruitment-automation.webp",
+    width: 1024,
+    height: 1024,
+    alt: "A screening call in progress, with candidate details, CRM updates and a scorecard coming off the transcript",
+  },
+};
