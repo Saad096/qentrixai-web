@@ -1,44 +1,87 @@
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { CaseStudyCard } from "@/components/cards/CaseStudyCard";
-import { CTABanner } from "@/components/sections/CTABanner";
+import Link from "next/link";
+import { PageHero } from "@/components/sections/PageHero";
+import { Section } from "@/components/ui/Section";
+import { CtaBlock } from "@/components/sections/FaqCta";
 import { caseStudies } from "@/data/caseStudies";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Case Studies",
+  title: "Six AI systems running in production",
   path: "/case-studies",
   description:
-    "Selected work from QentrixAI: multi-agent platforms, RAG systems, voice AI, meeting intelligence, and computer vision. Sanitised summaries with client names available under NDA.",
+    "Problem, what we built, what changed. Multi-agent operations, document intelligence, voice screening, meeting intelligence, IVR replacement and computer vision.",
 });
 
 export default function CaseStudiesPage() {
   return (
     <>
-      <section className="pt-32 pb-12">
-        <Container>
-          <SectionHeading
-            eyebrow="Case studies"
-            title="What we've shipped, in plain language."
-            description="Each card describes the problem, the approach we took, and the measurable outcome. We say 'delivered or contributed to' deliberately. These are real engagements, anonymised."
-          />
-        </Container>
-      </section>
+      <script
+        id="ld-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListJsonLd("Selected work", caseStudies.map((c) => ({ name: c.title, path: `/case-studies/${c.slug}` })))
+          ),
+        }}
+      />
+      <script id="ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Case studies", path: "/case-studies" },
+            ])
+          ),
+        }}
+      />
 
-      <section className="pb-20">
-        <Container>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {caseStudies.map((c, i) => (
-              <Reveal key={c.slug} delay={i * 0.04}>
-                <CaseStudyCard item={c} />
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        title="Selected work"
+        art="index-case-studies"
+        lede={
+          <>
+            Six production systems. Where a client is under NDA we describe the shape of the
+            business. We do not invent a logo.
+          </>
+        }
+      />
 
-      <CTABanner />
+
+      <Section className="rule">
+        <ul>
+          {caseStudies.map((c) => (
+            <li key={c.slug} className="border-t border-[color:var(--color-border)]">
+              <Link href={`/case-studies/${c.slug}`} className="group grid gap-5 py-9 md:grid-cols-12">
+                <div className="md:col-span-3">
+                  <span className="font-mono text-xs text-link">{c.category}</span>
+                  <span className="mt-2 block font-mono text-xs text-muted">{c.client}</span>
+                </div>
+                <div className="md:col-span-6">
+                  <h2 className="text-lg font-semibold text-text group-hover:text-link">
+                    {c.title}
+                  </h2>
+                  <p className="mt-2 text-base text-text-2">{c.problem}</p>
+                </div>
+                <div className="md:col-span-3">
+                  {c.metric ? (
+                    <>
+                      <span className="block text-xl font-bold text-text">{c.metric.value}</span>
+                      <span className="mt-1 block font-mono text-xs text-muted">
+                        {c.metric.label}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="block text-base text-muted">{c.outcome}</span>
+                  )}
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <CtaBlock />
     </>
   );
 }

@@ -1,0 +1,60 @@
+import { defineConfig, devices } from "@playwright/test";
+
+/**
+ * The matrix from CLAUDE.md section 9.1, minus WebKit: this host cannot run it
+ * (missing libavif13). Install it with `sudo npx playwright install-deps
+ * webkit` and the three WebKit projects below start working.
+ *
+ * Browser binaries: Playwright 1.63 ships no bundled Chromium or Firefox for
+ * macOS 12, and `npx playwright install` refuses on this OS. The Chromium
+ * projects therefore drive the locally installed Google Chrome, which is the
+ * same engine. Firefox has no local equivalent, so it runs only where a
+ * bundled build exists -- set PW_FIREFOX=1 (CI does) to include it.
+ */
+const CHROME = { channel: "chrome" } as const;
+const firefoxProjects = process.env.CI || process.env.PW_FIREFOX
+  ? [
+      {
+        name: "firefox",
+        use: { ...devices["Desktop Firefox"], viewport: { width: 1440, height: 900 } },
+      },
+    ]
+  : [];
+export default defineConfig({
+  testDir: "./tests/e2e",
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : 0,
+  reporter: process.env.CI ? "github" : "list",
+  timeout: 45_000,
+  use: {
+    baseURL: process.env.BASE_URL ?? "http://127.0.0.1:3311",
+    trace: "on-first-retry",
+  },
+  webServer: process.env.BASE_URL
+    ? undefined
+    : {
+        /* NEXT_DIST_DIR, for the same reason next.config.mjs documents it:
+           a production build into `.next` corrupts the dev server sharing
+           that directory. Without it here the suite served whatever stale
+           build happened to be in `.next` -- on 2026-09-22 that was a build
+           from three days earlier, so tests were failing against images and
+           alt text the site no longer ships. `next start` reads the same
+           variable `next build` writes, so the suite now tests the build we
+           actually produce. */
+        command: "NEXT_DIST_DIR=.next-prod npx next start -p 3311",
+        url: "http://127.0.0.1:3311",
+        reuseExistingServer: true,
+        timeout: 120_000,
+      },
+  projects: [
+    { name: "phone-small", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 360, height: 780 }, isMobile: false } },
+    { name: "phone-large", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 430, height: 932 } } },
+    { name: "tablet", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 768, height: 1024 } } },
+    { name: "laptop", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 1366, height: 768 } } },
+    { name: "desktop", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 1440, height: 900 } } },
+    { name: "wide", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 1920, height: 1080 } } },
+    { name: "ultrawide", use: { ...devices["Desktop Chrome"], ...CHROME, viewport: { width: 2560, height: 1440 } } },
+    ...firefoxProjects,
+  ],
+});

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendBookingEmail } from "@/lib/mail";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 
 const cors = process.env.CORS_ALLOW_ORIGINS ?? "*";
 
@@ -16,6 +17,14 @@ export async function OPTIONS() {
 }
 
 export async function POST(req: Request) {
+  const limited = rateLimit(`booking:${clientIp(req)}`, { limit: 5 });
+  if (!limited.ok) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests. Try again shortly." },
+      { status: 429, headers: { "Retry-After": String(limited.retryAfterSeconds) } }
+    );
+  }
+
   let payload: Record<string, unknown> = {};
   try {
     payload = await req.json();
@@ -38,7 +47,7 @@ export async function POST(req: Request) {
 
   if (honeypot.length > 0) {
     return NextResponse.json(
-      { ok: true, message: "Thanks — we'll confirm your slot shortly." },
+      { ok: true, message: "Thanks. We will confirm your slot shortly." },
       { headers: corsHeaders() }
     );
   }
@@ -53,7 +62,7 @@ export async function POST(req: Request) {
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRe.test(email)) {
     return NextResponse.json(
-      { ok: false, message: "That email address looks off — please double-check." },
+      { ok: false, message: "That email address looks off. Please double-check it." },
       { status: 400, headers: corsHeaders() }
     );
   }
@@ -90,7 +99,7 @@ export async function POST(req: Request) {
   return NextResponse.json(
     {
       ok: true,
-      message: `Thanks — we've got your request for ${dateLabel} at ${timeLabel} (${timezone}). We'll confirm by email within one business day.`,
+      message: `Thanks. We have your request for ${dateLabel} at ${timeLabel} (${timezone}) and will confirm by email within one business day.`,
     },
     { headers: corsHeaders() }
   );

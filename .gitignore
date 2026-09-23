@@ -92,8 +92,30 @@ desktop.ini
 $RECYCLE.BIN/
 
 # ───────────────────────────────────────────────────────────
-# Raw source media (copied into /public via setup; do not ship)
+# Raw source media — NOT shipped, NOT committed
+#
+# Originals the owner supplies (full-size PNG/JPEG renders, the source
+# media folder, superseded product shots) live here. Only the optimised
+# copy under /public is committed and deployed, so the repo Vercel builds
+# from stays small. `node scripts/asset-audit.mjs` lists anything under
+# /public the site no longer serves; `--move raw_assets` relocates it.
 # ───────────────────────────────────────────────────────────
+raw_assets/
+
+# Reference imagery pulled from the inspiration sites during the audit.
+# Licensed to their owners, never shipped, and never committed -- CLAUDE.md
+# 7.4. It lived in a top-level images/ folder whose ignore rule was removed
+# by mistake while tidying, which is how 11MB of it briefly got staged.
+/images/
+
+# Audit artifacts — screenshots and Lighthouse JSON from the revamp.
+# 65MB of binaries that document a run rather than build the site. The
+# write-ups in docs/revamp/*.md are the part worth keeping in git; the
+# evidence behind them lives in raw_assets/audit-artifacts/.
+docs/revamp/screenshots/
+docs/revamp/lighthouse/
+docs/revamp/lighthouse-after/
+docs/revamp/lighthouse-v2/
 
 # ───────────────────────────────────────────────────────────
 # Misc tooling caches
@@ -108,3 +130,15 @@ $RECYCLE.BIN/
 # Local task runner outputs (Claude Code)
 # ───────────────────────────────────────────────────────────
 .claude/
+
+# Vendored agent skills (reproducible from skills-lock.json)
+.agents/
+
+
+.next-prod/
+
+# Playwright MCP scratch output (snapshots, console logs, ad-hoc screenshots)
+.playwright-mcp/
+
+# Scratch harnesses (the keepers are scripts/axe*.mjs, readability.mjs, shot.mjs)
+scripts/.*.tmp.mjs

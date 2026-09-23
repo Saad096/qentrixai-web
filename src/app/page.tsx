@@ -1,44 +1,49 @@
 import { Hero } from "@/components/sections/Hero";
-import { Capabilities } from "@/components/sections/Capabilities";
-import { Clients } from "@/components/sections/Clients";
-import { AboutPreview } from "@/components/sections/AboutPreview";
-import { ServicesOverview } from "@/components/sections/ServicesOverview";
-import { ProductsShowcase } from "@/components/sections/ProductsShowcase";
-import { Industries } from "@/components/sections/Industries";
-import { Problem } from "@/components/sections/Problem";
+import { SelectedWork } from "@/components/sections/SelectedWork";
+import { TheGap } from "@/components/sections/TheGap";
+import { CapabilityCards } from "@/components/sections/CapabilityCards";
+import { Sovereign } from "@/components/sections/Sovereign";
+import { InferenceEconomics } from "@/components/sections/InferenceEconomics";
+import { ModelRadar } from "@/components/sections/ModelRadar";
+import { ProductsRow } from "@/components/sections/ProductsRow";
+import { HowWeWork } from "@/components/sections/HowWeWork";
+import { IndustryCards } from "@/components/sections/IndustryCards";
 import { WhyUs } from "@/components/sections/WhyUs";
-import { Process } from "@/components/sections/Process";
-import { CaseStudiesPreview } from "@/components/sections/CaseStudiesPreview";
-import { TechStack } from "@/components/sections/TechStack";
-import { BlogPreview } from "@/components/sections/BlogPreview";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { Stats } from "@/components/sections/Stats";
-import { CTABanner } from "@/components/sections/CTABanner";
-import { FAQ } from "@/components/sections/FAQ";
-import { buildMetadata } from "@/lib/seo";
+import { OutcomeNumbers } from "@/components/sections/OutcomeNumbers";
+import { InsightsRow } from "@/components/sections/InsightsRow";
+import { FaqCta } from "@/components/sections/FaqCta";
+import { buildMetadata, faqJsonLd } from "@/lib/seo";
+import { faqs } from "@/data/faqs";
 
 export const metadata = buildMetadata({ path: "/" });
 
+/**
+ * Ten sections, down from seventeen. Order is the buyer's order: claim and
+ * proof, then evidence, then the problem, then the offer.
+ */
 export default function HomePage() {
   return (
     <>
+      <script id="ld-faq"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }}
+      />
       <Hero />
-      <Capabilities />
-      <Clients />
-      <Stats />
-      <AboutPreview />
-      <ServicesOverview limit={6} />
-      <ProductsShowcase limit={6} />
-      <Industries />
-      <Problem />
+      <SelectedWork />
+      <TheGap />
+      <CapabilityCards />
+      <Sovereign />
+      <InferenceEconomics />
+      <ModelRadar />
+      <ProductsRow />
+      <HowWeWork />
+      <IndustryCards />
+      <OutcomeNumbers />
       <WhyUs />
-      <Process />
-      <CaseStudiesPreview />
-      <TechStack />
-      <BlogPreview />
       <Testimonials />
-      <FAQ />
-      <CTABanner />
+      <InsightsRow />
+      <FaqCta />
     </>
   );
 }

@@ -1,24 +1,55 @@
 /**
- * 2026-07 revamp: copy rewritten in plain brand voice. Dash separators and
- * filler phrases removed, tagline shortened to something a human would say.
+ * Kiln (2026-09 revamp). Facts are untouched: the four stats, the founding
+ * year, the location and the hours are exactly as they were. What changed is
+ * the shape -- six process steps collapse to four phases that each name the
+ * artifact they hand over, and six "why us" cards collapse to three pillars
+ * that each point at something on the site that proves them.
  */
+/**
+ * Two offices, supplied by the owner on 2026-09-22. Until then the site said
+ * one, and said it in eleven places -- the footer even carried a comment
+ * explaining that inventing a US address would be a lie. It is not invented
+ * now, so the comment and the claim both change.
+ *
+ * `registered` is the legal address and the one that belongs in JSON-LD.
+ * `engineering` is where the team sits. A buyer asking "where are you" means
+ * the second; a procurement form means the first.
+ */
+export type Office = {
+  kind: "Registered office" | "Engineering hub";
+  city: string;
+  region: string;
+  country: string;
+  lines: string[];
+};
+
+export const offices: Office[] = [
+  {
+    kind: "Registered office",
+    city: "Wilmington",
+    region: "Delaware",
+    country: "United States",
+    lines: ["2810 N Church St, STE 89718", "Wilmington, DE 19802", "United States"],
+  },
+  {
+    kind: "Engineering hub",
+    city: "Lahore",
+    region: "Punjab",
+    country: "Pakistan",
+    lines: ["COLABS, 22-N, Block N", "Phase 2, Johar Town", "Lahore, Pakistan"],
+  },
+];
+
 export const company = {
   name: "QentrixAI",
   legalName: "QentrixAI",
   tagline: "AI product studio",
+  promise: "AI systems that survive real users, real load, and handover.",
   mission:
-    "We turn ideas into AI systems you can actually deploy. Strategy, design, engineering, and operations from one senior team.",
-  positioning:
-    "QentrixAI builds production AI systems, intelligent automation, and scalable software products for modern businesses.",
+    "We design, build and run agentic systems, retrieval pipelines and voice AI, then hand over the repo, the eval harness and the runbook.",
   founded: "2024",
-  location: "Lahore, Pakistan, serving clients worldwide",
-  hours: "Mon to Sat · 9:00 to 19:00 PKT",
-  pillars: [
-    "Production-first AI engineering",
-    "Strategy, design, and development in one team",
-    "GenAI, agentic AI, RAG, voice AI, and MLOps depth",
-    "Dockerized, cloud-ready delivery with full handover",
-  ],
+  location: "Wilmington, Delaware and Lahore, Pakistan",
+  hours: "Mon to Sat, 9:00-19:00 PKT",
   capabilities: [
     "GenAI",
     "Agentic AI",
@@ -31,69 +62,166 @@ export const company = {
     "Cloud & DevOps",
   ],
   stats: [
-    { label: "Years in AI & data engineering", value: "5+" },
-    { label: "Production systems shipped", value: "25+" },
-    { label: "Client geographies served", value: "12" },
-    { label: "Avg. MVP delivery window", value: "6 wks" },
-  ],
-  whyUs: [
-    {
-      title: "Production over demos",
-      body: "Most AI projects stall at the demo. We architect data pipelines, observability, and deployment from day one so what we ship survives real load and real users.",
-    },
-    {
-      title: "One team, full path",
-      body: "Strategy, product design, AI/ML, backend, DevOps, and analytics under one roof. No handoff loss between vendors.",
-    },
-    {
-      title: "Strong AI engineering depth",
-      body: "GenAI, agentic AI with LangGraph, RAG with hybrid retrieval, voice AI on Whisper and Parakeet, computer vision, plus mature MLOps with Langfuse, LangSmith, and Grafana.",
-    },
-    {
-      title: "Cloud-ready by default",
-      body: "Everything ships Dockerized, CI/CD wired, and ready for AWS, GCP, or Azure. We hand over clean repos, runbooks, and docs.",
-    },
-    {
-      title: "Flexible engagement",
-      body: "Fixed-scope MVPs, retainer-based engineering pods, product partnerships, or strategy-only sprints. We shape the engagement around your stage.",
-    },
-    {
-      title: "Senior-only delivery",
-      body: "No junior-heavy outsourcing. Every engagement is led by senior engineers and a domain consultant who own outcomes end to end.",
-    },
-  ],
-  process: [
-    {
-      step: "01",
-      title: "Discover",
-      body: "Stakeholder interviews, data audit, success metrics, risk mapping. We end this phase with a written problem framing and a measurable target.",
-    },
-    {
-      step: "02",
-      title: "Design",
-      body: "System architecture, model strategy, retrieval and agent design, UX wireframes, integration plan, security and compliance posture.",
-    },
-    {
-      step: "03",
-      title: "Build",
-      body: "Iterative engineering with weekly demos. Clean repos, typed code, evaluation harnesses for prompts and agents, full test coverage on critical paths.",
-    },
-    {
-      step: "04",
-      title: "Integrate",
-      body: "We connect to your CRM, data warehouse, auth, billing, and downstream tools. Production-grade APIs, webhooks, and queues.",
-    },
-    {
-      step: "05",
-      title: "Deploy",
-      body: "Dockerized rollout to AWS, GCP, Azure, or your VPC. Blue/green or canary where needed. Secrets, SSL, and monitoring all wired.",
-    },
-    {
-      step: "06",
-      title: "Monitor & improve",
-      body: "LLM observability with Langfuse and LangSmith, system observability with Grafana and Prometheus, continuous evals, and a clear improvement loop.",
-    },
+    { label: "years in AI and data engineering", value: "5+" },
+    { label: "production systems shipped", value: "25+" },
+    { label: "client geographies served", value: "12" },
+    { label: "kickoff to working MVP", value: "6wk" },
   ],
 };
+
+export type Phase = {
+  step: string;
+  title: string;
+  /** The lede. One sentence that says what the phase decides. */
+  body: string;
+  /** Two or three sentences of substance. Prose, not a comma-spliced list. */
+  detail: string;
+  /** Completes "You own ...". */
+  artifact: string;
+};
+
+/**
+ * Five phases since 2026-09-22, on the owner's note that monitoring
+ * deserved its own step. It did: Run was carrying both the handover and the
+ * observability, which made the most-skipped phase of an AI engagement look
+ * like a footnote on the deployment one. Run now ends at handover, and
+ * Monitor is the phase that exists because these systems degrade while the
+ * code stays still.
+ *
+ * Rewritten 2026-09-21, cut again 2026-09-22 after a review called them
+ * walls of eighty words that nobody reads. Two sentences each now; the
+ * artifact line underneath is the most valuable sentence on the card and it
+ * is styled to say so.
+ *
+ * The previous four bodies were noun lists --
+ * "System architecture, model and retrieval strategy, integration plan,
+ * security and compliance posture" -- four fragments with no verb and no
+ * reader in them. They scanned as a checklist someone pasted from a
+ * proposal template, which is exactly the generated-copy tell the brief
+ * bans, and they said nothing a competitor could not also say.
+ *
+ * Each phase now leads with the decision it exists to make, then says what
+ * that costs you and what it saves. The artifact line is unchanged in
+ * substance because the artifacts are real.
+ */
+export const phases: Phase[] = [
+  {
+    step: "01",
+    title: "Frame",
+    body: "We agree what better looks like, in a number, before anyone picks a model.",
+    detail:
+      "We interview the people who will use it and audit the data you actually have, not the data the plan assumed. Most failed projects were never given a target they could miss.",
+    artifact: "a written problem framing with the success metric, and the number it starts at.",
+  },
+  {
+    step: "02",
+    title: "Design",
+    body: "The architecture, and a written record of what we turned down.",
+    detail:
+      "Retrieval, model choice, integration surface, and where the data may be processed. Security is decided here, not bolted on, because it constrains the architecture rather than the reverse.",
+    artifact: "an architecture decision record, including the options we rejected and why.",
+  },
+  {
+    step: "03",
+    title: "Build",
+    body: "Weekly demos against the metric, on your data, in your repo.",
+    detail:
+      "Typed code, small pull requests, and an eval harness from week one. A change that drops a metric fails the build instead of reaching a user.",
+    artifact: "the repo, and a regression suite running in your CI.",
+  },
+  {
+    step: "04",
+    title: "Run",
+    body: "Deployed to your cloud, then handed over on purpose.",
+    detail:
+      "Dockerised rollout into your account, secrets and access wired properly, and a rollback we have tested rather than assumed. Then your team runs a deploy and a rollback while we watch.",
+    artifact: "a runbook, and a rollback path your team has used once.",
+  },
+  {
+    step: "05",
+    title: "Monitor",
+    body: "Because AI systems degrade while the code stays still.",
+    detail:
+      "Tracing on every call, cost attributed per route, and the eval suite running against live traffic rather than only in CI. Drift gets caught by a report, not by a complaint. This is the phase most engagements skip and the one that decides whether the thing is still working in six months.",
+    artifact: "dashboards, drift alerts, and an eval suite running on a schedule.",
+  },
+];
+
+export type Pillar = {
+  title: string;
+  body: string;
+  proof: string;
+  proofHref?: string;
+};
+
+export const pillars: Pillar[] = [
+  {
+    title: "Production discipline",
+    body: "Evals, tracing and a rollback path are wired before launch, not bolted on after an incident.",
+    proof: "Langfuse, LangSmith, Grafana, Prometheus",
+  },
+  {
+    title: "We operate our own products",
+    body: "Eleven of them. We live with our own architecture decisions, which is why we argue about them early.",
+    proof: "See all eleven products",
+    proofHref: "/products",
+  },
+  {
+    title: "Senior-only delivery",
+    body: "The people who scope the work are the people who build it. No junior bench, no handoff between vendors.",
+    proof: "Led by Saad Alam, CEO and AI lead",
+    proofHref: "/about",
+  },
+];
+
+/**
+ * The homepage "why us" grid, 2026-09-21. Six cells rather than three cards,
+ * at the owner's direction, following the reference layout.
+ *
+ * Every line traces to something already on this page: `stats` above, the
+ * three `pillars` below, and the products in products.ts. Nothing here
+ * is a new claim -- the reference site's own cells include a "95% client
+ * retention rate" we have no basis for, so it is not here.
+ *
+ * `pillars` is kept as-is. It is the fuller three-reason argument and /about
+ * is the place for it; this is the scannable form.
+ */
+export type Reason = {
+  title: string;
+  line: string;
+  href?: string;
+};
+
+export const reasons: Reason[] = [
+  {
+    title: "Senior-only delivery",
+    line: "The people who scope the work are the people who build it. No junior bench.",
+    href: "/about",
+  },
+  {
+    title: "We run our own products",
+    line: "Eleven of them, in production. We live with our own architecture decisions.",
+    href: "/products",
+  },
+  {
+    title: "Evals before launch",
+    line: "Tracing, eval suites and a rollback path wired up front, not after an incident.",
+    href: "/services/cloud-devops-mlops",
+  },
+  {
+    title: "25+ systems shipped",
+    line: "Across five years of AI and data engineering, not five years of pilots.",
+    href: "/case-studies",
+  },
+  {
+    title: "12 client geographies",
+    line: "Delivered remotely into twelve countries, working in your timezone.",
+  },
+  {
+    title: "Six weeks to an MVP",
+    line: "Kickoff to something real users can use, with the repo yours at handover.",
+    href: "/#how-we-work",
+  },
+];
 
 export type Company = typeof company;

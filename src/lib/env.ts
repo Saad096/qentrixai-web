@@ -7,7 +7,9 @@
 const pick = (v: string | undefined, fallback = "") => (v && v.trim().length > 0 ? v : fallback);
 
 export const publicEnv = {
-  siteUrl: pick(process.env.NEXT_PUBLIC_SITE_URL, "https://qentrixai.com"),
+  // The apex host 308-redirects to www, so the canonical must be www or every
+  // canonical points at a redirect (audit B-06). Vercel env must match this.
+  siteUrl: pick(process.env.NEXT_PUBLIC_SITE_URL, "https://www.qentrix-ai.com"),
   siteName: pick(process.env.NEXT_PUBLIC_SITE_NAME, "QentrixAI"),
 
   profile: {
@@ -22,7 +24,7 @@ export const publicEnv = {
     ),
     email: pick(process.env.NEXT_PUBLIC_PROFILE_EMAIL, "talk@qentrix-ai.com"),
     phone: pick(process.env.NEXT_PUBLIC_PROFILE_PHONE, "+923196828506"),
-    location: pick(process.env.NEXT_PUBLIC_PROFILE_LOCATION, "Lahore, Pakistan"),
+    location: pick(process.env.NEXT_PUBLIC_PROFILE_LOCATION, "Wilmington, Delaware and Lahore, Pakistan"),
     availability: pick(
       process.env.NEXT_PUBLIC_PROFILE_AVAILABILITY,
       "Open for Projects, Ideas & Remote Positions"
@@ -30,26 +32,33 @@ export const publicEnv = {
     resumeUrl: pick(process.env.NEXT_PUBLIC_PROFILE_RESUME_URL, "/api/resume"),
   },
 
+  /* The scheduling event behind the booking dialog. /book stays a real route
+     for no-JS, for direct links and for search engines; the dialog is what
+     opens when JS is on. */
+  calendlyUrl: pick(
+    process.env.NEXT_PUBLIC_CALENDLY_URL,
+    "https://calendly.com/talk2saad/30-min-growth-strategy-call"
+  ),
+
   socials: {
+    /* Company accounts. The freelance marketplaces are gone on the owner's
+       instruction: Upwork, Fiverr and Freelancer were a personal profile
+       under a studio's masthead, and they undercut the thing the rest of the
+       site argues. Instagram and Facebook are the studio's own. */
     linkedin: pick(
       process.env.NEXT_PUBLIC_PROFILE_LINKEDIN,
       "https://www.linkedin.com/company/qentrixai"
     ),
-    upwork: pick(
-      process.env.NEXT_PUBLIC_PROFILE_UPWORK,
-      "https://www.upwork.com/freelancers/~016509a74d546ffb23"
-    ),
-    fiverr: pick(process.env.NEXT_PUBLIC_PROFILE_FIVERR, "https://www.fiverr.com/saadalam340"),
-    freelancer: pick(
-      process.env.NEXT_PUBLIC_PROFILE_FREELANCER,
-      "https://www.freelancer.com/u/SaadAlam106"
-    ),
     github: pick(process.env.NEXT_PUBLIC_PROFILE_GITHUB, "https://github.com/Saad096"),
-    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP, "https://wa.me/923196828506"),
     instagram: pick(
       process.env.NEXT_PUBLIC_PROFILE_INSTAGRAM,
-      "https://www.instagram.com/saadalam9657"
+      "https://www.instagram.com/qentrixai/"
     ),
+    facebook: pick(
+      process.env.NEXT_PUBLIC_PROFILE_FACEBOOK,
+      "https://www.facebook.com/Qentrixai"
+    ),
+    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP, "https://wa.me/923196828506"),
   },
 
   team: {

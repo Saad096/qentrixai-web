@@ -12,6 +12,28 @@ export type Blog = {
 
 export const blogs: Blog[] = [
   {
+    slug: "jev-typed-decisions-not-text",
+    title: "Jev, and the case for models that do not talk",
+    category: "Inference",
+    excerpt:
+      "TypeSafe AI shipped a model that cannot write a sentence. It returns a typed value and a calibrated confidence, in 70 to 500ms. Here is where that belongs in a production system, and where it does not.",
+    date: "2026-09-22",
+    readingTime: "7 min read",
+    cover: "/images/insights/jev-typed-decisions-not-text.webp",
+    author: "Saad Alam",
+    content: [
+      "TypeSafe AI released Jev on 15 September and dropped the waitlist five days later. It is a transformer that does not generate text. You hand it unstructured input plus a schema you defined in advance, and it hands back a typed value with a calibrated confidence score. It cannot write an article, generate code, or explain itself.",
+      "That sounds like a limitation until you count how much of a production system is not a conversation. Three primitives cover most of it. Choice picks one option from up to 255. Score rates against ordered levels. Noul returns a probability between zero and one. Every answer carries a confidence derived from the shape of the probability distribution, which is the part that matters.",
+      "The numbers TypeSafe publishes are 70 to 500ms end to end, $42 per billion input tokens, and output tokens free. They claim 193.6 times faster and 444.6 times cheaper than GPT-5.6 Terra on their own benchmarks. Treat a vendor benchmark as a hypothesis, not a result. The shape of the claim is credible though: a model that emits one typed value instead of a paragraph is not doing the expensive part of generation.",
+      "Here is why we care. Most of the retrieval and agent systems we run do not fail because the prose was poor. They fail at a decision. Is this ticket about billing. Is this command safe to execute. Does this passage answer the question. Should this call go to a human. Each is a classification with a confidence threshold behind it. Today each is answered by asking a large language model to write the word yes, then parsing it.",
+      "Parsing a model's prose to recover a decision is the weakest joint in most AI systems we are asked to fix. The model says Yes, definitely, though it depends on the account tier and the code takes the first three characters. A typed return removes that joint. So does a calibrated confidence: escalation stops being a regex over hedging language and becomes a number you can threshold and tune.",
+      "The catch, and it is a real one, is deployment. Jev is an early-access API with no open weights and no self-hosting. For a client with residency obligations, or one running air-gapped, that rules it out no matter how fast it is. This is the trade we spend most of our time on. The cheapest token is the one you never send. The cheapest token you cannot send at all is worth nothing.",
+      "Where we would reach for it today: high-volume routing and triage in a system that already calls hosted APIs, where a user feels the latency and the decision is small and well specified. Where we would not: inside a boundary that cannot make outbound calls, or anywhere the decision has to be explained to a regulator rather than merely logged.",
+      "The broader point outlives this particular model. Classification, scoring, routing and extraction are decisions, not essays, and the industry has spent three years paying generation prices for them. Whether Jev is the model that wins is a separate question from whether that pattern is correct. It is correct. We are already sizing small typed models against the large ones in client systems, and the gap is not close on the decisions that do not need prose.",
+      "If you are running a large model for something that could return an enum, that is worth measuring before your next invoice. We do that as part of inference engineering, and it is usually the largest single saving on the list.",
+    ],
+  },
+  {
     slug: "mcp-how-agents-reach-your-systems",
     title: "MCP is now how agents reach your systems",
     category: "MCP",
@@ -19,7 +41,7 @@ export const blogs: Blog[] = [
       "The Model Context Protocol went from Anthropic side project to Linux Foundation standard with over 10,000 public servers. What the new stateless spec and enterprise auth mean for your stack.",
     date: "2026-07-15",
     readingTime: "8 min read",
-    cover: "",
+    cover: "/images/insights/mcp-how-agents-reach-your-systems.webp",
     author: "Saad Alam",
     content: [
       "In December 2025 Anthropic donated MCP to the Agentic AI Foundation under the Linux Foundation, and adoption followed fast. There are now more than 10,000 public MCP servers, the SDKs see close to 100 million downloads a month, and around 4 in 10 software organisations report MCP servers in production.",
@@ -36,7 +58,7 @@ export const blogs: Blog[] = [
       "The defining AI skill of 2026 is not writing clever prompts. It is architecting what the model sees: memory, retrieval, tools, and state, delivered at the right moment.",
     date: "2026-07-02",
     readingTime: "7 min read",
-    cover: "",
+    cover: "/images/insights/context-engineering-beat-prompting.webp",
     author: "Saad Alam",
     content: [
       "Prompt engineering optimised a single message. Context engineering architects the entire information environment an agent operates in: what it remembers, what it retrieves, which tools it sees, and what state it carries between steps.",

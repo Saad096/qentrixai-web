@@ -1,69 +1,37 @@
 /**
- * 2026-07 revamp: the mark now uses the new circular QENTIX ribbon
- * (public/logo/qentrix-mark.png) inside a fully circular glass container.
- * `compact` drives the 48px → 32px header shrink on scroll.
+ * The mark, 2026-09-23: the owner replaced the blue-violet ribbon with the
+ * teal one.
+ *
+ * The light chip that used to sit behind it is gone with it. That chip
+ * existed because the old mark was an opaque square that had to be isolated
+ * from verdigris; this one is a circular ribbon with everything outside it
+ * transparent, so a chip behind it would draw a second, paler circle around
+ * the first. It also carries the brand hue itself now, which is why it no
+ * longer needs isolating from it.
  */
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export function Logo({
-  className,
-  size = "md",
-  compact = false,
-}: {
-  className?: string;
-  size?: "sm" | "md" | "lg";
-  compact?: boolean;
-}) {
-  const circle = compact
-    ? "size-8"
-    : size === "lg"
-      ? "size-12 md:size-14"
-      : size === "sm"
-        ? "size-8"
-        : "size-12";
-
-  const text = compact
-    ? "text-[15px]"
-    : size === "lg"
-      ? "text-xl md:text-2xl"
-      : size === "sm"
-        ? "text-base"
-        : "text-[17px] md:text-[19px]";
+export function Logo({ className, size = "md" }: { className?: string; size?: "sm" | "md" }) {
+  const dim = size === "sm" ? 28 : 32;
 
   return (
     <Link
       href="/"
       aria-label="QentrixAI home"
-      className={cn("group relative inline-flex items-center gap-2.5", className)}
+      className={cn("inline-flex min-h-[44px] items-center gap-2.5 rounded-sm", className)}
     >
-      <span
-        className={cn(
-          "relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full",
-          "bg-surface/80 ring-1 ring-ink/10 shadow-[0_4px_20px_-6px_rgb(var(--color-accent-rgb)/0.45)]",
-          "backdrop-blur transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
-          "group-hover:ring-accent/40",
-          circle
-        )}
-      >
-        <Image
-          src="/logo/qentrix-mark.png"
-          alt="QentrixAI logo mark"
-          width={112}
-          height={112}
-          className="size-full object-contain p-[3px]"
-          priority
-        />
-      </span>
-      <span
-        className={cn(
-          "font-display font-semibold tracking-tight text-ink transition-all duration-[350ms]",
-          text
-        )}
-      >
-        Qentrix<span className="text-gradient-brand">AI</span>
-      </span>
+      <Image
+        src="/logo/qentrix-mark.png"
+        alt=""
+        width={dim}
+        height={dim}
+        priority
+        className="shrink-0 object-contain"
+        style={{ width: dim, height: dim }}
+      />
+      <span className="text-md font-semibold tracking-[-0.02em] text-text">QentrixAI</span>
     </Link>
   );
 }

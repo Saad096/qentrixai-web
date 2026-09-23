@@ -1,77 +1,24 @@
 /*
  * ===========================================================================
- * QentrixAI design system — Phase 0 R&D notes (2026-07 revamp)
+ * QentrixAI design system — Aurora (2026-09-20)
  * ===========================================================================
+ * Owner direction: take the colour scheme from the two reference sites.
+ * Light follows VamTam "AI FusionX", dark follows Quixlab "Optim AI".
+ * This supersedes Kiln and overrides the violet ban in CLAUDE.md 1.8/6.1 at
+ * the owner's explicit instruction.
  *
- * BRAND COLOR DECISION
- * Studied: Linear, Vercel, Resend, Supabase, Luma, Perplexity, Anthropic,
- * Midjourney, Notion, ElevenLabs. The shared trait of premium palettes is
- * commitment: a near-monochrome base plus exactly ONE deliberate accent.
- * Linear anchors on iris violet (#5E6AD2) over a blue-tinted near-black.
- * Anthropic and Notion use warm paper whites (#F0EEE6 / #FFFEFC), never
- * #FFFFFF, which reads as printed matter instead of a screen default.
- * Supabase commits to a single jade and lets everything else stay neutral.
+ * Values were sampled from the live sites rather than eyeballed:
+ *   Superseded 2026-09-21. The sampled reference palette is kept in the
+ *   ramp below for the neutral steps only; the brand colours moved to
+ *   warm graphite + amber. See the dark-theme block for the reasoning.
+ *   Quixlab  blue-black #0D1017, surface #252A32, deepest #040406,
+ *            violet #9B31FF with a blue #144C99 in the same gradient
  *
- * Accent chosen: IRIS VIOLET-INDIGO — #5B50E5 (light) / #8B84F5 (dark).
- * Why: the QentrixAI mark is a blue-to-violet ribbon, so the accent extends
- * the logo instead of fighting it. It sits on the warm (red) side of indigo,
- * which keeps it away from both default-blue (Tailwind blue-500, every SaaS
- * template) and cold stock purple. A sky-blue secondary (#5AAEF0), sampled
- * from the top of the mark, appears ONLY inside gradients, never alone.
- *
- * Light base: #F7F6F3 warm linen, not pure white. Warm greys flatter the
- * violet accent and avoid clinical glare (same reasoning as Anthropic).
- * Dark base: #0B0A10, near-black with a violet undertone, not #000000.
- * Pure black kills perceived depth of shadows and glows.
- *
- * LAYOUT OBSERVATIONS (three strongest, from Vercel/Linear/Resend/Supabase/Luma)
- * 1. Heroes commit to one declarative message and one product artifact
- *    (a real UI surface or diagram), never a stock-photo backdrop. Density
- *    lives below the fold. We keep the bento product grid for this reason
- *    and use downloaded photography only as dim texture, never as subject.
- * 2. Social proof is quiet: monochrome logo strips and small numerals.
- *    Nothing carousels, nothing shouts.
- * 3. CTA discipline: exactly one filled primary and one ghost secondary,
- *    verb-first copy, repeated in the same positions (nav right, hero,
- *    footer band) so the path to contact is always one glance away.
- *
- * CONTENT AUDIT FLAGS (fixed in src/data + components)
- * - Em-dashes used as separators across body copy: removed or rephrased.
- * - "Transforming Ideas into Intelligent Solutions": template-speak,
- *   replaced with concrete positioning.
- * - Nav labels (Services / About / Contact) renamed to human, brand-true
- *   labels (What we build / Our story / Work with us).
- *
- * IMAGERY
- * - /public/images/hero-network.jpg
- *   https://unsplash.com/photos/photo-1451187580459-43490279c0fa (NASA,
- *   Unsplash license) — abstract night-earth network, used as dim texture.
- * - /public/images/architecture-grid.jpg
- *   https://unsplash.com/photos/photo-1486406146926-c627a92ad1ab
- *   (Sean Pollock, Unsplash license) — architectural geometry, about/CTA.
- * - Hero video and sand particle canvas were built in Part 2 and then
- *   removed per client feedback (content-first hero, orbs + grid only).
- *
- * ---------------------------------------------------------------------------
- * PART 2 MOTION REVAMP — Phase 0 R&D (web pass, 2026-07)
- * ---------------------------------------------------------------------------
- * Reference behavior studied: Linear (scroll-driven header geometry and
- * section reveals), Resend (near-mono palette, restrained card hovers),
- * Vercel (gradient mesh ambient), Luma (dark glass floating panels),
- * beepsme (numbered scene cards that pin and cycle, minimal nav).
- * Technique searches confirmed: canvas 2D handles ~500 particles without
- * WebGL (GSAP canvas-particles demo), pinned scrub sections are the GSAP
- * ScrollTrigger pin+scrub pattern (gsap.com/scroll), and Aceternity's
- * sticky-scroll-reveal is the same pinned-panel idea we build natively.
- *
- * COLOR DECISION (Part 2): industry reading for 2025/26 AI brands is
- * "violet, indigo and near-black, one electric accent, premium not loud"
- * (biznamelab tech-palette guide, design-bootcamp on violet as AI's color).
- * We sharpen Part 1's iris to ELECTRIC IRIS #7C6AFA on a DEEP VIOLET-BLACK
- * base #0D0B14 — warmer and more charged than default blue or stock purple,
- * still in the logo's blue-violet family. Six committed tokens per theme:
- * base, surface, surface-2, accent (+glow), text-primary, text-secondary,
- * border. Light mode stays warm linen (#F7F6F3), never pure white.
+ * Contrast work on top of those samples:
+ *   #6904F2 measures 7.24:1 on white and 5.09:1 on the lavender tint, so it
+ *   serves as both fill and text in light.
+ *   #9B31FF measures only 3.88:1 on the dark base and 2.94:1 on its surface,
+ *   so in dark it is a FILL ONLY. Text uses #B57DFF (6.65 / 5.04).
  * ===========================================================================
  */
 
@@ -80,327 +27,1259 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------ */
-/* Theme tokens. RGB triplets so Tailwind alpha modifiers keep working. */
+/* Ramp. Warm white through lavender into Quixlab's blue-blacks.       */
 /* ------------------------------------------------------------------ */
-
 :root {
-  /* Light theme: warm linen base, paper-white surfaces */
-  --color-base-rgb: 247 246 243;      /* #F7F6F3 */
-  --color-surface-rgb: 255 255 255;   /* #FFFFFF cards on linen */
-  --color-surface-2-rgb: 240 238 232; /* #F0EEE8 elevated card, modal */
-  --color-ink-rgb: 20 17 30;          /* #14111E text primary */
-  --color-muted-rgb: 74 72 96;        /* #4A4860 text secondary */
-  --color-accent-rgb: 90 72 232;      /* #5A48E8 electric iris, deepened for light contrast */
-  --color-accent-glow: rgb(90 72 232 / 0.15);
-  --color-accent-muted-rgb: 230 228 253; /* #E6E4FD tint for pills/hovers */
-  --color-sky-rgb: 58 134 222;        /* #3A86DE logo sky, gradients only */
-  --color-border: rgb(20 17 30 / 0.08);
-
-  --shadow-card: 0 1px 2px rgba(20, 17, 30, 0.05), 0 12px 32px -16px rgba(20, 17, 30, 0.16);
-  --shadow-header: 0 1px 2px rgba(20, 17, 30, 0.04), 0 8px 30px -12px rgba(20, 17, 30, 0.14);
-  --glow-accent: 0 0 44px -10px rgba(90, 72, 232, 0.35);
-  --gradient-text: linear-gradient(92deg, #14111e 0%, #4636c8 55%, #5a48e8 100%);
-  --gradient-brand: linear-gradient(92deg, #5a48e8 0%, #7c6afa 50%, #3a86de 100%);
-
-  /* Fluid type scale */
-  --text-xs: clamp(12px, 1.2vw, 13px);
-  --text-sm: clamp(13px, 1.4vw, 15px);
-  --text-base: clamp(15px, 1.6vw, 17px);
-  --text-lg: clamp(18px, 2vw, 22px);
-  --text-xl: clamp(24px, 3vw, 32px);
-  --text-2xl: clamp(32px, 4.5vw, 52px);
-  --text-hero: clamp(48px, 6vw, 80px);
+  --n-0: 255 255 255;    /* #FFFFFF */
+  --n-50: 250 249 247;   /* #FAF9F7 VamTam warm band */
+  --n-100: 241 239 251;  /* #F1EFFB lavender tint */
+  --n-200: 219 211 255;  /* #DBD3FF lavender, gradient stop */
+  --n-300: 188 175 252;  /* #BCAFFC lavender, deeper stop */
+  --n-400: 154 163 178;  /* #9AA3B2 */
+  --n-500: 106 112 124;  /* #6A707C */
+  --n-600: 82 86 94;     /* #52565E */
+  --n-700: 51 58 70;     /* #333A46 */
+  --n-800: 37 42 50;     /* #252A32 Quixlab surface */
+  --n-850: 25 29 42;     /* #191D2A */
+  --n-900: 13 16 23;     /* #0D1017 Quixlab base */
+  --n-950: 4 4 6;        /* #040406 Quixlab deepest */
+  --n-1000: 0 0 0;       /* #000000 */
 }
 
-.dark {
-  /* Dark theme: deep violet-black, never pure #000 */
-  --color-base-rgb: 13 11 20;         /* #0D0B14 */
-  --color-surface-rgb: 20 18 29;      /* #14121D */
-  --color-surface-2-rgb: 29 26 42;    /* #1D1A2A elevated card, modal */
-  --color-ink-rgb: 240 238 248;       /* #F0EEF8 text primary, slightly warm */
-  --color-muted-rgb: 148 144 168;     /* #9490A8 text secondary */
-  --color-accent-rgb: 124 106 250;    /* #7C6AFA electric iris */
-  --color-accent-glow: rgb(124 106 250 / 0.18);
-  --color-accent-muted-rgb: 41 36 74; /* #29244A deep tint */
-  --color-sky-rgb: 96 170 240;        /* #60AAF0 */
-  --color-border: rgb(255 255 255 / 0.08);
+/* ------------------------------------------------------------------ */
+/* Dark is the default theme.                                           */
+/*                                                                      */
+/* Repalette 2026-09-21 (second pass). Sampled from axcelerate.ai at the  */
+/* owner's direction: navy grounds, cool paper light theme, one blue.     */
+/*                                                                      */
+/* Measured: text 18.16 on base / 17.02 on card, muted 7.80 / 7.31,     */
+/* amber-as-text 9.91 / 9.28, emerald 9.92. Ink on an amber fill is     */
+/* 9.91 -- white on it is 2:1, so button labels are ink, never white.   */
+/* ------------------------------------------------------------------ */
+/*
+ * Grounds went near-black on 2026-09-21 at the owner's instruction: the
+ * sampled Quixlab surface #252A32 read as grey plastic wherever it was used
+ * as a card, and it was the weakest ground on the page for reading off.
+ * These are theme values rather than ramp steps, because the ramp holds the
+ * sampled reference colours and these deliberately depart from them.
+ *
+ * Every foreground gets *more* contrast on the new grounds, so nothing here
+ * can regress accessibility:
+ *
+ *   on card surface   text 13.68 -> 18.29   muted 5.67 -> 7.58   link 5.04 -> 6.74
+ *   on page base      text 18.05 -> 19.22   muted 7.48 -> 7.97   link 6.65 -> 7.08
+ *
+ * `brand` as text is still banned in dark -- it measures 3.93:1 on the new
+ * card surface, no better than before. Fills only, `link` for text.
+ */
+:root {
+  /* Kiln, neutral pass (2026-09-22). The owner asked for a clean grey in
+     dark mode rather than the warm graphite, and left the light theme
+     alone. So the tint comes out: these are true neutrals, R = G with B one
+     or two points above, which reads as grey rather than as brown or as
+     blue. The verdigris is unchanged and now sits on a neutral ground,
+     which is what makes it read as the only colour on the page.
 
-  --shadow-card: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 0 0 1px rgba(255, 255, 255, 0.05), 0 20px 40px -20px rgba(0, 0, 0, 0.6);
-  --shadow-header: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 40px -18px rgba(0, 0, 0, 0.7);
-  --glow-accent: 0 0 50px -10px rgba(124, 106, 250, 0.45);
-  --gradient-text: linear-gradient(92deg, #ffffff 0%, #cfc8fb 55%, #9fc4f2 100%);
-  --gradient-brand: linear-gradient(92deg, #7c6afa 0%, #a29bf7 50%, #60aaf0 100%);
+     The light theme is untouched. It is stone, it is warm, and it was not
+     the thing being complained about. */
+  --color-bg: 26 26 28;          /* #1A1A1C page */
+  --color-surface: 35 35 38;     /* #232326 card, lifted off the page */
+  --color-surface-2: 44 44 48;   /* #2C2C30 band, lifted further */
+  --art-ground: 20 20 22;        /* #141416 deepest, artwork sits on it */
+  --color-text: 244 244 245;     /* #F4F4F5 15.81:1 on the base */
+  --color-muted: 166 166 171;    /* #A6A6AB 7.17:1 base, 6.47:1 card, 5.74:1 band */
+  --color-text-2: 207 207 212;   /* #CFCFD4 11.20:1 base, 10.10:1 card, 8.96:1 band */
+
+  /* The reference blue #1F5FD1 works as a FILL here -- white on it clears
+     5.81:1 -- but measures only 2.51:1 as text on the navy, so text gets a
+     lighter step. The same split the amber needed, in reverse. */
+  /* brand is a FILL. Verdigris clears 5.07:1 as text on the page but only
+     4.49:1 on a card and 3.82:1 on a band, and most of our type sits on
+     cards -- so the rule survives the repalette unchanged. Foregrounds use
+     `link`, which is the same hue two steps up. */
+  --color-brand: 15 168 140;     /* #0FA88C verdigris fill */
+  --color-link: 47 192 165;      /* #2FC0A5 text, 6.66 base / 5.90 card / 5.03 band */
+  --color-accent: 47 192 165;    /* #2FC0A5 */
+  /* Ink, not white. White on verdigris is 3.00:1 -- exactly the failure the
+     first audit found on the live site. */
+  --color-on-brand: 11 43 36;    /* #0B2B24 on #0FA88C, 5.05:1 */
+
+  --color-success: 63 207 142;   /* #3FCF8E 7.62:1 */
+  --color-warn: 224 163 63;      /* #E0A33F 6.86:1 */
+  --color-danger: 239 111 92;    /* #EF6F5C 5.14:1 */
+  --color-info: 47 192 165;      /* #2FC0A5 6.66:1 */
+
+  --color-border: rgb(244 244 245 / 0.14);
+
+  /* Elevation. The old single inset hairline is why cards read as outlines:
+     there was no depth to read, only an edge. */
+  --shadow-1:
+    0 0 0 1px rgb(255 255 255 / 0.07),
+    0 1px 0 0 rgb(255 255 255 / 0.05) inset;
+  --shadow-2:
+    0 0 0 1px rgb(255 255 255 / 0.09),
+    0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+    0 18px 40px -24px rgb(0 0 0 / 0.9);
+  --shadow-3:
+    0 0 0 1px rgb(var(--color-brand) / 0.38),
+    0 1px 0 0 rgb(255 255 255 / 0.08) inset,
+    0 24px 60px -28px rgb(var(--color-brand) / 0.42);
+  --shadow-card: var(--shadow-1);
+
+  /* Ambient orb field */
+  /* All three stops stay inside the warm half of the wheel. The first pass
+     paired amber with the emerald and the overlap mixed to olive -- a warm
+     and a cool wash at this size and blur make mud, not depth. Alpha is well
+     down from the violet era too: amber is a far brighter hue, so the same
+     0.30 washed the page and fought the copy. */
+  /* On graphite the wash is atmosphere, not colour. Blue against a neutral
+     base is a different hue rather than the same one, so the same alpha that
+     merely lifted navy would read here as a blue stain on grey. Two brand
+     stops well down in opacity plus one neutral lift, blurred further so no
+     edge of an orb is ever findable. */
+  --orb-1: 15 168 140;   /* verdigris */
+  --orb-2: 47 192 165;   /* pale verdigris */
+  --orb-3: 58 58 50;     /* the warm stone, no second hue */
+  --orb-alpha: 0.12;
+  --orb-blur: 130px;
+
+  /* How hard the section grounds are tinted. On navy a brand wash was the
+     same hue as the page and simply lifted it; on graphite it is a
+     different hue and the same value reads as a blue stain on grey. Halved
+     for the dark theme, unchanged for light. */
+  /* Illustration palette. Separate from the UI tokens on purpose: artwork
+     needs more than one accent to read as a scene rather than a diagram,
+     but those extra hues must never leak into buttons or type. They are
+     scoped to the drawings and nothing else reads them.
+
+     Measured against the art ground they sit on, #0A090C here, so every
+     hue clears 3:1 as a non-text element. The light theme uses deeper
+     versions of the same hues for the same reason in reverse. */
+  --ill-1: 47 192 165;    /* #2FC0A5 verdigris   8.71 */
+  --ill-2: 15 168 140;    /* #0FA88C brand       6.62 */
+  --ill-3: 232 201 138;   /* #E8C98A sand       12.44 */
+  --ill-4: 224 144 107;   /* #E0906B clay        7.92 */
+  --ill-5: 131 180 222;   /* #83B4DE sky         9.03 */
+  --ill-6: 184 181 170;   /* #B8B5AA stone       9.67 */
+  --ill-panel: 32 32 35;  /* #202023 panels inside a scene */
+  --ill-line: 244 244 245;/* strokes, used at low opacity */
+
+  --wash-alpha: 0.09;
+  --band-glow: 0.08;
+
+  /* Scale raised one step across the board (2026-09-21), on the owner's
+     readability note. 15px body is the size a design tool shows you and a
+     reader squints at; 16px is the floor a browser defaults to for a reason.
+     The mono labels move 12 -> 13 because DM Mono runs small for its point
+     size and they carry real information, not decoration.
+
+     The display sizes move the other way. The hero was capped at 78px,
+     which put four words on a line and made every h1 break badly; 68px
+     fits the same headline in fewer, better lines. */
+  --text-xs: 13px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 21px;
+  --text-xl: clamp(23px, 2.4vw, 27px);
+  --text-2xl: clamp(27px, 3.2vw, 35px);
+  --text-3xl: clamp(31px, 4.2vw, 44px);
+  --text-hero: clamp(38px, 5.2vw, 68px);
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  /* Motion, slowed and given one easing curve (2026-09-21).
+
+     Everything used to run at 140-260ms on an ease that snaps hard at the
+     end, which is why the site felt clipped rather than calm. These are the
+     durations that read as deliberate at this scale: a hover still answers
+     immediately, but anything that moves a whole element takes long enough
+     to be followed.
+
+     One curve, named once. `ease-out` is the standard expo-out: fast
+     departure, long settle, nothing overshoots. */
+  --motion-fast: 180ms;
+  --motion-base: 420ms;
+  --motion-slow: 720ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-html {
-  scroll-behavior: smooth;
+/* ------------------------------------------------------------------ */
+/* Light theme: warm bone and sand, deep amber. Pure white is out for    */
+/* the same reason cold grey is -- 2026's neutral is warm and tactile.   */
+/* ------------------------------------------------------------------ */
+.light {
+  /* Kiln light: stone, not paper. Pure white is out for the same reason
+     pure black is -- 2026's neutral is warm and has a material to it. */
+  --color-bg: 227 225 216;       /* #E3E1D8 stone */
+  --color-surface: 242 241 234;  /* #F2F1EA card, a shade above the page */
+  --color-surface-2: 213 211 200;/* #D5D3C8 band, a shade below */
+  --art-ground: 237 236 228;     /* #EDECE4 */
+  --color-text: 35 35 31;        /* #23231F 12.04:1 on the base */
+  --color-muted: 85 85 77;       /* #55554D 5.74:1 base, 6.64:1 card, 5.01:1 band */
+  --color-text-2: 53 53 47;      /* #35352F 9.42:1 base, 10.90:1 card, 8.22:1 band */
+
+  /* Same split as dark, and for the same reason: the fill matches the slab
+     in the mock, and #0B6B5C as text on a band is 4.27:1 -- under the floor.
+     `link` is one step darker so it clears everywhere. */
+  --color-brand: 11 107 92;      /* #0B6B5C pine fill */
+  --color-link: 10 97 82;        /* #0A6152 text, 5.63 base / 6.52 card / 4.91 band */
+  --color-accent: 10 97 82;
+  --color-on-brand: 242 241 234; /* bone on #0B6B5C, 5.67:1 */
+
+  --color-success: 11 107 78;    /* #0B6B4E 4.97:1 */
+  --color-warn: 138 90 18;       /* #8A5A12 4.51:1 */
+  --color-danger: 163 58 41;     /* #A33A29 5.02:1 */
+  --color-info: 10 97 82;        /* #0A6152 5.63:1 */
+
+  --color-border: rgb(35 35 31 / 0.20);
+
+  --shadow-1:
+    0 0 0 1px var(--color-border),
+    0 1px 2px 0 rgb(20 30 25 / 0.06),
+    0 6px 16px -10px rgb(20 30 25 / 0.14);
+  --shadow-2:
+    0 0 0 1px var(--color-border),
+    0 2px 4px 0 rgb(20 30 25 / 0.07),
+    0 18px 40px -22px rgb(20 30 25 / 0.26);
+  --shadow-3:
+    0 0 0 1px rgb(var(--color-brand) / 0.45),
+    0 2px 4px 0 rgb(20 30 25 / 0.08),
+    0 24px 60px -26px rgb(20 30 25 / 0.32);
+  --shadow-card: var(--shadow-1);
+
+  --orb-1: 180 206 196;  /* pale verdigris wash on stone */
+  --orb-2: 208 222 214;
+  --orb-3: 237 236 228;
+  --orb-alpha: 0.65;
+  --orb-blur: 90px;
+  --ill-1: 11 107 92;     /* #0B6B5C pine        5.42 */
+  --ill-2: 10 140 118;    /* #0A8C76             3.53 */
+  --ill-3: 154 107 21;    /* #9A6B15 deep sand   3.95 */
+  --ill-4: 176 86 47;     /* #B0562F deep clay   4.20 */
+  --ill-5: 42 102 144;    /* #2A6690 deep sky    5.21 */
+  --ill-6: 110 108 98;    /* #6E6C62 stone       4.45 */
+  --ill-panel: 250 249 243;
+  --ill-line: 35 35 31;
+
+  --wash-alpha: 0.16;
+  --band-glow: 0.14;
+}
+
+/* Kills the one-word last line: "Here are / three.", "Sovereign by default,
+   not by / exception." Supported everywhere we care about, and where it is
+   not the heading simply wraps as before. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 html,
 body {
-  background-color: rgb(var(--color-base-rgb));
-  color: rgb(var(--color-ink-rgb));
+  background-color: rgb(var(--color-bg));
+  color: rgb(var(--color-text));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
 }
 
-body {
-  transition: background-color 0.3s ease, color 0.3s ease;
+/* The header is sticky, so an untreated anchor jump parks its target
+   underneath the bar. Every in-page link on the site goes through this:
+   /#model-radar from the Build menu, /about#how-we-work, the service
+   anchors. Scrolled header height plus air.
+
+   Deliberately no `scroll-behavior: smooth` here. It was added alongside
+   this and had to come out: it animates every programmatic scroll, not just
+   anchor clicks, so scroll-reveal triggers fired hundreds of milliseconds
+   late and sections sat at opacity 0 while the scroll was still in flight.
+   The a11y run caught the how-we-work header mid-tween at 3.84:1. */
+html {
+  scroll-padding-top: 5.5rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ambient orb field.                                                   */
+/*                                                                      */
+/* Animates transform and nothing else, so it lives entirely on the     */
+/* compositor and costs no main-thread time. This is the one infinite   */
+/* animation on the site; the marquees that cost the old build its      */
+/* main thread are not coming back.                                     */
+/* ------------------------------------------------------------------ */
+/* The tab rail scrolls horizontally on narrow screens. Without a fade the
+   clipped tab at the edge just looks cut off; the mask says "there is more",
+   and it is removed once every tab fits. */
+@media (max-width: 767px) {
+  .tab-rail {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 26px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 26px), transparent 100%);
+  }
+}
+
+.orb-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mounted once in the layout so inner pages get the ambient too -- it used
+   to exist only on the homepage hero and the closing CTA, so /services and
+   the rest were flat. Fixed rather than absolute: it stays put while the
+   page scrolls and adds no height. */
+.orb-field--page {
+  position: fixed;
+}
+
+/* The page field sits behind everything, so the content needs a layer of its
+   own: a positioned z-index:0 element paints above static block content. */
+body > header,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(var(--orb-blur));
+  will-change: transform;
+  opacity: var(--orb-alpha);
+  animation: orb-drift 17s ease-in-out infinite;
+}
+
+.orb-a {
+  width: 46vw;
+  height: 46vw;
+  max-width: 620px;
+  max-height: 620px;
+  top: -14%;
+  left: -8%;
+  background: radial-gradient(circle, rgb(var(--orb-1)) 0%, rgb(var(--orb-1) / 0) 70%);
+}
+
+.orb-b {
+  width: 40vw;
+  height: 40vw;
+  max-width: 560px;
+  max-height: 560px;
+  top: 6%;
+  right: -10%;
+  background: radial-gradient(circle, rgb(var(--orb-2)) 0%, rgb(var(--orb-2) / 0) 70%);
+  animation-duration: 21s;
+  animation-direction: reverse;
+}
+
+.orb-c {
+  width: 34vw;
+  height: 34vw;
+  max-width: 460px;
+  max-height: 460px;
+  bottom: -18%;
+  left: 28%;
+  background: radial-gradient(circle, rgb(var(--orb-3)) 0%, rgb(var(--orb-3) / 0) 70%);
+  animation-duration: 25s;
+  animation-delay: -6s;
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero variant.                                                        */
+/*                                                                      */
+/* In the hero the orbs are the background rather than atmosphere       */
+/* behind something else, so they are larger, denser and slower. Still  */
+/* transform-only, so the cost is unchanged: this is the same three     */
+/* elements, drawn bigger.                                              */
+/* ------------------------------------------------------------------ */
+/* The light theme's orb stops are deliberately pale where the field is
+   atmosphere behind other content. As the hero's entire background they
+   simply disappeared, so the hero variant gets more saturated stops. Still
+   light enough that #000 body text clears its contrast floor over them. */
+/* These three stops were still violet from the Aurora palette, two
+   repalettes later -- the one place on the site where the banned hue
+   survived. Pale blue, matching the light theme's own wash. */
+.light .orb-field--hero {
+  --orb-1: 158 195 182;
+  --orb-2: 196 216 206;
+  --orb-3: 224 228 218;
+  --orb-alpha: 0.42;
+}
+
+/* 1.55 was set against a near-black base where the wash had somewhere to
+   go. Kiln's base is a warm mid-tone, so the same multiplier greys the
+   hero rather than lighting it. */
+.orb-field--hero .orb {
+  opacity: calc(var(--orb-alpha) * 1.15);
+  filter: blur(calc(var(--orb-blur) * 1.25));
+}
+
+.orb-field--hero .orb-a {
+  width: 74vw;
+  height: 74vw;
+  max-width: 980px;
+  max-height: 980px;
+  top: -26%;
+  left: -16%;
+  animation-duration: 34s;
+}
+
+.orb-field--hero .orb-b {
+  width: 66vw;
+  height: 66vw;
+  max-width: 880px;
+  max-height: 880px;
+  top: -8%;
+  right: -14%;
+  animation-duration: 40s;
+}
+
+.orb-field--hero .orb-c {
+  width: 56vw;
+  height: 56vw;
+  max-width: 760px;
+  max-height: 760px;
+  bottom: -34%;
+  left: 34%;
+  animation-duration: 46s;
+}
+
+@keyframes orb-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  25% { transform: translate3d(9%, -7%, 0) scale(1.14); }
+  50% { transform: translate3d(-6%, 6%, 0) scale(0.92); }
+  75% { transform: translate3d(7%, 4%, 0) scale(1.08); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* ------------------------------------------------------------------ */
+/* Brand gradient for the solid violet blocks.                          */
+/*                                                                      */
+/* Stops are per theme because the label sitting on the gradient has to
+/* clear it at both ends. Dark runs amber into a burnt amber and carries
+/* INK, not white. Light runs deep amber into a deeper bronze and carries
+/* white.                                                               */
+/* ------------------------------------------------------------------ */
+:root {
+  /* The slab runs lighter, not darker: on-brand is ink here, and ink on a
+     darker verdigris fails. #0B2B24 clears 5.05 on the first stop and 6.05
+     on the second. */
+  --grad-a: 15 168 140;  /* #0FA88C */
+  --grad-b: 31 184 154;  /* #1FB89A */
+
+  /* Band grounds: the page run to near-black with a little warmth. */
+  --band-a: 44 44 48;    /* #2C2C30 — above the page, not below it */
+  --band-b: 51 51 56;    /* #333338 */
+}
+
+.light {
+  --grad-a: 11 107 92;   /* #0B6B5C — bone clears 5.67:1 */
+  --grad-b: 9 90 76;     /* #095A4C — bone clears 7.19:1 */
+
+  /* Black is not an option on the light theme, so the band gets the same
+     treatment in kind: a gradient rather than one flat fill. */
+  /* Was #DCDAD1 / #E9E7DF, seven RGB units below the #E3E1D8 page. On a
+     stone palette that is invisible, so the light theme read as one flat
+     sheet while the dark theme had rhythm. Seventeen units now, matching
+     the separation the dark theme already had. Contrast re-checked: muted
+     text clears 4.5:1 on the new band. */
+  --band-a: 210 207 194; /* #D2CFC2 */
+  --band-b: 219 216 204; /* #DBD8CC */
+}
+
+.brand-gradient {
+  background-color: rgb(var(--color-brand));
+  background-image: linear-gradient(135deg, rgb(var(--grad-a)) 0%, rgb(var(--grad-b)) 100%);
+}
+
+/* The same two stops, arranged radially instead of on a 135deg ramp.
+   On a wide panel the linear version puts its bright end in the top-left
+   corner while the copy sits in the middle, so centred text reads as pushed
+   right -- the final CTA was reported as "not centred" when it was centred to
+   the pixel. Anchoring the light stop on the copy puts the visual mass and
+   the text in the same place. `text-on-brand` carries the label, which is
+   ink on the dark theme's amber (9.91 and 6.37 at the two stops) and white
+   on light's deep amber (5.92 and 9.46), so the blend cannot fail either. */
+.brand-gradient-radial {
+  background-color: rgb(var(--grad-b));
+  background-image: radial-gradient(
+    120% 150% at 50% 34%,
+    rgb(var(--grad-a)) 0%,
+    rgb(var(--grad-b)) 78%
+  );
+}
+
+/* The gradient that keeps a near-black card from reading as a flat hole.
+   One brand-tinted wash falling off the top edge -- enough to give the
+   surface a light direction, far too faint to cost any text contrast
+   (7% of the brand hue moves the card's luminance by under a point). */
+/* The tint pools at the BOTTOM of the card. It ran 180deg -- brightest at
+   the top edge, fading down -- and in the light theme a green-tinted band
+   along the top edge reads as a shadow falling upward onto the card, which
+   is how the owner reported it. Light comes from above, so the top edge is
+   clean and the weight sits at the bottom, agreeing with the drop shadow
+   underneath rather than fighting it. */
+.surface-sheen {
+  background-image: linear-gradient(
+    0deg,
+    rgb(var(--color-brand) / 0.07) 0%,
+    rgb(var(--color-brand) / 0) 55%
+  );
+}
+
+/* A rail that scrolls sideways should not also show a scrollbar; the pills
+   running to the edge are the affordance. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Card illustrations.                                                  */
+/*                                                                      */
+/* Four bespoke diagrams, one per capability, drawn from tokens rather  */
+/* than shipped as images: they theme correctly, cost no bytes, and     */
+/* stay sharp at any density. The reference site's equivalents are a    */
+/* paid template's assets and are not used here.                        */
+/*                                                                      */
+/* Every animation below is decorative and transform/opacity only, so   */
+/* it stays on the compositor. All of it stops under reduced motion --  */
+/* see the block at the end of this file.                               */
+/* ------------------------------------------------------------------ */
+.art-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    70% 60% at 50% 42%,
+    rgb(var(--color-brand) / 0.22),
+    transparent 72%
+  );
+}
+
+.art-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.5;
   background-image:
-    radial-gradient(800px 420px at 18% -8%, rgb(var(--color-accent-rgb) / 0.10), transparent 60%),
-    radial-gradient(700px 400px at 100% 8%, rgb(var(--color-sky-rgb) / 0.07), transparent 60%);
-  background-attachment: fixed;
+    linear-gradient(to right, rgb(var(--color-text) / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-text) / 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(70% 70% at 50% 45%, #000, transparent 75%);
 }
 
-/* Subtle dotted grid background utility */
-.bg-grid {
+/* Orbit rings turn; the chips riding them do not, so their labels stay
+   upright and readable. */
+.art-ring {
+  animation: art-spin 34s linear infinite;
+}
+.art-ring-slow {
+  animation: art-spin 52s linear infinite reverse;
+}
+
+@keyframes art-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A packet running the agent graph's happy path. */
+.art-packet {
+  animation: art-travel 4.2s ease-in-out infinite;
+}
+
+@keyframes art-travel {
+  0%,
+  8% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  92%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* Waveform bars. Each gets its own delay inline. */
+.art-bar {
+  transform-origin: center;
+  animation: art-pulse 1.9s ease-in-out infinite;
+}
+
+@keyframes art-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Retrieval: the matched chunks light up in turn. */
+.art-hit {
+  animation: art-blink 3.6s ease-in-out infinite;
+}
+
+@keyframes art-blink {
+  0%,
+  55%,
+  100% {
+    opacity: 0.35;
+  }
+  20%,
+  40% {
+    opacity: 1;
+  }
+}
+
+/* The plate unDraw illustrations sit on.
+   Now themed, because each illustration has a dark twin: the plate follows
+   --art-ground and the art follows the theme with it. Only the variant the
+   theme resolves is ever fetched. */
+.illus-plate {
+  background-color: rgb(var(--art-ground));
+  background-image: var(--illus-dark),
+    radial-gradient(82% 74% at 50% 6%, rgb(var(--color-brand) / 0.16), transparent 72%);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  /* Height-based, with an auto width: sizing both axes in percent squashes
+     the art, because each axis resolves against a different box dimension. */
+  background-size: auto var(--illus-scale, 72%), cover;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.light .illus-plate {
+  background-image: var(--illus-light),
+    radial-gradient(82% 74% at 50% 6%, rgb(var(--color-brand) / 0.10), transparent 72%);
+}
+
+/* The gradient plate a product screenshot is inset on. Two offset radials
+   rather than a linear ramp: a 135deg ramp puts its bright end in one corner,
+   and with a screenshot centred on top that corner is the only part of the
+   gradient still visible. Radials keep the colour around all four edges,
+   which is the part you actually see. */
+.product-plate {
+  background-color: rgb(var(--color-surface-2));
   background-image:
-    linear-gradient(rgb(var(--color-ink-rgb) / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--color-ink-rgb) / 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: -1px -1px;
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    radial-gradient(85% 95% at 12% 0%, rgb(var(--color-brand) / 0.55), transparent 62%),
+    radial-gradient(80% 90% at 92% 100%, rgb(var(--color-accent) / 0.50), transparent 64%);
 }
 
-.bg-dots {
-  background-image: radial-gradient(rgb(var(--color-ink-rgb) / 0.06) 1px, transparent 1px);
-  background-size: 18px 18px;
+/* Section content always sits above the orb field. */
+.above-orbs {
+  position: relative;
+  z-index: 1;
 }
 
-/* Glassmorphism (used sparingly: header, dark-surface cards, modals) */
-.glass {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgb(var(--color-surface-rgb) / 0.72);
-  border: 1px solid rgb(var(--color-ink-rgb) / 0.10);
+/* ------------------------------------------------------------------ */
+/* Rhythm                                                               */
+/* ------------------------------------------------------------------ */
+/* Section rhythm. Was 5.5rem / 8.5rem -- 88px on a phone and 136px on
+   desktop between every pair of sections, which the owner read as the page
+   being padded out rather than composed. 72px / 104px still separates two
+   grounds clearly and takes roughly a viewport of dead scroll out of the
+   homepage. */
+.section {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+@media (min-width: 768px) {
+  .section {
+    padding-top: 6.5rem;
+    padding-bottom: 6.5rem;
+  }
 }
 
-.card-glass {
-  background: linear-gradient(180deg, rgb(var(--color-ink-rgb) / 0.04), rgb(var(--color-ink-rgb) / 0.015));
-  border: 1px solid rgb(var(--color-ink-rgb) / 0.06);
-  backdrop-filter: blur(12px);
+/* Model orbit. One rotation on the ring, an equal and opposite one on every
+   chip, so the chips travel the circle while their type stays upright.
+   48s is deliberately slow -- fast enough to notice, slow enough that a name
+   is readable as it passes. Pauses on hover and on focus-within. */
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
 }
 
-.card-glow {
+@keyframes orbit-spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+.orbit-ring {
+  animation: orbit-spin 48s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.orbit-chip {
+  animation: orbit-spin-reverse 48s linear infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.orbit:hover .orbit-ring,
+.orbit:hover .orbit-chip,
+.orbit:focus-within .orbit-ring,
+.orbit:focus-within .orbit-chip {
+  animation-play-state: paused;
+}
+
+/* Hero arrival (motion plan A). A stagger on everything EXCEPT the h1 --
+   that is the LCP element and animating it is what put the old build at
+   3.71s. Each step is 60ms behind the last, opacity + an 18px rise. */
+@keyframes hero-in {
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.hero-in {
+  animation: hero-in var(--motion-slow) var(--ease-out) both;
+}
+
+.hero-in-1 { animation-delay: 90ms; }
+.hero-in-2 { animation-delay: 180ms; }
+.hero-in-3 { animation-delay: 270ms; }
+
+/* Domain panel transition (motion plan E). Keyed on the active tab, so it
+   replays on every change rather than only on mount. */
+@keyframes panel-in {
+  from { opacity: 0; transform: translate3d(14px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.panel-in {
+  animation: panel-in var(--motion-base) var(--ease-out) both;
+}
+
+/* Sequence steps.
+ *
+ * This used to dim the inactive cards to opacity 0.55. Opacity composites
+ * the whole card -- text included -- against the page, and the measured
+ * result was 2.87:1 for muted copy in dark and 2.52:1 in light, against a
+ * 4.5 floor. Even primary text failed in light at 3.67. Three of the four
+ * cards were unreadable at any given scroll position, and reported as a
+ * text-colour bug because that is exactly what it looks like.
+ *
+ * It is also the alpha-text mistake this codebase already has a rule
+ * against -- see the note on Stat.tsx, and the 41 instances of it the first
+ * audit found on the old site.
+ *
+ * So the active step is marked with things that are not text: a brand rule
+ * down its leading edge and a lift. Every card stays fully legible at every
+ * scroll position, which is the only acceptable resting state for copy. */
+[data-pin-sequence] .pin-step {
+  position: relative;
+  transition: box-shadow var(--motion-base) var(--ease-soft),
+    transform var(--motion-base) var(--ease-soft);
+}
+
+[data-pin-sequence] .pin-step::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  background: rgb(var(--color-brand));
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-soft);
+  pointer-events: none;
+}
+
+[data-pin-sequence] .pin-step.is-step-active {
+  transform: translate3d(0, -4px, 0);
+  box-shadow: var(--shadow-2);
+}
+
+[data-pin-sequence] .pin-step.is-step-active::before {
+  opacity: 1;
+}
+
+/* The footer is the one dark band in the light theme, so it re-declares the
+   tokens its subtree reads rather than hard-coding colours into the markup.
+   It was navy; it is graphite now, in both themes, because "not navy" has
+   to include the one place navy was load-bearing. On the dark theme this is
+   a near no-op -- a shade below the page, which is what a footer wants. */
+.footer-deep {
+  --color-bg: 15 15 17;          /* #0F0F11 */
+  --color-surface: 26 26 28;     /* #1A1A1C */
+  --color-surface-2: 35 35 38;
+  --color-text: 244 244 245;     /* 17.42:1 on #0F0F11 */
+  --color-muted: 166 166 171;    /* #A6A6AB 7.90:1 */
+  --color-text-2: 207 207 212;
+  --color-link: 47 192 165;      /* #2FC0A5 8.39:1 */
+  --color-border: rgb(244 244 245 / 0.14);
+
+  background-color: rgb(var(--color-bg));
+  color: rgb(var(--color-text));
+}
+
+/* ------------------------------------------------------------------ */
+/* The header bar.                                                      */
+/*                                                                      */
+/* A centred pill at the top of a page; a flat, full-bleed masthead      */
+/* once you have scrolled. The interpolation is a scroll-driven          */
+/* animation, so the browser owns it: it runs off the main thread, it    */
+/* is exactly proportional to scroll position, and scrolling back up     */
+/* reverses it at the same ratio without any code arranging that.        */
+/*                                                                      */
+/* This replaces a GSAP ticker that wrote width, top and border-radius   */
+/* every frame. Those are layout properties; that version relaid out     */
+/* the document on every frame of every scroll and was a P0 in the       */
+/* audit. The browser is interpolating the same properties here, but     */
+/* against a timeline rather than from a scroll handler, and there is    */
+/* no listener in the path.                                              */
+/*                                                                      */
+/* Corrections after the first pass, all from the owner:                 */
+/*                                                                      */
+/*  - The range is the whole document, not a fixed distance. 220px, then */
+/*    85vh, both finished the transition in the first screen or two and  */
+/*    the bar then sat docked for the remaining nine -- which is not     */
+/*    "shrinks as you scroll the page", it is "snaps near the top".      */
+/*    Omitting animation-range entirely maps the animation across the    */
+/*    full scroll range, so the bar reaches its docked state exactly as  */
+/*    you reach the footer, and reverses at the same rate going back up. */
+/*  - The widened bar kept its gap above it, so it never docked. The     */
+/*    top inset animates to zero with everything else, and the bar ends  */
+/*    flat against the top edge with square corners.                     */
+/*  - It was too short to read as a masthead, then too heavy once it     */
+/*    was not. 68px at rest settling to 60px docked is where it reads    */
+/*    as a bar rather than a band: tall enough for a 44px hit area with  */
+/*    air around it, short enough that it is not the loudest object on   */
+/*    the page.                                                          */
+/* ------------------------------------------------------------------ */
+.header-shell {
+  padding-top: var(--header-inset, 12px);
+  /* Where the mega-menu hangs from. It was pinned to 76px, which was the
+     old bar height; the panel floated away from the bar the moment that
+     changed. Derived now. */
+  --menu-top: calc(var(--header-inset, 12px) + var(--header-h, 60px) + 8px);
+}
+
+.header-row {
+  height: var(--header-h, 60px);
+  transition: height var(--motion-base) var(--ease-out);
+}
+
+.header-pill {
+  width: min(100% - 2rem, var(--container, 1260px));
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  transition: box-shadow var(--motion-base) var(--ease-out);
+}
+
+@supports (animation-timeline: scroll()) {
+  @keyframes header-dock {
+    from {
+      width: min(100% - 2rem, 1180px);
+      border-radius: 999px;
+    }
+    to {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+
+  /* The inset and the height ride the same timeline on the shell, so the
+     bar reaches the top edge and its final height together rather than in
+     two separate movements. */
+  @keyframes header-dock-shell {
+    from { --header-inset: 12px; --header-h: 68px; }
+    to { --header-inset: 0px; --header-h: 60px; }
+  }
+
+  /* px, not rem. @property requires a computationally independent
+     initial-value, and rem depends on the root font size -- the whole
+     registration is dropped as invalid, the property falls back to being
+     unregistered, and an unregistered custom property does not interpolate.
+     The height animated and the inset did not, which is how this surfaced. */
+  @property --header-inset {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 12px;
+  }
+
+  @property --header-h {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 68px;
+  }
+
+  .header-shell,
+  .header-pill {
+    animation-timeline: scroll(root block);
+    /* No animation-range: the default covers the entire scroll range, so
+       progress is literally "how far down the page you are". */
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+  }
+
+  .header-shell { animation-name: header-dock-shell; }
+  .header-pill { animation-name: header-dock; }
+
+  .header-row { transition: none; }
+
+  /* The open mobile panel is a state, not a scroll position, so it stays a
+     pill and does not take the timeline. */
+  #mobile-menu.header-pill {
+    animation: none;
+    width: min(100% - 2rem, 1180px);
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* Without scroll timelines the bar rests docked. A resting layout, not a
+   broken one. */
+@supports not (animation-timeline: scroll()) {
+  .header-shell {
+    --header-inset: 0px;
+    --header-h: 60px;
+  }
+  .header-pill {
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-shell {
+    animation: none !important;
+    --header-inset: 0px;
+    --header-h: 60px;
+  }
+  .header-pill {
+    animation: none !important;
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+/* The hero video panel.
+   It was 3:4 on desktop, which suited the abstract plexus loop that
+   replaced it -- cropping the sides of a field of dots costs nothing. The
+   footage now is a centred figure, and a 3:4 crop of a 16:9 source cut its
+   arms off. 16:10 keeps the figure whole and still fills the column beside
+   a three-line headline. */
+.hero-video {
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 1024px) {
+  .hero-video {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* The one moving part in a DomainFlow: the connector's dash offset, which
+   says the path runs left to right without spending a label on it. No
+   transform and no layout, so it is a paint on the compositor. */
+@keyframes domain-flow-rail {
+  to { stroke-dashoffset: -32; }
+}
+
+.domain-flow__rail {
+  animation: domain-flow-rail 2.4s linear infinite;
+}
+
+/* Each node lights as the pulse reaches it. Six seconds for four stages,
+   which is slow enough to follow and slow enough to ignore. */
+@keyframes domain-flow-node {
+  0%, 14%, 100% { stroke-width: 2; }
+  4%, 9% { stroke-width: 3.5; }
+}
+
+.domain-flow__node {
+  animation: domain-flow-node 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .domain-flow__rail,
+  .domain-flow__node { animation: none; }
+  /* SVG animateMotion is not covered by the animation reset, so the pulse
+     is hidden outright rather than left travelling. */
+  .domain-flow__pulse { display: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* The demo-to-production pipeline, running.                            */
+/*                                                                      */
+/* The rail already drew itself once on scroll and then sat still, so    */
+/* the section argued that production is a sequence and then showed a    */
+/* static row of dots. A packet now travels the wire and each stage      */
+/* lights as it arrives, which is the claim: work moves through these    */
+/* stages continuously, it does not arrive at one of them and stop.      */
+/*                                                                      */
+/* Twelve seconds for six stages. Slow enough to follow if you watch     */
+/* it, slow enough to ignore while you read the prose beside it.         */
+/* Transform and opacity only, so it costs no main-thread time, and      */
+/* nothing that carries a word moves or fades.                          */
+/* ------------------------------------------------------------------ */
+@keyframes pipe-packet {
+  0%   { transform: translateX(-16%); opacity: 0; }
+  6%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* The animated element is full-width and carries a 16%-wide bar inside it,
+   because a translateX percentage resolves against the element's own width.
+   Sizing the mover to the rail is what lets -16% and 100% mean "one rail
+   width", which is what the node delays below are computed against. */
+.pipe-packet {
+  animation: pipe-packet 12s linear infinite;
+  will-change: transform;
+}
+
+.pipe-packet > span {
+  /* A slice of the rail rather than a dot: a dot on a 1px line reads as
+     dust, a short bright segment reads as something moving. */
+  display: block;
+  width: 16%;
+  height: 100%;
+}
+
+/* The ring that expands out of a node as the packet reaches it. Lives on
+   ::after so the node itself keeps its own border and background. */
+@keyframes pipe-ping {
+  0%        { transform: scale(0.7); opacity: 0; }
+  4%        { opacity: 0.55; }
+  16%       { transform: scale(2.3); opacity: 0; }
+  100%      { transform: scale(2.3); opacity: 0; }
+}
+
+/* And the node breathes as it fires: a short swell, not a throb. */
+@keyframes pipe-swell {
+  0%, 14%, 100% { transform: scale(1); }
+  5%            { transform: scale(1.16); }
+}
+
+.pipe-node {
+  position: relative;
+  animation: pipe-swell 12s ease-in-out infinite;
+  animation-delay: var(--pipe-delay, 0s);
+}
+
+.pipe-node::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  border: 2px solid rgb(var(--color-link));
+  opacity: 0;
+  animation: pipe-ping 12s ease-out infinite;
+  animation-delay: var(--pipe-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipe-packet { display: none; }
+  .pipe-node,
+  .pipe-node::after { animation: none; }
+}
+
+/* Scene animation. Transform and opacity only, so every one of these stays
+   on the compositor, and all of them stop under prefers-reduced-motion.
+   A scene should read fully when still: motion adds a second beat, it never
+   carries the meaning. */
+@keyframes scene-sweep {
+  0%, 100% { transform: translateX(-6%); }
+  50% { transform: translateX(6%); }
+}
+@keyframes scene-rise {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes scene-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1); }
+}
+@keyframes scene-trace {
+  to { stroke-dashoffset: -44; }
+}
+
+.scene__sweep { animation: scene-sweep 5.5s ease-in-out infinite; }
+.scene__rise  { animation: scene-rise 4.5s ease-in-out infinite; }
+.scene__pulse { animation: scene-pulse 2.8s ease-in-out infinite; transform-origin: center; }
+.scene__trace { animation: scene-trace 3s linear infinite; }
+.scene__d1 { animation-delay: 0.4s; }
+.scene__d2 { animation-delay: 0.9s; }
+.scene__d3 { animation-delay: 1.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scene__sweep, .scene__rise, .scene__pulse, .scene__trace { animation: none; }
+}
+
+.menu-pop {
+  animation: menu-pop 240ms var(--ease-out) both;
+  transform-origin: top center;
+}
+
+@keyframes menu-pop {
+  from { opacity: 0; transform: translate(-50%, -6px) scale(0.98); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.rule {
+  border-top: 1px solid var(--color-border);
+}
+
+/* ------------------------------------------------------------------ */
+/* Section grounds.                                                     */
+/*                                                                      */
+/* The finding this fixes: every section sat on the same near-black at   */
+/* the same weight with a hairline between, so a 9,900px page read as    */
+/* one undifferentiated strip. Three grounds alternate down the page.    */
+/* Every decorative layer is pointer-events:none and sits behind         */
+/* content, so none of them can eat a click.                             */
+/* ------------------------------------------------------------------ */
+.ground-wash,
+.ground-band {
   position: relative;
   isolation: isolate;
 }
 
-.card-glow::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(140deg, rgb(var(--color-accent-rgb) / 0.5), rgb(var(--color-sky-rgb) / 0.25) 40%, transparent 70%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+/* `wash` is now the same ground as `band`. The two offset radials it used
+   to draw were the blurred smudges a review called accidental, and it was
+   right: they sat at different positions and intensities from section to
+   section with nothing deciding where. The only glow left on the site is
+   inside the hero, behind the video, where it has a job. */
+.ground-wash::before {
+  content: none;
 }
 
-.card-glow:hover::before {
-  opacity: 1;
+.ground-wash {
+  background-color: rgb(var(--band-a));
 }
 
-/* Section padding */
-.section {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-@media (min-width: 768px) {
-  .section {
-    padding-top: 7rem;
-    padding-bottom: 7rem;
-  }
-}
-
-/* Gradient text */
-.text-gradient {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* The flat #191D2A fill read as a washed-out blue-grey slab. The band is a
+   gradient to black now, with one brand-tinted corner so it has a light
+   source rather than being a flat rectangle.
+   The glow is a background layer, not a pseudo-element: ::before and ::after
+   here are the 1px hairlines and are already spoken for. */
+.ground-band {
+  background-color: rgb(var(--band-a));
+  background-image:
+    linear-gradient(
+      168deg,
+      rgb(var(--band-a)) 0%,
+      rgb(var(--band-b)) 62%,
+      rgb(var(--band-a)) 100%
+    );
 }
 
-.text-gradient-brand {
-  background: var(--gradient-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* "Learn more" link: accent underline slides in from the left */
-.link-slide {
-  position: relative;
-}
-.link-slide::after {
+.ground-band::before,
+.ground-band::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -2px;
-  height: 1.5px;
-  width: 100%;
-  background: rgb(var(--color-accent-rgb));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+  pointer-events: none;
 }
-.group:hover .link-slide::after,
-.link-slide:hover::after {
-  transform: scaleX(1);
-}
+.ground-band::before { top: 0; }
+.ground-band::after { bottom: 0; }
 
-/* Hero ambient: two slow-drifting radial orbs. The single ambient element. */
-@keyframes orb-drift {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  33% { transform: translate3d(4%, -3%, 0) scale(1.06); }
-  66% { transform: translate3d(-3%, 2%, 0) scale(0.97); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-.orb {
+/* Grain. Breaks up the banding that makes a large soft wash read as "a CSS
+   gradient" rather than as a designed surface. One inline SVG: no request,
+   no runtime cost. */
+.grain::after {
+  content: "";
   position: absolute;
-  border-radius: 9999px;
-  filter: blur(80px);
-  will-change: transform;
-  animation: orb-drift 16s ease-in-out infinite;
-}
-.orb-2 {
-  animation-duration: 20s;
-  animation-direction: reverse;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Focus ring */
+/* Cards lift on hover. transform and box-shadow only, so it stays off the
+   layout path. Guarded to real hover devices: on touch this would fire on
+   tap and stick. */
+.lift {
+  transition:
+    transform var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: var(--shadow-3);
+  }
+}
+
+.prose-links a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion. Scroll reveals are driven by GSAP ScrollTrigger, loaded      */
+/* lazily below the fold; these are the from-states it animates out of. */
+/* ------------------------------------------------------------------ */
+/* The hidden from-state is applied only once the reveal script has actually
+   loaded and set .js-reveal on <html>. If JS never runs, or fails, every
+   section renders visible -- content must never depend on an animation. */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  will-change: transform, opacity;
+}
+
+.js-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.rise {
+  animation: rise var(--motion-base) var(--ease-out) both;
+}
+
+@keyframes slab-fill {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.slab-fill {
+  animation: slab-fill var(--motion-slow) var(--ease-out) both;
+}
+
+/* A dual ring, because a single violet one disappears on the thing people
+   focus most. `link` on the brand fill measures 1.72:1 in dark and 1:1 in
+   light -- the primary CTA is brand-filled, so its focus state was invisible.
+   The halo sits between the element and the ring, so whatever is underneath,
+   both adjacent pairs contrast:
+     dark   ring #F8F9FA vs brand 4.66, halo #050609 vs brand 4.13
+     light  ring #000000 vs halo 21,    halo #FFFFFF vs brand 7.24 */
 :focus-visible {
-  outline: 2px solid rgb(var(--color-accent-rgb) / 0.8);
+  outline: 2px solid rgb(var(--color-text));
   outline-offset: 3px;
-  border-radius: 6px;
+  box-shadow: 0 0 0 3px rgb(var(--color-bg));
+  border-radius: 4px;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
+::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-ink-rgb) / 0.12);
+  background: rgb(var(--color-text) / 0.14);
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--color-ink-rgb) / 0.22);
-}
-
-/* Marquee parent */
-.marquee-mask {
-  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
-}
-
-/* ------------------------------------------------------------------ */
-/* Part 2 motion revamp: cursor, hero video, animated gradients        */
-/* ------------------------------------------------------------------ */
-
-/* Magnetic cursor. Native cursor hides only while the custom one runs. */
-html.has-custom-cursor,
-html.has-custom-cursor body,
-html.has-custom-cursor a,
-html.has-custom-cursor button {
-  cursor: none;
-}
-
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgb(var(--color-accent-rgb));
-  pointer-events: none;
-  z-index: 99999;
-  will-change: transform;
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease;
-}
-
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid rgb(var(--color-accent-rgb));
-  background: var(--color-accent-glow);
-  pointer-events: none;
-  z-index: 99998;
-  will-change: transform;
-  display: grid;
-  place-items: center;
-  transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, border 0.25s ease;
-}
-
-.cursor-ring.cursor-hover {
-  width: 56px;
-  height: 56px;
-  background: rgb(var(--color-accent-rgb) / 0.25);
-  border-color: rgb(var(--color-accent-rgb));
-}
-
-.cursor-dot.cursor-hover {
-  width: 4px;
-  height: 4px;
-  opacity: 0.6;
-}
-
-.cursor-ring.cursor-text {
-  width: 48px;
-  height: 48px;
-  background: transparent;
-  border-width: 1px;
-}
-
-.cursor-ring.cursor-label {
-  width: 56px;
-  height: 56px;
-  background: rgb(var(--color-accent-rgb) / 0.9);
-  border-color: transparent;
-}
-
-.cursor-ring-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.cursor-ring.cursor-label .cursor-ring-label {
-  opacity: 1;
-}
-
-@media (pointer: coarse) {
-  .cursor-dot,
-  .cursor-ring {
-    display: none;
-  }
-}
-
-/* Animated gradient hero headline */
-.gradient-animate {
-  background-size: 200% auto;
-  animation: gradient-shift 6s linear infinite;
-}
-
-@keyframes gradient-shift {
-  to {
-    background-position: 200% center;
-  }
-}
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--color-text) / 0.24); }
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -412,8 +1291,216 @@ html.has-custom-cursor button {
     scroll-behavior: auto !important;
   }
 
-  .cursor-dot,
-  .cursor-ring {
-    display: none !important;
+  .orb,
+  .orbit-ring,
+  .orbit-chip { animation: none; }
+
+  .hero-in,
+  .panel-in,
+  .menu-pop { animation: none; }
+
+  [data-pin-sequence] .pin-step.is-step-active {
+    transform: none;
   }
+
+  .js-reveal [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Modals.                                                              */
+/*                                                                      */
+/* Booking and the brief form open here rather than on a route of their */
+/* own, so the page a visitor was reading is still behind them. The     */
+/* routes still exist and still work without JS; the dialog is the      */
+/* enhancement.                                                         */
+/* ------------------------------------------------------------------ */
+.qx-modal {
+  /* <dialog> ships with a border, a background and margin: auto that
+     centres it only vertically in some engines. Reset, then place. */
+  border: 0;
+  padding: 0;
+  max-width: 100vw;
+  max-height: 100dvh;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+.qx-modal::backdrop {
+  background: rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(10px) saturate(0.9);
+  -webkit-backdrop-filter: blur(10px) saturate(0.9);
+}
+
+.qx-modal[open] {
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .qx-modal[open] { padding: 32px; }
+}
+
+.qx-modal__panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100dvh - 32px);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: rgb(var(--color-surface));
+  box-shadow: var(--shadow-2);
+  animation: qx-modal-in var(--motion-base) var(--ease-out) both;
+}
+
+.qx-modal__panel--lg { max-width: 980px; }
+
+@media (min-width: 768px) {
+  .qx-modal__panel { max-height: calc(100dvh - 64px); }
+}
+
+.qx-modal__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@keyframes qx-modal-in {
+  from { opacity: 0; transform: translate3d(0, 12px, 0) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qx-modal__panel { animation: none; }
+}
+
+/* The Calendly iframe. 700px is the height below which its month grid
+   starts scrolling inside itself, which reads as broken. */
+.qx-calendly {
+  display: block;
+  width: 100%;
+  height: min(78dvh, 760px);
+  min-height: 560px;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Domain orbit (industries hero).                                      */
+/*                                                                      */
+/* The ring carries the nodes round; each node counter-spins at the      */
+/* same rate so its label stays level while it travels. 64s is slow      */
+/* enough to read a name as it passes and slow enough to ignore while    */
+/* reading the headline beside it. Transform only, so it stays on the    */
+/* compositor. Pauses on hover and on focus-within, because a reader     */
+/* who has stopped on it wants it to hold still.                        */
+/* ------------------------------------------------------------------ */
+.domain-orbit__ring {
+  animation: orbit-spin 64s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.domain-orbit__node {
+  animation: orbit-spin-reverse 64s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.domain-orbit:hover .domain-orbit__ring,
+.domain-orbit:hover .domain-orbit__node,
+.domain-orbit:focus-within .domain-orbit__ring,
+.domain-orbit:focus-within .domain-orbit__node {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .domain-orbit__ring,
+  .domain-orbit__node { animation: none; }
+}
+
+/* Hero video controls. Visible by default; they only duck out of the way
+   while it is playing, and only where there is a real pointer to bring them
+   back. On a touch screen there is no hover, so hiding them there would be
+   hiding the Pause control outright -- which WCAG 2.2.2 asks us not to do
+   for motion that runs longer than five seconds. */
+.hero-video__controls {
+  opacity: 1;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-video__controls[data-playing="true"] { opacity: 0; }
+  .hero-video:hover .hero-video__controls,
+  .hero-video__controls:focus-within { opacity: 1; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Industry hero drift.                                                 */
+/*                                                                      */
+/* Only for artwork that draws a flow -- AI automation, where documents  */
+/* converge on a decision and fan back out. Two soft bands travel the    */
+/* diagram left to right on a long cycle, so it reads as the pipeline    */
+/* running rather than as a picture of one. On a photograph this would   */
+/* look like a rendering fault, which is why it is opt-in per industry.  */
+/*                                                                      */
+/* Transform and opacity only, so it stays on the compositor, and the    */
+/* bands are behind nothing readable. Stops under reduced motion.        */
+/* ------------------------------------------------------------------ */
+.industry-drift { isolation: isolate; }
+
+@keyframes industry-drift {
+  0%   { transform: translateX(-60%); opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { transform: translateX(160%); opacity: 0; }
+}
+
+.industry-drift__band {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42%;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background: linear-gradient(
+    100deg,
+    rgb(var(--color-brand) / 0) 0%,
+    rgb(var(--color-brand) / 0.16) 45%,
+    rgb(var(--color-brand) / 0) 100%
+  );
+  animation: industry-drift 9s linear infinite;
+  will-change: transform;
+}
+
+.industry-drift__band--b {
+  width: 30%;
+  animation-delay: 4.5s;
+  background: linear-gradient(
+    100deg,
+    rgb(var(--color-accent) / 0) 0%,
+    rgb(var(--color-accent) / 0.14) 45%,
+    rgb(var(--color-accent) / 0) 100%
+  );
+}
+
+/* multiply darkens on a light plate and muddies on a dark one, so the dark
+   theme lightens instead. Written the same way as every other dark rule in
+   this file: the explicit data-theme, and the media query guarded so an
+   explicit light choice still wins. */
+:root[data-theme="dark"] .industry-drift__band {
+  mix-blend-mode: screen;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .industry-drift__band {
+    mix-blend-mode: screen;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .industry-drift__band { display: none; }
 }

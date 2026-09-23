@@ -1,32 +1,43 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
+/**
+ * The old 404 said "That route hasn't been wired up yet" -- developer voice
+ * on a customer-facing page. An empty screen is an invitation to act.
+ */
 export default function NotFound() {
+  const links = [
+    { label: "Case studies", href: "/case-studies" },
+    { label: "Products", href: "/products" },
+    { label: "What we build", href: "/services" },
+    { label: "Contact", href: "/contact" },
+  ];
+
   return (
-    <section className="pt-40 pb-24">
-      <Container className="max-w-2xl text-center">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-accent">
-          404 · Page not found
-        </p>
-        <h1 className="mt-3 font-display text-5xl font-semibold tracking-tight text-ink md:text-6xl">
-          That route hasn&apos;t been wired up yet.
+    <section className="py-24 md:py-32">
+      <Container>
+        <p className="font-mono text-xs text-muted">404</p>
+        <h1 className="mt-4 max-w-[18ch] text-3xl font-bold text-text">
+          That page has moved or never existed.
         </h1>
-        <p className="mt-4 text-ink/65">
-          The link might be stale, or we haven&apos;t built this page yet. Head back home or browse
-          our work.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Button href="/">
-            Back home <ArrowRight className="size-4" />
-          </Button>
-          <Button href="/products" variant="outline">
-            See products
-          </Button>
-          <Link href="/contact" className="text-[14px] text-ink/65 hover:text-ink">
-            Or contact us →
-          </Link>
+        <p className="mt-5 max-w-measure text-md text-muted">Here is where most people are heading.</p>
+
+        <ul className="mt-9 max-w-measure">
+          {links.map((l) => (
+            <li key={l.href} className="border-t border-[color:var(--color-border)]">
+              <Link
+                href={l.href}
+                className="flex min-h-[60px] items-center text-md text-text hover:text-link"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-10">
+          <Button href="/">Back to the homepage</Button>
         </div>
       </Container>
     </section>
