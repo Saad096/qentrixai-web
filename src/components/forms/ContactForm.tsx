@@ -109,11 +109,16 @@ export function ContactForm() {
       </div>
       <Field label="Message" name="message" type="textarea" required placeholder="Tell us about the problem, the team, and the ideal timeline." />
 
-      <div className="mt-2 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+      {/* Centred. Left-aligned under a two-column grid of fields it read as
+          one more field rather than as the end of the form. Full width on a
+          phone, where a centred pill with dead space either side is worse
+          than a bar you can hit with a thumb. */}
+      <div className="mt-2 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
         <Button
           type="submit"
+          size="lg"
           disabled={state.status === "submitting" || state.status === "success"}
-          className="w-full sm:w-auto"
+          className="w-full sm:w-auto sm:min-w-[15rem]"
         >
           {state.status === "submitting" ? (
             <>

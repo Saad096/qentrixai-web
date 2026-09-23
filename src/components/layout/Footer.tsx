@@ -76,13 +76,20 @@ export function Footer() {
             left the four link columns about 300px each, and every label here
             is a sentence rather than a word, so they kept wrapping to two
             lines however the split was tuned. Full width, four columns, and
-            they fit on one line each. */}
-        <div className="py-14 md:py-16">
-          <div className="max-w-[46ch]">
-            <Logo />
-            <p className="mt-5 max-w-[40ch] text-base text-muted">{company.mission}</p>
+            they fit on one line each.
 
-            <ul className="mt-7 space-y-1">
+            Centred, and the positioning line runs the width of the footer
+            rather than being capped at 46ch on the left: at full width a
+            left-pinned block with the whole footer empty beside it was the
+            one thing in here that did not line up with anything. The two
+            ways to make contact sit under it as a centred pair. */}
+        <div className="py-14 text-center md:py-16">
+          <div className="flex justify-center">
+            <Logo />
+          </div>
+          <p className="mx-auto mt-5 max-w-[70ch] text-base text-muted">{company.mission}</p>
+
+          <ul className="mt-7 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-8">
               <li>
                 <a
                   href={`mailto:${publicEnv.profile.email}`}
@@ -112,9 +119,12 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
 
-          <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 lg:grid-cols-4">
+          {/* text-left, because the brand block above is centred and the
+              centring was cascading down here: the column headings sat in
+              the middle of columns whose links were left-aligned under
+              them. */}
+          <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 text-left lg:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">

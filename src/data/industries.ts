@@ -29,6 +29,12 @@ export type Industry = {
   image?: string;
   /** Describes what the photograph shows, not what the tab is called. */
   imageAlt?: string;
+  /** Slow drift on the hero image. Only for artwork that reads as a flow --
+      on a photograph it looks like a rendering fault rather than motion. */
+  animateImage?: boolean;
+  /** Hero frame ratio. Defaults to 4/3, which suits a photograph. A wide
+      diagram needs its own, or object-cover crops the sides off it. */
+  imageRatio?: string;
   /** The four stages drawn when there is no photograph. */
   flow?: { label: string; sub: string }[];
 };
@@ -146,6 +152,10 @@ export const industries: Industry[] = [
   {
     slug: "saas-and-platform",
     name: "SaaS and platform engineering",
+    image: `${DIR}/saas-and-platform.webp`,
+    imageRatio: "aspect-[1392/634]",
+    imageAlt:
+      "The platform around a model: auth, tenancy, billing, integrations, clients and the deployment pipeline, with the inference call at the centre",
     flow: [
       { label: "Scope", sub: "one workflow" },
       { label: "Build", sub: "web, mobile, API" },
@@ -159,6 +169,13 @@ export const industries: Industry[] = [
   {
     slug: "ai-automation",
     name: "AI automation",
+    image: `${DIR}/ai-automation.webp`,
+    imageRatio: "aspect-[1408/730]",
+    imageAlt:
+      "Documents, records and messages converging on a decision point, then fanning back out to a report, a database and an email",
+    /* Drawn as a flow rather than a scene, so it gets the drifting-current
+       treatment in the hero. See `animate` below. */
+    animateImage: true,
     flow: [
       { label: "Trigger", sub: "event or queue" },
       { label: "Decide", sub: "rules first" },

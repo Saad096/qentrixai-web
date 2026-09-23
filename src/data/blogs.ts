@@ -19,7 +19,7 @@ export const blogs: Blog[] = [
       "TypeSafe AI shipped a model that cannot write a sentence. It returns a typed value and a calibrated confidence, in 70 to 500ms. Here is where that belongs in a production system, and where it does not.",
     date: "2026-09-22",
     readingTime: "7 min read",
-    cover: "",
+    cover: "/images/insights/jev-typed-decisions-not-text.webp",
     author: "Saad Alam",
     content: [
       "TypeSafe AI released Jev on 15 September and dropped the waitlist five days later. It is a transformer that does not generate text. You hand it unstructured input plus a schema you defined in advance, and it hands back a typed value with a calibrated confidence score. It cannot write an article, generate code, or explain itself.",
@@ -41,7 +41,7 @@ export const blogs: Blog[] = [
       "The Model Context Protocol went from Anthropic side project to Linux Foundation standard with over 10,000 public servers. What the new stateless spec and enterprise auth mean for your stack.",
     date: "2026-07-15",
     readingTime: "8 min read",
-    cover: "",
+    cover: "/images/insights/mcp-how-agents-reach-your-systems.webp",
     author: "Saad Alam",
     content: [
       "In December 2025 Anthropic donated MCP to the Agentic AI Foundation under the Linux Foundation, and adoption followed fast. There are now more than 10,000 public MCP servers, the SDKs see close to 100 million downloads a month, and around 4 in 10 software organisations report MCP servers in production.",
@@ -58,7 +58,7 @@ export const blogs: Blog[] = [
       "The defining AI skill of 2026 is not writing clever prompts. It is architecting what the model sees: memory, retrieval, tools, and state, delivered at the right moment.",
     date: "2026-07-02",
     readingTime: "7 min read",
-    cover: "",
+    cover: "/images/insights/context-engineering-beat-prompting.webp",
     author: "Saad Alam",
     content: [
       "Prompt engineering optimised a single message. Context engineering architects the entire information environment an agent operates in: what it remembers, what it retrieves, which tools it sees, and what state it carries between steps.",

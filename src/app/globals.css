@@ -1438,3 +1438,69 @@ body > footer {
   .hero-video:hover .hero-video__controls,
   .hero-video__controls:focus-within { opacity: 1; }
 }
+
+/* ------------------------------------------------------------------ */
+/* Industry hero drift.                                                 */
+/*                                                                      */
+/* Only for artwork that draws a flow -- AI automation, where documents  */
+/* converge on a decision and fan back out. Two soft bands travel the    */
+/* diagram left to right on a long cycle, so it reads as the pipeline    */
+/* running rather than as a picture of one. On a photograph this would   */
+/* look like a rendering fault, which is why it is opt-in per industry.  */
+/*                                                                      */
+/* Transform and opacity only, so it stays on the compositor, and the    */
+/* bands are behind nothing readable. Stops under reduced motion.        */
+/* ------------------------------------------------------------------ */
+.industry-drift { isolation: isolate; }
+
+@keyframes industry-drift {
+  0%   { transform: translateX(-60%); opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { transform: translateX(160%); opacity: 0; }
+}
+
+.industry-drift__band {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42%;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background: linear-gradient(
+    100deg,
+    rgb(var(--color-brand) / 0) 0%,
+    rgb(var(--color-brand) / 0.16) 45%,
+    rgb(var(--color-brand) / 0) 100%
+  );
+  animation: industry-drift 9s linear infinite;
+  will-change: transform;
+}
+
+.industry-drift__band--b {
+  width: 30%;
+  animation-delay: 4.5s;
+  background: linear-gradient(
+    100deg,
+    rgb(var(--color-accent) / 0) 0%,
+    rgb(var(--color-accent) / 0.14) 45%,
+    rgb(var(--color-accent) / 0) 100%
+  );
+}
+
+/* multiply darkens on a light plate and muddies on a dark one, so the dark
+   theme lightens instead. Written the same way as every other dark rule in
+   this file: the explicit data-theme, and the media query guarded so an
+   explicit light choice still wins. */
+:root[data-theme="dark"] .industry-drift__band {
+  mix-blend-mode: screen;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .industry-drift__band {
+    mix-blend-mode: screen;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .industry-drift__band { display: none; }
+}

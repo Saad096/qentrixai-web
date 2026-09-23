@@ -108,7 +108,12 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                   way: it shows the shape of the system rather than a stock
                   image of the sector. */}
               {ind.image ? (
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-2">
+                <div
+                  className={
+                    `relative overflow-hidden rounded-lg shadow-2 ${ind.imageRatio ?? "aspect-[4/3]"}` +
+                    (ind.animateImage ? " industry-drift" : "")
+                  }
+                >
                   <Image
                     src={ind.image}
                     alt={ind.imageAlt ?? ""}
@@ -117,6 +122,17 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                     sizes="(min-width: 1024px) 48vw, 100vw"
                     className="object-cover"
                   />
+                  {/* A current moving along the flow, for artwork that draws
+                      one. Two soft bands drifting left to right across the
+                      diagram, in brand and accent, masked to the plate. It
+                      reads as the pipeline running rather than as a picture
+                      of a pipeline. Transform and opacity only. */}
+                  {ind.animateImage && (
+                    <>
+                      <span aria-hidden="true" className="industry-drift__band" />
+                      <span aria-hidden="true" className="industry-drift__band industry-drift__band--b" />
+                    </>
+                  )}
                 </div>
               ) : (
                 ind.slug in SCENES ? (

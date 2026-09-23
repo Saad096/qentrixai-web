@@ -4,6 +4,7 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Container } from "@/components/ui/Container";
 import { Illustration } from "@/components/ui/Illustration";
 import { BLOG_ART } from "@/data/illustrations";
+import Image from "next/image";
 import { Scene, SCENES, type SceneKey } from "@/components/art/scenes";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
@@ -96,7 +97,23 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
               <p className="mt-6 max-w-measure text-md text-text-2">{blog.excerpt}</p>
             </div>
 
-            {scene ? (
+            {/* A supplied cover wins over both the drawn scene and the
+                unDraw plate: it is the article's own artwork, it is what
+                the card on the home page shows, and it is what gets shared
+                as the og:image. Anything without one keeps the fallbacks. */}
+            {blog.cover ? (
+              <div className="lg:col-span-5">
+                <Image
+                  src={blog.cover}
+                  alt=""
+                  width={1376}
+                  height={768}
+                  priority
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="h-auto w-full rounded-lg shadow-2"
+                />
+              </div>
+            ) : scene ? (
               <div className="lg:col-span-5">
                 <Scene name={scene} />
               </div>

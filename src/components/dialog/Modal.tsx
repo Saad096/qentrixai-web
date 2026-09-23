@@ -100,7 +100,12 @@ export function Modal({
           </button>
         </div>
 
-        <div className="qx-modal__body">{children}</div>
+        {/* Mounted only while open. A closed <dialog> is display:none but it
+            is still in the DOM, so the brief form -- a full set of fields, a
+            second submit button and a second set of labels -- was present on
+            every page of the site, and /contact carried two identical forms.
+            Nothing here needs to persist between openings. */}
+        <div className="qx-modal__body">{open ? children : null}</div>
       </div>
     </dialog>
   );
