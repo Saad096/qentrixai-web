@@ -67,7 +67,7 @@ export function IndustryCards() {
                     <li key={c.href}>
                       <Link
                         href={c.href}
-                        className="inline-flex min-h-[36px] items-center rounded-full border border-[color:var(--color-border)] px-3.5 font-mono text-xs text-link hover:border-brand"
+                        className="inline-flex min-h-[44px] items-center rounded-full border border-[color:var(--color-border)] px-3.5 font-mono text-xs text-link hover:border-brand"
                       >
                         {c.label}
                       </Link>

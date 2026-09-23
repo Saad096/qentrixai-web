@@ -25,7 +25,15 @@ export function Breadcrumb({
           return (
             <li key={c.name} className="flex items-center gap-2">
               {c.href && !last ? (
-                <Link href={c.href} className="underline-offset-4 hover:text-text hover:underline">
+                /* A 44px box on the link, not on the li: the separator must
+                   not grow with it. The crumbs were 19px tall, which is the
+                   whole trail failing the tap-target floor on every detail
+                   page. Negative margin keeps the row its original height,
+                   so nothing moves -- only the hit area changes. */
+                <Link
+                  href={c.href}
+                  className="-my-3 flex min-h-[44px] items-center underline-offset-4 hover:text-text hover:underline"
+                >
                   {c.name}
                 </Link>
               ) : (

@@ -71,7 +71,7 @@ export const team: TeamMember[] = [
     role: "Business Analyst Consultant",
     background: "Business Analysis & Delivery",
     bio: "Business analyst consultant focused on requirement discovery, product documentation, client communication and solution alignment. Translates messy business reality into clear specs and outcomes engineering can ship against.",
-    image: "/team/mawra-muneer.png",
+    image: "/team/mawra-muneer.webp",
     linkedin: publicEnv.team.mawraLinkedIn,
     skills: [
       "Discovery & Requirements",

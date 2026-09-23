@@ -7,8 +7,20 @@ import { caseStudies } from "@/data/caseStudies";
 import { industries } from "@/data/industries";
 
 /**
- * The old sitemap listed 11 static routes and the blog. It omitted /team and
- * every detail page -- 29 pages of written content that were never rendered.
+ * The old sitemap listed 11 static routes and the blog. It omitted every
+ * detail page -- 29 pages of written content that were never rendered.
+ *
+ * Diffing the built route list against this one is the check worth
+ * repeating whenever a route is added: a page missing from here is a page
+ * that only gets found by following a link to it.
+ *
+ * /team is the one built route deliberately left out. It is a redirect to
+ * the home page -- the member profiles are hidden on purpose -- so listing
+ * it would offer a crawler a URL that never resolves to its own content,
+ * and it would compete with / for the same title and description. It was
+ * briefly added here on the strength of that route diff alone, which is
+ * the mistake this note exists to prevent: check what a route does before
+ * listing it, not just that it exists.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = publicEnv.siteUrl.replace(/\/$/, "");

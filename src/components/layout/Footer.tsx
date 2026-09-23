@@ -171,10 +171,18 @@ export function Footer() {
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Talk to us</h2>
             <p className="mt-2 text-base text-text-2">
-              <a href={`mailto:${publicEnv.profile.email}`} className="block hover:text-link">
+              {/* min-h rather than a bare line box. These were 26px tall,
+                  which is a thumb-sized miss on a phone. */}
+              <a
+                href={`mailto:${publicEnv.profile.email}`}
+                className="flex min-h-[44px] items-center hover:text-link"
+              >
                 {publicEnv.profile.email}
               </a>
-              <a href={`tel:${publicEnv.profile.phone}`} className="block hover:text-link">
+              <a
+                href={`tel:${publicEnv.profile.phone}`}
+                className="flex min-h-[44px] items-center hover:text-link"
+              >
                 {publicEnv.profile.phone}
               </a>
             </p>

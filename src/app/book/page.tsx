@@ -62,13 +62,13 @@ export default function BookPage() {
                 <ul className="mt-4 space-y-3 text-sm text-muted">
                   <li className="flex items-start gap-3">
                     <Mail className="mt-0.5 size-4 text-muted" />
-                    <a href={`mailto:${p.email}`} className="hover:text-text">
+                    <a href={`mailto:${p.email}`} className="flex min-h-[44px] items-center hover:text-text">
                       {p.email}
                     </a>
                   </li>
                   <li className="flex items-start gap-3">
                     <Phone className="mt-0.5 size-4 text-muted" />
-                    <a href={`tel:${p.phone}`} className="hover:text-text">
+                    <a href={`tel:${p.phone}`} className="flex min-h-[44px] items-center hover:text-text">
                       {p.phone}
                     </a>
                   </li>

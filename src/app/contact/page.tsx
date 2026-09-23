@@ -74,15 +74,23 @@ export default function ContactPage() {
               <div className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6">
                 <h3 className=" text-lg font-semibold text-text">Direct lines</h3>
                 <ul className="mt-4 space-y-3 text-sm text-muted">
-                  <li className="flex items-start gap-3">
-                    <Mail className="mt-0.5 size-4 text-muted" />
-                    <a href={`mailto:${p.email}`} className="hover:text-text">
+                  {/* The two that are links get a 44px box; the address
+                      below them is not tappable and keeps its line box. */}
+                  <li className="flex items-center gap-3">
+                    <Mail className="size-4 shrink-0 text-muted" />
+                    <a
+                      href={`mailto:${p.email}`}
+                      className="flex min-h-[44px] items-center hover:text-text"
+                    >
                       {p.email}
                     </a>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <Phone className="mt-0.5 size-4 text-muted" />
-                    <a href={`tel:${p.phone}`} className="hover:text-text">
+                  <li className="flex items-center gap-3">
+                    <Phone className="size-4 shrink-0 text-muted" />
+                    <a
+                      href={`tel:${p.phone}`}
+                      className="flex min-h-[44px] items-center hover:text-text"
+                    >
                       {p.phone}
                     </a>
                   </li>
@@ -122,7 +130,7 @@ export default function ContactPage() {
                       href={s.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
+                      className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-4 text-sm text-text-2 hover:border-brand"
                     >
                       <Linkedin className="size-3.5" /> LinkedIn
                     </a>
@@ -132,7 +140,7 @@ export default function ContactPage() {
                       href={s.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
+                      className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-4 text-sm text-text-2 hover:border-brand"
                     >
                       <Github className="size-3.5" /> GitHub
                     </a>
@@ -142,7 +150,7 @@ export default function ContactPage() {
                       href={s.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
+                      className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-4 text-sm text-text-2 hover:border-brand"
                     >
                       <Instagram className="size-3.5" /> Instagram
                     </a>
@@ -152,7 +160,7 @@ export default function ContactPage() {
                       href={s.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-sm text-text-2 hover:border-brand"
+                      className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-4 text-sm text-text-2 hover:border-brand"
                     >
                       <Facebook className="size-3.5" /> Facebook
                     </a>
