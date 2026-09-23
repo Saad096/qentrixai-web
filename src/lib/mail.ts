@@ -58,10 +58,17 @@ function sendgridSender(): { email: string; name: string } {
   };
 }
 
-const TO =
-  process.env.CONTACT_RECEIVER_EMAIL ??
-  process.env.NEXT_PUBLIC_PROFILE_EMAIL ??
-  "talk@qentrix-ai.com";
+/**
+ * Where a submitted brief lands. Deliberately NOT the public address: the
+ * site still shows talk@qentrix-ai.com everywhere a visitor can write to us
+ * by hand, and replies go out from there. This is only the inbox the form
+ * delivers to.
+ *
+ * The NEXT_PUBLIC_PROFILE_EMAIL fallback is gone. It silently made the
+ * displayed address double as the delivery address, so changing one changed
+ * the other -- which is the exact coupling this split exists to avoid.
+ */
+const TO = process.env.CONTACT_RECEIVER_EMAIL ?? "talk2saadalam@gmail.com";
 
 function buildPlainText(p: ContactPayload) {
   return [

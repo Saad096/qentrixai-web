@@ -117,11 +117,11 @@ export function buildMetadata({
     // instead: 1KB, 6KB and 25KB.
     icons: {
       icon: [
-        { url: "/logo/icon-32.png?v=4", type: "image/png", sizes: "32x32" },
-        { url: "/logo/icon-512.png?v=4", type: "image/png", sizes: "512x512" },
+        { url: "/logo/icon-32.png?v=5", type: "image/png", sizes: "32x32" },
+        { url: "/logo/icon-512.png?v=5", type: "image/png", sizes: "512x512" },
       ],
-      shortcut: "/logo/icon-32.png?v=4",
-      apple: "/logo/icon-180.png?v=4",
+      shortcut: "/logo/icon-32.png?v=5",
+      apple: "/logo/icon-180.png?v=5",
     },
   };
 }
