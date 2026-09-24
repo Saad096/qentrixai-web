@@ -26,7 +26,19 @@ export default function robots(): MetadataRoute.Robots {
          All of it is honour-system. A scraper that ignores robots.txt is
          unaffected -- verified by fetching this site with curl after these
          rules went live and getting the full page. Enforcement is the
-         Vercel Bot Protection challenge, not this file. */
+         Vercel Bot Protection challenge, not this file.
+
+         The split matches Vercel's own verified-bots directory, which
+         categorises these same agents: the ones allowed below are all
+         `ai_assistant` ("does not crawl content for AI model training"),
+         the ones blocked above are all `ai_crawler`. Because Bot Protection
+         auto-excludes verified bots, the allowed list passes the challenge
+         and the blocked list is refused here first. The two layers agree.
+
+         Vercel's AI Bots managed ruleset must stay on Allow. It is one
+         switch covering "training data, search purposes, or user-generated
+         fetches" with no way to separate them, so Deny would take the
+         citation crawlers out with the training ones. */
       ...[
         // Bulk training corpora and harvesters.
         "GPTBot",
@@ -76,6 +88,9 @@ export default function robots(): MetadataRoute.Robots {
         "PerplexityBot",     // Perplexity index
         "Perplexity-User",   // a user asked Perplexity
         "MistralAI-User",    // a user asked Le Chat
+        "DuckAssistBot",     // DuckDuckGo assist, cites its sources
+        "Gemini-Deep-Research",
+        "meta-externalfetcher", // a user shared a link; bypasses robots anyway
         "YouBot",
         "Google-Extended",   // Gemini grounding, and training with it
       ].map((userAgent) => ({ userAgent, allow: "/", disallow: ["/api/"] })),
