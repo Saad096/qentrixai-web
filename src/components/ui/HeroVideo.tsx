@@ -4,7 +4,7 @@
  * The hero's right column: the presenter loop the owner supplied.
  *
  * It starts PAUSED, on the poster frame, with one control in the middle of
- * it: "Click to listen to what QentrixAI does".
+ * it: "Hear What We Do".
  *
  * That is a reversal, and the history is worth keeping because it cost a
  * lot of attempts. The brief was sound on arrival. No browser allows that
@@ -112,7 +112,7 @@ export function HeroVideo() {
             className="inline-flex min-h-[52px] items-center gap-3 rounded-full bg-brand px-6 text-md font-semibold text-on-brand shadow-2 transition-[filter,transform] duration-[var(--motion-fast)] hover:brightness-110 focus-visible:brightness-110"
           >
             <Volume2 aria-hidden className="size-5 shrink-0" />
-            <span className="text-left leading-tight">Click to listen to what QentrixAI does</span>
+            <span className="text-left leading-tight">Hear What We Do</span>
           </button>
         </div>
       )}

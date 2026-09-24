@@ -34,7 +34,46 @@ export default function TermsPage() {
           <h2 className="mt-8  text-xl font-semibold text-text">Intellectual property</h2>
           <p>
             All Site content, including text, design, code, and graphics, is owned by QentrixAI
-            or licensed to it. Don't reuse it without permission.
+            or licensed to it. Don&rsquo;t reuse it without permission.
+          </p>
+
+          {/* The enforceable part. A scraper cannot be stopped at the wire --
+              anything a browser renders has already been delivered -- so the
+              remedy for a copied site is contractual and legal, and that
+              requires the prohibition to be stated rather than implied. */}
+          <h2 className="mt-8  text-xl font-semibold text-text">
+            Automated access, scraping and AI training
+          </h2>
+          <p>
+            You may not use automated means to copy this Site. That includes crawlers, scrapers,
+            browser extensions, headless browsers and AI agents, whether operated by you or on
+            your behalf. Specifically, and without our prior written permission, you may not:
+          </p>
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>
+              Extract, copy or store the Site&rsquo;s text, images, illustrations, layout, styling
+              or source in bulk, by any automated method.
+            </li>
+            <li>
+              Use the Site&rsquo;s content as training data, fine-tuning data, or retrieval corpus
+              for a machine-learning model.
+            </li>
+            <li>
+              Reproduce the Site&rsquo;s design, structure or copy to create a derivative or
+              substantially similar website, including by giving this Site to a generative tool
+              and asking it to build something that resembles it.
+            </li>
+            <li>
+              Circumvent our <a className="text-link underline underline-offset-4" href="/robots.txt">robots.txt</a>,
+              rate limits or other access controls.
+            </li>
+          </ul>
+          <p className="mt-4">
+            Our robots.txt disallows AI and scraping crawlers. Accessing the Site by an automated
+            means it disallows is unauthorised access under these Terms, regardless of whether the
+            request was technically permitted. Our case studies, product descriptions and written
+            research are original work; copying them is copyright infringement, and we will pursue
+            it.
           </p>
 
           <h2 className="mt-8  text-xl font-semibold text-text">Third-party links</h2>

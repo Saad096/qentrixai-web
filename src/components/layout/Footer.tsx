@@ -93,7 +93,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${publicEnv.profile.email}`}
-                  className="inline-flex min-h-[44px] items-center gap-3 text-base text-text-2 transition-colors hover:text-link"
+                  className="inline-flex min-h-[44px] items-center gap-3 rounded-full px-3 text-base text-text-2 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
                 >
                   <span
                     aria-hidden="true"
@@ -107,7 +107,7 @@ export function Footer() {
               <li>
                 <Link
                   href={PRIMARY_CTA.href}
-                  className="inline-flex min-h-[44px] items-center gap-3 text-base font-semibold text-text hover:text-link"
+                  className="inline-flex min-h-[44px] items-center gap-3 rounded-full px-3 text-base font-semibold text-text transition-[background-color,box-shadow] hover:bg-surface hover:shadow-1"
                 >
                   <span
                     aria-hidden="true"
@@ -135,7 +135,7 @@ export function Footer() {
                     <li key={col.title + link.label}>
                       <Link
                         href={link.href}
-                        className="flex min-h-[44px] items-center py-1.5 text-base leading-snug text-text-2 transition-colors hover:text-link"
+                        className="-mx-2.5 flex min-h-[44px] items-center rounded-md px-2.5 py-1.5 text-base leading-snug text-text-2 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
                       >
                         {link.label}
                       </Link>
@@ -175,13 +175,13 @@ export function Footer() {
                   which is a thumb-sized miss on a phone. */}
               <a
                 href={`mailto:${publicEnv.profile.email}`}
-                className="flex min-h-[44px] items-center hover:text-link"
+                className="-mx-2.5 flex min-h-[44px] items-center rounded-md px-2.5 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
               >
                 {publicEnv.profile.email}
               </a>
               <a
                 href={`tel:${publicEnv.profile.phone}`}
-                className="flex min-h-[44px] items-center hover:text-link"
+                className="-mx-2.5 flex min-h-[44px] items-center rounded-md px-2.5 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
               >
                 {publicEnv.profile.phone}
               </a>

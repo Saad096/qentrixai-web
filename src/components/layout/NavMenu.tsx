@@ -110,7 +110,19 @@ export function NavMenu({
           // pale green of the sovereign-ai hero, muted measured 4.34:1 and
           // failed. text-2 is the darkest of the secondary tokens and clears
           // it on every ground the site has.
-          active || open ? "text-text" : "text-text-2 hover:text-text"
+          //
+          // The hover is a surface, not just a colour change. A word that
+          // only shifts shade on hover does not read as something you can
+          // click -- reported as "misguiding, it does not feel hoverable".
+          // A filled chip with a ring says the whole area is the target,
+          // which it is.
+          // -mx-2.5 cancels the padding in layout terms. Without it the chip
+          // added 24px per trigger, five triggers widened the header past
+          // 1024px, and every page gained 62-78px of horizontal overflow at
+          // exactly the width where the desktop nav first appears.
+          "-mx-2.5 rounded-full px-2.5 transition-[background-color,color,box-shadow]",
+          "hover:bg-surface-2 hover:shadow-1",
+          active || open ? "bg-surface-2 text-text shadow-1" : "text-text-2 hover:text-text"
         )}
       >
         {label}
@@ -128,8 +140,14 @@ export function NavMenu({
           /* Fixed and centred on the viewport, not on the trigger. Anchored
              to the trigger a wide panel hangs off the left edge, because the
              triggers sit left of centre in the bar. */
+          /* max-height and scroll, or the panel runs off the bottom of a
+             short screen and the links at its foot become unreachable. The
+             Build panel is 691px tall and starts 101px down, so it needs
+             792px: it overflowed by 24px on a 768px laptop and 71px on a
+             720px one, with no way to scroll to the three links at the
+             bottom. Measured, not guessed. */
           className={cn(
-            "menu-pop fixed left-1/2 top-[var(--menu-top,72px)] z-50 -translate-x-1/2 rounded-lg bg-surface p-7 shadow-3 ring-1 ring-[color:var(--color-border)]",
+            "menu-pop fixed left-1/2 top-[var(--menu-top,72px)] z-50 max-h-[calc(100dvh-var(--menu-top,72px)-1rem)] -translate-x-1/2 overflow-y-auto overscroll-contain rounded-lg bg-surface p-7 shadow-3 ring-1 ring-[color:var(--color-border)]",
             width
           )}
         >
