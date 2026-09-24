@@ -22,6 +22,38 @@ const nextConfig = {
     // any origin be proxied through our image optimiser (audit C-05).
   },
   poweredByHeader: false,
+
+  /**
+   * Headers that actually do something against copying.
+   *
+   * None of this stops a scraper -- by the time a header is read the page has
+   * been delivered. What it does stop is the cheap attacks that do not need a
+   * scraper at all:
+   *
+   *   frame-ancestors  someone embedding qentrix-ai.com in an iframe on their
+   *                    own domain and passing it off as their site, or
+   *                    overlaying it to harvest clicks. This is the one
+   *                    "lookalike site" vector a header genuinely closes.
+   *   nosniff          a response being reinterpreted as a script.
+   *   Referrer-Policy  our URLs leaking into other sites' analytics.
+   *
+   * X-Frame-Options is the legacy twin of frame-ancestors and is kept for
+   * older engines that ignore CSP.
+   */
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Robots-Tag", value: "noai, noimageai" },
+        ],
+      },
+    ];
+  },
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

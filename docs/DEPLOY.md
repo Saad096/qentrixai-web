@@ -77,3 +77,69 @@ node scripts/seo-audit.mjs     http://localhost:3000 / /about /blogs
 
 `axe-scrolled` walks the page before auditing, because several states only
 exist once scroll-driven animation has fired.
+
+## Anti-scraping: what is in place, and what it can and cannot do
+
+Requested 2026-09-24. The honest framing first, because it decides what to
+expect from the rest.
+
+**A public website cannot be made unscrapable.** To render a page a browser
+must first receive the HTML, the CSS and the images; once those bytes are
+delivered, whoever requested them has them. A browser extension runs inside
+that browser, after delivery. An AI agent driving a real browser is
+indistinguishable from a person browsing. Every server-side control ends at
+the moment of delivery, and this is architectural rather than a limit of
+free tooling — no paid product changes it either.
+
+So nothing below prevents someone pointing a tool at the site and rebuilding
+a lookalike. What it does is make bulk automated harvesting expensive, keep
+compliant crawlers away, and establish the legal standing that is the actual
+remedy against a copycat.
+
+### In the code
+
+| Measure | Where | What it does |
+|---|---|---|
+| 38 AI and scraping crawlers disallowed | `src/app/robots.ts` | Honour-system. Compliant crawlers obey; a scraper that ignores robots.txt is unaffected. |
+| `frame-ancestors 'none'` + `X-Frame-Options: DENY` | `next.config.mjs` | The one lookalike vector a header genuinely closes: nobody can iframe the site on their domain and pass it off as theirs, or overlay it to harvest clicks. |
+| `X-Robots-Tag: noai, noimageai` | `next.config.mjs` | An emerging convention some crawlers honour. Costs nothing; do not rely on it. |
+| `nosniff`, `Referrer-Policy` | `next.config.mjs` | Response cannot be reinterpreted as script; our URLs stop leaking into other sites' analytics. |
+| Automated-access prohibition | `/terms` | The enforceable part. Names scraping, extensions, AI agents, training use and lookalike rebuilds explicitly, so the prohibition is stated rather than implied. |
+| Per-IP rate limit on `/api/contact` | `src/lib/rateLimit.ts` | Stops a script hammering the form. In-memory, so per serverless instance — see the note in that file. |
+
+Search engines are deliberately untouched: Googlebot and Bingbot are not
+named, so they fall under `User-Agent: * / Allow: /` and index normally.
+
+**Cost of the crawler block, stated plainly.** The list includes the
+citation crawlers (`OAI-SearchBot`, `ChatGPT-User`, `PerplexityBot`), not
+just the training ones. The site is therefore opting out of being cited in
+ChatGPT, Perplexity and Gemini answers — which is the visibility
+`/services/aeo-and-geo` sells. Removing those three names from the list in
+`robots.ts` buys it back while keeping training crawlers out.
+
+### Free, in the Vercel dashboard
+
+Not a new third party — it is already the host.
+
+- **Firewall → Attack Challenge Mode.** Turn on during an active scrape.
+  Forces a browser challenge; stops naive scripted harvesting outright.
+- **Firewall → Bot filter.** Free-tier rules against known bad agents.
+- **Firewall → custom rules.** Rate-limit by path or user agent.
+- **Observability → Logs.** Where a scrape shows up first: one IP or agent
+  requesting every route in sitemap order within a few minutes.
+
+### Deliberately not done
+
+Disabling right-click, blocking text selection, trapping devtools,
+obfuscating markup, rendering copy as images. Each is bypassed in seconds,
+each breaks screen readers, and the last two destroy the SEO the site
+depends on. They provide the feeling of protection and none of it.
+
+### If someone does copy the site
+
+That is a legal matter, not a technical one, and the Terms clause exists to
+support it: screenshot both sites, note the date, send a takedown to their
+host and registrar, and file a DMCA with Google to have the copy delisted.
+Original written work — case studies, product copy, the model-landscape
+research — is copyright from the moment it is written; registration is only
+needed to sue for statutory damages.

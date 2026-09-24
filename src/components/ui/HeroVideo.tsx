@@ -112,7 +112,7 @@ export function HeroVideo() {
             className="inline-flex min-h-[52px] items-center gap-3 rounded-full bg-brand px-6 text-md font-semibold text-on-brand shadow-2 transition-[filter,transform] duration-[var(--motion-fast)] hover:brightness-110 focus-visible:brightness-110"
           >
             <Volume2 aria-hidden className="size-5 shrink-0" />
-            <span className="text-left leading-tight">Click to listen to what QentrixAI does</span>
+            <span className="text-left leading-tight">Hear What We Do</span>
           </button>
         </div>
       )}
