@@ -101,7 +101,7 @@ export function HeroVideo() {
         <source src="/media/hero-robot.mp4" type="video/mp4" />
       </video>
 
-      {/* Before the first click: one control, in the middle, saying what it
+      {/* Before the first click: one control, in the middle, saying what it ############################3
           does. A bare play triangle over a paused video says "video"; it
           does not say there is something to hear. */}
       {!started && (
