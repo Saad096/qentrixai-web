@@ -108,11 +108,16 @@ export function ModelRadar() {
                     type="button"
                     aria-pressed={active}
                     onClick={() => setWeights(p.weights)}
+                    /* Filled when active, and a filled hover when not. An
+                       outline that only changes its border colour does not
+                       read as a control -- the same complaint as the nav
+                       tabs. on-brand is the ink token, not white: white on
+                       verdigris is 3.00:1. */
                     className={cn(
-                      "min-h-[44px] rounded-full border px-4 text-sm transition-colors",
+                      "min-h-[44px] rounded-full border px-4 text-sm font-semibold transition-[background-color,border-color,color,box-shadow]",
                       active
-                        ? "border-link text-text"
-                        : "border-[color:var(--color-border)] text-muted hover:border-link hover:text-text"
+                        ? "border-transparent bg-brand text-on-brand shadow-1"
+                        : "border-[color:var(--color-border)] text-text-2 hover:border-brand hover:bg-surface-2 hover:text-text"
                     )}
                   >
                     {p.label}
