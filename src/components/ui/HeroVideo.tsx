@@ -4,7 +4,7 @@
  * The hero's right column: the presenter loop the owner supplied.
  *
  * It starts PAUSED, on the poster frame, with one control in the middle of
- * it: "Click to listen to what QentrixAI does".
+ * it: "Hear What We Do".
  *
  * That is a reversal, and the history is worth keeping because it cost a
  * lot of attempts. The brief was sound on arrival. No browser allows that
