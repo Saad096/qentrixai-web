@@ -114,7 +114,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
           The illustration fills it and gives each capability a face. */}
       <section className="py-16 md:py-24">
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
               <Breadcrumb
                 trail={[
@@ -307,7 +307,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
 
       {detail && (
         <Section ground={nextGround()}>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-5" data-reveal>
               <p className="mb-4 font-mono text-xs text-muted">Before the call</p>
               <h2 className="text-3xl font-bold text-text">Two questions that always come up.</h2>

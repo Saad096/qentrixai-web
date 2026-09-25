@@ -143,3 +143,22 @@ host and registrar, and file a DMCA with Google to have the copy delisted.
 Original written work — case studies, product copy, the model-landscape
 research — is copyright from the moment it is written; registration is only
 needed to sue for statutory damages.
+
+## Responsive checking
+
+```bash
+node scripts/responsive.mjs http://localhost:3000 / /about /services
+```
+
+Use this rather than the overflow check the other harnesses do. They measure
+`document.scrollWidth` against `window.innerWidth`, which cannot see the
+worst kind of breakage: when an ancestor clips, the document never grows, so
+the page does not scroll sideways -- it just loses the right-hand side of
+everything. A deployed hero was 664px wide in a 390px viewport while every
+sweep reported "no overflow", because 390 did equal 390.
+
+This one measures elements against the viewport, under real device
+emulation, and flags an element only when it carries content -- its own text,
+or a video or image. A bare wrapper that bleeds is fine; the rotating squares
+behind the domain orbit do it by design while every label stays inside the
+ring. Words and pictures being cut is not fine.

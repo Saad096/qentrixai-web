@@ -61,7 +61,7 @@ export function Section({
               headerClassName
                 ? cn("max-w-measure", headerClassName)
                 : lede && heading
-                  ? "grid gap-x-12 gap-y-5 lg:grid-cols-12"
+                  ? "grid grid-cols-1 gap-x-12 gap-y-5 lg:grid-cols-12"
                   : "max-w-measure"
             )}
           >

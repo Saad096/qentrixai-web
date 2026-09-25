@@ -81,7 +81,7 @@ export default async function BlogDetail({ params }: { params: Promise<Params> }
               half of the masthead empty -- the owner's screenshot. Copy
               left, drawing top right, body starting where the eye already
               is. */}
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
               <Breadcrumb
                 trail={[

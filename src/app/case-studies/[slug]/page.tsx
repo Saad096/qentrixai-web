@@ -54,7 +54,7 @@ export default async function CaseStudyDetail({ params }: { params: Promise<Para
 
       <section className="py-16 md:py-24">
         <Container>
-          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">
               <Breadcrumb
                 trail={[

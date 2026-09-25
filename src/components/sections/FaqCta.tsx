@@ -23,7 +23,7 @@ import { PRIMARY_CTA } from "@/data/navigation";
 export function Faq({ form = true }: { form?: boolean } = {}) {
   return (
       <Section id="faq" ground="band">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5" data-reveal>
             <p className="mb-4 font-mono text-xs text-muted">Before the call</p>
             <h2 className="text-3xl font-bold text-text">Questions buyers actually ask.</h2>

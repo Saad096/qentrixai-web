@@ -57,7 +57,7 @@ export default function ContactPage() {
 
       <section className="pb-20">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-12">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <div className="rounded-lg border border-[color:var(--color-border)] bg-surface p-6 md:p-8">
                 <h2 className=" text-xl font-semibold text-text">Send a brief</h2>
