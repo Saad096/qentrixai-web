@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { ContactForm } from "@/components/forms/ContactForm";
 import { faqs } from "@/data/faqs";
 import { PRIMARY_CTA } from "@/data/navigation";
 
@@ -19,7 +20,7 @@ import { PRIMARY_CTA } from "@/data/navigation";
  * pages already have their own two specific questions, which is the right
  * amount of FAQ for a page about one capability.
  */
-export function Faq() {
+export function Faq({ form = true }: { form?: boolean } = {}) {
   return (
       <Section id="faq" ground="band">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
@@ -30,14 +31,24 @@ export function Faq() {
               If yours is not here, ask it on the call. We answer scoping and architecture
               questions before there is a contract.
             </p>
-            <div className="mt-8 rounded-md bg-surface p-7 shadow-1">
-              <p className="text-base text-text-2">
-                Thirty minutes, no pitch deck. If we are not the right fit, we will say so.
-              </p>
-              <Button href={PRIMARY_CTA.href} size="lg" className="mt-5 w-full sm:w-auto">
-                {PRIMARY_CTA.label}
-              </Button>
-            </div>
+            {/* The form, not a second booking button.
+                CtaBlock sits directly below this section and already carries
+                the booking ask, so a card repeating it here was the same
+                request twice in one screen -- and it left the column mostly
+                empty, because the accordion beside it is three times taller.
+                A form fills that space with something useful and gives the
+                reader the other way to make contact: the one that does not
+                require picking a time. */}
+            {form && (
+              <div className="mt-8 rounded-md bg-surface p-6 shadow-1 md:p-7">
+                <p className="text-base font-semibold text-text">
+                  Rather write than book a slot?
+                </p>
+                <div className="mt-4">
+                  <ContactForm compact />
+                </div>
+              </div>
+            )}
           </div>
 
           <ul className="lg:col-span-7">
@@ -116,10 +127,10 @@ export function CtaBlock() {
  * Both halves, for the three pages that want them. Kept as a named export
  * so those call sites read as intent rather than as two adjacent imports.
  */
-export function FaqCta() {
+export function FaqCta({ form = true }: { form?: boolean } = {}) {
   return (
     <>
-      <Faq />
+      <Faq form={form} />
       <CtaBlock />
     </>
   );

@@ -133,7 +133,27 @@ export function organizationJsonLd() {
     "@id": `${base()}/#organization`,
     name: publicEnv.siteName,
     url: base(),
-    logo: `${base()}/logo/qentrix-mark.png`,
+    /* `logo` as an ImageObject rather than a bare URL: Google's logo
+       guidance asks for one it can size, and the bare string leaves it to
+       fetch and guess. 512x512, which clears the 112px minimum. */
+    logo: {
+      "@type": "ImageObject",
+      url: `${base()}/logo/qentrix-mark.png`,
+      width: 512,
+      height: 512,
+    },
+    /* `image` is the field the Rich Results Test flagged as missing. It is
+       optional and non-critical, but it is what Google shows beside the
+       entity in a knowledge panel, and leaving it out means Google picks
+       something itself. The OG card is the right answer: it is already the
+       image we chose to represent the company everywhere else it is
+       shared, and it is 1200x630 rather than a square mark. */
+    image: {
+      "@type": "ImageObject",
+      url: `${base()}/opengraph-image`,
+      width: 1200,
+      height: 630,
+    },
     description: defaultDescription,
     foundingDate: "2024",
     email: publicEnv.profile.email,
@@ -182,7 +202,13 @@ export function websiteJsonLd() {
   };
 }
 
-export function serviceJsonLd(s: { title: string; description: string; slug: string }) {
+export function serviceJsonLd(s: {
+  title: string;
+  description: string;
+  slug: string;
+  /** The capability group this belongs to, used as `serviceType`. */
+  group?: string;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -191,6 +217,11 @@ export function serviceJsonLd(s: { title: string; description: string; slug: str
     url: abs(`/services/${s.slug}`),
     provider: { "@id": `${base()}/#organization` },
     areaServed: "Worldwide",
+    /* Google lists serviceType as recommended and it was absent. The group
+       from services.ts is the honest value -- it is the category we already
+       file the capability under on the site, not a keyword invented for a
+       crawler. */
+    ...(s.group ? { serviceType: s.group } : {}),
   };
 }
 
@@ -202,8 +233,17 @@ export function productJsonLd(p: { name: string; tagline: string; slug: string; 
     description: p.tagline,
     url: abs(`/products/${p.slug}`),
     applicationCategory: "BusinessApplication",
+    /* Every one of these runs in a browser. Factual, and it was the other
+       recommended field the schema audit found missing. */
+    operatingSystem: "Web browser",
     ...(p.image ? { image: abs(p.image) } : {}),
     publisher: { "@id": `${base()}/#organization` },
+    /* `offers` is the third field Google recommends here, and it is
+       deliberately absent. We publish no prices for these products, so any
+       value would be invented -- and an invented price is the one kind of
+       structured data that can reach a search result and mislead a buyer
+       directly. A missing optional field costs a non-critical warning;
+       a wrong one costs trust. Add it here when there is a real price. */
   };
 }
 

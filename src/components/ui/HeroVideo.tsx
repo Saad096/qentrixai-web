@@ -103,7 +103,7 @@ export function HeroVideo() {
 
       {/* Before the first click: one control, in the middle, saying what it ############################3
           does. A bare play triangle over a paused video says "video"; it ################################333333
-          does not say there is something to hear. */}
+          does not say there is something to hear. */} #################################################333
       {!started && (
         <div className="absolute inset-0 grid place-items-center bg-[color:rgb(0_0_0/0.35)] p-5">
           <button

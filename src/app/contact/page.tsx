@@ -172,7 +172,8 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <FaqCta />
+      {/* form={false}: this page already opens with the form. */}
+      <FaqCta form={false} />
     </>
   );
 }

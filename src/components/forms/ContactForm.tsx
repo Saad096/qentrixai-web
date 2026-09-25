@@ -38,8 +38,20 @@ type State =
   | { status: "success"; message: string }
   | { status: "error"; message: string };
 
-export function ContactForm() {
+export function ContactForm({
+  compact = false,
+}: {
+  /**
+   * Single-column fields, for a narrow slot such as the FAQ sidebar.
+   *
+   * The paired rows use `sm:grid-cols-2`, which is a viewport query rather
+   * than a container one -- in a 480px column on a 1440px screen they would
+   * still go two-up and give each field about 230px. This opts out.
+   */
+  compact?: boolean;
+} = {}) {
   const [state, setState] = React.useState<State>({ status: "idle" });
+  const pair = compact ? "grid gap-4" : "grid gap-4 sm:grid-cols-2";
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -95,15 +107,15 @@ export function ContactForm() {
         className="hidden"
       />
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className={pair}>
         <Field label="Name" name="name" type="text" required autoComplete="name" placeholder="Your full name" />
         <Field label="Email" name="email" type="email" required autoComplete="email" inputMode="email" placeholder="you@company.com" />
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className={pair}>
         <Field label="Company (optional)" name="company" type="text" autoComplete="organization" placeholder="Company or project" />
         <Field label="Phone or WhatsApp" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+1 555 000 0000" />
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className={pair}>
         <Select label="What are you looking to solve?" name="service" options={problems} />
         <Select label="Budget range" name="budget" options={budgets} />
       </div>

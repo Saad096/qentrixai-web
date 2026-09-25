@@ -83,6 +83,7 @@ export default async function ServiceDetail({ params }: { params: Promise<Params
               title: service.title,
               description: service.description,
               slug: service.slug,
+              group: service.group,
             })
           ),
         }}
