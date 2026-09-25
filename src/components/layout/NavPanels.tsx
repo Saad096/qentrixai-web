@@ -25,10 +25,26 @@ import { industries } from "@/data/industries";
 import { phases } from "@/data/company";
 import { blogs } from "@/data/blogs";
 
+/**
+ * Panel links hover as a surface, not as a colour.
+ *
+ * The top-level tabs were given this treatment already; these were missed,
+ * and they are most of what is actually in a dropdown. They turned green on
+ * hover and did nothing else, which on a dark panel reads as the text
+ * changing colour rather than as a row you can hit -- reported twice.
+ *
+ * The lift is the same one the footer links use, so hovering anywhere in
+ * the site's navigation now looks the same. The negative margin keeps the
+ * padded hit area from widening the column.
+ */
 const itemClass =
-  "flex min-h-[40px] items-center rounded-sm text-base font-medium text-text transition-colors hover:text-link";
+  "-mx-2.5 flex min-h-[44px] items-center rounded-md px-2.5 text-base font-medium text-text transition-[background-color,color,box-shadow] hover:bg-surface-2 hover:text-text hover:shadow-1";
+
+/* The panel's closing action. It keeps the brand colour at rest, because it
+   is a different kind of link -- "see all of them" rather than one of them
+   -- but it gains the same surface so the affordance matches. */
 const footClass =
-  "inline-flex min-h-[44px] items-center text-base font-semibold text-link underline-offset-4 hover:underline";
+  "-mx-3 inline-flex min-h-[44px] items-center rounded-full px-3 text-base font-semibold text-link transition-[background-color,color,box-shadow] hover:bg-surface-2 hover:text-text hover:shadow-1";
 
 
 /**
@@ -130,7 +146,7 @@ export function CaseStudiesMenu({ active }: { active: boolean }) {
       <ul className="grid gap-x-8 gap-y-1 sm:grid-cols-2">
         {caseStudies.map((c) => (
           <li key={c.slug}>
-            <Link href={`/case-studies/${c.slug}`} className="block rounded-sm py-2">
+            <Link href={`/case-studies/${c.slug}`} className="-mx-2.5 block rounded-md px-2.5 py-2 transition-[background-color,box-shadow] hover:bg-surface-2 hover:shadow-1">
               <span className="block text-xs font-semibold uppercase tracking-[0.08em] text-link">
                 {c.category}
               </span>
@@ -208,7 +224,7 @@ export function HowWeWorkMenu({ active }: { active: boolean }) {
       <ol className="grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
         {phases.map((p) => (
           <li key={p.step}>
-            <Link href="/about#how-we-work" className="block rounded-sm py-1">
+            <Link href="/about#how-we-work" className="-mx-2.5 block rounded-md px-2.5 py-1 transition-[background-color,box-shadow] hover:bg-surface-2 hover:shadow-1">
               <span className="text-xs font-semibold uppercase tracking-[0.08em] text-link">
                 {p.step}
               </span>
@@ -247,7 +263,7 @@ export function InsightsMenu({ active }: { active: boolean }) {
       <ul className="grid gap-x-8 gap-y-1 sm:grid-cols-2">
         {recent.map((b) => (
           <li key={b.slug}>
-            <Link href={`/blogs/${b.slug}`} className="block rounded-sm py-2">
+            <Link href={`/blogs/${b.slug}`} className="-mx-2.5 block rounded-md px-2.5 py-2 transition-[background-color,box-shadow] hover:bg-surface-2 hover:shadow-1">
               <span className="block text-xs font-semibold uppercase tracking-[0.08em] text-link">
                 {b.category}
               </span>
