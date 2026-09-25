@@ -310,7 +310,7 @@ export default function SovereignAiPage() {
           the diagram of it. */}
       <section className="py-16 md:py-24">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
               <p className="font-mono text-xs text-muted">For regulated and IP-sensitive teams</p>
               <h1 className="mt-4 max-w-[17ch] text-hero font-bold text-text">
@@ -351,7 +351,7 @@ export default function SovereignAiPage() {
 
       {/* Why now: argument left, four reasons right. */}
       <Section ground={nextGround()}>
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5" data-reveal>
             <p className="mb-4 font-mono text-xs text-muted">Why sovereign AI</p>
             <h2 className="text-3xl font-bold text-text">
@@ -460,7 +460,7 @@ export default function SovereignAiPage() {
 
       {/* Stages: sticky argument on the left, the sequence on the right. */}
       <Section ground={nextGround()}>
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-28" data-reveal>
               <p className="mb-4 font-mono text-xs text-muted">How it works</p>
@@ -655,7 +655,7 @@ export default function SovereignAiPage() {
       {/* Two columns, same reason as the homepage FAQ: a single left-aligned
           accordion leaves the right half of a 1440 viewport empty. */}
       <Section ground={nextGround()}>
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5" data-reveal>
             <p className="mb-4 font-mono text-xs text-muted">
               Questions security and IT teams ask
@@ -712,7 +712,7 @@ export default function SovereignAiPage() {
       </Section>
 
       <Section ground={nextGround()}>
-        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7" data-reveal>
             <h2 className="text-3xl font-bold text-text">Book a private AI assessment.</h2>
             <p className="mt-5 max-w-measure text-md text-muted">

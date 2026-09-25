@@ -135,7 +135,7 @@ export function BookingCalendar() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-12">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
       <div className="lg:col-span-6">
         <div className="flex items-center justify-between">
           <h3 className="font-display text-lg font-semibold text-text">

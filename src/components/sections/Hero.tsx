@@ -37,7 +37,14 @@ export function Hero() {
           It animates transform only, so it stays on the compositor. */}
       <OrbField className="orb-field--hero" />
       <Container className="above-orbs">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
+        {/* grid-cols-1 is load-bearing, not tidiness. Without a base column
+            the implicit one is `auto`-sized, which is allowed to exceed its
+            container: on a 412px phone this column came out 664px and the
+            headline, the lede and the video were all cut off at the right
+            edge. Tailwind's grid-cols-1 is repeat(1, minmax(0, 1fr)), and
+            that 0 minimum is the whole fix -- it lets the column shrink to
+            the container instead of to its content. */}
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             {/* Proof, then claim. Both reference sites lead with evidence and
                 put the headline second; the trusted-by line used to sit below

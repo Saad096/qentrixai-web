@@ -87,7 +87,7 @@ export default function AboutPage() {
           viewport -- there is nothing to caption around. */}
       <section className="py-16 md:py-24">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">
               <p className="font-mono text-xs text-muted">About us</p>
               <h1 className="mt-4 max-w-[20ch] text-hero font-bold text-text">

@@ -37,7 +37,7 @@ export function PageHeading({
     <section className="py-16 md:py-24">
       <Container>
         {art ? (
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">{head}</div>
             <div className="lg:col-span-6">
               <Scene name={art} />

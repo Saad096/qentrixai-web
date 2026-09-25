@@ -80,7 +80,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
 
       <section className="py-16 md:py-24">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">
               <Breadcrumb
                 trail={[
