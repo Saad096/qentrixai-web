@@ -23,7 +23,7 @@ export const publicEnv = {
       "AI systems that make it to production"
     ),
     email: pick(process.env.NEXT_PUBLIC_PROFILE_EMAIL, "talk@qentrix-ai.com"),
-    phone: pick(process.env.NEXT_PUBLIC_PROFILE_PHONE, "+923196828506"),
+    phone: pick(process.env.NEXT_PUBLIC_PROFILE_PHONE, "+13026653382"),
     location: pick(process.env.NEXT_PUBLIC_PROFILE_LOCATION, "Wilmington, Delaware and Lahore, Pakistan"),
     availability: pick(
       process.env.NEXT_PUBLIC_PROFILE_AVAILABILITY,
@@ -58,7 +58,7 @@ export const publicEnv = {
       process.env.NEXT_PUBLIC_PROFILE_FACEBOOK,
       "https://www.facebook.com/Qentrixai"
     ),
-    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP, "https://wa.me/923196828506"),
+    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP, "https://wa.me/13026653382"),
   },
 
   team: {

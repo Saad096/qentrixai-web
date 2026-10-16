@@ -1504,3 +1504,55 @@ body > footer {
 @media (prefers-reduced-motion: reduce) {
   .industry-drift__band { display: none; }
 }
+
+/* ------------------------------------------------------------------ */
+/* Booking dialog loading state.                                        */
+/*                                                                      */
+/* Calendly can take several seconds on a cold connection, and an        */
+/* iframe paints nothing until it is ready -- so the dialog opened to a  */
+/* blank panel and read as broken. This is what fills that gap: a        */
+/* spinner, a sentence saying what is being fetched, and a skeleton of   */
+/* the month grid so the wait reads as a calendar arriving.              */
+/* ------------------------------------------------------------------ */
+@keyframes qx-spin { to { transform: rotate(360deg); } }
+
+.qx-spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: 3px solid rgb(var(--color-text) / 0.14);
+  border-top-color: rgb(var(--color-link));
+  animation: qx-spin 760ms linear infinite;
+}
+
+@keyframes qx-cal-cell {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.7; }
+}
+
+.qx-cal-skeleton {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 7px;
+  width: min(280px, 70vw);
+  margin-top: 4px;
+}
+
+.qx-cal-skeleton > span {
+  height: 22px;
+  border-radius: var(--radius-sm);
+  background: rgb(var(--color-text) / 0.1);
+  animation: qx-cal-cell 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qx-spinner { animation-duration: 2.4s; }
+  .qx-cal-skeleton > span { animation: none; opacity: 0.4; }
+}
+
+/* The travelling pulses on the /products hero. SVG animateMotion is not
+   covered by the global animation reset, so the element is hidden outright
+   rather than left frozen mid-route. */
+@media (prefers-reduced-motion: reduce) {
+  .products-flow { display: none; }
+}

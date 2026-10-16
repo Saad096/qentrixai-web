@@ -42,6 +42,12 @@ function hexFromToken(name: string, fallback: string) {
 
 export function BookingDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [src, setSrc] = React.useState<string | null>(null);
+  /* Calendly takes a few seconds on a cold connection. Until onLoad fires
+     the iframe paints nothing, so the dialog opened to a blank panel and
+     read as broken -- reported as "feels like an empty page, the user can
+     switch away". The placeholder sits behind the frame and is covered the
+     moment it paints. */
+  const [ready, setReady] = React.useState(false);
 
   React.useEffect(() => {
     if (!open) return;
@@ -62,6 +68,12 @@ export function BookingDialog({ open, onClose }: { open: boolean; onClose: () =>
     setSrc(url.toString());
   }, [open]);
 
+  /* Reset between openings, or a second open would show the stale frame as
+     already-ready for the instant before it reloads. */
+  React.useEffect(() => {
+    if (!open) setReady(false);
+  }, [open]);
+
   return (
     <Modal
       open={open}
@@ -70,21 +82,42 @@ export function BookingDialog({ open, onClose }: { open: boolean; onClose: () =>
       title="Book a strategy call"
       description="Thirty minutes, no pitch deck. If we are not the right fit, we will say so on the call."
     >
-      {src ? (
-        <iframe
-          key={src}
-          src={src}
-          title="Select a date and time"
-          className="qx-calendly"
-          loading="lazy"
-        />
-      ) : (
-        /* Only ever visible for the frame before the effect runs. It holds
-           the height so the panel does not snap open at zero and resize. */
-        <div className="qx-calendly grid place-items-center">
-          <p className="font-mono text-xs text-muted">Loading the calendar…</p>
-        </div>
-      )}
+      <div className="relative">
+        {/* Behind the frame, not instead of it: the iframe is in the DOM and
+            fetching from the first paint, and this is simply what is visible
+            until it covers this up. Swapping on a timer would delay the
+            thing we are waiting for. */}
+        {!ready && (
+          <div className="qx-calendly absolute inset-0 grid place-items-center gap-4 p-6">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <span className="qx-spinner" aria-hidden="true" />
+              <p className="text-base font-semibold text-text">Loading the calendar</p>
+              <p className="max-w-[34ch] text-base text-muted">
+                Fetching live availability from Calendly. This takes a moment on a slow
+                connection.
+              </p>
+              {/* Skeleton of the month grid underneath, so the wait reads as
+                  a calendar arriving rather than as a blank box. */}
+              <span aria-hidden="true" className="qx-cal-skeleton">
+                {Array.from({ length: 21 }).map((_, i) => (
+                  <span key={i} style={{ animationDelay: `${(i % 7) * 70}ms` }} />
+                ))}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {src && (
+          <iframe
+            key={src}
+            src={src}
+            title="Select a date and time"
+            className="qx-calendly"
+            onLoad={() => setReady(true)}
+            style={{ opacity: ready ? 1 : 0, transition: "opacity var(--motion-base) var(--ease-out)" }}
+          />
+        )}
+      </div>
     </Modal>
   );
 }

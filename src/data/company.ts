@@ -49,7 +49,11 @@ export const company = {
     "We design, build and run agentic systems, retrieval pipelines and voice AI, then hand over the repo, the eval harness and the runbook.",
   founded: "2024",
   location: "Wilmington, Delaware and Lahore, Pakistan",
-  hours: "Mon to Sat, 9:00-19:00 PKT",
+  /* Not opening hours. The old line was "Mon to Sat, 9:00-19:00 PKT",
+     which tells a buyer in another timezone not to bother -- on a site whose
+     form takes briefs at any hour and whose own product answers calls at
+     3am. This says when a person replies, without implying a closed door. */
+  hours: "Write any time. A person replies within one business day.",
   capabilities: [
     "GenAI",
     "Agentic AI",

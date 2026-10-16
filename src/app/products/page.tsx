@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
+import { ProductsFlow } from "@/components/art/ProductsFlow";
 import { DeviceFrame, DevicePlaceholder } from "@/components/ui/DeviceFrame";
 import { Section } from "@/components/ui/Section";
 import { CtaBlock } from "@/components/sections/FaqCta";
@@ -39,7 +40,7 @@ export default function ProductsPage() {
 
       <PageHero
         title="Products we build and run"
-        art="index-products"
+        visual={<ProductsFlow />}
         lede={
           <>
             {products.length} products, operated in-house on the same discipline we sell.

@@ -124,7 +124,12 @@ export function Footer() {
               centring was cascading down here: the column headings sat in
               the middle of columns whose links were left-aligned under
               them. */}
-          <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 text-left lg:grid-cols-4">
+          {/* Columns sized to their content and spread across the row, rather
+              than four equal quarters. Equal columns look left-weighted here
+              because the content is not equal: "Make your knowledge answer"
+              fills its quarter while "Careers" leaves most of the last one
+              empty, so the footer drifted away from its own right edge. */}
+          <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 text-left lg:grid-cols-[auto_auto_auto_auto] lg:justify-between">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
@@ -149,7 +154,7 @@ export function Footer() {
 
         {/* Same four-column grid and same gutter as the link block above, so
             the two rows line up rather than each finding its own rhythm. */}
-        <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-[color:var(--color-border)] py-10 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-[color:var(--color-border)] py-10 lg:grid-cols-[auto_auto_auto_auto] lg:justify-between">
           {offices.map((o) => (
             <div key={o.city}>
               <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
@@ -165,7 +170,7 @@ export function Footer() {
             </div>
           ))}
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Hours</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Response time</h2>
             <p className="mt-2 text-base text-text-2">{company.hours}</p>
           </div>
           <div>
