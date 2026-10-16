@@ -109,6 +109,12 @@
   --color-danger: 239 111 92;    /* #EF6F5C 5.14:1 */
   --color-info: 47 192 165;      /* #2FC0A5 6.66:1 */
 
+  /* WhatsApp's own green, which is a brand colour and not ours, so it is
+     not on the neutral ramp. It still has to be legible on both themes:
+     #25D366 is 9.65:1 on the footer and 1.90:1 on a light card, so the
+     light theme gets WhatsApp's dark green instead. */
+  --brand-whatsapp: #25D366;
+
   --color-border: rgb(244 244 245 / 0.14);
 
   /* Elevation. The old single inset hairline is why cards read as outlines:
@@ -233,6 +239,10 @@
   --color-warn: 138 90 18;       /* #8A5A12 4.51:1 */
   --color-danger: 163 58 41;     /* #A33A29 5.02:1 */
   --color-info: 10 97 82;        /* #0A6152 5.63:1 */
+
+  /* WhatsApp dark green, 3.66:1 on the bone card -- clear of the 3:1 floor
+     for a non-text mark, where their #25D366 is 1.90:1. */
+  --brand-whatsapp: #128C7E;
 
   --color-border: rgb(35 35 31 / 0.20);
 
@@ -821,6 +831,9 @@ body > footer {
   --color-text-2: 207 207 212;
   --color-link: 47 192 165;      /* #2FC0A5 8.39:1 */
   --color-border: rgb(244 244 245 / 0.14);
+  /* Dark in both themes, so the mark takes its dark-theme value here even
+     when the page around it is light. */
+  --brand-whatsapp: #25D366;
 
   background-color: rgb(var(--color-bg));
   color: rgb(var(--color-text));

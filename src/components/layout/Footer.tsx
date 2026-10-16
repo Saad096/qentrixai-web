@@ -8,6 +8,7 @@ import { services } from "@/data/services";
 import { industries } from "@/data/industries";
 import { company, offices } from "@/data/company";
 import { publicEnv } from "@/lib/env";
+import { formatPhone, telHref, whatsappHref } from "@/lib/phone";
 
 /**
  * Footer, on the reference's structure: a brand column with the positioning
@@ -61,6 +62,9 @@ const COLUMNS = [
 ];
 
 const SOCIALS = [
+  /* WhatsApp first: it is the only one of these that is a way to reach us
+     rather than a place to read about us, and on a phone it is one tap. */
+  { label: "WhatsApp", href: publicEnv.socials.whatsapp },
   { label: "LinkedIn", href: publicEnv.socials.linkedin },
   { label: "GitHub", href: publicEnv.socials.github },
   { label: "Instagram", href: publicEnv.socials.instagram },
@@ -187,12 +191,26 @@ export function Footer() {
               >
                 {publicEnv.profile.email}
               </a>
+              {/* Grouped for reading, E.164 in the href. "+13026653382" is
+                  what a database stores; nobody reads a ten-digit run. */}
               <a
-                href={`tel:${publicEnv.profile.phone}`}
+                href={telHref(publicEnv.profile.phone)}
                 className="-mx-2.5 flex min-h-[44px] items-center rounded-md px-2.5 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
               >
-                {publicEnv.profile.phone}
+                {formatPhone(publicEnv.profile.phone)}
               </a>
+              {publicEnv.profile.whatsapp && (
+                <a
+                  href={whatsappHref(publicEnv.profile.whatsapp)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="-mx-2.5 flex min-h-[44px] items-center gap-2 rounded-md px-2.5 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
+                >
+                  <BrandIcon name="WhatsApp" className="size-4 shrink-0" />
+                  {formatPhone(publicEnv.profile.whatsapp)}
+                  <span className="sr-only">on WhatsApp</span>
+                </a>
+              )}
             </p>
           </div>
         </div>

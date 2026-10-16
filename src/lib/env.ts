@@ -6,6 +6,12 @@
 
 const pick = (v: string | undefined, fallback = "") => (v && v.trim().length > 0 ? v : fallback);
 
+/* wa.me takes bare digits: no +, no spaces. */
+const waLink = (v: string) => {
+  const digits = v.replace(/\D/g, "");
+  return digits ? `https://wa.me/${digits}` : "";
+};
+
 export const publicEnv = {
   // The apex host 308-redirects to www, so the canonical must be www or every
   // canonical points at a redirect (audit B-06). Vercel env must match this.
@@ -23,7 +29,20 @@ export const publicEnv = {
       "AI systems that make it to production"
     ),
     email: pick(process.env.NEXT_PUBLIC_PROFILE_EMAIL, "talk@qentrix-ai.com"),
+    /* E.164, always. Everything the visitor reads goes through
+       formatPhone() in lib/phone.ts; this is storage, not display. */
     phone: pick(process.env.NEXT_PUBLIC_PROFILE_PHONE, "+13026653382"),
+    /* The Lahore line, which is the one that answers on WhatsApp. Different
+       number from the Delaware one above on purpose -- a US DID does not
+       carry a WhatsApp account.
+
+       Deliberately a NEW variable rather than reusing
+       NEXT_PUBLIC_PROFILE_WHATSAPP, which held a full wa.me URL. Reusing it
+       would have meant the old value -- still set here and on Vercel --
+       silently kept pointing at the old number, which is exactly what the
+       first version of this change did. A new name makes the stale one
+       inert instead of wrong. */
+    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP_NUMBER, "+923196828506"),
     location: pick(process.env.NEXT_PUBLIC_PROFILE_LOCATION, "Wilmington, Delaware and Lahore, Pakistan"),
     availability: pick(
       process.env.NEXT_PUBLIC_PROFILE_AVAILABILITY,
@@ -58,7 +77,9 @@ export const publicEnv = {
       process.env.NEXT_PUBLIC_PROFILE_FACEBOOK,
       "https://www.facebook.com/Qentrixai"
     ),
-    whatsapp: pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP, "https://wa.me/13026653382"),
+    /* Derived from profile.whatsapp rather than stored twice: two copies of
+       a phone number is one copy that goes stale. */
+    whatsapp: waLink(pick(process.env.NEXT_PUBLIC_PROFILE_WHATSAPP_NUMBER, "+923196828506")),
   },
 
   team: {

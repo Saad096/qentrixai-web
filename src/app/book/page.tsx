@@ -1,8 +1,11 @@
-import { Mail, Phone, MapPin, Clock, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { BookingCalendar } from "@/components/booking/BookingCalendar";
+import { BrandIcon } from "@/components/ui/BrandIcon";
 import { publicEnv } from "@/lib/env";
+import { formatPhone, telHref, whatsappHref } from "@/lib/phone";
+import { company } from "@/data/company";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -68,17 +71,35 @@ export default function BookPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <Phone className="mt-0.5 size-4 text-muted" />
-                    <a href={`tel:${p.phone}`} className="flex min-h-[44px] items-center hover:text-text">
-                      {p.phone}
+                    <a href={telHref(p.phone)} className="flex min-h-[44px] items-center hover:text-text">
+                      {formatPhone(p.phone)}
                     </a>
                   </li>
+                  {p.whatsapp && (
+                    <li className="flex items-start gap-3">
+                      <BrandIcon name="WhatsApp" className="mt-0.5 size-4 shrink-0" />
+                      <a
+                        href={whatsappHref(p.whatsapp)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex min-h-[44px] items-center hover:text-text"
+                      >
+                        {formatPhone(p.whatsapp)}
+                        <span className="sr-only">on WhatsApp</span>
+                      </a>
+                    </li>
+                  )}
                   <li className="flex items-start gap-3">
                     <MapPin className="mt-0.5 size-4 text-muted" />
                     <span>{p.location}</span>
                   </li>
+                  {/* Was "Mon - Sat . 9:00 - 19:00 PKT", hardcoded here while
+                      company.hours had already been rewritten. A buyer in
+                      another timezone reads an opening-hours line as a closed
+                      door; this says when a person replies instead. */}
                   <li className="flex items-start gap-3">
-                    <Clock className="mt-0.5 size-4 text-muted" />
-                    <span>Mon – Sat · 9:00 – 19:00 PKT</span>
+                    <Clock className="mt-0.5 size-4 shrink-0 text-muted" />
+                    <span>{company.hours}</span>
                   </li>
                 </ul>
               </div>
@@ -96,7 +117,7 @@ export default function BookPage() {
                       rel="noopener noreferrer"
                       className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-brand px-5 py-2.5 text-sm font-medium text-white  transition-all hover:scale-[1.02] hover:brightness-110"
                     >
-                      <MessageCircle className="size-4" /> WhatsApp us
+                      <BrandIcon name="WhatsApp" tone="current" className="size-4" /> WhatsApp us
                     </a>
                   )}
                   <a
