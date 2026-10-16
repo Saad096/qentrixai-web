@@ -40,6 +40,18 @@ const nextConfig = {
    * X-Frame-Options is the legacy twin of frame-ancestors and is kept for
    * older engines that ignore CSP.
    */
+  /**
+   * RoseNode was removed from the catalogue on 2026-10-16 and replaced by
+   * NurturHQ. Its page was in the sitemap, so the URL may be indexed and
+   * may be linked from elsewhere; a 301 sends that traffic and any accrued
+   * authority to the product that replaced it rather than to a 404.
+   */
+  async redirects() {
+    return [
+      { source: "/products/rosenode", destination: "/products/nurturhq", permanent: true },
+    ];
+  },
+
   async headers() {
     return [
       {
