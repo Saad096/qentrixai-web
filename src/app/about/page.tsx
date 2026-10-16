@@ -16,6 +16,7 @@ import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
 import { clients } from "@/data/clients";
 import { publicEnv } from "@/lib/env";
+import { formatPhone } from "@/lib/phone";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { SectionCta } from "@/components/ui/SectionCta";
 
@@ -370,7 +371,8 @@ export default function AboutPage() {
             ["Founded", company.founded],
             ["Hours", company.hours],
             ["Email", publicEnv.profile.email],
-            ["Phone", publicEnv.profile.phone],
+            ["Phone", formatPhone(publicEnv.profile.phone)],
+            ["WhatsApp", formatPhone(publicEnv.profile.whatsapp)],
           ].map(([k, v]) => (
             <div
               key={k}

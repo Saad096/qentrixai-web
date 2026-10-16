@@ -179,6 +179,27 @@ export function organizationJsonLd() {
         addressCountry: "PK",
       },
     },
+    /* Two numbers now, and they do different jobs: the Delaware line is the
+       one on the letterhead, the Lahore line is the one that answers on
+       WhatsApp. `telephone` above keeps the first, because a single value
+       is what consumers that do not read contactPoint will take. */
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: publicEnv.profile.phone,
+        email: publicEnv.profile.email,
+        availableLanguage: ["en"],
+      },
+      publicEnv.profile.whatsapp && {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        telephone: publicEnv.profile.whatsapp,
+        contactOption: "WhatsApp",
+        url: publicEnv.socials.whatsapp,
+        availableLanguage: ["en", "ur"],
+      },
+    ].filter(Boolean),
     sameAs: [
       publicEnv.socials.linkedin,
       publicEnv.socials.instagram,

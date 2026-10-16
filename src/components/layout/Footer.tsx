@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, ArrowUpRight, Linkedin, Github, Instagram, Facebook } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
+import { BrandIcon } from "@/components/ui/BrandIcon";
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
 import { PRIMARY_CTA } from "@/data/navigation";
@@ -7,6 +8,7 @@ import { services } from "@/data/services";
 import { industries } from "@/data/industries";
 import { company, offices } from "@/data/company";
 import { publicEnv } from "@/lib/env";
+import { formatPhone, telHref } from "@/lib/phone";
 
 /**
  * Footer, on the reference's structure: a brand column with the positioning
@@ -60,10 +62,13 @@ const COLUMNS = [
 ];
 
 const SOCIALS = [
-  { label: "LinkedIn", href: publicEnv.socials.linkedin, Icon: Linkedin },
-  { label: "GitHub", href: publicEnv.socials.github, Icon: Github },
-  { label: "Instagram", href: publicEnv.socials.instagram, Icon: Instagram },
-  { label: "Facebook", href: publicEnv.socials.facebook, Icon: Facebook },
+  /* WhatsApp first: it is the only one of these that is a way to reach us
+     rather than a place to read about us, and on a phone it is one tap. */
+  { label: "WhatsApp", href: publicEnv.socials.whatsapp },
+  { label: "LinkedIn", href: publicEnv.socials.linkedin },
+  { label: "GitHub", href: publicEnv.socials.github },
+  { label: "Instagram", href: publicEnv.socials.instagram },
+  { label: "Facebook", href: publicEnv.socials.facebook },
 ].filter((s) => s.href);
 
 export function Footer() {
@@ -124,6 +129,13 @@ export function Footer() {
               centring was cascading down here: the column headings sat in
               the middle of columns whose links were left-aligned under
               them. */}
+          {/* Four equal columns, so this row and the office row below line up
+              with each other. Content-sized columns spread with
+              justify-between fixed the dead space on the right and broke
+              that alignment instead -- the two rows have different content
+              widths, so their columns landed at different x positions. The
+              dead space is handled by the container width rather than by
+              the column template. */}
           <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 text-left lg:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
@@ -165,8 +177,8 @@ export function Footer() {
             </div>
           ))}
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Hours</h2>
-            <p className="mt-2 text-base text-text-2">{company.hours}</p>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Response time</h2>
+            <p className="mt-2 max-w-[24ch] text-base text-text-2">{company.hours}</p>
           </div>
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Talk to us</h2>
@@ -179,12 +191,18 @@ export function Footer() {
               >
                 {publicEnv.profile.email}
               </a>
+              {/* Grouped for reading, E.164 in the href. "+13026653382" is
+                  what a database stores; nobody reads a ten-digit run. */}
               <a
-                href={`tel:${publicEnv.profile.phone}`}
+                href={telHref(publicEnv.profile.phone)}
                 className="-mx-2.5 flex min-h-[44px] items-center rounded-md px-2.5 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
               >
-                {publicEnv.profile.phone}
+                {formatPhone(publicEnv.profile.phone)}
               </a>
+              {/* No WhatsApp line here. The mark in the social row below
+                  already carries that number, and a second number under
+                  "Talk to us" reads as a choice to make rather than a way
+                  to get in touch. */}
             </p>
           </div>
         </div>
@@ -201,16 +219,16 @@ export function Footer() {
           </p>
 
           <ul className="flex items-center gap-2">
-            {SOCIALS.map(({ label, href, Icon }) => (
+            {SOCIALS.map(({ label, href }) => (
               <li key={label}>
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid size-11 place-items-center rounded-full text-muted ring-1 ring-[color:var(--color-border)] transition-colors hover:text-text"
+                  className="grid size-11 place-items-center rounded-full ring-1 ring-[color:var(--color-border)] transition-[background-color,box-shadow] hover:bg-surface hover:shadow-1"
                 >
-                  <Icon className="size-[18px]" aria-hidden="true" />
+                  <BrandIcon name={label} className="size-[18px]" />
                 </a>
               </li>
             ))}

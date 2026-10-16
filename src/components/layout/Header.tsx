@@ -173,9 +173,15 @@ export function Header() {
           did exactly that at max-height:0. */}
       {open && (
       <div
+        /* max-height and scroll, the same fix the desktop dropdown needed.
+           This was overflow-hidden with no ceiling: on a short screen -- a
+           landscape phone, or a small laptop with browser chrome eating the
+           viewport -- the sheet ran past the bottom and the Book a strategy
+           call button at its foot could not be reached or even seen. The
+           header is sticky, so there was no page scroll to recover it. */
         id="mobile-menu"
         ref={panelRef}
-        className="header-pill mx-auto mt-2 overflow-hidden bg-bg shadow-2 lg:hidden"
+        className="header-pill mx-auto mt-2 max-h-[calc(100dvh-var(--menu-top,72px)-1rem)] overflow-y-auto overscroll-contain bg-bg shadow-2 lg:hidden"
       >
         <div className="px-5">
           <nav aria-label="Primary" className="flex flex-col py-3">

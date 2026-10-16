@@ -109,6 +109,12 @@
   --color-danger: 239 111 92;    /* #EF6F5C 5.14:1 */
   --color-info: 47 192 165;      /* #2FC0A5 6.66:1 */
 
+  /* WhatsApp's own green, which is a brand colour and not ours, so it is
+     not on the neutral ramp. It still has to be legible on both themes:
+     #25D366 is 9.65:1 on the footer and 1.90:1 on a light card, so the
+     light theme gets WhatsApp's dark green instead. */
+  --brand-whatsapp: #25D366;
+
   --color-border: rgb(244 244 245 / 0.14);
 
   /* Elevation. The old single inset hairline is why cards read as outlines:
@@ -233,6 +239,10 @@
   --color-warn: 138 90 18;       /* #8A5A12 4.51:1 */
   --color-danger: 163 58 41;     /* #A33A29 5.02:1 */
   --color-info: 10 97 82;        /* #0A6152 5.63:1 */
+
+  /* WhatsApp dark green, 3.66:1 on the bone card -- clear of the 3:1 floor
+     for a non-text mark, where their #25D366 is 1.90:1. */
+  --brand-whatsapp: #128C7E;
 
   --color-border: rgb(35 35 31 / 0.20);
 
@@ -821,6 +831,9 @@ body > footer {
   --color-text-2: 207 207 212;
   --color-link: 47 192 165;      /* #2FC0A5 8.39:1 */
   --color-border: rgb(244 244 245 / 0.14);
+  /* Dark in both themes, so the mark takes its dark-theme value here even
+     when the page around it is light. */
+  --brand-whatsapp: #25D366;
 
   background-color: rgb(var(--color-bg));
   color: rgb(var(--color-text));
@@ -1503,4 +1516,56 @@ body > footer {
 
 @media (prefers-reduced-motion: reduce) {
   .industry-drift__band { display: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Booking dialog loading state.                                        */
+/*                                                                      */
+/* Calendly can take several seconds on a cold connection, and an        */
+/* iframe paints nothing until it is ready -- so the dialog opened to a  */
+/* blank panel and read as broken. This is what fills that gap: a        */
+/* spinner, a sentence saying what is being fetched, and a skeleton of   */
+/* the month grid so the wait reads as a calendar arriving.              */
+/* ------------------------------------------------------------------ */
+@keyframes qx-spin { to { transform: rotate(360deg); } }
+
+.qx-spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: 3px solid rgb(var(--color-text) / 0.14);
+  border-top-color: rgb(var(--color-link));
+  animation: qx-spin 760ms linear infinite;
+}
+
+@keyframes qx-cal-cell {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.7; }
+}
+
+.qx-cal-skeleton {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 7px;
+  width: min(280px, 70vw);
+  margin-top: 4px;
+}
+
+.qx-cal-skeleton > span {
+  height: 22px;
+  border-radius: var(--radius-sm);
+  background: rgb(var(--color-text) / 0.1);
+  animation: qx-cal-cell 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qx-spinner { animation-duration: 2.4s; }
+  .qx-cal-skeleton > span { animation: none; opacity: 0.4; }
+}
+
+/* The travelling pulses on the /products hero. SVG animateMotion is not
+   covered by the global animation reset, so the element is hidden outright
+   rather than left frozen mid-route. */
+@media (prefers-reduced-motion: reduce) {
+  .products-flow { display: none; }
 }

@@ -47,7 +47,7 @@ export const industries: Industry[] = [
     imageAlt: "A headset resting on a desk beside an open laptop",
     line: "Call deflection, screening and back-office coordination, with a confidence threshold that hands off to a human rather than guessing.",
     cases: ["ai-ivr-platform", "voice-recruitment-automation", "multi-agent-ai-platform"],
-    products: ["voxroute", "voicebot"],
+    products: ["voxroute", "voicebot", "nurturhq"],
   },
   {
     slug: "healthcare",
@@ -109,7 +109,7 @@ export const industries: Industry[] = [
     imageAlt: "A customer browsing shelves in a shop",
     line: "Assistants people talk to daily, instrumented so cost per message and tail latency are attributable to the kind of conversation driving them.",
     cases: [],
-    products: ["rosenode", "ala", "multiagent-chatbot"],
+    products: ["ala", "multiagent-chatbot"],
   },
   {
     slug: "public-sector",

@@ -7,8 +7,9 @@
  * full-width on mobile.
  */
 import * as React from "react";
-import { Send, MessageCircle, Mail, Loader2, Check } from "lucide-react";
+import { Send, Mail, Loader2, Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { BrandIcon } from "@/components/ui/BrandIcon";
 import { publicEnv } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
@@ -170,7 +171,7 @@ export function ContactForm({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-[13px] text-text"
               >
-                <MessageCircle className="size-3.5" /> WhatsApp
+                <BrandIcon name="WhatsApp" tone="current" className="size-3.5" /> WhatsApp
               </a>
             )}
           </div>

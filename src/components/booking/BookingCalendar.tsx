@@ -8,8 +8,9 @@
  * the request the same way the contact form does.
  */
 import * as React from "react";
-import { ChevronLeft, ChevronRight, Loader2, Check, Mail, MessageCircle, Clock } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2, Check, Mail, Clock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { BrandIcon } from "@/components/ui/BrandIcon";
 import { publicEnv } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
@@ -298,7 +299,7 @@ export function BookingCalendar() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-surface px-3 py-1.5 text-[13px] text-text"
                     >
-                      <MessageCircle className="size-3.5" /> WhatsApp
+                      <BrandIcon name="WhatsApp" tone="current" className="size-3.5" /> WhatsApp
                     </a>
                   )}
                 </div>

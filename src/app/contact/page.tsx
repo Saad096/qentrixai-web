@@ -3,7 +3,6 @@ import {
   Phone,
   MapPin,
   Clock,
-  MessageCircle,
   Linkedin,
   Github,
   Instagram,
@@ -15,7 +14,10 @@ import { PageHeading } from "@/components/ui/PageHeading";
 import { Button } from "@/components/ui/Button";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { FaqCta } from "@/components/sections/FaqCta";
+import { BrandIcon } from "@/components/ui/BrandIcon";
 import { publicEnv, getBookingUrl } from "@/lib/env";
+import { formatPhone, telHref, whatsappHref } from "@/lib/phone";
+import { company } from "@/data/company";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -88,19 +90,37 @@ export default function ContactPage() {
                   <li className="flex items-center gap-3">
                     <Phone className="size-4 shrink-0 text-muted" />
                     <a
-                      href={`tel:${p.phone}`}
+                      href={telHref(p.phone)}
                       className="flex min-h-[44px] items-center hover:text-text"
                     >
-                      {p.phone}
+                      {formatPhone(p.phone)}
                     </a>
                   </li>
+                  {p.whatsapp && (
+                    <li className="flex items-center gap-3">
+                      <BrandIcon name="WhatsApp" className="size-4 shrink-0" />
+                      <a
+                        href={whatsappHref(p.whatsapp)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex min-h-[44px] items-center hover:text-text"
+                      >
+                        {formatPhone(p.whatsapp)}
+                        <span className="sr-only">on WhatsApp</span>
+                      </a>
+                    </li>
+                  )}
                   <li className="flex items-start gap-3">
                     <MapPin className="mt-0.5 size-4 text-muted" />
                     <span>{p.location}</span>
                   </li>
+                  {/* Was "Mon - Sat . 9:00 - 19:00 PKT", hardcoded here while
+                      company.hours had already been rewritten. A buyer in
+                      another timezone reads an opening-hours line as a closed
+                      door; this says when a person replies instead. */}
                   <li className="flex items-start gap-3">
-                    <Clock className="mt-0.5 size-4 text-muted" />
-                    <span>Mon – Sat · 9:00 – 19:00 PKT</span>
+                    <Clock className="mt-0.5 size-4 shrink-0 text-muted" />
+                    <span>{company.hours}</span>
                   </li>
                 </ul>
               </div>
@@ -116,7 +136,7 @@ export default function ContactPage() {
                   </Button>
                   {s.whatsapp && (
                     <Button href={s.whatsapp} variant="secondary" className="w-full">
-                      <MessageCircle className="size-4" /> WhatsApp
+                      <BrandIcon name="WhatsApp" tone="current" className="size-4" /> WhatsApp
                     </Button>
                   )}
                 </div>
