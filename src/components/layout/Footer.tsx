@@ -8,7 +8,7 @@ import { services } from "@/data/services";
 import { industries } from "@/data/industries";
 import { company, offices } from "@/data/company";
 import { publicEnv } from "@/lib/env";
-import { formatPhone, telHref, whatsappHref } from "@/lib/phone";
+import { formatPhone, telHref } from "@/lib/phone";
 
 /**
  * Footer, on the reference's structure: a brand column with the positioning
@@ -199,18 +199,10 @@ export function Footer() {
               >
                 {formatPhone(publicEnv.profile.phone)}
               </a>
-              {publicEnv.profile.whatsapp && (
-                <a
-                  href={whatsappHref(publicEnv.profile.whatsapp)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="-mx-2.5 flex min-h-[44px] items-center gap-2 rounded-md px-2.5 transition-[background-color,color,box-shadow] hover:bg-surface hover:text-text hover:shadow-1"
-                >
-                  <BrandIcon name="WhatsApp" className="size-4 shrink-0" />
-                  {formatPhone(publicEnv.profile.whatsapp)}
-                  <span className="sr-only">on WhatsApp</span>
-                </a>
-              )}
+              {/* No WhatsApp line here. The mark in the social row below
+                  already carries that number, and a second number under
+                  "Talk to us" reads as a choice to make rather than a way
+                  to get in touch. */}
             </p>
           </div>
         </div>
