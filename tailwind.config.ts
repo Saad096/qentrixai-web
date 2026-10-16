@@ -83,10 +83,13 @@ const config: Config = {
         // is what read as "the padding is too high": the gutter was the
         // container cap, not the 32px of padding inside it.
         container: "1440px",
-        // The footer runs wider than the page on purpose. Every label in it
-        // is a sentence rather than a word ("Keep the model inside your
-        // border"), and at container width they all wrapped to two lines.
-        footer: "1600px",
+        // Wider than the page, but only by enough. Every label in here is a
+        // sentence rather than a word ("Keep the model inside your border")
+        // and wrapped to two lines at the page's 1440. 1600 cured that and
+        // overshot -- four equal columns of 380px left the content floating
+        // short of its own right edge. 1520 keeps every label on one line
+        // with about 40px to spare on the longest.
+        footer: "1520px",
         measure: "62ch",
       },
     },

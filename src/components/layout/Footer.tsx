@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, ArrowUpRight, Linkedin, Github, Instagram, Facebook } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
+import { BrandIcon } from "@/components/ui/BrandIcon";
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
 import { PRIMARY_CTA } from "@/data/navigation";
@@ -60,10 +61,10 @@ const COLUMNS = [
 ];
 
 const SOCIALS = [
-  { label: "LinkedIn", href: publicEnv.socials.linkedin, Icon: Linkedin },
-  { label: "GitHub", href: publicEnv.socials.github, Icon: Github },
-  { label: "Instagram", href: publicEnv.socials.instagram, Icon: Instagram },
-  { label: "Facebook", href: publicEnv.socials.facebook, Icon: Facebook },
+  { label: "LinkedIn", href: publicEnv.socials.linkedin },
+  { label: "GitHub", href: publicEnv.socials.github },
+  { label: "Instagram", href: publicEnv.socials.instagram },
+  { label: "Facebook", href: publicEnv.socials.facebook },
 ].filter((s) => s.href);
 
 export function Footer() {
@@ -124,12 +125,14 @@ export function Footer() {
               centring was cascading down here: the column headings sat in
               the middle of columns whose links were left-aligned under
               them. */}
-          {/* Columns sized to their content and spread across the row, rather
-              than four equal quarters. Equal columns look left-weighted here
-              because the content is not equal: "Make your knowledge answer"
-              fills its quarter while "Careers" leaves most of the last one
-              empty, so the footer drifted away from its own right edge. */}
-          <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 text-left lg:grid-cols-[auto_auto_auto_auto] lg:justify-between">
+          {/* Four equal columns, so this row and the office row below line up
+              with each other. Content-sized columns spread with
+              justify-between fixed the dead space on the right and broke
+              that alignment instead -- the two rows have different content
+              widths, so their columns landed at different x positions. The
+              dead space is handled by the container width rather than by
+              the column template. */}
+          <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-8 text-left lg:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
@@ -154,7 +157,7 @@ export function Footer() {
 
         {/* Same four-column grid and same gutter as the link block above, so
             the two rows line up rather than each finding its own rhythm. */}
-        <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-[color:var(--color-border)] py-10 lg:grid-cols-[auto_auto_auto_auto] lg:justify-between">
+        <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-[color:var(--color-border)] py-10 lg:grid-cols-4">
           {offices.map((o) => (
             <div key={o.city}>
               <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">
@@ -171,7 +174,7 @@ export function Footer() {
           ))}
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Response time</h2>
-            <p className="mt-2 text-base text-text-2">{company.hours}</p>
+            <p className="mt-2 max-w-[24ch] text-base text-text-2">{company.hours}</p>
           </div>
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-text">Talk to us</h2>
@@ -206,16 +209,16 @@ export function Footer() {
           </p>
 
           <ul className="flex items-center gap-2">
-            {SOCIALS.map(({ label, href, Icon }) => (
+            {SOCIALS.map(({ label, href }) => (
               <li key={label}>
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid size-11 place-items-center rounded-full text-muted ring-1 ring-[color:var(--color-border)] transition-colors hover:text-text"
+                  className="grid size-11 place-items-center rounded-full ring-1 ring-[color:var(--color-border)] transition-[background-color,box-shadow] hover:bg-surface hover:shadow-1"
                 >
-                  <Icon className="size-[18px]" aria-hidden="true" />
+                  <BrandIcon name={label} className="size-[18px]" />
                 </a>
               </li>
             ))}
